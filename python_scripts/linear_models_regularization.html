@@ -680,7 +680,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-regularization">Effect of regularization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-and-regularization">Feature scaling and regularization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-the-regularization-parameter">Fine tuning the regularization parameter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuning-the-regularization-parameter">Tuning the regularization parameter</a></li>
 </ul>
             </nav>
         </div>
@@ -694,16 +694,16 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="regularization-of-linear-regression-model">
 <h1>Regularization of linear regression model<a class="headerlink" href="#regularization-of-linear-regression-model" title="Permalink to this heading">#</a></h1>
-<p>In this notebook, we will see the limitations of linear regression models and
-the advantage of using regularized models instead.</p>
-<p>Besides, we will also present the preprocessing required when dealing with
-regularized models, furthermore when the regularization parameter needs to be
-tuned.</p>
-<p>We will start by highlighting the over-fitting issue that can arise with a
+<p>In this notebook, we explore some limitations of linear regression models and
+demonstrate the benefits of using regularized models instead. Additionally, we
+discuss the importance of scaling the data when working with regularized
+models, especially when tuning the regularization parameter.</p>
+<p>We start by highlighting the problem of overfitting that can occur with a
 simple linear regression model.</p>
 <section id="effect-of-regularization">
 <h2>Effect of regularization<a class="headerlink" href="#effect-of-regularization" title="Permalink to this heading">#</a></h2>
-<p>We will first load the California housing dataset.</p>
+<p>We load the Ames housing dataset. We retain some specific
+<code class="docutils literal notranslate"><span class="pre">features_of_interest</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want a deeper overview regarding this dataset, you can refer to the
@@ -711,110 +711,32 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
+<span class="n">features_of_interest</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;LotFrontage&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LotArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PoolArea&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;YearBuilt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;YrSold&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ames_housing</span><span class="p">[</span><span class="n">features_of_interest</span><span class="p">],</span>
+    <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>MedInc</th>
-      <th>HouseAge</th>
-      <th>AveRooms</th>
-      <th>AveBedrms</th>
-      <th>Population</th>
-      <th>AveOccup</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>8.3252</td>
-      <td>41.0</td>
-      <td>6.984127</td>
-      <td>1.023810</td>
-      <td>322.0</td>
-      <td>2.555556</td>
-      <td>37.88</td>
-      <td>-122.23</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>8.3014</td>
-      <td>21.0</td>
-      <td>6.238137</td>
-      <td>0.971880</td>
-      <td>2401.0</td>
-      <td>2.109842</td>
-      <td>37.86</td>
-      <td>-122.22</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>7.2574</td>
-      <td>52.0</td>
-      <td>8.288136</td>
-      <td>1.073446</td>
-      <td>496.0</td>
-      <td>2.802260</td>
-      <td>37.85</td>
-      <td>-122.24</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>5.6431</td>
-      <td>52.0</td>
-      <td>5.817352</td>
-      <td>1.073059</td>
-      <td>558.0</td>
-      <td>2.547945</td>
-      <td>37.85</td>
-      <td>-122.25</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>3.8462</td>
-      <td>52.0</td>
-      <td>6.281853</td>
-      <td>1.081081</td>
-      <td>565.0</td>
-      <td>2.181467</td>
-      <td>37.85</td>
-      <td>-122.25</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>In one of the previous notebook, we showed that linear models could be used
-even in settings where <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> are not linearly linked.</p>
-<p>We showed that one can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create
-additional features encoding non-linear interactions between features.</p>
-<p>Here, we will use this transformer to augment the feature space. Subsequently,
-we will train a linear regression model. We will use the out-of-sample test
-set to evaluate the generalization capabilities of our model.</p>
+even when there is no linear relationship between the <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code>.
+For instance, one can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create
+additional features that capture some non-linear interactions between them.</p>
+<p>Here, we use this transformer to augment the feature space. Subsequently, we
+train a linear regression model. We use the out-of-sample test set to evaluate
+the generalization capabilities of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
@@ -845,14 +767,14 @@ assess the generalization performance of our model.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the train set:
-4190.212 ± 151.123
+2.85e+09 ± 8.63e+07
 </pre></div>
 </div>
 </div>
@@ -862,39 +784,44 @@ assess the generalization performance of our model.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the test set:
-13334.943 ± 20292.681
+8.69e+10 ± 2.47e+11
 </pre></div>
 </div>
 </div>
 </div>
-<p>The score on the training set is much better. This generalization performance
-gap between the training and testing score is an indication that our model
-overfitted our training set.</p>
-<p>Indeed, this is one of the danger when augmenting the number of features with
-a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer. Our model will focus on some specific
-features. We can check the weights of the model to have a confirmation. Let’s
-create a dataframe: the columns will contain the name of the feature while the
-line the coefficients values stored by each model during the cross-validation.</p>
-<p>Since we used a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> to augment the data, we will create
-feature names representative of the feature combination. Scikit-learn provides
-a <code class="docutils literal notranslate"><span class="pre">get_feature_names_out</span></code> method for this purpose. First, let’s get the first
-fitted model from the cross-validation.</p>
+<p>The training score is much better than the testing score. Such a gap between
+the training and testing scores is an indication that our model overfitted the
+training set. Indeed, this is one of the dangers when augmenting the number of
+features with a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer. For instance, one does not
+expect features such as <code class="docutils literal notranslate"><span class="pre">PoolArea</span> <span class="pre">*</span> <span class="pre">YrSold</span></code> to be very predictive.</p>
+<p>We can create a dataframe to check the weights of the model: the columns
+contain the name of the features whereas the rows store the coefficients values
+of each model during the cross-validation.</p>
+<p>Since we used a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> to augment the data, we extract the
+feature names representative of each feature combination. Scikit-learn
+provides a <code class="docutils literal notranslate"><span class="pre">feature_names_in_</span></code> method for this purpose. First, let’s get the
+first fitted model from the cross-validation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_first_fold</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">model_first_fold</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;polynomialfeatures&#x27;, PolynomialFeatures(include_bias=False)),
+                (&#x27;linearregression&#x27;, LinearRegression())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">Pipeline</label><div class="sk-toggleable__content"><pre>Pipeline(steps=[(&#x27;polynomialfeatures&#x27;, PolynomialFeatures(include_bias=False)),
+                (&#x27;linearregression&#x27;, LinearRegression())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">PolynomialFeatures</label><div class="sk-toggleable__content"><pre>PolynomialFeatures(include_bias=False)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div></div></div></div></div></div></div></div></div>
 </div>
-<p>Now, we can access to the fitted <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> to generate the feature
-names:</p>
+<p>Now, we can access the fitted <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> (step <code class="docutils literal notranslate"><span class="pre">-1</span></code> i.e. the last step
+of the model) to recover the feature names.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">model_first_fold</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">feature_names_in_</span>
@@ -903,25 +830,19 @@ names:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;,
-       &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;, &#39;MedInc^2&#39;, &#39;MedInc HouseAge&#39;,
-       &#39;MedInc AveRooms&#39;, &#39;MedInc AveBedrms&#39;, &#39;MedInc Population&#39;,
-       &#39;MedInc AveOccup&#39;, &#39;MedInc Latitude&#39;, &#39;MedInc Longitude&#39;,
-       &#39;HouseAge^2&#39;, &#39;HouseAge AveRooms&#39;, &#39;HouseAge AveBedrms&#39;,
-       &#39;HouseAge Population&#39;, &#39;HouseAge AveOccup&#39;, &#39;HouseAge Latitude&#39;,
-       &#39;HouseAge Longitude&#39;, &#39;AveRooms^2&#39;, &#39;AveRooms AveBedrms&#39;,
-       &#39;AveRooms Population&#39;, &#39;AveRooms AveOccup&#39;, &#39;AveRooms Latitude&#39;,
-       &#39;AveRooms Longitude&#39;, &#39;AveBedrms^2&#39;, &#39;AveBedrms Population&#39;,
-       &#39;AveBedrms AveOccup&#39;, &#39;AveBedrms Latitude&#39;, &#39;AveBedrms Longitude&#39;,
-       &#39;Population^2&#39;, &#39;Population AveOccup&#39;, &#39;Population Latitude&#39;,
-       &#39;Population Longitude&#39;, &#39;AveOccup^2&#39;, &#39;AveOccup Latitude&#39;,
-       &#39;AveOccup Longitude&#39;, &#39;Latitude^2&#39;, &#39;Latitude Longitude&#39;,
-       &#39;Longitude^2&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;LotFrontage&#39;, &#39;LotArea&#39;, &#39;PoolArea&#39;, &#39;YearBuilt&#39;, &#39;YrSold&#39;,
+       &#39;LotFrontage^2&#39;, &#39;LotFrontage LotArea&#39;, &#39;LotFrontage PoolArea&#39;,
+       &#39;LotFrontage YearBuilt&#39;, &#39;LotFrontage YrSold&#39;, &#39;LotArea^2&#39;,
+       &#39;LotArea PoolArea&#39;, &#39;LotArea YearBuilt&#39;, &#39;LotArea YrSold&#39;,
+       &#39;PoolArea^2&#39;, &#39;PoolArea YearBuilt&#39;, &#39;PoolArea YrSold&#39;,
+       &#39;YearBuilt^2&#39;, &#39;YearBuilt YrSold&#39;, &#39;YrSold^2&#39;], dtype=object)
 </pre></div>
 </div>
 </div>
 </div>
-<p>Finally, we can create the dataframe containing all the information.</p>
+<p>The following code creates a list by iterating through the estimators and
+querying their last step for the learned <code class="docutils literal notranslate"><span class="pre">coef_</span></code>. We can then create the
+dataframe containing all the information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -938,31 +859,39 @@ names:</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
-<span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Linear regression coefficients&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linear regression weights&quot;</span><span class="p">,</span>
+    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f20e4315396140eebfa893c7bf2fe59079bb9a35bbf852c71189bfa21ccf8261.png" src="../_images/f20e4315396140eebfa893c7bf2fe59079bb9a35bbf852c71189bfa21ccf8261.png" />
+<img alt="../_images/eb9cbd075cf3aa80ebba36a6242b2cfa4f29934dd27b7ef39646f420c05a5c87.png" src="../_images/eb9cbd075cf3aa80ebba36a6242b2cfa4f29934dd27b7ef39646f420c05a5c87.png" />
 </div>
 </div>
+<p>Notice that we use a (symmetric) log scale for the bar plot. Observe that some
+coefficents are extremely large while others are extremely small. Furthermore,
+the coefficient values can be very unstable accross cross-validation folds.</p>
 <p>We can force the linear regression model to consider all features in a more
-homogeneous manner. In fact, we could force large positive or negative weight
-to shrink toward zero. This is known as regularization. We will use a ridge
-model which enforces such behavior.</p>
+homogeneous manner. In fact, we could force large positive or negative
+weights to shrink toward zero. This is known as regularization. We use a
+ridge model which enforces such behavior.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
 
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;cholesky&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">ridge</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
-    <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
     <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
     <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -971,49 +900,70 @@ model which enforces such behavior.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.672e-17): result may not be accurate.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59923e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.67257e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59556e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.75536e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59609e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.67367e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=3.11828e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=3.5546e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=1.06109e-19): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.75974e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.60121e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.82401e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.61694e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=4.96672e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59735e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68318e-17): result may not be accurate.
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59566e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.72304e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.60047e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59824e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59593e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59564e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.5959e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59553e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.59686e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.60737e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.68514e-17): result may not be accurate.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.5957e-20): result may not be accurate.
+  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/sklearn/linear_model/_ridge.py:216: LinAlgWarning: Ill-conditioned matrix (rcond=2.60243e-20): result may not be accurate.
   return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
 </pre></div>
 </div>
 </div>
 </div>
-<p>The code cell above will generate a couple of warnings because the features
-included both extremely large and extremely small values, which are causing
-numerical problems when training the predictive model.</p>
-<p>We can explore the train and test scores of this model.</p>
+<p>The code cell above can generate a couple of warnings (depending on the
+choice of solver) because the features included both extremely large and
+extremely small values, which are causing numerical problems when training
+the predictive model. We will get to that in a bit.</p>
+<p>Let us evaluate the train and test scores of this model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Mean squared error of ridge model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the train set:
-4373.180 ± 153.942
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of ridge model on the train set:
+2.90e+09 ± 6.56e+07
 </pre></div>
 </div>
 </div>
@@ -1022,15 +972,15 @@ numerical problems when training the predictive model.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Mean squared error of ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the test set:
-7303.589 ± 4950.732
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of ridge model on the test set:
+4.55e+10 ± 1.68e+11
 </pre></div>
 </div>
 </div>
@@ -1048,57 +998,78 @@ ridge with the un-regularized linear regression.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge weights&quot;</span><span class="p">,</span>
+    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/fe5a921dd273539f0c8c488f0efb695fe350d378897973b1ddf71dcad9b2fd91.png" src="../_images/fe5a921dd273539f0c8c488f0efb695fe350d378897973b1ddf71dcad9b2fd91.png" />
+<img alt="../_images/43cb2e2a1844f8f278d471c88b16e47ee811513d668a28680b9b39caafc21466.png" src="../_images/43cb2e2a1844f8f278d471c88b16e47ee811513d668a28680b9b39caafc21466.png" />
 </div>
 </div>
-<p>By comparing the magnitude of the weights on this plot compared to the
-previous plot, we see that a ridge model will enforce all weights to have a
-similar magnitude, while the overall magnitude of the weights is shrunk
+<p>By comparing the order of magnitude of the weights on this plot with respect
+to the previous plot, we see that a ridge model enforces all weights to lay in
+a more similar scale, while the overall magnitude of the weights is shrunk
 towards zero with respect to the linear regression model.</p>
-<p>However, in this example, we omitted two important aspects: (i) the need to
-scale the data and (ii) the need to search for the best regularization
-parameter.</p>
+<p>You can observe that the coefficients are still unstable from one fold to
+another, and finally, the results can vary a lot depending on the choice of
+the solver (for instance try to set <code class="docutils literal notranslate"><span class="pre">solver=&quot;saga&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">solver=&quot;lsqr&quot;</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">solver=&quot;cholesky&quot;</span></code> and re-run the above cells).</p>
+<p>In the following we will attempt to resolve those remaining problems, by
+focusing on two important aspects we omitted so far:</p>
+<ul class="simple">
+<li><p>the need to scale the data, and</p></li>
+<li><p>the need to search for the best regularization parameter.</p></li>
+</ul>
 </section>
 <section id="feature-scaling-and-regularization">
 <h2>Feature scaling and regularization<a class="headerlink" href="#feature-scaling-and-regularization" title="Permalink to this heading">#</a></h2>
-<p>On the one hand, weights define the link between feature values and the
-predicted target. On the other hand, regularization adds constraints on the
-weights of the model through the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter. Therefore, the effect that
-feature rescaling has on the final weights also interacts with regularization.</p>
+<p>On the one hand, weights define the association between feature values and the
+predicted target, which depends on the scales of both the feature values and
+the target. On the other hand, regularization adds constraints on the weights
+of the model through the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter. Therefore, the effect that feature
+rescaling has on the final weights also interacts with the use of
+regularization.</p>
 <p>Let’s consider the case where features live on the same scale/units: if two
-features are found to be equally important by the model, they will be affected
-similarly by regularization strength.</p>
-<p>Now, let’s consider the scenario where features have completely different data
-scale (for instance age in years and annual revenue in dollars). If two
-features are as important, our model will boost the weights of features with
-small scale and reduce the weights of features with high scale.</p>
-<p>We recall that regularization forces weights to be closer. Therefore, we get
-an intuition that if we want to use regularization, dealing with rescaled data
-would make it easier to find an optimal regularization parameter and thus an
-adequate model.</p>
-<p>As a side note, some solvers based on gradient computation are expecting such
-rescaled data. Unscaled data will be detrimental when computing the optimal
-weights. Therefore, when working with a linear model and numerical data, it is
-generally good practice to scale the data.</p>
-<p>Thus, we will add a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> in the machine learning pipeline. This
-scaler will be placed just before the regressor.</p>
+features are found to be equally important by the model, they are affected
+similarly by the regularization strength.</p>
+<p>Now, let’s consider the scenario where two features have completely different
+data scales (for instance age in years and annual revenue in dollars). Let’s
+also assume that both features are approximately equally predictive and are
+not too correlated. Fitting a linear regression without scaling and without
+regularization would give a higher weight to the feature with the smallest
+natural scale. If we add regularization, the feature with the smallest natural
+scale would be penalized more than the other feature. This is not desirable
+given the hypothesis that both features are equally important. In such case we
+require the regularization to stay neutral.</p>
+<p>In practice, we don’t know ahead of time which features are predictive, and
+therefore we want regularization to treat all features approximately equally
+by default. This can be achieved by rescaling the features.</p>
+<p>Furthermore, many numerical solvers used internally in scikit-learn behave
+better when features are approximately on the same scale. Heterogeneously
+scaled data can be detrimental when solving for the optimal weights (hence the
+warnings we tend to get when fitting linear models on raw data). Therefore,
+when working with a linear model and numerical data, it is generally a good
+practice to scale the data.</p>
+<p>Thus, we add a <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code> in the machine learning pipeline, which scales
+each feature individually such that its range maps into the range between zero
+and one. We place it just before the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer as
+powers of features in the range between zero and one remain in the same range.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
 
-<span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+<span class="n">scaled_ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">MinMaxScaler</span><span class="p">(),</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">StandardScaler</span><span class="p">(),</span>
-    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;cholesky&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">ridge</span><span class="p">,</span>
+    <span class="n">scaled_ridge</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
@@ -1114,15 +1085,15 @@ scaler will be placed just before the regressor.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Mean squared error of scaled ridge model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the train set:
-4347.036 ± 156.666
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of scaled ridge model on the train set:
+3.78e+09 ± 1.21e+08
 </pre></div>
 </div>
 </div>
@@ -1131,56 +1102,64 @@ scaler will be placed just before the regressor.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Mean squared error of scaled ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the test set:
-5508.472 ± 1816.642
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of scaled ridge model on the test set:
+3.83e+09 ± 1.17e+09
 </pre></div>
 </div>
 </div>
 </div>
-<p>We observe that scaling data has a positive impact on the test score and that
-the test score is closer to the train score. It means that our model is less
+<p>We observe that scaling data has a positive impact on the test error: it is
+now both lower and closer to the train error. It means that our model is less
 overfitted and that we are getting closer to the best generalization sweet
 spot.</p>
+<p>If you want to try different solvers, you can notice that fitting this
+pipeline no longer generates any warning regardless of such choice.
+Additionally, changing the solver should no longer result in significant
+changes in the weights.</p>
 <p>Let’s have an additional look to the different weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
-<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">weights_ridge_scaled_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights with data scaling&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">weights_ridge_scaled_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge weights with data scaling&quot;</span><span class="p">,</span>
+    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a75a2e99c44961b45de3b9cc0dd2849deff04bf95f06f26a27041205955e9ae4.png" src="../_images/a75a2e99c44961b45de3b9cc0dd2849deff04bf95f06f26a27041205955e9ae4.png" />
+<img alt="../_images/3ea5bd5f9eba250bf939ad02c3bc0492b32961352b654482a75d53752b628f11.png" src="../_images/3ea5bd5f9eba250bf939ad02c3bc0492b32961352b654482a75d53752b628f11.png" />
 </div>
 </div>
 <p>Compare to the previous plots, we see that now all weight magnitudes are
 closer and that all features are more equally contributing.</p>
-<p>In the previous example, we fixed <code class="docutils literal notranslate"><span class="pre">alpha=0.5</span></code>. We will now check the impact of
+<p>In the previous example, we fixed <code class="docutils literal notranslate"><span class="pre">alpha=10</span></code>. We can now check the impact of
 the value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> by increasing its value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge_large_alpha</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">MinMaxScaler</span><span class="p">(),</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">StandardScaler</span><span class="p">(),</span>
-    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;lsqr&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">ridge</span><span class="p">,</span>
+    <span class="n">ridge_large_alpha</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
@@ -1195,47 +1174,49 @@ the value of <code class="docutils literal notranslate"><span class="pre">alpha<
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
-<span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">weights_ridge_scaled_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Ridge weights with data scaling and large alpha&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">weights_ridge_scaled_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge weights with data scaling and large alpha&quot;</span><span class="p">,</span>
+    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1df2ac12fe48c226e954bbcd040679f397949ead0104853d27b8b09a43b35994.png" src="../_images/1df2ac12fe48c226e954bbcd040679f397949ead0104853d27b8b09a43b35994.png" />
+<img alt="../_images/e82f1eae180598ba8f6ade0b832c4fa1c9efb53fde318a440e49d2bf5820553e.png" src="../_images/e82f1eae180598ba8f6ade0b832c4fa1c9efb53fde318a440e49d2bf5820553e.png" />
 </div>
 </div>
 <p>Looking specifically to weights values, we observe that increasing the value
-of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> will decrease the weight values. A negative value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> would
+of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> decreases the weight values. A negative value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> would
 actually enhance large weights and promote overfitting.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Here, we only focus on numerical features. For categorical features, it is
 generally common to omit scaling when features are encoded with a
 <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> since the feature values are already on a similar scale.</p>
-<p>However, this choice can be questioned since scaling interacts with
-regularization as well. For instance, scaling categorical features that are
-imbalanced (e.g. more occurrences of a specific category) would even out the
-impact of regularization to each category. However, scaling such features in
-the presence of rare categories could be problematic (i.e. division by a very
+<p>However, this choice may depend on the scaling method and the user case. For
+instance, standard scaling categorical features that are imbalanced (e.g. more
+occurrences of a specific category) would even out the impact of
+regularization to each category. However, scaling such features in the
+presence of rare categories could be problematic (i.e. division by a very
 small standard deviation) and it can therefore introduce numerical issues.</p>
 </div>
-<p>In the previous analysis, we did not study if the parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> will have
-an effect on the performance. We chose the parameter beforehand and fixed it
-for the analysis.</p>
-<p>In the next section, we will check the impact of the regularization parameter
-<code class="docutils literal notranslate"><span class="pre">alpha</span></code> and how it should be tuned.</p>
+<p>In the previous analysis, we chose the parameter beforehand and fixed it for
+the analysis. In the next section, we check how the regularization parameter
+<code class="docutils literal notranslate"><span class="pre">alpha</span></code> should be tuned.</p>
 </section>
-<section id="fine-tuning-the-regularization-parameter">
-<h2>Fine tuning the regularization parameter<a class="headerlink" href="#fine-tuning-the-regularization-parameter" title="Permalink to this heading">#</a></h2>
+<section id="tuning-the-regularization-parameter">
+<h2>Tuning the regularization parameter<a class="headerlink" href="#tuning-the-regularization-parameter" title="Permalink to this heading">#</a></h2>
 <p>As mentioned, the regularization parameter needs to be tuned on each dataset.
-The default parameter will not lead to the optimal model. Therefore, we need
+The default parameter does not lead to the optimal model. Therefore, we need
 to tune the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter.</p>
 <p>Model hyperparameter tuning should be done with care. Indeed, we want to find
 an optimal parameter that maximizes some metrics. Thus, it requires both a
@@ -1250,19 +1231,19 @@ However, some predictor in scikit-learn are available with an integrated
 hyperparameter search, more efficient than using a grid-search. The name of
 these predictors finishes by <code class="docutils literal notranslate"><span class="pre">CV</span></code>. In the case of <code class="docutils literal notranslate"><span class="pre">Ridge</span></code>, scikit-learn
 provides a <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> regressor.</p>
-<p>Therefore, we can use this predictor as the last step of the pipeline.
-Including the pipeline a cross-validation allows to make a nested
-cross-validation: the inner cross-validation will search for the best alpha,
-while the outer cross-validation will give an estimate of the testing score.</p>
+<p>Cross-validating a pipeline that contains such predictors allows to make a
+nested cross-validation: the inner cross-validation searches for the best
+alpha, while the outer cross-validation gives an estimate of the testing
+score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">RidgeCV</span>
 
-<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">MinMaxScaler</span><span class="p">(),</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">StandardScaler</span><span class="p">(),</span>
     <span class="n">RidgeCV</span><span class="p">(</span><span class="n">alphas</span><span class="o">=</span><span class="n">alphas</span><span class="p">,</span> <span class="n">store_cv_values</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
 <span class="p">)</span>
 </pre></div>
@@ -1273,7 +1254,7 @@ while the outer cross-validation will give an estimate of the testing score.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">ridge</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
@@ -1292,15 +1273,15 @@ while the outer cross-validation will give an estimate of the testing score.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Mean squared error of tuned ridge model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the train set:
-4301.922 ± 24.826
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of tuned ridge model on the train set:
+3.12e+09 ± 1.25e+08
 </pre></div>
 </div>
 </div>
@@ -1309,15 +1290,15 @@ while the outer cross-validation will give an estimate of the testing score.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;Mean squared error of tuned ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of linear regression model on the test set:
-4458.556 ± 462.192
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean squared error of tuned ridge model on the test set:
+3.50e+09 ± 1.40e+09
 </pre></div>
 </div>
 </div>
@@ -1326,8 +1307,8 @@ while the outer cross-validation will give an estimate of the testing score.</p>
 It indicates that our model is not overfitting.</p>
 <p>When fitting the ridge regressor, we also requested to store the error found
 during cross-validation (by setting the parameter <code class="docutils literal notranslate"><span class="pre">store_cv_values=True</span></code>). We
-will plot the mean squared error for the different <code class="docutils literal notranslate"><span class="pre">alphas</span></code> regularization
-strength that we tried. The error bars represent one standard deviation of the
+can plot the mean squared error for the different <code class="docutils literal notranslate"><span class="pre">alphas</span></code> regularization
+strengths that we tried. The error bars represent one standard deviation of the
 average mean square error across folds for a given value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1365,127 +1346,81 @@ average mean square error across folds for a given value of <code class="docutil
   </thead>
   <tbody>
     <tr>
-      <th>0.010000</th>
-      <td>10805.760257</td>
-      <td>7859.294941</td>
+      <th>1.000000e-07</th>
+      <td>5.841881e+10</td>
+      <td>5.347783e+10</td>
     </tr>
     <tr>
-      <th>0.012589</th>
-      <td>9835.307516</td>
-      <td>6588.155387</td>
+      <th>1.321941e-07</th>
+      <td>5.837563e+10</td>
+      <td>5.343115e+10</td>
     </tr>
     <tr>
-      <th>0.015849</th>
-      <td>8925.577610</td>
-      <td>5409.395931</td>
+      <th>1.747528e-07</th>
+      <td>5.831866e+10</td>
+      <td>5.336956e+10</td>
     </tr>
     <tr>
-      <th>0.019953</th>
-      <td>8100.047161</td>
-      <td>4353.016704</td>
+      <th>2.310130e-07</th>
+      <td>5.824352e+10</td>
+      <td>5.328835e+10</td>
     </tr>
     <tr>
-      <th>0.025119</th>
-      <td>7375.000527</td>
-      <td>3438.794963</td>
+      <th>3.053856e-07</th>
+      <td>5.814452e+10</td>
+      <td>5.318133e+10</td>
     </tr>
     <tr>
-      <th>0.031623</th>
-      <td>6758.474506</td>
-      <td>2674.639258</td>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>0.039811</th>
-      <td>6250.760542</td>
-      <td>2056.950531</td>
+      <th>3.274549e+04</th>
+      <td>6.319038e+09</td>
+      <td>1.337394e+08</td>
     </tr>
     <tr>
-      <th>0.050119</th>
-      <td>5846.266069</td>
-      <td>1572.763214</td>
+      <th>4.328761e+04</th>
+      <td>6.324503e+09</td>
+      <td>1.338181e+08</td>
     </tr>
     <tr>
-      <th>0.063096</th>
-      <td>5536.215174</td>
-      <td>1202.943947</td>
+      <th>5.722368e+04</th>
+      <td>6.328652e+09</td>
+      <td>1.338778e+08</td>
     </tr>
     <tr>
-      <th>0.079433</th>
-      <td>5311.576140</td>
-      <td>925.547806</td>
+      <th>7.564633e+04</th>
+      <td>6.331799e+09</td>
+      <td>1.339232e+08</td>
     </tr>
     <tr>
-      <th>0.100000</th>
-      <td>5165.715922</td>
-      <td>718.596591</td>
-    </tr>
-    <tr>
-      <th>0.125893</th>
-      <td>5096.474028</td>
-      <td>562.042934</td>
-    </tr>
-    <tr>
-      <th>0.158489</th>
-      <td>5107.489238</td>
-      <td>439.763119</td>
-    </tr>
-    <tr>
-      <th>0.199526</th>
-      <td>5208.638340</td>
-      <td>345.021050</td>
-    </tr>
-    <tr>
-      <th>0.251189</th>
-      <td>5415.385561</td>
-      <td>297.489290</td>
-    </tr>
-    <tr>
-      <th>0.316228</th>
-      <td>5746.801131</td>
-      <td>353.672626</td>
-    </tr>
-    <tr>
-      <th>0.398107</th>
-      <td>6222.125875</td>
-      <td>535.737882</td>
-    </tr>
-    <tr>
-      <th>0.501187</th>
-      <td>6856.124687</td>
-      <td>820.747311</td>
-    </tr>
-    <tr>
-      <th>0.630957</th>
-      <td>7654.025118</td>
-      <td>1192.443073</td>
-    </tr>
-    <tr>
-      <th>0.794328</th>
-      <td>8607.322588</td>
-      <td>1638.892918</td>
-    </tr>
-    <tr>
-      <th>1.000000</th>
-      <td>9691.803104</td>
-      <td>2144.446582</td>
+      <th>1.000000e+05</th>
+      <td>6.334185e+09</td>
+      <td>1.339576e+08</td>
     </tr>
   </tbody>
 </table>
+<p>100 rows × 2 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">4_500</span><span class="p">,</span> <span class="mi">11_000</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;alpha&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Testing error obtained by cross-validation&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span>
+    <span class="n">yscale</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Testing error in RidgeCV&#39;s inner cross-validation&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a134873af09330133354e26401d3ab749b1b371168010822fa5ac6f2f06569bd.png" src="../_images/a134873af09330133354e26401d3ab749b1b371168010822fa5ac6f2f06569bd.png" />
+<img alt="../_images/57cc970eae8d938b17c456cdd053cae1974a9d6071e752a914f2fb6762539e17.png" src="../_images/57cc970eae8d938b17c456cdd053cae1974a9d6071e752a914f2fb6762539e17.png" />
 </div>
 </div>
 <p>As we can see, regularization is just like salt in cooking: one must balance
@@ -1499,11 +1434,56 @@ best <code class="docutils literal notranslate"><span class="pre">alpha</span></
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.07943282347242812,
- 0.12589254117941676,
- 0.31622776601683794,
- 0.12589254117941676,
- 0.09999999999999999]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.11497569953977356,
+ 0.35111917342151344,
+ 0.1519911082952933,
+ 0.35111917342151344,
+ 0.11497569953977356,
+ 0.4641588833612782,
+ 0.4641588833612782,
+ 0.4641588833612782,
+ 0.4641588833612782,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.11497569953977356,
+ 0.11497569953977356,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.11497569953977356,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.08697490026177834,
+ 0.6135907273413176,
+ 0.4641588833612782,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.4641588833612782,
+ 0.11497569953977356,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.35111917342151344,
+ 0.11497569953977356,
+ 0.08697490026177834,
+ 0.4641588833612782,
+ 0.4641588833612782,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.35111917342151344,
+ 0.4641588833612782,
+ 0.35111917342151344]
 </pre></div>
 </div>
 </div>
@@ -1523,15 +1503,34 @@ by:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Min optimal alpha: 0.08 and Max optimal alpha: 0.32
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Min optimal alpha: 0.09 and Max optimal alpha: 0.61
 </pre></div>
 </div>
 </div>
 </div>
-<p>This range can be reduced by decreasing the spacing between the grid of
-<code class="docutils literal notranslate"><span class="pre">alphas</span></code>.</p>
-<p>In this notebook, you learned about the concept of regularization and the
-importance of preprocessing and parameter tuning.</p>
+<p>This range can be reduced depending on the feature engineering and
+preprocessing.</p>
+<p>Here is a summary of important points highlighted in this notebook:</p>
+<ul class="simple">
+<li><p>scaling features makes the effect of regularization more even: all variables
+are regularized by comparable magnitude, which would not necessarily be the
+case with the natural feature scales;</p></li>
+<li><p>scaling features makes the numerical solvers more stable which is also
+helpful to tune the regularization parameter more independently of the
+choice of the solver used to fit the linear model;</p></li>
+<li><p>tuning the regularization parameter of the <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> estimator can be done
+very efficiently by using the <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> class. Wrapping it into a
+<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> call makes it possible to assess the true generalization
+power of the whole pipeline by including the tuning of the regularization
+parameter as part of the learning process: this is an example of “nested
+cross-validation”;</p></li>
+<li><p>doing so makes it possible to check that the optimal value of the
+regularization strength <code class="docutils literal notranslate"><span class="pre">alpha</span></code> is robust to a resampling of the dataset. If
+it wasn’t the case it would hint at a problem with the dataset (e.g.
+presence of outliers in the features or the target that influence the
+learning process disproportionately) or a bad choice of other elements of
+the feature engineering pipeline.</p></li>
+</ul>
 </section>
 </section>
 
@@ -1604,7 +1603,7 @@ importance of preprocessing and parameter tuning.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-regularization">Effect of regularization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-scaling-and-regularization">Feature scaling and regularization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fine-tuning-the-regularization-parameter">Fine tuning the regularization parameter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuning-the-regularization-parameter">Tuning the regularization parameter</a></li>
 </ul>
   </nav></div>
 

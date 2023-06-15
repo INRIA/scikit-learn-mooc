@@ -8,19 +8,18 @@
 # %% [markdown]
 # # Regularization of linear regression model
 #
-# In this notebook, we will see the limitations of linear regression models and
-# the advantage of using regularized models instead.
+# In this notebook, we explore some limitations of linear regression models and
+# demonstrate the benefits of using regularized models instead. Additionally, we
+# discuss the importance of scaling the data when working with regularized
+# models, especially when tuning the regularization parameter.
 #
-# Besides, we will also present the preprocessing required when dealing with
-# regularized models, furthermore when the regularization parameter needs to be
-# tuned.
-#
-# We will start by highlighting the over-fitting issue that can arise with a
+# We start by highlighting the problem of overfitting that can occur with a
 # simple linear regression model.
 #
 # ## Effect of regularization
 #
-# We will first load the California housing dataset.
+# We load the Ames housing dataset. We retain some specific
+# `features_of_interest`.
 
 # %% [markdown]
 # ```{note}
@@ -29,22 +28,31 @@
 # ```
 
 # %%
-from sklearn.datasets import fetch_california_housing
+import pandas as pd
 
-data, target = fetch_california_housing(as_frame=True, return_X_y=True)
-target *= 100  # rescale the target in k$
-data.head()
+ames_housing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
+features_of_interest = [
+    "LotFrontage",
+    "LotArea",
+    "PoolArea",
+    "YearBuilt",
+    "YrSold",
+]
+target_name = "SalePrice"
+data, target = (
+    ames_housing[features_of_interest],
+    ames_housing[target_name],
+)
 
 # %% [markdown]
 # In one of the previous notebook, we showed that linear models could be used
-# even in settings where `data` and `target` are not linearly linked.
+# even when there is no linear relationship between the `data` and `target`.
+# For instance, one can use the `PolynomialFeatures` transformer to create
+# additional features that capture some non-linear interactions between them.
 #
-# We showed that one can use the `PolynomialFeatures` transformer to create
-# additional features encoding non-linear interactions between features.
-#
-# Here, we will use this transformer to augment the feature space. Subsequently,
-# we will train a linear regression model. We will use the out-of-sample test
-# set to evaluate the generalization capabilities of our model.
+# Here, we use this transformer to augment the feature space. Subsequently, we
+# train a linear regression model. We use the out-of-sample test set to evaluate
+# the generalization capabilities of our model.
 
 # %%
 from sklearn.model_selection import cross_validate
@@ -73,45 +81,48 @@ cv_results = cross_validate(
 train_error = -cv_results["train_score"]
 print(
     "Mean squared error of linear regression model on the train set:\n"
-    f"{train_error.mean():.3f} ± {train_error.std():.3f}"
+    f"{train_error.mean():.2e} ± {train_error.std():.2e}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
     "Mean squared error of linear regression model on the test set:\n"
-    f"{test_error.mean():.3f} ± {test_error.std():.3f}"
+    f"{test_error.mean():.2e} ± {test_error.std():.2e}"
 )
 
 # %% [markdown]
-# The score on the training set is much better. This generalization performance
-# gap between the training and testing score is an indication that our model
-# overfitted our training set.
+# The training score is much better than the testing score. Such a gap between
+# the training and testing scores is an indication that our model overfitted the
+# training set. Indeed, this is one of the dangers when augmenting the number of
+# features with a `PolynomialFeatures` transformer. For instance, one does not
+# expect features such as `PoolArea * YrSold` to be very predictive.
 #
-# Indeed, this is one of the danger when augmenting the number of features with
-# a `PolynomialFeatures` transformer. Our model will focus on some specific
-# features. We can check the weights of the model to have a confirmation. Let's
-# create a dataframe: the columns will contain the name of the feature while the
-# line the coefficients values stored by each model during the cross-validation.
+# We can create a dataframe to check the weights of the model: the columns
+# contain the name of the features whereas the rows store the coefficients values
+# of each model during the cross-validation.
 #
-# Since we used a `PolynomialFeatures` to augment the data, we will create
-# feature names representative of the feature combination. Scikit-learn provides
-# a `get_feature_names_out` method for this purpose. First, let's get the first
-# fitted model from the cross-validation.
+# Since we used a `PolynomialFeatures` to augment the data, we extract the
+# feature names representative of each feature combination. Scikit-learn
+# provides a `feature_names_in_` method for this purpose. First, let's get the
+# first fitted model from the cross-validation.
 
 # %%
 model_first_fold = cv_results["estimator"][0]
+model_first_fold
 
 # %% [markdown]
-# Now, we can access to the fitted `PolynomialFeatures` to generate the feature
-# names:
+# Now, we can access the fitted `LinearRegression` (step `-1` i.e. the last step
+# of the model) to recover the feature names.
 
 # %%
 feature_names = model_first_fold[-1].feature_names_in_
 feature_names
 
 # %% [markdown]
-# Finally, we can create the dataframe containing all the information.
+# The following code creates a list by iterating through the estimators and
+# querying their last step for the learned `coef_`. We can then create the
+# dataframe containing all the information.
 
 # %%
 import pandas as pd
@@ -126,50 +137,60 @@ weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
 import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
-weights_linear_regression.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title("Linear regression coefficients")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_linear_regression.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Linear regression weights",
+    xscale="symlog",
+)
 
 # %% [markdown]
+# Notice that we use a (symmetric) log scale for the bar plot. Observe that some
+# coefficents are extremely large while others are extremely small. Furthermore,
+# the coefficient values can be very unstable accross cross-validation folds.
+#
 # We can force the linear regression model to consider all features in a more
-# homogeneous manner. In fact, we could force large positive or negative weight
-# to shrink toward zero. This is known as regularization. We will use a ridge
-# model which enforces such behavior.
+# homogeneous manner. In fact, we could force large positive or negative
+# weights to shrink toward zero. This is known as regularization. We use a
+# ridge model which enforces such behavior.
 
 # %%
 from sklearn.linear_model import Ridge
 
 ridge = make_pipeline(
-    PolynomialFeatures(degree=2, include_bias=False), Ridge(alpha=100)
+    PolynomialFeatures(degree=2, include_bias=False),
+    Ridge(alpha=100, solver="cholesky"),
 )
 cv_results = cross_validate(
     ridge,
     data,
     target,
-    cv=10,
+    cv=20,
     scoring="neg_mean_squared_error",
     return_train_score=True,
     return_estimator=True,
 )
 
 # %% [markdown]
-# The code cell above will generate a couple of warnings because the features
-# included both extremely large and extremely small values, which are causing
-# numerical problems when training the predictive model.
+# The code cell above can generate a couple of warnings (depending on the
+# choice of solver) because the features included both extremely large and
+# extremely small values, which are causing numerical problems when training
+# the predictive model. We will get to that in a bit.
 #
-# We can explore the train and test scores of this model.
+# Let us evaluate the train and test scores of this model.
 
 # %%
 train_error = -cv_results["train_score"]
 print(
-    "Mean squared error of linear regression model on the train set:\n"
-    f"{train_error.mean():.3f} ± {train_error.std():.3f}"
+    "Mean squared error of ridge model on the train set:\n"
+    f"{train_error.mean():.2e} ± {train_error.std():.2e}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
-    "Mean squared error of linear regression model on the test set:\n"
-    f"{test_error.mean():.3f} ± {test_error.std():.3f}"
+    "Mean squared error of ridge model on the test set:\n"
+    f"{test_error.mean():.2e} ± {test_error.std():.2e}"
 )
 
 # %% [markdown]
@@ -182,58 +203,78 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title("Ridge weights")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_ridge.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Ridge weights",
+    xscale="symlog",
+)
 
 # %% [markdown]
-# By comparing the magnitude of the weights on this plot compared to the
-# previous plot, we see that a ridge model will enforce all weights to have a
-# similar magnitude, while the overall magnitude of the weights is shrunk
+# By comparing the order of magnitude of the weights on this plot with respect
+# to the previous plot, we see that a ridge model enforces all weights to lay in
+# a more similar scale, while the overall magnitude of the weights is shrunk
 # towards zero with respect to the linear regression model.
 #
-# However, in this example, we omitted two important aspects: (i) the need to
-# scale the data and (ii) the need to search for the best regularization
-# parameter.
+# You can observe that the coefficients are still unstable from one fold to
+# another, and finally, the results can vary a lot depending on the choice of
+# the solver (for instance try to set `solver="saga"` or `solver="lsqr"` instead
+# of `solver="cholesky"` and re-run the above cells).
+#
+# In the following we will attempt to resolve those remaining problems, by
+# focusing on two important aspects we omitted so far:
+# - the need to scale the data, and
+# - the need to search for the best regularization parameter.
 #
 # ## Feature scaling and regularization
 #
-# On the one hand, weights define the link between feature values and the
-# predicted target. On the other hand, regularization adds constraints on the
-# weights of the model through the `alpha` parameter. Therefore, the effect that
-# feature rescaling has on the final weights also interacts with regularization.
+# On the one hand, weights define the association between feature values and the
+# predicted target, which depends on the scales of both the feature values and
+# the target. On the other hand, regularization adds constraints on the weights
+# of the model through the `alpha` parameter. Therefore, the effect that feature
+# rescaling has on the final weights also interacts with the use of
+# regularization.
 #
 # Let's consider the case where features live on the same scale/units: if two
-# features are found to be equally important by the model, they will be affected
-# similarly by regularization strength.
+# features are found to be equally important by the model, they are affected
+# similarly by the regularization strength.
 #
-# Now, let's consider the scenario where features have completely different data
-# scale (for instance age in years and annual revenue in dollars). If two
-# features are as important, our model will boost the weights of features with
-# small scale and reduce the weights of features with high scale.
+# Now, let's consider the scenario where two features have completely different
+# data scales (for instance age in years and annual revenue in dollars). Let's
+# also assume that both features are approximately equally predictive and are
+# not too correlated. Fitting a linear regression without scaling and without
+# regularization would give a higher weight to the feature with the smallest
+# natural scale. If we add regularization, the feature with the smallest natural
+# scale would be penalized more than the other feature. This is not desirable
+# given the hypothesis that both features are equally important. In such case we
+# require the regularization to stay neutral.
 #
-# We recall that regularization forces weights to be closer. Therefore, we get
-# an intuition that if we want to use regularization, dealing with rescaled data
-# would make it easier to find an optimal regularization parameter and thus an
-# adequate model.
+# In practice, we don't know ahead of time which features are predictive, and
+# therefore we want regularization to treat all features approximately equally
+# by default. This can be achieved by rescaling the features.
 #
-# As a side note, some solvers based on gradient computation are expecting such
-# rescaled data. Unscaled data will be detrimental when computing the optimal
-# weights. Therefore, when working with a linear model and numerical data, it is
-# generally good practice to scale the data.
+# Furthermore, many numerical solvers used internally in scikit-learn behave
+# better when features are approximately on the same scale. Heterogeneously
+# scaled data can be detrimental when solving for the optimal weights (hence the
+# warnings we tend to get when fitting linear models on raw data). Therefore,
+# when working with a linear model and numerical data, it is generally a good
+# practice to scale the data.
 #
-# Thus, we will add a `StandardScaler` in the machine learning pipeline. This
-# scaler will be placed just before the regressor.
+# Thus, we add a `MinMaxScaler` in the machine learning pipeline, which scales
+# each feature individually such that its range maps into the range between zero
+# and one. We place it just before the `PolynomialFeatures` transformer as
+# powers of features in the range between zero and one remain in the same range.
 
 # %%
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 
-ridge = make_pipeline(
+scaled_ridge = make_pipeline(
+    MinMaxScaler(),
     PolynomialFeatures(degree=2, include_bias=False),
-    StandardScaler(),
-    Ridge(alpha=0.5),
+    Ridge(alpha=10, solver="cholesky"),
 )
 cv_results = cross_validate(
-    ridge,
+    scaled_ridge,
     data,
     target,
     cv=10,
@@ -245,48 +286,57 @@ cv_results = cross_validate(
 # %%
 train_error = -cv_results["train_score"]
 print(
-    "Mean squared error of linear regression model on the train set:\n"
-    f"{train_error.mean():.3f} ± {train_error.std():.3f}"
+    "Mean squared error of scaled ridge model on the train set:\n"
+    f"{train_error.mean():.2e} ± {train_error.std():.2e}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
-    "Mean squared error of linear regression model on the test set:\n"
-    f"{test_error.mean():.3f} ± {test_error.std():.3f}"
+    "Mean squared error of scaled ridge model on the test set:\n"
+    f"{test_error.mean():.2e} ± {test_error.std():.2e}"
 )
 
 # %% [markdown]
-# We observe that scaling data has a positive impact on the test score and that
-# the test score is closer to the train score. It means that our model is less
+# We observe that scaling data has a positive impact on the test error: it is
+# now both lower and closer to the train error. It means that our model is less
 # overfitted and that we are getting closer to the best generalization sweet
 # spot.
+#
+# If you want to try different solvers, you can notice that fitting this
+# pipeline no longer generates any warning regardless of such choice.
+# Additionally, changing the solver should no longer result in significant
+# changes in the weights.
 #
 # Let's have an additional look to the different weights.
 
 # %%
 coefs = [est[-1].coef_ for est in cv_results["estimator"]]
-weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title("Ridge weights with data scaling")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Ridge weights with data scaling",
+    xscale="symlog",
+)
 
 # %% [markdown]
 # Compare to the previous plots, we see that now all weight magnitudes are
 # closer and that all features are more equally contributing.
 #
-# In the previous example, we fixed `alpha=0.5`. We will now check the impact of
+# In the previous example, we fixed `alpha=10`. We can now check the impact of
 # the value of `alpha` by increasing its value.
 
 # %%
-ridge = make_pipeline(
+ridge_large_alpha = make_pipeline(
+    MinMaxScaler(),
     PolynomialFeatures(degree=2, include_bias=False),
-    StandardScaler(),
-    Ridge(alpha=1_000_000),
+    Ridge(alpha=1_000_000, solver="lsqr"),
 )
 cv_results = cross_validate(
-    ridge,
+    ridge_large_alpha,
     data,
     target,
     cv=10,
@@ -297,15 +347,19 @@ cv_results = cross_validate(
 
 # %%
 coefs = [est[-1].coef_ for est in cv_results["estimator"]]
-weights_ridge = pd.DataFrame(coefs, columns=feature_names)
+weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-weights_ridge.plot.box(color=color, vert=False, figsize=(6, 16))
-_ = plt.title("Ridge weights with data scaling and large alpha")
+fig, ax = plt.subplots(figsize=(8, 12))
+weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(
+    title="Ridge weights with data scaling and large alpha",
+    xscale="symlog",
+)
 
 # %% [markdown]
 # Looking specifically to weights values, we observe that increasing the value
-# of `alpha` will decrease the weight values. A negative value of `alpha` would
+# of `alpha` decreases the weight values. A negative value of `alpha` would
 # actually enhance large weights and promote overfitting.
 #
 # ```{note}
@@ -313,25 +367,22 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # generally common to omit scaling when features are encoded with a
 # `OneHotEncoder` since the feature values are already on a similar scale.
 #
-# However, this choice can be questioned since scaling interacts with
-# regularization as well. For instance, scaling categorical features that are
-# imbalanced (e.g. more occurrences of a specific category) would even out the
-# impact of regularization to each category. However, scaling such features in
-# the presence of rare categories could be problematic (i.e. division by a very
+# However, this choice may depend on the scaling method and the user case. For
+# instance, standard scaling categorical features that are imbalanced (e.g. more
+# occurrences of a specific category) would even out the impact of
+# regularization to each category. However, scaling such features in the
+# presence of rare categories could be problematic (i.e. division by a very
 # small standard deviation) and it can therefore introduce numerical issues.
 # ```
 #
-# In the previous analysis, we did not study if the parameter `alpha` will have
-# an effect on the performance. We chose the parameter beforehand and fixed it
-# for the analysis.
+# In the previous analysis, we chose the parameter beforehand and fixed it for
+# the analysis. In the next section, we check how the regularization parameter
+# `alpha` should be tuned.
 #
-# In the next section, we will check the impact of the regularization parameter
-# `alpha` and how it should be tuned.
-#
-# ## Fine tuning the regularization parameter
+# ## Tuning the regularization parameter
 #
 # As mentioned, the regularization parameter needs to be tuned on each dataset.
-# The default parameter will not lead to the optimal model. Therefore, we need
+# The default parameter does not lead to the optimal model. Therefore, we need
 # to tune the `alpha` parameter.
 #
 # Model hyperparameter tuning should be done with care. Indeed, we want to find
@@ -350,26 +401,26 @@ _ = plt.title("Ridge weights with data scaling and large alpha")
 # these predictors finishes by `CV`. In the case of `Ridge`, scikit-learn
 # provides a `RidgeCV` regressor.
 #
-# Therefore, we can use this predictor as the last step of the pipeline.
-# Including the pipeline a cross-validation allows to make a nested
-# cross-validation: the inner cross-validation will search for the best alpha,
-# while the outer cross-validation will give an estimate of the testing score.
+# Cross-validating a pipeline that contains such predictors allows to make a
+# nested cross-validation: the inner cross-validation searches for the best
+# alpha, while the outer cross-validation gives an estimate of the testing
+# score.
 
 # %%
 import numpy as np
 from sklearn.linear_model import RidgeCV
 
-alphas = np.logspace(-2, 0, num=21)
+alphas = np.logspace(-7, 5, num=100)
 ridge = make_pipeline(
+    MinMaxScaler(),
     PolynomialFeatures(degree=2, include_bias=False),
-    StandardScaler(),
     RidgeCV(alphas=alphas, store_cv_values=True),
 )
 
 # %%
 from sklearn.model_selection import ShuffleSplit
 
-cv = ShuffleSplit(n_splits=5, random_state=1)
+cv = ShuffleSplit(n_splits=50, random_state=0)
 cv_results = cross_validate(
     ridge,
     data,
@@ -384,15 +435,15 @@ cv_results = cross_validate(
 # %%
 train_error = -cv_results["train_score"]
 print(
-    "Mean squared error of linear regression model on the train set:\n"
-    f"{train_error.mean():.3f} ± {train_error.std():.3f}"
+    "Mean squared error of tuned ridge model on the train set:\n"
+    f"{train_error.mean():.2e} ± {train_error.std():.2e}"
 )
 
 # %%
 test_error = -cv_results["test_score"]
 print(
-    "Mean squared error of linear regression model on the test set:\n"
-    f"{test_error.mean():.3f} ± {test_error.std():.3f}"
+    "Mean squared error of tuned ridge model on the test set:\n"
+    f"{test_error.mean():.2e} ± {test_error.std():.2e}"
 )
 
 # %% [markdown]
@@ -401,8 +452,8 @@ print(
 #
 # When fitting the ridge regressor, we also requested to store the error found
 # during cross-validation (by setting the parameter `store_cv_values=True`). We
-# will plot the mean squared error for the different `alphas` regularization
-# strength that we tried. The error bars represent one standard deviation of the
+# can plot the mean squared error for the different `alphas` regularization
+# strengths that we tried. The error bars represent one standard deviation of the
 # average mean square error across folds for a given value of `alpha`.
 
 # %%
@@ -414,12 +465,15 @@ cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas
 
 # %%
-plt.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
-plt.xlim((0.0, 1.0))
-plt.ylim((4_500, 11_000))
-plt.ylabel("Mean squared error\n (lower is better)")
-plt.xlabel("alpha")
-_ = plt.title("Testing error obtained by cross-validation")
+fig, ax = plt.subplots()
+ax.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
+_ = ax.set(
+    xscale="log",
+    xlabel="alpha",
+    yscale="log",
+    ylabel="Mean squared error\n (lower is better)",
+    title="Testing error in RidgeCV's inner cross-validation",
+)
 
 # %% [markdown]
 # As we can see, regularization is just like salt in cooking: one must balance
@@ -444,8 +498,25 @@ print(
 )
 
 # %% [markdown]
-# This range can be reduced by decreasing the spacing between the grid of
-# `alphas`.
+# This range can be reduced depending on the feature engineering and
+# preprocessing.
 #
-# In this notebook, you learned about the concept of regularization and the
-# importance of preprocessing and parameter tuning.
+# Here is a summary of important points highlighted in this notebook:
+# - scaling features makes the effect of regularization more even: all variables
+#   are regularized by comparable magnitude, which would not necessarily be the
+#   case with the natural feature scales;
+# - scaling features makes the numerical solvers more stable which is also
+#   helpful to tune the regularization parameter more independently of the
+#   choice of the solver used to fit the linear model;
+# - tuning the regularization parameter of the `Ridge` estimator can be done
+#   very efficiently by using the `RidgeCV` class. Wrapping it into a
+#   `cross_validate` call makes it possible to assess the true generalization
+#   power of the whole pipeline by including the tuning of the regularization
+#   parameter as part of the learning process: this is an example of "nested
+#   cross-validation";
+# - doing so makes it possible to check that the optimal value of the
+#   regularization strength `alpha` is robust to a resampling of the dataset. If
+#   it wasn't the case it would hint at a problem with the dataset (e.g.
+#   presence of outliers in the features or the target that influence the
+#   learning process disproportionately) or a bad choice of other elements of
+#   the feature engineering pipeline.

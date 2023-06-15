@@ -92,11 +92,11 @@ print(
 )
 
 # %% [markdown]
-# The training score is much better than the testing score. Such gap between the
+# The training score is much better than the testing score. Such a gap between the
 # training and testing scores is an indication that our model overfitted the
 # training set. Indeed, this is one of the dangers when augmenting the number of
-# features with a `PolynomialFeatures` transformer. One does not expect features
-# such as `PoolArea * YrSold` to be predictive.
+# features with a `PolynomialFeatures` transformer. For instance, one does not
+# expect features such as `PoolArea * YrSold` to be very predictive.
 #
 # We can create a dataframe to check the weights of the model: the columns
 # contain the name of the features whereas the rows store the coefficients values
@@ -109,6 +109,7 @@ print(
 
 # %%
 model_first_fold = cv_results["estimator"][0]
+model_first_fold
 
 # %% [markdown]
 # Now, we can access the fitted `LinearRegression` (step `-1` i.e. the last step

@@ -9,8 +9,8 @@
 # # Regularization of linear regression model
 #
 # In this notebook, we explore some limitations of linear regression models and
-# demonstrate the benefits of using regularized models instead. Additionally,
-# we discuss the importance of scaling the data when working with regularized
+# demonstrate the benefits of using regularized models instead. Additionally, we
+# discuss the importance of scaling the data when working with regularized
 # models, especially when tuning the regularization parameter.
 #
 # We start by highlighting the problem of overfitting that can occur with a
@@ -92,8 +92,8 @@ print(
 )
 
 # %% [markdown]
-# The training score is much better than the testing score. Such a gap between the
-# training and testing scores is an indication that our model overfitted the
+# The training score is much better than the testing score. Such a gap between
+# the training and testing scores is an indication that our model overfitted the
 # training set. Indeed, this is one of the dangers when augmenting the number of
 # features with a `PolynomialFeatures` transformer. For instance, one does not
 # expect features such as `PoolArea * YrSold` to be very predictive.
@@ -145,11 +145,9 @@ _ = ax.set(
 )
 
 # %% [markdown]
-#
-# Note that we use a (symmetric) log scale for the bar plot. Observe that some
-# coefficents are extremely large while others are extremely small.
-# Furthermore, the coefficient values can be very unstable accross
-# cross-validation folds.
+# Notice that we use a (symmetric) log scale for the bar plot. Observe that some
+# coefficents are extremely large while others are extremely small. Furthermore,
+# the coefficient values can be very unstable accross cross-validation folds.
 #
 # We can force the linear regression model to consider all features in a more
 # homogeneous manner. In fact, we could force large positive or negative
@@ -174,7 +172,6 @@ cv_results = cross_validate(
 )
 
 # %% [markdown]
-#
 # The code cell above can generate a couple of warnings (depending on the
 # choice of solver) because the features included both extremely large and
 # extremely small values, which are causing numerical problems when training
@@ -214,19 +211,18 @@ _ = ax.set(
 )
 
 # %% [markdown]
-#
 # By comparing the order of magnitude of the weights on this plot with respect
-# to the previous plot, we see that a ridge model enforces all weights to lay
-# in a more similar scale, while the overall magnitude of the weights is shrunk
+# to the previous plot, we see that a ridge model enforces all weights to lay in
+# a more similar scale, while the overall magnitude of the weights is shrunk
 # towards zero with respect to the linear regression model.
 #
 # You can observe that the coefficients are still unstable from one fold to
 # another, and finally, the results can vary a lot depending on the choice of
-# the solver (for instance try to set `solver="saga"` or `solver="lsqr"`
-# instead of `solver="cholesky"` and re-run the above cells).
+# the solver (for instance try to set `solver="saga"` or `solver="lsqr"` instead
+# of `solver="cholesky"` and re-run the above cells).
 #
 # In the following we will attempt to resolve those remaining problems, by
-# focussing on two important aspects we omitted so far:
+# focusing on two important aspects we omitted so far:
 # - the need to scale the data, and
 # - the need to search for the best regularization parameter.
 #
@@ -234,35 +230,34 @@ _ = ax.set(
 #
 # On the one hand, weights define the association between feature values and the
 # predicted target, which depends on the scales of both the feature values and
-# the target. On the other hand, regularization adds constraints on the
-# weights of the model through the `alpha` parameter. Therefore, the effect that
-# feature rescaling has on the final weights also interacts with the use of
+# the target. On the other hand, regularization adds constraints on the weights
+# of the model through the `alpha` parameter. Therefore, the effect that feature
+# rescaling has on the final weights also interacts with the use of
 # regularization.
 #
 # Let's consider the case where features live on the same scale/units: if two
-# features are found to be equally important by the model, they are be affected
-# similarly by regularization strength.
+# features are found to be equally important by the model, they are affected
+# similarly by the regularization strength.
 #
 # Now, let's consider the scenario where two features have completely different
-# data scales (for instance age in years and annual revenue in dollars).
-# Furthermore, let's assume that the features are approximately equally
-# predictive (but not too correlated). Fitting a linear regression without
-# scaling and without regularization would give a higher weight to the feature
-# with the smallest natural scale. If we add regularization, the feature with
-# the smallest natural scale will therefore be penalized more than the other
-# feature which is not desirable because all features are equally important we
-# would therefore like the regularization to stay neutral.
+# data scales (for instance age in years and annual revenue in dollars). Let's
+# also assume that both features are approximately equally predictive and are
+# not too correlated. Fitting a linear regression without scaling and without
+# regularization would give a higher weight to the feature with the smallest
+# natural scale. If we add regularization, the feature with the smallest natural
+# scale would be penalized more than the other feature. This is not desirable
+# given the hypothesis that both features are equally important. In such case we
+# require the regularization to stay neutral.
 #
-# In practice, we don't know ahead of time which features will be predictive,
-# and therefore we want regularization to treat all features approximately
-# equally by default. This is can therefore be achieved by rescaling the
-# features.
+# In practice, we don't know ahead of time which features are predictive, and
+# therefore we want regularization to treat all features approximately equally
+# by default. This can be achieved by rescaling the features.
 #
 # Furthermore, many numerical solvers used internally in scikit-learn behave
 # better when features are approximately on the same scale. Heterogeneously
-# scaled data can be detrimental when solving for the optimal weights (hence
-# the warnings we tend to get when fitting linear models on raw data). Therefore,
-# when working with a linear model and numerical data, it is generally good
+# scaled data can be detrimental when solving for the optimal weights (hence the
+# warnings we tend to get when fitting linear models on raw data). Therefore,
+# when working with a linear model and numerical data, it is generally a good
 # practice to scale the data.
 #
 # Thus, we add a `MinMaxScaler` in the machine learning pipeline, which scales
@@ -468,7 +463,6 @@ cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas
 
 # %%
-
 fig, ax = plt.subplots()
 ax.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
 _ = ax.set(

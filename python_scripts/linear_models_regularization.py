@@ -304,7 +304,7 @@ print(
 # spot.
 #
 # We also observe that fitting this pipeline no longer generates any warning
-# for any choice of the solver paramerter. Futhermore, changing the solver should
+# for any choice of the solver parameter. Furthermore, changing the solver should
 # no longer result in significant changes in the weights.
 #
 # Let's have an additional look to the different weights.
@@ -499,5 +499,20 @@ print(
 # This range can be reduced depending on the feature engineering and
 # preprocessing.
 #
-# In this notebook, you learned about the concept of regularization and the
-# importance of preprocessing and parameter tuning.
+# Here is a summary of important points highlighted in this notebook:
+# - scaling features makes the effect of regularization more even: all variables
+#   are regularized by comparable magnitude, which would not necessarily be the
+#   case with the natural feature scales;
+# - scaling features makes the numerical solvers more stable which is also helpful
+#   to tune the regularization parameter more independently of the choice of the
+#   solver used to fit the linear model to the training set;
+# - tuning the regularization parameter of the `Ridge` estimator can be done very
+#   efficiently by using the `RidgeCV` class. Wrapping it into a `cross_validate`
+#   call makes it possible to assess the true generalization power of the whole
+#   pipeline by including the tuning of the regularization parameter as part of the
+#   learning process: this is an example of "nested cross-validation";
+# - doing so makes it possible to check that the optimal value of the regularization
+#   strength `alpha` is robust to a resampling of the dataset. If it wasn't the case
+#   it would hint at a problem with the dataset (e.g. presence of outliers in the
+#   features or the target that influence the learning process disproportionately) or
+#   a bad choice of other elements of the feature engineering pipeline.

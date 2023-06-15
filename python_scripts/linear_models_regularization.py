@@ -303,9 +303,10 @@ print(
 # overfitted and that we are getting closer to the best generalization sweet
 # spot.
 #
-# We also observe that fitting this pipeline no longer generates any warning
-# for any choice of the solver parameter. Furthermore, changing the solver should
-# no longer result in significant changes in the weights.
+# If you want to try different solvers, you can notice that fitting this
+# pipeline no longer generates any warning regardless of such choice.
+# Additionally, changing the solver should no longer result in significant
+# changes in the weights.
 #
 # Let's have an additional look to the different weights.
 
@@ -358,7 +359,8 @@ _ = ax.set(
 
 # %% [markdown]
 # Looking specifically to weights values, we observe that increasing the value
-# of `alpha` decreases the weight values.
+# of `alpha` decreases the weight values. A negative value of `alpha` would
+# actually enhance large weights and promote overfitting.
 #
 # ```{note}
 # Here, we only focus on numerical features. For categorical features, it is
@@ -399,10 +401,10 @@ _ = ax.set(
 # these predictors finishes by `CV`. In the case of `Ridge`, scikit-learn
 # provides a `RidgeCV` regressor.
 #
-# Therefore, we can use this predictor as the last step of the pipeline.
-# Including the pipeline a cross-validation allows to make a nested
-# cross-validation: the inner cross-validation searches for the best alpha,
-# while the outer cross-validation gives an estimate of the testing score.
+# Cross-validating a pipeline that contains such predictors allows to make a
+# nested cross-validation: the inner cross-validation searches for the best
+# alpha, while the outer cross-validation gives an estimate of the testing
+# score.
 
 # %%
 import numpy as np
@@ -503,16 +505,18 @@ print(
 # - scaling features makes the effect of regularization more even: all variables
 #   are regularized by comparable magnitude, which would not necessarily be the
 #   case with the natural feature scales;
-# - scaling features makes the numerical solvers more stable which is also helpful
-#   to tune the regularization parameter more independently of the choice of the
-#   solver used to fit the linear model to the training set;
-# - tuning the regularization parameter of the `Ridge` estimator can be done very
-#   efficiently by using the `RidgeCV` class. Wrapping it into a `cross_validate`
-#   call makes it possible to assess the true generalization power of the whole
-#   pipeline by including the tuning of the regularization parameter as part of the
-#   learning process: this is an example of "nested cross-validation";
-# - doing so makes it possible to check that the optimal value of the regularization
-#   strength `alpha` is robust to a resampling of the dataset. If it wasn't the case
-#   it would hint at a problem with the dataset (e.g. presence of outliers in the
-#   features or the target that influence the learning process disproportionately) or
-#   a bad choice of other elements of the feature engineering pipeline.
+# - scaling features makes the numerical solvers more stable which is also
+#   helpful to tune the regularization parameter more independently of the
+#   choice of the solver used to fit the linear model;
+# - tuning the regularization parameter of the `Ridge` estimator can be done
+#   very efficiently by using the `RidgeCV` class. Wrapping it into a
+#   `cross_validate` call makes it possible to assess the true generalization
+#   power of the whole pipeline by including the tuning of the regularization
+#   parameter as part of the learning process: this is an example of "nested
+#   cross-validation";
+# - doing so makes it possible to check that the optimal value of the
+#   regularization strength `alpha` is robust to a resampling of the dataset. If
+#   it wasn't the case it would hint at a problem with the dataset (e.g.
+#   presence of outliers in the features or the target that influence the
+#   learning process disproportionately) or a bad choice of other elements of
+#   the feature engineering pipeline.

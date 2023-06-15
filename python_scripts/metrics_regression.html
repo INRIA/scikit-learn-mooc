@@ -56,8 +56,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/matomo.js"></script>
     <script src="../_static/sklearn_mooc.js"></script>
+    <script src="../_static/matomo.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -684,15 +684,15 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="regression">
 <h1>Regression<a class="headerlink" href="#regression" title="Permalink to this heading">#</a></h1>
-<p>In this notebook, we will present the metrics that can be used in regression.</p>
+<p>In this notebook, we present the metrics that can be used in regression.</p>
 <p>A set of metrics are dedicated to regression. Indeed, classification metrics
 cannot be used to evaluate the generalization performance of regression models
 because there is a fundamental difference between their target type <code class="docutils literal notranslate"><span class="pre">target</span></code>:
 it is a continuous variable in regression, while a discrete variable in
 classification.</p>
-<p>We will use the Ames housing dataset. The goal is to predict the price of
-houses in the city of Ames, Iowa. As with classification, we will only use a
-single train-test split to focus solely on the regression metrics.</p>
+<p>We use the Ames housing dataset. The goal is to predict the price of houses in
+the city of Ames, Iowa. As with classification, we only use a single
+train-test split to focus solely on the regression metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -729,7 +729,7 @@ problem: minimizing an error (also known as the loss function) using a
 training set. A basic loss function used in regression is the mean squared
 error (MSE). Thus, this metric is sometimes used to evaluate the model since
 it is optimized by said model.</p>
-<p>We will give an example using a linear regression model.</p>
+<p>We give an example using a linear regression model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
@@ -775,8 +775,10 @@ decreases the error.</p>
 </div>
 <p>The raw MSE can be difficult to interpret. One way is to rescale the MSE by
 the variance of the target. This score is known as the <span class="math notranslate nohighlight">\(R^2\)</span> also called the
-coefficient of determination. Indeed, this is the default score used in
-scikit-learn by calling the method <code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination">coefficient of
+determination</a>.
+Indeed, this is the default score used in scikit-learn by calling the method
+<code class="docutils literal notranslate"><span class="pre">score</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
@@ -784,7 +786,7 @@ scikit-learn by calling the method <code class="docutils literal notranslate"><s
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6872520581075487
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6872520581075463
 </pre></div>
 </div>
 </div>
@@ -1005,15 +1007,13 @@ transformation.</p>
     <span class="s2">&quot;Mean absolute error: &quot;</span>
     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
 <span class="p">)</span>
-
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Median absolute error: &quot;</span>
     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">median_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
 <span class="p">)</span>
-
 <span class="nb">print</span><span class="p">(</span>
     <span class="s2">&quot;Mean absolute percentage error: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1021,7 +1021,7 @@ transformation.</p>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean absolute error: 17.406 k$
 Median absolute error: 10.327 k$
-Mean absolute percentage error: 9.919 %
+Mean absolute percentage error: 9.92%
 </pre></div>
 </div>
 </div>

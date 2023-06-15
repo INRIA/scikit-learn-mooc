@@ -8,7 +8,7 @@
 # %% [markdown]
 # # Regression
 #
-# In this notebook, we will present the metrics that can be used in regression.
+# In this notebook, we present the metrics that can be used in regression.
 #
 # A set of metrics are dedicated to regression. Indeed, classification metrics
 # cannot be used to evaluate the generalization performance of regression models
@@ -16,9 +16,9 @@
 # it is a continuous variable in regression, while a discrete variable in
 # classification.
 #
-# We will use the Ames housing dataset. The goal is to predict the price of
-# houses in the city of Ames, Iowa. As with classification, we will only use a
-# single train-test split to focus solely on the regression metrics.
+# We use the Ames housing dataset. The goal is to predict the price of houses in
+# the city of Ames, Iowa. As with classification, we only use a single
+# train-test split to focus solely on the regression metrics.
 
 # %%
 import pandas as pd
@@ -53,7 +53,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # error (MSE). Thus, this metric is sometimes used to evaluate the model since
 # it is optimized by said model.
 #
-# We will give an example using a linear regression model.
+# We give an example using a linear regression model.
 
 # %%
 from sklearn.linear_model import LinearRegression
@@ -86,8 +86,10 @@ print(
 # %% [markdown]
 # The raw MSE can be difficult to interpret. One way is to rescale the MSE by
 # the variance of the target. This score is known as the $R^2$ also called the
-# coefficient of determination. Indeed, this is the default score used in
-# scikit-learn by calling the method `score`.
+# [coefficient of
+# determination](https://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination).
+# Indeed, this is the default score used in scikit-learn by calling the method
+# `score`.
 
 # %%
 regressor.score(data_test, target_test)
@@ -278,15 +280,13 @@ print(
     "Mean absolute error: "
     f"{mean_absolute_error(target_test, target_predicted):.3f} k$"
 )
-
 print(
     "Median absolute error: "
     f"{median_absolute_error(target_test, target_predicted):.3f} k$"
 )
-
 print(
     "Mean absolute percentage error: "
-    f"{mean_absolute_percentage_error(target_test, target_predicted) * 100:.3f} %"
+    f"{mean_absolute_percentage_error(target_test, target_predicted):.2%}"
 )
 
 # %% [markdown]

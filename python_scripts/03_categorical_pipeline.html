@@ -700,9 +700,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="encoding-of-categorical-variables">
 <h1>Encoding of categorical variables<a class="headerlink" href="#encoding-of-categorical-variables" title="Permalink to this heading">#</a></h1>
-<p>In this notebook, we will present typical ways of dealing with <strong>categorical
-variables</strong> by encoding them, namely <strong>ordinal encoding</strong> and <strong>one-hot
-encoding</strong>.</p>
+<p>In this notebook, we will present typical ways of dealing with
+<strong>categorical variables</strong> by encoding them, namely <strong>ordinal encoding</strong> and
+<strong>one-hot encoding</strong>.</p>
 <p>Let’s first load the entire adult dataset containing both numerical and
 categorical data.</p>
 <div class="cell docutils container">
@@ -723,15 +723,17 @@ categorical data.</p>
 </div>
 <section id="identify-categorical-variables">
 <h2>Identify categorical variables<a class="headerlink" href="#identify-categorical-variables" title="Permalink to this heading">#</a></h2>
-<p>As we saw in the previous section, a numerical variable is a quantity
-represented by a real or integer number. These variables can be naturally
-handled by machine learning algorithms that are typically composed of a
-sequence of arithmetic instructions such as additions and multiplications.</p>
-<p>In contrast, categorical variables have discrete values, typically represented
-by string labels (but not only) taken from a finite list of possible choices.
-For instance, the variable <code class="docutils literal notranslate"><span class="pre">native-country</span></code> in our dataset is a categorical
-variable because it encodes the data using a finite list of possible countries
-(along with the <code class="docutils literal notranslate"><span class="pre">?</span></code> symbol when this information is missing):</p>
+<p>As we saw in the previous section, a numerical variable is a
+quantity represented by a real or integer number. These variables can be
+naturally handled by machine learning algorithms that are typically composed
+of a sequence of arithmetic instructions such as additions and
+multiplications.</p>
+<p>In contrast, categorical variables have discrete values, typically
+represented by string labels (but not only) taken from a finite list of
+possible choices. For instance, the variable <code class="docutils literal notranslate"><span class="pre">native-country</span></code> in our dataset
+is a categorical variable because it encodes the data using a finite list of
+possible countries (along with the <code class="docutils literal notranslate"><span class="pre">?</span></code> symbol when this information is
+missing):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;native-country&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
@@ -787,8 +789,8 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<p>How can we easily recognize categorical columns among the dataset? Part of the
-answer lies in the columns’ data type:</p>
+<p>How can we easily recognize categorical columns among the dataset? Part of
+the answer lies in the columns’ data type:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
@@ -820,8 +822,8 @@ dtype: object
 <h2>Select features based on their data type<a class="headerlink" href="#select-features-based-on-their-data-type" title="Permalink to this heading">#</a></h2>
 <p>In the previous notebook, we manually defined the numerical columns. We could
 do a similar approach. Instead, we will use the scikit-learn helper function
-<code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>, which allows us to select columns based on their data
-type. We will illustrate how to use this helper.</p>
+<code class="docutils literal notranslate"><span class="pre">make_column_selector</span></code>, which allows us to select columns based on
+their data type. We will illustrate how to use this helper.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
@@ -966,8 +968,9 @@ machine-learning algorithm.</p>
 <section id="encoding-ordinal-categories">
 <h3>Encoding ordinal categories<a class="headerlink" href="#encoding-ordinal-categories" title="Permalink to this heading">#</a></h3>
 <p>The most intuitive strategy is to encode each category with a different
-number. The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will transform the data in such manner. We will
-start by encoding a single column to understand how the encoding works.</p>
+number. The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will transform the data in such manner.
+We will start by encoding a single column to understand how the encoding
+works.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
@@ -1182,34 +1185,34 @@ values by checking the fitted attribute <code class="docutils literal notranslat
 <p>We see that the categories have been encoded for each feature (column)
 independently. We also note that the number of features before and after the
 encoding is the same.</p>
-<p>However, be careful when applying this encoding strategy: using this integer
-representation leads downstream predictive models to assume that the values
-are ordered (0 &lt; 1 &lt; 2 &lt; 3… for instance).</p>
+<p>However, be careful when applying this encoding strategy:
+using this integer representation leads downstream predictive models
+to assume that the values are ordered (0 &lt; 1 &lt; 2 &lt; 3… for instance).</p>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> uses a lexicographical strategy to map string
-category labels to integers. This strategy is arbitrary and often meaningless.
-For instance, suppose the dataset has a categorical variable named <code class="docutils literal notranslate"><span class="pre">&quot;size&quot;</span></code>
-with categories such as “S”, “M”, “L”, “XL”. We would like the integer
-representation to respect the meaning of the sizes by mapping them to
-increasing integers such as <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3</span></code>. However, the lexicographical
-strategy used by default would map the labels “S”, “M”, “L”, “XL” to 2, 1, 0,
-3, by following the alphabetical order.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a <code class="docutils literal notranslate"><span class="pre">categories</span></code> constructor argument to pass
-categories in the expected ordering explicitly. You can find more information
-in the <a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html#encoding-categorical-features">scikit-learn
-documentation</a>
+category labels to integers. This strategy is arbitrary and often
+meaningless. For instance, suppose the dataset has a categorical variable
+named <code class="docutils literal notranslate"><span class="pre">&quot;size&quot;</span></code> with categories such as “S”, “M”, “L”, “XL”. We would like the
+integer representation to respect the meaning of the sizes by mapping them to
+increasing integers such as <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3</span></code>.
+However, the lexicographical strategy used by default would map the labels
+“S”, “M”, “L”, “XL” to 2, 1, 0, 3, by following the alphabetical order.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> class accepts a <code class="docutils literal notranslate"><span class="pre">categories</span></code> constructor argument to
+pass categories in the expected ordering explicitly. You can find more
+information in the
+<a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html#encoding-categorical-features">scikit-learn documentation</a>
 if needed.</p>
-<p>If a categorical variable does not carry any meaningful order information then
-this encoding might be misleading to downstream statistical models and you
-might consider using one-hot encoding instead (see below).</p>
+<p>If a categorical variable does not carry any meaningful order information
+then this encoding might be misleading to downstream statistical models and
+you might consider using one-hot encoding instead (see below).</p>
 </section>
 <section id="encoding-nominal-categories-without-assuming-any-order">
 <h3>Encoding nominal categories (without assuming any order)<a class="headerlink" href="#encoding-nominal-categories-without-assuming-any-order" title="Permalink to this heading">#</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is an alternative encoder that prevents the downstream models
-to make a false assumption about the ordering of categories. For a given
-feature, it will create as many new columns as there are possible categories.
-For a given sample, the value of the column corresponding to the category will
-be set to <code class="docutils literal notranslate"><span class="pre">1</span></code> while all the columns of the other categories will be set to
-<code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is an alternative encoder that prevents the downstream
+models to make a false assumption about the ordering of categories. For a
+given feature, it will create as many new columns as there are possible
+categories. For a given sample, the value of the column corresponding to the
+category will be set to <code class="docutils literal notranslate"><span class="pre">1</span></code> while all the columns of the other categories
+will be set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
 <p>We will start by encoding a single feature (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code>) to illustrate
 how the encoding works.</p>
 <div class="cell docutils container">
@@ -1479,8 +1482,8 @@ how the encoding works.</p>
 <p><code class="docutils literal notranslate"><span class="pre">sparse_output=False</span></code> is used in the <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> for didactic purposes,
 namely easier visualization of the data.</p>
 <p>Sparse matrices are efficient data structures when most of your matrix
-elements are zero. They won’t be covered in detail in this course. If you want
-more details about them, you can look at
+elements are zero. They won’t be covered in detail in this course. If you
+want more details about them, you can look at
 <a class="reference external" href="https://scipy-lectures.org/advanced/scipy_sparse/introduction.html#why-sparse-matrices">this</a>.</p>
 </div>
 <p>We see that encoding a single feature will give a dataframe full of zeros
@@ -1775,8 +1778,8 @@ returned, for each sample, a 1 to specify which category it belongs to.</p>
 </div>
 <p>Look at how the <code class="docutils literal notranslate"><span class="pre">&quot;workclass&quot;</span></code> variable of the 3 first records has been encoded
 and compare this to the original string representation.</p>
-<p>The number of features after the encoding is more than 10 times larger than in
-the original data because some variables such as <code class="docutils literal notranslate"><span class="pre">occupation</span></code> and
+<p>The number of features after the encoding is more than 10 times larger than
+in the original data because some variables such as <code class="docutils literal notranslate"><span class="pre">occupation</span></code> and
 <code class="docutils literal notranslate"><span class="pre">native-country</span></code> have many possible categories.</p>
 </section>
 <section id="choosing-an-encoding-strategy">
@@ -1785,24 +1788,24 @@ the original data because some variables such as <code class="docutils literal n
 type of categories (i.e. ordinal vs. nominal).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In general <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is the encoding strategy used when the downstream
-models are <strong>linear models</strong> while <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is often a good strategy
-with <strong>tree-based models</strong>.</p>
+<p>In general <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> is the encoding strategy used when the
+downstream models are <strong>linear models</strong> while <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> is often a
+good strategy with <strong>tree-based models</strong>.</p>
 </div>
-<p>Using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will output ordinal categories. This means that
-there is an order in the resulting categories (e.g. <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">2</span></code>). The impact
-of violating this ordering assumption is really dependent on the downstream
-models. Linear models will be impacted by misordered categories while
-tree-based models will not.</p>
+<p>Using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> will output ordinal categories. This means
+that there is an order in the resulting categories (e.g. <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">2</span></code>). The
+impact of violating this ordering assumption is really dependent on the
+downstream models. Linear models will be impacted by misordered categories
+while tree-based models will not.</p>
 <p>You can still use an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with linear models but you need to be
 sure that:</p>
 <ul class="simple">
 <li><p>the original categories (before encoding) have an ordering;</p></li>
 <li><p>the encoded categories follow the same ordering than the original
-categories.</p></li>
+categories.
+The <strong>next exercise</strong> highlights the issue of misusing <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with
+a linear model.</p></li>
 </ul>
-<p>The <strong>next exercise</strong> shows what can happen when using an <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code>
-with a liner model and the conditions above are not met.</p>
 <p>One-hot encoding categorical variables with high cardinality can cause
 computational inefficiency in tree-based models. Because of this, it is not
 recommended to use <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> in such cases even if the original
@@ -1814,8 +1817,8 @@ exercise</strong> of this sequence.</p>
 <h2>Evaluate our predictive pipeline<a class="headerlink" href="#evaluate-our-predictive-pipeline" title="Permalink to this heading">#</a></h2>
 <p>We can now integrate this encoder inside a machine learning pipeline like we
 did with numerical data: let’s train a linear classifier on the encoded data
-and check the generalization performance of this machine learning pipeline
-using cross-validation.</p>
+and check the generalization performance of this machine learning pipeline using
+cross-validation.</p>
 <p>Before we create the pipeline, we have to linger on the <code class="docutils literal notranslate"><span class="pre">native-country</span></code>.
 Let’s recall some statistics regarding this column.</p>
 <div class="cell docutils container">
@@ -1873,24 +1876,32 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<p>We see that the <code class="docutils literal notranslate"><span class="pre">Holand-Netherlands</span></code> category is occurring rarely. This will
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">&quot;Holand-Netherlands&quot;</span></code> category is occurring rarely. This will
 be a problem during cross-validation: if the sample ends up in the test set
 during splitting then the classifier would not have seen the category during
 training and will not be able to encode it.</p>
-<p>In scikit-learn, there are two solutions to bypass this issue:</p>
+<p>In scikit-learn, there are some possible solutions to bypass this issue:</p>
 <ul class="simple">
-<li><p>list all the possible categories and provide it to the encoder via the
-keyword argument <code class="docutils literal notranslate"><span class="pre">categories</span></code>;</p></li>
-<li><p>use the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>, i.e. if an unknown category is
+<li><p>list all the possible categories and provide them to the encoder via the
+keyword argument <code class="docutils literal notranslate"><span class="pre">categories</span></code> instead of letting the estimator automatically
+determine them from the training data when calling fit;</p></li>
+<li><p>set the parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;ignore&quot;</span></code>, i.e. if an unknown category is
 encountered during transform, the resulting one-hot encoded columns for this
-feature will be all zeros.</p></li>
+feature will be all zeros;</p></li>
+<li><p>adjust the <code class="docutils literal notranslate"><span class="pre">min_frequency</span></code> parameter to collapse the rarest categories
+observed in the training data into a single one-hot encoded feature. If you
+enable this option, you can also set <code class="docutils literal notranslate"><span class="pre">handle_unknown=&quot;infrequent_if_exist&quot;</span></code>
+to encode the unknown categories (categories only observed at predict time)
+as ones in that last column.</p></li>
 </ul>
-<p>Here, we will use the latter solution for simplicity.</p>
+<p>In this notebook we only explore the second option, namely
+<code class="docutils literal notranslate"><span class="pre">OneHotEncoder(handle_unknown=&quot;ignore&quot;)</span></code>. Feel free to evaluate the
+alternatives on your own, for instance using a sandbox notebook.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Be aware the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> exposes as well a parameter <code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>. It
-can be set to <code class="docutils literal notranslate"><span class="pre">use_encoded_value</span></code>. If that option is chosen, you can define a
-fixed value to which all unknowns will be set to during <code class="docutils literal notranslate"><span class="pre">transform</span></code>. For
+<p>Be aware the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> exposes a parameter also named <code class="docutils literal notranslate"><span class="pre">handle_unknown</span></code>.
+It can be set to <code class="docutils literal notranslate"><span class="pre">use_encoded_value</span></code>. If that option is chosen, you can define
+a fixed value to which all unknowns will be set to during <code class="docutils literal notranslate"><span class="pre">transform</span></code>. For
 example, <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder(handle_unknown='use_encoded_value',</span> <span class="pre">unknown_value=42)</span></code> will set all values encountered during <code class="docutils literal notranslate"><span class="pre">transform</span></code> to <code class="docutils literal notranslate"><span class="pre">42</span></code>
 which are not part of the data encountered during the <code class="docutils literal notranslate"><span class="pre">fit</span></code> call. You are
 going to use these parameters in the next exercise.</p>
@@ -1911,10 +1922,10 @@ going to use these parameters in the next exercise.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Here, we need to increase the maximum number of iterations to obtain a fully
-converged <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> and silence a <code class="docutils literal notranslate"><span class="pre">ConvergenceWarning</span></code>. Contrary to
-the numerical features, the one-hot encoded categorical features are all on
-the same scale (values are 0 or 1), so they would not benefit from scaling. In
-this case, increasing <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> is the right thing to do.</p>
+converged <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> and silence a <code class="docutils literal notranslate"><span class="pre">ConvergenceWarning</span></code>. Contrary
+to the numerical features, the one-hot encoded categorical features are all
+on the same scale (values are 0 or 1), so they would not benefit from
+scaling. In this case, increasing <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> is the right thing to do.</p>
 </div>
 <p>Finally, we can check the model’s generalization performance only using the
 categorical columns.</p>
@@ -1948,9 +1959,9 @@ categorical columns.</p>
 </div>
 </div>
 </div>
-<p>As you can see, this representation of the categorical variables is slightly
-more predictive of the revenue than the numerical variables that we used
-previously.</p>
+<p>As you can see, this representation of the categorical variables is
+slightly more predictive of the revenue than the numerical variables
+that we used previously.</p>
 <p>In this notebook we have:</p>
 <ul class="simple">
 <li><p>seen two common strategies for encoding categorical features: <strong>ordinal

@@ -45,7 +45,7 @@ data, target = (
 )
 
 # %% [markdown]
-# In one of the previous notebook, we showed that linear models could be used
+# In one of the previous notebooks, we showed that linear models could be used
 # even when there is no linear relationship between the `data` and `target`.
 # For instance, one can use the `PolynomialFeatures` transformer to create
 # additional features that capture some non-linear interactions between them.
@@ -98,14 +98,15 @@ print(
 # features with a `PolynomialFeatures` transformer. For instance, one does not
 # expect features such as `PoolArea * YrSold` to be very predictive.
 #
-# We can create a dataframe to check the weights of the model: the columns
-# contain the name of the features whereas the rows store the coefficients values
-# of each model during the cross-validation.
+# To analyze the weights of the model, we can create a dataframe. The columns of
+# the dataframe will contain the feature names, while the rows will store the
+# coefficients of each model of a given cross-validation fold.
 #
-# Since we used a `PolynomialFeatures` to augment the data, we extract the
-# feature names representative of each feature combination. Scikit-learn
-# provides a `feature_names_in_` method for this purpose. First, let's get the
-# first fitted model from the cross-validation.
+# In order to obtain the feature names associated with each feature combination,
+# we need to extract them from the augmented data created by
+# `PolynomialFeatures`. Fortunately, scikit-learn provides a convenient method
+# called `feature_names_in_` for this purpose. Let's begin by retrieving the
+# coefficients from the model fitted in the first cross-validation fold.
 
 # %%
 model_first_fold = cv_results["estimator"][0]
@@ -137,7 +138,7 @@ weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
 import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(10, 10))
 weights_linear_regression.plot.box(color=color, vert=False, ax=ax)
 _ = ax.set(
     title="Linear regression weights",
@@ -203,7 +204,7 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(8, 10))
 weights_ridge.plot.box(color=color, vert=False, ax=ax)
 _ = ax.set(
     title="Ridge weights",
@@ -315,19 +316,20 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(8, 10))
 weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
 _ = ax.set(
     title="Ridge weights with data scaling",
-    xscale="symlog",
+    # xscale="symlog",
 )
 
 # %% [markdown]
-# Compare to the previous plots, we see that now all weight magnitudes are
-# closer and that all features are more equally contributing.
+# Compared to the previous plots, we see that now most weight magnitudes have a
+# similar order of magnitude, i.e. they are more equally contributing. The
+# number of unstable weights also decreased.
 #
 # In the previous example, we fixed `alpha=10`. We can now check the impact of
-# the value of `alpha` by increasing its value.
+# `alpha` by increasing it to a very large value.
 
 # %%
 ridge_large_alpha = make_pipeline(
@@ -350,7 +352,7 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(8, 10))
 weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
 _ = ax.set(
     title="Ridge weights with data scaling and large alpha",
@@ -465,7 +467,7 @@ cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas
 
 # %%
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 6))
 ax.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
 _ = ax.set(
     xscale="log",

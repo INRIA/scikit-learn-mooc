@@ -360,9 +360,9 @@ _ = ax.set(
 )
 
 # %% [markdown]
-# When examining the weight values, we notice that as the alpha value increases,
-# the weights decrease. A negative value of `alpha` can lead to unpredictable
-# and unstable behavior in the model.
+# When examining the weight values, we notice that as the `alpha` value
+# increases, the weights decrease. A negative value of `alpha` can lead to
+# unpredictable and unstable behavior in the model.
 #
 # ```{note}
 # Here, we only focus on numerical features. For categorical features, it is

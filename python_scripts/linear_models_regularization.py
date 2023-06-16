@@ -360,9 +360,9 @@ _ = ax.set(
 )
 
 # %% [markdown]
-# Looking specifically to weights values, we observe that increasing the value
-# of `alpha` decreases the weight values. A negative value of `alpha` would
-# actually enhance large weights and promote overfitting.
+# When examining the weight values, we notice that as the alpha value increases,
+# the weights decrease. A negative value of `alpha` can lead to unpredictable
+# and unstable behavior in the model.
 #
 # ```{note}
 # Here, we only focus on numerical features. For categorical features, it is

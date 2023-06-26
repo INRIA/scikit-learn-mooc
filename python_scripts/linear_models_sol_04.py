@@ -1,18 +1,12 @@
 # ---
 # jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
 # ---
 
 # %% [markdown]
-# # 📝 Exercise M4.05
+# # 📃 Solution for Exercise M4.04
 #
 # In the previous notebook we set `penalty="none"` to disable regularization
 # entirely. This parameter can also control the **type** of regularization to
@@ -74,10 +68,56 @@ logistic_regression = make_pipeline(
 # %%
 Cs = [0.01, 0.1, 1, 10]
 
-# Write your code here.
+# solution
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.inspection import DecisionBoundaryDisplay
+
+for C in Cs:
+    logistic_regression.set_params(logisticregression__C=C)
+    logistic_regression.fit(data_train, target_train)
+    accuracy = logistic_regression.score(data_test, target_test)
+
+    DecisionBoundaryDisplay.from_estimator(
+        logistic_regression,
+        data_test,
+        response_method="predict",
+        cmap="RdBu_r",
+        alpha=0.5,
+    )
+    sns.scatterplot(
+        data=penguins_test,
+        x=culmen_columns[0],
+        y=culmen_columns[1],
+        hue=target_column,
+        palette=["tab:red", "tab:blue"],
+    )
+    plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+    plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.
 
 # %%
-# Write your code here.
+# solution
+weights_ridge = []
+for C in Cs:
+    logistic_regression.set_params(logisticregression__C=C)
+    logistic_regression.fit(data_train, target_train)
+    coefs = logistic_regression[-1].coef_[0]
+    weights_ridge.append(pd.Series(coefs, index=culmen_columns))
+
+# %% tags=["solution"]
+weights_ridge = pd.concat(weights_ridge, axis=1, keys=[f"C: {C}" for C in Cs])
+weights_ridge.plot.barh()
+_ = plt.title("LogisticRegression weights depending of C")
+
+# %% [markdown] tags=["solution"]
+# We see that a small `C` will shrink the weights values toward zero. It means
+# that a small `C` provides a more regularized model. Thus, `C` is the inverse
+# of the `alpha` coefficient in the `Ridge` model.
+#
+# Besides, with a strong penalty (i.e. small `C` value), the weight of the
+# feature "Culmen Depth (mm)" is almost zero. It explains why the decision
+# separation in the plot is almost perpendicular to the "Culmen Length (mm)"
+# feature.

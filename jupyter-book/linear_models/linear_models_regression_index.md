@@ -1,5 +1,0 @@
-# Linear regression
-
-```{tableofcontents}
-
-```

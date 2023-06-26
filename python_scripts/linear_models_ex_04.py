@@ -14,9 +14,8 @@
 # %% [markdown]
 # # 📝 Exercise M4.04
 #
-# In the previous notebook we set `penalty="none"` to disable regularization
-# entirely. This parameter can also control the **type** of regularization to
-# use, whereas the regularization **strength** is set using the parameter `C`.
+# The parameter `penalty` can control the **type** of regularization to use,
+# whereas the regularization **strength** is set using the parameter `C`.
 # Setting`penalty="none"` is equivalent to an infinitely large value of `C`. In
 # this exercise, we ask you to train a logistic regression classifier using the
 # `penalty="l2"` regularization (which happens to be the default in

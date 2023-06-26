@@ -78,9 +78,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 
-logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty=None)
-)
+logistic_regression = make_pipeline(StandardScaler(), LogisticRegression())
 logistic_regression.fit(data_train, target_train)
 accuracy = logistic_regression.score(data_test, target_test)
 print(f"Accuracy on test set: {accuracy:.3f}")
@@ -124,8 +122,7 @@ _ = plt.title("Decision boundary of the trained\n LogisticRegression")
 
 # %% [markdown]
 # Thus, we see that our decision function is represented by a line separating
-# the 2 classes. We should also note that we did not impose any regularization
-# by setting the parameter `penalty` to `'none'`.
+# the 2 classes.
 #
 # Since the line is oblique, it means that we used a combination of both
 # features:

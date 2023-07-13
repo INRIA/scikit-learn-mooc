@@ -58,77 +58,31 @@ forest = RandomForestRegressor(max_depth=None)
 # For both the gradient-boosting and random forest models, create a validation
 # curve using the training set to assess the impact of the number of trees on
 # the performance of each model. Evaluate the list of parameters `param_range =
-# [1, 2, 5, 10, 20, 50, 100]` and use the mean absolute error.
+# np.array([1, 2, 5, 10, 20, 50, 100])` and use the mean absolute error.
 
 # %%
 # solution
-from sklearn.model_selection import validation_curve
-
-param_range = [1, 2, 5, 10, 20, 50, 100]
-gbdt_train_scores, gbdt_validation_scores = validation_curve(
-    gbdt,
-    data_train,
-    target_train,
-    param_name="n_estimators",
-    param_range=param_range,
-    scoring="neg_mean_absolute_error",
-    n_jobs=2,
-)
-gbdt_train_errors, gbdt_validation_errors = (
-    -gbdt_train_scores,
-    -gbdt_validation_scores,
-)
-
-forest_train_scores, forest_validation_scores = validation_curve(
-    forest,
-    data_train,
-    target_train,
-    param_name="n_estimators",
-    param_range=param_range,
-    scoring="neg_mean_absolute_error",
-    n_jobs=2,
-)
-forest_train_errors = -forest_train_scores
-forest_validation_errors = -forest_validation_scores
-
-# %% tags=["solution"]
 import matplotlib.pyplot as plt
+import numpy as np
 
-fig, axs = plt.subplots(ncols=2, sharex=True, sharey=True, figsize=(10, 4))
+from sklearn.model_selection import ValidationCurveDisplay
 
-axs[0].errorbar(
-    param_range,
-    gbdt_train_errors.mean(axis=1),
-    yerr=gbdt_train_errors.std(axis=1),
-    label="Training",
+param_range = np.array([1, 2, 5, 10, 20, 50, 100])
+ValidationCurveDisplay.from_estimator(
+    forest,
+    data,
+    target,
+    param_name="n_estimators",
+    param_range=param_range,
+    scoring="neg_mean_absolute_error",
+    negate_score=True,
+    std_display_style="errorbar",
+    n_jobs=2,
 )
-axs[0].errorbar(
-    param_range,
-    gbdt_validation_errors.mean(axis=1),
-    yerr=gbdt_validation_errors.std(axis=1),
-    label="Cross-validation",
-)
-axs[0].set_title("Gradient boosting decision tree")
-axs[0].set_xlabel("# estimators")
-axs[0].set_ylabel("Mean absolute error in k$\n(smaller is better)")
 
-axs[1].errorbar(
-    param_range,
-    forest_train_errors.mean(axis=1),
-    yerr=forest_train_errors.std(axis=1),
-    label="Training",
-)
-axs[1].errorbar(
-    param_range,
-    forest_validation_errors.mean(axis=1),
-    yerr=forest_validation_errors.std(axis=1),
-    label="Cross-validation",
-)
-axs[1].set_title("Random forest")
-axs[1].set_xlabel("# estimators")
-
-plt.legend()
-_ = fig.suptitle("Validation curves", y=1.1)
+plt.xlabel("Number of trees on the forest")
+plt.ylabel("Mean absolute error (k$)")
+_ = plt.title("Validation curve for random forest")
 
 # %% [markdown]
 # Both gradient boosting and random forest models will always improve when

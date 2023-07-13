@@ -104,48 +104,29 @@ print(
 
 # %%
 # solution
+import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.model_selection import validation_curve
+
+from sklearn.model_selection import ValidationCurveDisplay
 
 gammas = np.logspace(-3, 2, num=30)
 param_name = "svc__gamma"
-train_scores, test_scores = validation_curve(
+ValidationCurveDisplay.from_estimator(
     model,
     data,
     target,
     param_name=param_name,
     param_range=gammas,
     cv=cv,
+    scoring="accuracy",  # this is already the default for classifiers
+    score_name="Accuracy",
+    std_display_style="errorbar",
+    errorbar_kw={"alpha": 0.7},  # transparency for better visualization
     n_jobs=2,
 )
 
-# %% [markdown]
-# Plot the validation curve for the train and test scores.
-
-# %%
-# solution
-import matplotlib.pyplot as plt
-
-plt.errorbar(
-    gammas,
-    train_scores.mean(axis=1),
-    yerr=train_scores.std(axis=1),
-    alpha=0.95,
-    label="Training score",
-)
-plt.errorbar(
-    gammas,
-    test_scores.mean(axis=1),
-    yerr=test_scores.std(axis=1),
-    alpha=0.5,
-    label="Testing score",
-)
-plt.legend()
-
-plt.xscale("log")
 plt.xlabel(r"Value of hyperparameter $\gamma$")
-plt.ylabel("Accuracy score")
-_ = plt.title("Validation score of support vector machine")
+_ = plt.title("Validation curve of support vector machine")
 
 # %% [markdown] tags=["solution"]
 # Looking at the curve, we can clearly identify the over-fitting regime of the

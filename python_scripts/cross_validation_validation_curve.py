@@ -48,7 +48,7 @@ regressor = DecisionTreeRegressor()
 import pandas as pd
 from sklearn.model_selection import cross_validate, ShuffleSplit
 
-cv = ShuffleSplit(n_splits=30, test_size=0.2)
+cv = ShuffleSplit(n_splits=30, test_size=0.2, random_state=0)
 cv_results = cross_validate(
     regressor,
     data,
@@ -104,10 +104,10 @@ _ = plt.title("Train and test errors distribution via cross-validation")
 
 # %%
 # %%time
-from sklearn.model_selection import validation_curve
+from sklearn.model_selection import ValidationCurveDisplay
 
 max_depth = [1, 5, 10, 15, 20, 25]
-train_scores, test_scores = validation_curve(
+ValidationCurveDisplay.from_estimator(
     regressor,
     data,
     target,
@@ -115,18 +115,10 @@ train_scores, test_scores = validation_curve(
     param_range=max_depth,
     cv=cv,
     scoring="neg_mean_absolute_error",
+    negate_score=True,
+    std_display_style="errorbar",
     n_jobs=2,
 )
-train_errors, test_errors = -train_scores, -test_scores
-
-# %% [markdown]
-# Now that we collected the results, we will show the validation curve by
-# plotting the training and testing errors (as well as their deviations).
-
-# %%
-plt.plot(max_depth, train_errors.mean(axis=1), label="Training error")
-plt.plot(max_depth, test_errors.mean(axis=1), label="Testing error")
-plt.legend()
 
 plt.xlabel("Maximum depth of decision tree")
 plt.ylabel("Mean absolute error (k$)")
@@ -158,33 +150,11 @@ _ = plt.title("Validation curve for decision tree")
 # could reach by just tuning this parameter.
 #
 # Be aware that looking at the mean errors is quite limiting. We should also
-# look at the standard deviation to assess the dispersion of the score. We can
-# repeat the same plot as before but this time, we will add some information to
-# show the standard deviation of the errors as well.
-
-# %%
-plt.errorbar(
-    max_depth,
-    train_errors.mean(axis=1),
-    yerr=train_errors.std(axis=1),
-    label="Training error",
-)
-plt.errorbar(
-    max_depth,
-    test_errors.mean(axis=1),
-    yerr=test_errors.std(axis=1),
-    label="Testing error",
-)
-plt.legend()
-
-plt.xlabel("Maximum depth of decision tree")
-plt.ylabel("Mean absolute error (k$)")
-_ = plt.title("Validation curve for decision tree")
-
-# %% [markdown]
-# We were lucky that the variance of the errors was small compared to their
-# respective values, and therefore the conclusions above are quite clear. This
-# is not necessarily always the case.
+# look at the standard deviation to assess the dispersion of the score. For such
+# purpose, we can use the parameter `std_display_style` to show the standard
+# deviation of the errors as well. In this case, the variance of the errors is
+# small compared to their respective values, and therefore the conclusions above
+# are quite clear. This is not necessarily always the case.
 
 # %% [markdown]
 # ## Summary:

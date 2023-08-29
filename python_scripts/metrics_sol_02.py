@@ -53,8 +53,8 @@ scores = cross_val_score(model, data, target, cv=10, scoring="r2")
 print(f"R2 score: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
-# Then, instead of using the $R^2$ score, use the mean absolute error. You need
-# to refer to the documentation for the `scoring` parameter.
+# Then, instead of using the $R^2$ score, use the mean absolute error (MAE). You
+# may need to refer to the documentation for the `scoring` parameter.
 
 # %%
 # solution
@@ -91,3 +91,41 @@ scores = {
 }
 scores = pd.DataFrame(scores)
 scores
+
+# %% [markdown] tags=["solution"]
+# In the Regression Metrics notebook we mentioned the concept of loss function,
+# which is the metric to be optimized when training a model. In the case of a
+# linear regression, the fitting process consists in minimizing the mean squared
+# error (MSE). Some estimators, such as the `HistGradientBoostingRegressor`, can
+# use different loss functions, to be set using the `loss` hyperparameter.
+#
+# Notice that the evaluation metrics and the loss function are not necessarily
+# the same. Let's see an example:
+
+# %%
+# solution
+from sklearn.ensemble import HistGradientBoostingRegressor
+
+scoring = ["neg_mean_squared_error", "neg_mean_absolute_error"]
+loss_functions = ["squared_error", "absolute_error"]
+scores = {"loss": [], "MSE": [], "MAE": []}
+
+for loss_func in loss_functions:
+    model = HistGradientBoostingRegressor(loss=loss_func)
+    cv_results = cross_validate(model, data, target, scoring=scoring)
+    mse = -cv_results["test_neg_mean_squared_error"]
+    mae = -cv_results["test_neg_mean_absolute_error"]
+    scores["loss"].append(loss_func)
+    scores["MSE"].append(f"{mse.mean():.1f} ± {mse.std():.1f}")
+    scores["MAE"].append(f"{mae.mean():.1f} ± {mae.std():.1f}")
+scores = pd.DataFrame(scores)
+scores.set_index("loss", inplace=True)
+scores
+
+# %% [markdown] tags=["solution"]
+# Even if the score distributions overlap due to the presence of outliers in the
+# dataset, it is true that the average MSE is lower when `loss="squared_error`,
+# whereas the average MAE is lower when `loss="absolute_error` as expected.
+#
+# If you feel like going beyond the contents of this MOOC, you can change try
+# different combinations of loss function and evaluation metrics.

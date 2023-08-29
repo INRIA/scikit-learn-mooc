@@ -127,5 +127,5 @@ scores
 # dataset, it is true that the average MSE is lower when `loss="squared_error`,
 # whereas the average MAE is lower when `loss="absolute_error` as expected.
 #
-# If you feel like going beyond the contents of this MOOC, you can change try
-# different combinations of loss function and evaluation metrics.
+# If you feel like going beyond the contents of this MOOC, you can try different
+# combinations of loss function and evaluation metrics.

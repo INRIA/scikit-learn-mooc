@@ -392,3 +392,32 @@ _ = disp.ax_.set_title("Receiver Operating Characteristic curve")
 # the ROC-AUC is 0.5. Indeed, we show the generalization performance of a dummy
 # classifier (the orange dashed line) to show that even the worst generalization
 # performance obtained will be above this line.
+#
+# Instead of using a dummy classifier, you can use the parameter `plot_chance_level`
+# available in the ROC and PR displays:
+
+# %%
+fig, axs = plt.subplots(ncols=2, nrows=1, figsize=(15, 7))
+
+PrecisionRecallDisplay.from_estimator(
+    classifier,
+    data_test,
+    target_test,
+    pos_label="donated",
+    marker="+",
+    plot_chance_level=True,
+    chance_level_kw={"color": "tab:orange", "linestyle": "--"},
+    ax=axs[0],
+)
+RocCurveDisplay.from_estimator(
+    classifier,
+    data_test,
+    target_test,
+    pos_label="donated",
+    marker="+",
+    plot_chance_level=True,
+    chance_level_kw={"color": "tab:orange", "linestyle": "--"},
+    ax=axs[1],
+)
+
+_ = fig.suptitle("PR and ROC curves")

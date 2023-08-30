@@ -104,7 +104,6 @@ print(
 
 # %%
 # solution
-import matplotlib.pyplot as plt
 import numpy as np
 
 from sklearn.model_selection import ValidationCurveDisplay
@@ -163,8 +162,7 @@ LearningCurveDisplay.from_estimator(
     n_jobs=2,
 )
 
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
-_ = plt.title("Learning curve for support vector machine")
+_ = disp.ax_.set(title="Learning curve for support vector machine")
 
 # %% [markdown] tags=["solution"]
 # We observe that adding new samples to the training dataset does not seem to

@@ -111,7 +111,7 @@ from sklearn.model_selection import ValidationCurveDisplay
 
 gammas = np.logspace(-3, 2, num=30)
 param_name = "svc__gamma"
-ValidationCurveDisplay.from_estimator(
+disp = ValidationCurveDisplay.from_estimator(
     model,
     data,
     target,

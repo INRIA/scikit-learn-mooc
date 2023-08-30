@@ -139,10 +139,8 @@ import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
 fig, ax = plt.subplots(figsize=(10, 10))
-weights_linear_regression.boxplot(color=color, vert=False, grid=False, ax=ax)
-_ = ax.set(
-    title="Linear regression weights (linear scale)",
-)
+weights_linear_regression.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(title="Linear regression weights (linear scale)")
 
 # %% [markdown]
 # By looking at the bar plot above it would seem that most of the features are
@@ -150,9 +148,10 @@ _ = ax.set(
 # scale as the extremely large span of `"YrSold"`. Instead we can use a
 # symmetric log scale for the plot.
 
+# %%
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
 fig, ax = plt.subplots(figsize=(10, 10))
-weights_linear_regression.boxplot(color=color, vert=False, grid=False, ax=ax)
+weights_linear_regression.plot.box(color=color, vert=False, ax=ax)
 _ = ax.set(
     title="Linear regression weights (symmetric log scale)",
     xscale="symlog",
@@ -217,12 +216,9 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, axs = plt.subplots(ncols=2, figsize=(16, 10), sharey=True)
-weights_ridge.boxplot(color=color, vert=False, grid=False, ax=axs[0])
-weights_ridge.boxplot(color=color, vert=False, grid=False, ax=axs[1])
-axs[0].set(title="linear scale")
-axs[1].set(title="symmetric log scale", xscale="symlog")
-_ = plt.suptitle("Ridge regression weights")
+fig, ax = plt.subplots(figsize=(8, 10))
+weights_ridge.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(title="Ridge regression weights")
 
 # %% [markdown]
 # By comparing the order of magnitude of the weights on this plot with respect
@@ -369,16 +365,9 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, axs = plt.subplots(ncols=2, figsize=(16, 10), sharey=True)
-weights_ridge_scaled_data.boxplot(
-    color=color, vert=False, grid=False, ax=axs[0]
-)
-weights_ridge_scaled_data.boxplot(
-    color=color, vert=False, grid=False, ax=axs[1]
-)
-axs[0].set(title="linear scale")
-axs[1].set(title="symmetric log scale", xscale="symlog")
-_ = plt.suptitle("Ridge regression weights with data scaling and large alpha")
+fig, ax = plt.subplots(figsize=(8, 10))
+weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(title="Ridge regression weights with data scaling and large alpha")
 
 # %% [markdown]
 # When examining the weight values, we notice that as the `alpha` value

@@ -159,9 +159,9 @@ _ = ax.set(
 )
 
 # %% [markdown]
-# Observe that some coefficents are extremely large while others are extremely
+# Observe that some coefficients are extremely large while others are extremely
 # small, yet non-zero. Furthermore, the coefficient values can be very unstable
-# accross cross-validation folds.
+# across cross-validation folds.
 #
 # We can force the linear regression model to consider all features in a more
 # homogeneous manner. In fact, we could force large positive or negative

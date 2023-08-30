@@ -95,7 +95,7 @@ scores
 # %% [markdown] tags=["solution"]
 # In the Regression Metrics notebook, we introduced the concept of loss function,
 # which is the metric optimized when training a model. In the case of a
-# linear regression, the fitting process consists in minimizing the mean squared
+# `LinearRegression`, the fitting process consists in minimizing the mean squared
 # error (MSE). Some estimators, such as the `HistGradientBoostingRegressor`, can
 # use different loss functions, to be set using the `loss` hyperparameter.
 #
@@ -120,8 +120,7 @@ for loss_func in loss_functions:
     scores["MSE"].append(f"{mse.mean():.1f} ± {mse.std():.1f}")
     scores["MAE"].append(f"{mae.mean():.1f} ± {mae.std():.1f}")
 scores = pd.DataFrame(scores)
-scores.set_index("loss", inplace=True)
-scores
+scores.set_index("loss")
 
 # %% [markdown] tags=["solution"]
 # Even if the score distributions overlap due to the presence of outliers in the

@@ -119,10 +119,11 @@ disp = ValidationCurveDisplay.from_estimator(
     std_display_style="errorbar",
     n_jobs=2,
 )
-
-plt.xlabel("Maximum depth of decision tree")
-plt.ylabel("Mean absolute error (k$)")
-_ = plt.title("Validation curve for decision tree")
+_ = disp.ax_.set(
+    xlabel="Maximum depth of decision tree",
+    ylabel="Mean absolute error (k$)",
+    title="Validate curve for decision tree",
+)
 
 # %% [markdown]
 # The validation curve can be divided into three areas:

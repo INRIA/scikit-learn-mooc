@@ -394,7 +394,7 @@ _ = disp.ax_.set_title("Receiver Operating Characteristic curve")
 # performance obtained will be above this line.
 #
 # Instead of using a dummy classifier, you can use the parameter `plot_chance_level`
-# that the ROC and PR curves have implemented in scikit-learn:
+# available in the ROC and PR displays:
 
 # %%
 fig, axs = plt.subplots(ncols=2, nrows=1, figsize=(15, 7))
@@ -420,4 +420,4 @@ RocCurveDisplay.from_estimator(
     ax=axs[1],
 )
 
-_ = plt.suptitle("PR and ROC curves")
+_ = fig.suptitle("PR and ROC curves")

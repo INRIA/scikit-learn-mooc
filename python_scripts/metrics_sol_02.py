@@ -131,3 +131,22 @@ scores.set_index("loss")
 #
 # If you feel like going beyond the contents of this MOOC, you can try different
 # combinations of loss functions and evaluation metrics.
+#
+# Notice that there are some metrics that cannot be directly optimized by
+# optimizing a loss function. This is the case for metrics that evolve in a
+# discontinuous manner with respect to the internal parameters of the model, as
+# learning solvers based on gradient descent or similar optimizers require
+# continuity (the details are belong the scope of this MOOC).
+#
+# For instance, classification models are often evaluated using metrics computed
+# on hard class predictions (i.e. whether a sample belongs to a given class)
+# rather than from continuous values such as
+# [`predict_proba`](https://scikit-learn.org/stable/glossary.html#term-predict_proba)
+# (i.e. the estimated probability of belonging to said given class). Because of
+# this, classifiers are typically trained by optimizing a loss function computed
+# from some continuous output of the model. We call it a "surrogate loss" as it
+# substitutes the metric of interest. For instance `LogisticRegression`
+# minimizes the `log_loss` applied to the `predict_proba` output of the model.
+# By minimizing the surrogate loss, we maximize the accuracy. However
+# scikit-learn does not provide surrogate losses for all possible classification
+# metrics.

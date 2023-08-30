@@ -99,7 +99,7 @@ print(
 # expect features such as `PoolArea * YrSold` to be very predictive.
 #
 # To analyze the weights of the model, we can create a dataframe. The columns of
-# the dataframe will contain the feature names, while the rows will store the
+# the dataframe contains the feature names, while the rows store the
 # coefficients of each model of a given cross-validation fold.
 #
 # In order to obtain the feature names associated with each feature combination,

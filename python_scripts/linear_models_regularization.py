@@ -221,20 +221,20 @@ weights_ridge.plot.box(color=color, vert=False, ax=ax)
 _ = ax.set(title="Ridge regression weights")
 
 # %% [markdown]
-# By comparing the order of magnitude of the weights on this plot with respect
-# to the previous plot, we see that a ridge model enforces all weights to lay in
-# a more similar scale, while the overall magnitude of the weights is shrunk
-# towards zero with respect to the linear regression model.
+# Notice that the overall magnitudes of the weights are shrunk
+# (yet non-zero!) with respect to the linear regression model. If you want to,
+# feel free to use a symmetric log scale in the previous plot.
 #
-# You can observe that the coefficients are still unstable from one fold to
-# another, and finally, the results can vary a lot depending on the choice of
-# the solver (for instance try to set `solver="saga"` or `solver="lsqr"` instead
-# of `solver="cholesky"` and re-run the above cells).
+# You can also observe that even if the weights' values are less extreme, they
+# are still unstable from one fold to another. Even worst, the results can vary
+# a lot depending on the choice of the solver (for instance try to set
+# `solver="saga"` or `solver="lsqr"` instead of `solver="cholesky"` and re-run
+# the above cells).
 #
-# In the following we will attempt to resolve those remaining problems, by
+# In the following we attempt to resolve those remaining problems, by
 # focusing on two important aspects we omitted so far:
-# - the need to scale the data, and
-# - the need to search for the best regularization parameter.
+# - the need to **scale the data**, and
+# - the need to **search for the best regularization parameter**.
 #
 # ## Feature scaling and regularization
 #
@@ -334,7 +334,7 @@ _ = ax.set(title="Ridge regression weights with data scaling")
 # similar order of magnitude, i.e. they are more equally contributing. The
 # number of unstable weights also decreased.
 #
-# In the previous example, we fixed `alpha=10`. We can now check the impact of
+# In the previous model, we set `alpha=10`. We can now check the impact of
 # `alpha` by increasing it to a very large value.
 
 # %%

@@ -126,6 +126,8 @@ scores.set_index("loss")
 # Even if the score distributions overlap due to the presence of outliers in the
 # dataset, it is true that the average MSE is lower when `loss="squared_error`,
 # whereas the average MAE is lower when `loss="absolute_error` as expected.
+# Indeed, the choice of a loss function is made depending on the evaluation
+# metric that we want to optimize for a given use case.
 #
 # If you feel like going beyond the contents of this MOOC, you can try different
-# combinations of loss function and evaluation metrics.
+# combinations of loss functions and evaluation metrics.

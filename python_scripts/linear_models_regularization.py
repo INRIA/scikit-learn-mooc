@@ -325,16 +325,9 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, axs = plt.subplots(ncols=2, figsize=(16, 10), sharey=True)
-weights_ridge_scaled_data.boxplot(
-    color=color, vert=False, grid=False, ax=axs[0]
-)
-weights_ridge_scaled_data.boxplot(
-    color=color, vert=False, grid=False, ax=axs[1]
-)
-axs[0].set(title="linear scale")
-axs[1].set(title="symmetric log scale", xscale="symlog")
-_ = plt.suptitle("Ridge regression weights with data scaling")
+fig, ax = plt.subplots(figsize=(8, 10))
+weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(title="Ridge regression weights with data scaling")
 
 # %% [markdown]
 # Compared to the previous plots, we see that now most weight magnitudes have a

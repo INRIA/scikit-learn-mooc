@@ -22,7 +22,7 @@
 # * use a learning curve to determine the usefulness of adding new samples in
 #   the dataset when building a classifier.
 #
-# To make these experiments we will first load the blood transfusion dataset.
+# To make these experiments we first load the blood transfusion dataset.
 
 # %% [markdown]
 # ```{note}
@@ -38,7 +38,7 @@ data = blood_transfusion.drop(columns="Class")
 target = blood_transfusion["Class"]
 
 # %% [markdown]
-# We will use a support vector machine classifier (SVM). In its most simple
+# Here we use a support vector machine classifier (SVM). In its most simple
 # form, a SVM classifier is a linear classifier behaving similarly to a logistic
 # regression. Indeed, the optimization used to find the optimal weights of the
 # linear model are different but we don't need to know these details for the
@@ -78,23 +78,17 @@ target = blood_transfusion["Class"]
 # As previously mentioned, the parameter `gamma` is one of the parameters
 # controlling under/over-fitting in support vector machine with an RBF kernel.
 #
-# Evaluate the effect of the parameter `gamma` by using the
-# [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html)
-# function. You can leave the default `scoring=None` which is equivalent to
+# Evaluate the effect of the parameter `gamma` by using
+# [`sklearn.model_selection.ValidationCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ValidationCurveDisplay.html).
+# You can leave the default `scoring=None` which is equivalent to
 # `scoring="accuracy"` for classification problems. You can vary `gamma` between
 # `10e-3` and `10e2` by generating samples on a logarithmic scale with the help
 # of `np.logspace(-3, 2, num=30)`.
 #
-# Since we are manipulating a `Pipeline` the parameter name will be set to
-# `svc__gamma` instead of only `gamma`. You can retrieve the parameter name
-# using `model.get_params().keys()`. We will go more into detail regarding
-# accessing and setting hyperparameter in the next section.
-
-# %%
-# Write your code here.
-
-# %% [markdown]
-# Plot the validation curve for the train and test scores.
+# Since we are manipulating a `Pipeline` the parameter name is `svc__gamma`
+# instead of only `gamma`. You can retrieve the parameter name using
+# `model.get_params().keys()`. We will go more into detail regarding accessing
+# and setting hyperparameter in the next section.
 
 # %%
 # Write your code here.
@@ -102,7 +96,8 @@ target = blood_transfusion["Class"]
 # %% [markdown]
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize. Compute the learning curve
-# (using [`sklearn.model_selection.LearningCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html))
+# (using
+# [`sklearn.model_selection.LearningCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html))
 # by computing the train and test scores for different training dataset size.
 # Plot the train and test scores with respect to the number of samples.
 

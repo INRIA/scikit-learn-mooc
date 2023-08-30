@@ -16,7 +16,7 @@
 # * use a learning curve to determine the usefulness of adding new samples in
 #   the dataset when building a classifier.
 #
-# To make these experiments we will first load the blood transfusion dataset.
+# To make these experiments we first load the blood transfusion dataset.
 
 # %% [markdown]
 # ```{note}
@@ -32,7 +32,7 @@ data = blood_transfusion.drop(columns="Class")
 target = blood_transfusion["Class"]
 
 # %% [markdown]
-# We will use a support vector machine classifier (SVM). In its most simple
+# Here we use a support vector machine classifier (SVM). In its most simple
 # form, a SVM classifier is a linear classifier behaving similarly to a logistic
 # regression. Indeed, the optimization used to find the optimal weights of the
 # linear model are different but we don't need to know these details for the
@@ -90,62 +90,44 @@ print(
 # As previously mentioned, the parameter `gamma` is one of the parameters
 # controlling under/over-fitting in support vector machine with an RBF kernel.
 #
-# Evaluate the effect of the parameter `gamma` by using the
-# [`sklearn.model_selection.validation_curve`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html)
-# function. You can leave the default `scoring=None` which is equivalent to
+# Evaluate the effect of the parameter `gamma` by using
+# [`sklearn.model_selection.ValidationCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ValidationCurveDisplay.html).
+# You can leave the default `scoring=None` which is equivalent to
 # `scoring="accuracy"` for classification problems. You can vary `gamma` between
 # `10e-3` and `10e2` by generating samples on a logarithmic scale with the help
 # of `np.logspace(-3, 2, num=30)`.
 #
-# Since we are manipulating a `Pipeline` the parameter name will be set to
-# `svc__gamma` instead of only `gamma`. You can retrieve the parameter name
-# using `model.get_params().keys()`. We will go more into detail regarding
-# accessing and setting hyperparameter in the next section.
+# Since we are manipulating a `Pipeline` the parameter name is `svc__gamma`
+# instead of only `gamma`. You can retrieve the parameter name using
+# `model.get_params().keys()`. We will go more into detail regarding accessing
+# and setting hyperparameter in the next section.
 
 # %%
 # solution
 import numpy as np
-from sklearn.model_selection import validation_curve
+
+from sklearn.model_selection import ValidationCurveDisplay
 
 gammas = np.logspace(-3, 2, num=30)
 param_name = "svc__gamma"
-train_scores, test_scores = validation_curve(
+disp = ValidationCurveDisplay.from_estimator(
     model,
     data,
     target,
     param_name=param_name,
     param_range=gammas,
     cv=cv,
+    scoring="accuracy",  # this is already the default for classifiers
+    score_name="Accuracy",
+    std_display_style="errorbar",
+    errorbar_kw={"alpha": 0.7},  # transparency for better visualization
     n_jobs=2,
 )
 
-# %% [markdown]
-# Plot the validation curve for the train and test scores.
-
-# %%
-# solution
-import matplotlib.pyplot as plt
-
-plt.errorbar(
-    gammas,
-    train_scores.mean(axis=1),
-    yerr=train_scores.std(axis=1),
-    alpha=0.95,
-    label="Training score",
+_ = disp.ax_.set(
+    xlabel=r"Value of hyperparameter $\gamma$",
+    title="Validation curve of support vector machine",
 )
-plt.errorbar(
-    gammas,
-    test_scores.mean(axis=1),
-    yerr=test_scores.std(axis=1),
-    alpha=0.5,
-    label="Testing score",
-)
-plt.legend()
-
-plt.xscale("log")
-plt.xlabel(r"Value of hyperparameter $\gamma$")
-plt.ylabel("Accuracy score")
-_ = plt.title("Validation score of support vector machine")
 
 # %% [markdown] tags=["solution"]
 # Looking at the curve, we can clearly identify the over-fitting regime of the
@@ -156,7 +138,8 @@ _ = plt.title("Validation score of support vector machine")
 # %% [markdown]
 # Now, you can perform an analysis to check whether adding new samples to the
 # dataset could help our model to better generalize. Compute the learning curve
-# (using [`sklearn.model_selection.LearningCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html))
+# (using
+# [`sklearn.model_selection.LearningCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html))
 # by computing the train and test scores for different training dataset size.
 # Plot the train and test scores with respect to the number of samples.
 
@@ -179,8 +162,7 @@ LearningCurveDisplay.from_estimator(
     n_jobs=2,
 )
 
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
-_ = plt.title("Learning curve for support vector machine")
+_ = disp.ax_.set(title="Learning curve for support vector machine")
 
 # %% [markdown] tags=["solution"]
 # We observe that adding new samples to the training dataset does not seem to

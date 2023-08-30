@@ -690,7 +690,7 @@ validation curve;</p></li>
 <li><p>use a learning curve to determine the usefulness of adding new samples in
 the dataset when building a classifier.</p></li>
 </ul>
-<p>To make these experiments we will first load the blood transfusion dataset.</p>
+<p>To make these experiments we first load the blood transfusion dataset.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want a deeper overview regarding this dataset, you can refer to the
@@ -707,7 +707,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 </div>
-<p>We will use a support vector machine classifier (SVM). In its most simple
+<p>Here we use a support vector machine classifier (SVM). In its most simple
 form, a SVM classifier is a linear classifier behaving similarly to a logistic
 regression. Indeed, the optimization used to find the optimal weights of the
 linear model are different but we don’t need to know these details for the
@@ -748,24 +748,16 @@ let the other parameters to the default.</p>
 </div>
 <p>As previously mentioned, the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> is one of the parameters
 controlling under/over-fitting in support vector machine with an RBF kernel.</p>
-<p>Evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> by using the
-<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.validation_curve.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.validation_curve</span></code></a>
-function. You can leave the default <code class="docutils literal notranslate"><span class="pre">scoring=None</span></code> which is equivalent to
+<p>Evaluate the effect of the parameter <code class="docutils literal notranslate"><span class="pre">gamma</span></code> by using
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ValidationCurveDisplay.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.ValidationCurveDisplay</span></code></a>.
+You can leave the default <code class="docutils literal notranslate"><span class="pre">scoring=None</span></code> which is equivalent to
 <code class="docutils literal notranslate"><span class="pre">scoring=&quot;accuracy&quot;</span></code> for classification problems. You can vary <code class="docutils literal notranslate"><span class="pre">gamma</span></code> between
 <code class="docutils literal notranslate"><span class="pre">10e-3</span></code> and <code class="docutils literal notranslate"><span class="pre">10e2</span></code> by generating samples on a logarithmic scale with the help
 of <code class="docutils literal notranslate"><span class="pre">np.logspace(-3,</span> <span class="pre">2,</span> <span class="pre">num=30)</span></code>.</p>
-<p>Since we are manipulating a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> the parameter name will be set to
-<code class="docutils literal notranslate"><span class="pre">svc__gamma</span></code> instead of only <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can retrieve the parameter name
-using <code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into detail regarding
-accessing and setting hyperparameter in the next section.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Plot the validation curve for the train and test scores.</p>
+<p>Since we are manipulating a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> the parameter name is <code class="docutils literal notranslate"><span class="pre">svc__gamma</span></code>
+instead of only <code class="docutils literal notranslate"><span class="pre">gamma</span></code>. You can retrieve the parameter name using
+<code class="docutils literal notranslate"><span class="pre">model.get_params().keys()</span></code>. We will go more into detail regarding accessing
+and setting hyperparameter in the next section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -775,7 +767,8 @@ accessing and setting hyperparameter in the next section.</p>
 </div>
 <p>Now, you can perform an analysis to check whether adding new samples to the
 dataset could help our model to better generalize. Compute the learning curve
-(using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.LearningCurveDisplay</span></code></a>)
+(using
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.LearningCurveDisplay.html"><code class="docutils literal notranslate"><span class="pre">sklearn.model_selection.LearningCurveDisplay</span></code></a>)
 by computing the train and test scores for different training dataset size.
 Plot the train and test scores with respect to the number of samples.</p>
 <div class="cell docutils container">

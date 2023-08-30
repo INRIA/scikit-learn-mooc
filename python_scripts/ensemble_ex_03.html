@@ -689,7 +689,7 @@ the number of estimators is not properly chosen;</p></li>
 <li><p>use the early-stopping strategy to avoid adding unnecessary trees, to get
 the best generalization performances.</p></li>
 </ul>
-<p>We will use the California housing dataset to conduct our experiments.</p>
+<p>We use the California housing dataset to conduct our experiments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -728,7 +728,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <p>For both the gradient-boosting and random forest models, create a validation
 curve using the training set to assess the impact of the number of trees on
-the performance of each model. Evaluate the list of parameters <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">100]</span></code> and use the mean absolute error.</p>
+the performance of each model. Evaluate the list of parameters <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">np.array([1,</span> <span class="pre">2,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">100])</span></code> and use the mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -736,17 +736,17 @@ the performance of each model. Evaluate the list of parameters <code class="docu
 </div>
 </div>
 </div>
-<p>Both gradient boosting and random forest models will always improve when
-increasing the number of trees in the ensemble. However, it will reach a
-plateau where adding new trees will just make fitting and scoring slower.</p>
+<p>Both gradient boosting and random forest models improve when increasing the
+number of trees in the ensemble. However, the scores reach a plateau where
+adding new trees just makes fitting and scoring slower.</p>
 <p>To avoid adding new unnecessary tree, unlike random-forest gradient-boosting
-offers an early-stopping option. Internally, the algorithm will use an
+offers an early-stopping option. Internally, the algorithm uses an
 out-of-sample set to compute the generalization performance of the model at
 each addition of a tree. Thus, if the generalization performance is not
-improving for several iterations, it will stop adding trees.</p>
+improving for several iterations, it stops adding trees.</p>
 <p>Now, create a gradient-boosting model with <code class="docutils literal notranslate"><span class="pre">n_estimators=1_000</span></code>. This number
-of trees will be too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such that
-the gradient boosting fitting will stop after adding 5 trees that do not
+of trees is certainly too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such
+that the gradient boosting fitting stops after adding 5 trees that do not
 improve the overall generalization performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

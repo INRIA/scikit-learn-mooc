@@ -689,7 +689,7 @@ the number of estimators is not properly chosen;</p></li>
 <li><p>use the early-stopping strategy to avoid adding unnecessary trees, to get
 the best generalization performances.</p></li>
 </ul>
-<p>We will use the California housing dataset to conduct our experiments.</p>
+<p>We use the California housing dataset to conduct our experiments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -734,99 +734,50 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <p>For both the gradient-boosting and random forest models, create a validation
 curve using the training set to assess the impact of the number of trees on
-the performance of each model. Evaluate the list of parameters <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">100]</span></code> and use the mean absolute error.</p>
+the performance of each model. Evaluate the list of parameters <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">np.array([1,</span> <span class="pre">2,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">100])</span></code> and use the mean absolute error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">validation_curve</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">param_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
-<span class="n">gbdt_train_scores</span><span class="p">,</span> <span class="n">gbdt_validation_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
-    <span class="n">gbdt</span><span class="p">,</span>
-    <span class="n">data_train</span><span class="p">,</span>
-    <span class="n">target_train</span><span class="p">,</span>
-    <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span>
-    <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
-    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">gbdt_train_errors</span><span class="p">,</span> <span class="n">gbdt_validation_errors</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="o">-</span><span class="n">gbdt_train_scores</span><span class="p">,</span>
-    <span class="o">-</span><span class="n">gbdt_validation_scores</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ValidationCurveDisplay</span>
 
-<span class="n">forest_train_scores</span><span class="p">,</span> <span class="n">forest_validation_scores</span> <span class="o">=</span> <span class="n">validation_curve</span><span class="p">(</span>
+<span class="n">param_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+<span class="n">disp</span> <span class="o">=</span> <span class="n">ValidationCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">forest</span><span class="p">,</span>
-    <span class="n">data_train</span><span class="p">,</span>
-    <span class="n">target_train</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">,</span>
     <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span>
     <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span>
     <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">negate_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">std_display_style</span><span class="o">=</span><span class="s2">&quot;errorbar&quot;</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">forest_train_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">forest_train_scores</span>
-<span class="n">forest_validation_errors</span> <span class="o">=</span> <span class="o">-</span><span class="n">forest_validation_scores</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_solution docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
-    <span class="n">param_range</span><span class="p">,</span>
-    <span class="n">gbdt_train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">yerr</span><span class="o">=</span><span class="n">gbdt_train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training&quot;</span><span class="p">,</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Number of trees in the forest&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Validation curve for random forest&quot;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
-    <span class="n">param_range</span><span class="p">,</span>
-    <span class="n">gbdt_validation_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">yerr</span><span class="o">=</span><span class="n">gbdt_validation_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cross-validation&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Gradient boosting decision tree&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;# estimators&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean absolute error in k$</span><span class="se">\n</span><span class="s2">(smaller is better)&quot;</span><span class="p">)</span>
-
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
-    <span class="n">param_range</span><span class="p">,</span>
-    <span class="n">forest_train_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">yerr</span><span class="o">=</span><span class="n">forest_train_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span>
-    <span class="n">param_range</span><span class="p">,</span>
-    <span class="n">forest_validation_errors</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">yerr</span><span class="o">=</span><span class="n">forest_validation_errors</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cross-validation&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Random forest&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;# estimators&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Validation curves&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7733217eb65e5efeb51c518586638448df63edcd4105b461e53d2693b36689ba.png" src="../_images/7733217eb65e5efeb51c518586638448df63edcd4105b461e53d2693b36689ba.png" />
+<img alt="../_images/341ad572392dbdec09555f2e2815ecf6bba74821d159f888b7a5e54fb5e9485f.png" src="../_images/341ad572392dbdec09555f2e2815ecf6bba74821d159f888b7a5e54fb5e9485f.png" />
 </div>
 </div>
-<p>Both gradient boosting and random forest models will always improve when
-increasing the number of trees in the ensemble. However, it will reach a
-plateau where adding new trees will just make fitting and scoring slower.</p>
+<p>Both gradient boosting and random forest models improve when increasing the
+number of trees in the ensemble. However, the scores reach a plateau where
+adding new trees just makes fitting and scoring slower.</p>
 <p>To avoid adding new unnecessary tree, unlike random-forest gradient-boosting
-offers an early-stopping option. Internally, the algorithm will use an
+offers an early-stopping option. Internally, the algorithm uses an
 out-of-sample set to compute the generalization performance of the model at
 each addition of a tree. Thus, if the generalization performance is not
-improving for several iterations, it will stop adding trees.</p>
+improving for several iterations, it stops adding trees.</p>
 <p>Now, create a gradient-boosting model with <code class="docutils literal notranslate"><span class="pre">n_estimators=1_000</span></code>. This number
-of trees will be too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such that
-the gradient boosting fitting will stop after adding 5 trees that do not
+of trees is certainly too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such
+that the gradient boosting fitting stops after adding 5 trees that do not
 improve the overall generalization performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -838,7 +789,7 @@ improve the overall generalization performance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>107
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>169
 </pre></div>
 </div>
 </div>
@@ -861,7 +812,7 @@ with the values observed in the validation curve.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 37.32 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 35.74 k$
 </pre></div>
 </div>
 </div>

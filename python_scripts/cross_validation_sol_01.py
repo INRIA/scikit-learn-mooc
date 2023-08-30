@@ -125,8 +125,10 @@ disp = ValidationCurveDisplay.from_estimator(
     n_jobs=2,
 )
 
-plt.xlabel(r"Value of hyperparameter $\gamma$")
-_ = plt.title("Validation curve of support vector machine")
+_ = disp.ax_.set(
+    xlabel=r"Value of hyperparameter $\gamma$",
+    title="Validation curve of support vector machine",
+)
 
 # %% [markdown] tags=["solution"]
 # Looking at the curve, we can clearly identify the over-fitting regime of the

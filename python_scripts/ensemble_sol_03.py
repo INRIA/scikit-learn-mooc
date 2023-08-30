@@ -68,7 +68,7 @@ import numpy as np
 from sklearn.model_selection import ValidationCurveDisplay
 
 param_range = np.array([1, 2, 5, 10, 20, 50, 100])
-ValidationCurveDisplay.from_estimator(
+disp = ValidationCurveDisplay.from_estimator(
     forest,
     data,
     target,
@@ -80,9 +80,11 @@ ValidationCurveDisplay.from_estimator(
     n_jobs=2,
 )
 
-plt.xlabel("Number of trees in the forest")
-plt.ylabel("Mean absolute error (k$)")
-_ = plt.title("Validation curve for random forest")
+_ = disp.ax_.set(
+    xlabel="Number of trees in the forest",
+    ylabel="Mean absolute error (k$)",
+    title="Validation curve for random forest",
+)
 
 # %% [markdown]
 # Both gradient boosting and random forest models improve when increasing the

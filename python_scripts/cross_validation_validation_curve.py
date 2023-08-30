@@ -107,7 +107,7 @@ _ = plt.title("Train and test errors distribution via cross-validation")
 from sklearn.model_selection import ValidationCurveDisplay
 
 max_depth = [1, 5, 10, 15, 20, 25]
-ValidationCurveDisplay.from_estimator(
+disp = ValidationCurveDisplay.from_estimator(
     regressor,
     data,
     target,

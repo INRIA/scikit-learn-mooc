@@ -94,9 +94,9 @@ scores
 
 # %% [markdown] tags=["solution"]
 # In the Regression Metrics notebook, we introduced the concept of loss function,
-# which is the metric optimized when training a model. In the case of a
+# which is the metric optimized when training a model. In the case of
 # `LinearRegression`, the fitting process consists in minimizing the mean squared
-# error (MSE). Some estimators, such as the `HistGradientBoostingRegressor`, can
+# error (MSE). Some estimators, such as `HistGradientBoostingRegressor`, can
 # use different loss functions, to be set using the `loss` hyperparameter.
 #
 # Notice that the evaluation metrics and the loss functions are not necessarily

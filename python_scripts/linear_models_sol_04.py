@@ -15,7 +15,7 @@
 # `penalty="l2"` regularization (which happens to be the default in
 # scikit-learn) to find by yourself the effect of the parameter `C`.
 #
-# We will start by loading the dataset.
+# We start by loading the dataset.
 
 # %% [markdown]
 # ```{note}

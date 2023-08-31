@@ -315,3 +315,17 @@ ax = sns.scatterplot(
 )
 ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
+
+# %% [markdown]
+# ## Notebook Recap
+#
+# In this notebook we explored several ways to expand a single numerical feature
+# into several non-linearly derived new features. This makes our machine
+# learning pipeline more expressive and less likely to underfit, even if the
+# last stage of the pipeline is a simple linear regression model.
+
+# For the sake of simplicity, we introduced those transformers on a toy
+# regression problem with a single input feature. However, non-linear feature
+# transformers such as Nystroem can further improve the expressiveness of
+# machine learning pipelines to model non-linear interactions between features.
+# We will explore this possibility in the next exercise.

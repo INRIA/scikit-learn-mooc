@@ -737,8 +737,8 @@ the default score).</p>
 </div>
 </div>
 </div>
-<p>Then, instead of using the <span class="math notranslate nohighlight">\(R^2\)</span> score, use the mean absolute error. You need
-to refer to the documentation for the <code class="docutils literal notranslate"><span class="pre">scoring</span></code> parameter.</p>
+<p>Then, instead of using the <span class="math notranslate nohighlight">\(R^2\)</span> score, use the mean absolute error (MAE). You
+may need to refer to the documentation for the <code class="docutils literal notranslate"><span class="pre">scoring</span></code> parameter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -840,6 +840,103 @@ compute the <span class="math notranslate nohighlight">\(R^2\)</span> score and 
 </table>
 </div></div></div>
 </div>
+<p>In the Regression Metrics notebook, we introduced the concept of loss function,
+which is the metric optimized when training a model. In the case of
+<code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code>, the fitting process consists in minimizing the mean squared
+error (MSE). Some estimators, such as <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingRegressor</span></code>, can
+use different loss functions, to be set using the <code class="docutils literal notranslate"><span class="pre">loss</span></code> hyperparameter.</p>
+<p>Notice that the evaluation metrics and the loss functions are not necessarily
+the same. Let’s see an example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingRegressor</span>
+
+<span class="n">scoring</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span> <span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">]</span>
+<span class="n">loss_functions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;squared_error&quot;</span><span class="p">,</span> <span class="s2">&quot;absolute_error&quot;</span><span class="p">]</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">loss_func</span> <span class="ow">in</span> <span class="n">loss_functions</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">HistGradientBoostingRegressor</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">loss_func</span><span class="p">)</span>
+    <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_neg_mean_squared_error&quot;</span><span class="p">]</span>
+    <span class="n">mae</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_neg_mean_absolute_error&quot;</span><span class="p">]</span>
+    <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_func</span><span class="p">)</span>
+    <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;MSE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mse</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">mse</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">scores</span><span class="p">[</span><span class="s2">&quot;MAE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mae</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">mae</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+<span class="n">scores</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MSE</th>
+      <th>MAE</th>
+    </tr>
+    <tr>
+      <th>loss</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>squared_error</th>
+      <td>892.2 ± 243.6</td>
+      <td>17.6 ± 0.9</td>
+    </tr>
+    <tr>
+      <th>absolute_error</th>
+      <td>923.8 ± 344.6</td>
+      <td>16.7 ± 1.5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Even if the score distributions overlap due to the presence of outliers in the
+dataset, it is true that the average MSE is lower when <code class="docutils literal notranslate"><span class="pre">loss=&quot;squared_error</span></code>,
+whereas the average MAE is lower when <code class="docutils literal notranslate"><span class="pre">loss=&quot;absolute_error</span></code> as expected.
+Indeed, the choice of a loss function is made depending on the evaluation
+metric that we want to optimize for a given use case.</p>
+<p>If you feel like going beyond the contents of this MOOC, you can try different
+combinations of loss functions and evaluation metrics.</p>
+<p>Notice that there are some metrics that cannot be directly optimized by
+optimizing a loss function. This is the case for metrics that evolve in a
+discontinuous manner with respect to the internal parameters of the model, as
+learning solvers based on gradient descent or similar optimizers require
+continuity (the details are beyond the scope of this MOOC).</p>
+<p>For instance, classification models are often evaluated using metrics computed
+on hard class predictions (i.e. whether a sample belongs to a given class)
+rather than from continuous values such as
+<a class="reference external" href="https://scikit-learn.org/stable/glossary.html#term-predict_proba"><code class="docutils literal notranslate"><span class="pre">predict_proba</span></code></a>
+(i.e. the estimated probability of belonging to said given class). Because of
+this, classifiers are typically trained by optimizing a loss function computed
+from some continuous output of the model. We call it a “surrogate loss” as it
+substitutes the metric of interest. For instance <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>
+minimizes the <code class="docutils literal notranslate"><span class="pre">log_loss</span></code> applied to the <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> output of the model.
+By minimizing the surrogate loss, we maximize the accuracy. However
+scikit-learn does not provide surrogate losses for all possible classification
+metrics.</p>
 </section>
 
     <script type="text/x-thebe-config">

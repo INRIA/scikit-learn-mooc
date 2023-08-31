@@ -14,17 +14,24 @@
 # %% [markdown]
 # # 📝 Exercise M4.03
 #
-# In all previous notebooks, we only used a single feature in `data`. But we
-# have already shown that we could add new features to make the model more
-# expressive by deriving new features, based on the original feature.
+# In the previous notebook, we showed that we can add new features based on the
+# original feature to make the model more expressive, for instance `x ** 2` or `x ** 3`.
+# In that case we only used a single feature in `data`.
 #
 # The aim of this notebook is to train a linear regression algorithm on a
-# dataset with more than a single feature.
+# dataset with more than a single feature. In such a "multi-dimensional" feature
+# space we can derive new features of the form `x1 * x2`, `x2 * x3`,
+# etc. Products of features are usually called "non-linear or
+# multiplicative interactions" between features.
 #
-# We will load a dataset about house prices in California. The dataset consists
-# of 8 features regarding the demography and geography of districts in
-# California and the aim is to predict the median house price of each district.
-# We will use all 8 features to predict the target, the median house price.
+# Feature engineering can be an important step of a model pipeline as long as
+# the new features are expected to be predictive. For instance, think of a
+# classification model to decide if a patient has risk of developing a heart
+# disease. This would depend on the patient's Body Mass Index which is defined
+# as `weight / height ** 2`.
+#
+# We load the dataset penguins dataset. We first use a set of 3 numerical
+# features to predict the target, i.e. the body mass of the penguin.
 
 # %% [markdown]
 # ```{note}
@@ -33,10 +40,18 @@
 # ```
 
 # %%
-from sklearn.datasets import fetch_california_housing
+import pandas as pd
 
-data, target = fetch_california_housing(as_frame=True, return_X_y=True)
-target *= 100  # rescale the target in k$
+penguins = pd.read_csv("../datasets/penguins.csv")
+
+columns = ["Flipper Length (mm)", "Culmen Length (mm)", "Culmen Depth (mm)"]
+target_name = "Body Mass (g)"
+
+# Remove lines with missing values for the columns of interest
+penguins_non_missing = penguins[columns + [target_name]].dropna()
+
+data = penguins_non_missing[columns]
+target = penguins_non_missing[target_name]
 data.head()
 
 # %% [markdown]
@@ -48,24 +63,31 @@ data.head()
 
 # %% [markdown]
 # Execute a cross-validation with 10 folds and use the mean absolute error (MAE)
-# as metric. Be sure to *return* the fitted *estimators*.
+# as metric.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Compute the mean and std of the MAE in thousands of dollars (k$).
+# Compute the mean and std of the MAE in grams (g).
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Inspect the fitted model using a box plot to show the distribution of values
-# for the coefficients returned from the cross-validation. Hint: use the
-# function
-# [`df.plot.box()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.box.html)
-# to create a box plot.
+# Now create a pipeline using `make_pipeline` consisting of a
+# `PolynomialFeatures` and a linear regression. Set `degree=2` and
+# `interaction_only=True` to the feature engineering step. Remember not to
+# include the bias to avoid redundancies with the linear's regression intercept.
+#
+# Use the same strategy as before to cross-validate such a pipeline.
 
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Compute the mean and std of the MAE in grams (g) and compare with the results
+# without feature engineering.
 
 # %%
 # Write your code here.

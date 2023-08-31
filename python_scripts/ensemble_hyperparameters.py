@@ -143,7 +143,7 @@ print(
 # The difference is that the actual number of trees required by the model is
 # not directly set by the user but depends on the stopping criteria.
 #
-# The depth of the trees is controled by `max_depth` (or `max_leaf_nodes`). We
+# The depth of the trees is controlled by `max_depth` (or `max_leaf_nodes`). We
 # saw in the section on gradient-boosting that boosting algorithms fit the error
 # of the previous tree in the ensemble. Thus, fitting fully grown trees would be
 # detrimental. Indeed, the first tree of the ensemble would perfectly fit
@@ -221,8 +221,10 @@ print(f"On average, our HGBT regressor makes an error of {error:.2f} k$")
 #
 # We summarize these details in the following table:
 #
-# |**Bagging**  | **Boosting**|
-# |------------ | -------------|
-# |fit trees **independently** | fit trees **sequentially**|
-# |each **deep tree overfits** | each **shallow tree underfits**|
-# |averaging the tree predictions **reduces overfitting** | sequentially adding trees **reduces underfitting**|
+# | **Bagging**                                      | **Boosting**                                       |
+# |--------------------------------------------------|-----------------------------------------------------|
+# | fit trees **independently**                      | fit trees **sequentially**                          |
+# | each **deep tree overfits**                      | each **shallow tree underfits**                     |
+# | averaging the tree predictions **reduces overfitting** | sequentially adding trees **reduces underfitting** |
+# | generalization improves with the number of trees | too many trees may cause overfitting                |
+# | does not have a `learning_rate` parameter        | fitting the residuals is controlled by the `learning_rate` |

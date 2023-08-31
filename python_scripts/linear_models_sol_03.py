@@ -128,7 +128,7 @@ print(
 )
 
 # %% [markdown] tags=["solution"]
-# We can observe that the mean absolute error is lower and less spread with the
+# We observe that the mean absolute error is lower and less spread with the
 # enriched features. In this case the "interactions" are indeed predictive. In
 # the following notebook we will see what happens when the enriched features are
 # non-predictive and how to deal with this case.

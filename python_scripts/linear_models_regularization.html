@@ -730,13 +730,14 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 </div>
-<p>In one of the previous notebook, we showed that linear models could be used
+<p>In one of the previous notebooks, we showed that linear models could be used
 even when there is no linear relationship between the <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code>.
 For instance, one can use the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer to create
 additional features that capture some non-linear interactions between them.</p>
 <p>Here, we use this transformer to augment the feature space. Subsequently, we
-train a linear regression model. We use the out-of-sample test set to evaluate
-the generalization capabilities of our model.</p>
+train a linear regression model. We use cross-validation with
+<code class="docutils literal notranslate"><span class="pre">return_train_score=True</span></code> to evaluate both the train scores and the
+generalization capabilities of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
@@ -796,18 +797,20 @@ assess the generalization performance of our model.</p>
 </div>
 </div>
 </div>
-<p>The training score is much better than the testing score. Such a gap between
-the training and testing scores is an indication that our model overfitted the
-training set. Indeed, this is one of the dangers when augmenting the number of
-features with a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer. For instance, one does not
-expect features such as <code class="docutils literal notranslate"><span class="pre">PoolArea</span> <span class="pre">*</span> <span class="pre">YrSold</span></code> to be very predictive.</p>
-<p>We can create a dataframe to check the weights of the model: the columns
-contain the name of the features whereas the rows store the coefficients values
-of each model during the cross-validation.</p>
-<p>Since we used a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> to augment the data, we extract the
-feature names representative of each feature combination. Scikit-learn
-provides a <code class="docutils literal notranslate"><span class="pre">feature_names_in_</span></code> method for this purpose. First, let’s get the
-first fitted model from the cross-validation.</p>
+<p>The training error is in average one order of magnitude lower than the testing
+error (lower error is better). Such a gap between the training and testing
+scores is an indication that our model overfitted the training set. Indeed,
+this is one of the dangers when augmenting the number of features with a
+<code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> transformer. For instance, one does not expect features
+such as <code class="docutils literal notranslate"><span class="pre">PoolArea</span> <span class="pre">*</span> <span class="pre">YrSold</span></code> to be very predictive.</p>
+<p>To analyze the weights of the model, we can create a dataframe. The columns of
+the dataframe contain the feature names, while the rows store the coefficients
+of each model of a given cross-validation fold.</p>
+<p>In order to obtain the feature names associated with each feature combination,
+we need to extract them from the augmented data created by
+<code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code>. Fortunately, scikit-learn provides a convenient method
+called <code class="docutils literal notranslate"><span class="pre">feature_names_in_</span></code> for this purpose. Let’s begin by retrieving the
+coefficients from the model fitted in the first cross-validation fold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_first_fold</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -821,7 +824,7 @@ first fitted model from the cross-validation.</p>
                 (&#x27;linearregression&#x27;, LinearRegression())])</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">PolynomialFeatures</label><div class="sk-toggleable__content"><pre>PolynomialFeatures(include_bias=False)</pre></div></div></div><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div></div></div></div></div></div></div></div></div>
 </div>
 <p>Now, we can access the fitted <code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code> (step <code class="docutils literal notranslate"><span class="pre">-1</span></code> i.e. the last step
-of the model) to recover the feature names.</p>
+of the <code class="docutils literal notranslate"><span class="pre">linear_regression</span></code> pipeline) to recover the feature names.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">model_first_fold</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">feature_names_in_</span>
@@ -859,22 +862,39 @@ dataframe containing all the information.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linear regression weights (linear scale)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1bd250ebc5c0f403cfcb85e55762b50a66ee01577abd946e55c56be0206c3e8e.png" src="../_images/1bd250ebc5c0f403cfcb85e55762b50a66ee01577abd946e55c56be0206c3e8e.png" />
+</div>
+</div>
+<p>By looking at the bar plot above it would seem that most of the features are
+very close to zero, but this is just an effect of visualizing them on the same
+scale as the extremely large span of <code class="docutils literal notranslate"><span class="pre">&quot;YrSold&quot;</span></code>. Instead we can use a
+symmetric log scale for the plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linear regression weights&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linear regression weights (symmetric log scale)&quot;</span><span class="p">,</span>
     <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/24194a13ee55a4720494cfad9920dc4498368e099a8943904b40aeac99b9ec28.png" src="../_images/24194a13ee55a4720494cfad9920dc4498368e099a8943904b40aeac99b9ec28.png" />
+<img alt="../_images/bb6ca144f6e39f786c94602681606cd4f90d25dec7c2504fa889232686089a68.png" src="../_images/bb6ca144f6e39f786c94602681606cd4f90d25dec7c2504fa889232686089a68.png" />
 </div>
 </div>
-<p>Notice that we use a (symmetric) log scale for the bar plot. Observe that some
-coefficents are extremely large while others are extremely small. Furthermore,
-the coefficient values can be very unstable accross cross-validation folds.</p>
+<p>Observe that some coefficients are extremely large while others are extremely
+small, yet non-zero. Furthermore, the coefficient values can be very unstable
+across cross-validation folds.</p>
 <p>We can force the linear regression model to consider all features in a more
 homogeneous manner. In fact, we could force large positive or negative
 weights to shrink toward zero. This is known as regularization. We use a
@@ -983,9 +1003,9 @@ the predictive model. We will get to that in a bit.</p>
 </div>
 </div>
 </div>
-<p>We see that the training and testing scores are much closer, indicating that
-our model is less overfitting. We can compare the values of the weights of
-ridge with the un-regularized linear regression.</p>
+<p>We see that the training and testing scores get closer, indicating that our
+model is less overfitting (yet still overfitting!). We can compare the values
+of the weights of ridge with the un-regularized linear regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
@@ -996,32 +1016,29 @@ ridge with the un-regularized linear regression.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge weights&quot;</span><span class="p">,</span>
-    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge regression weights&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ec175b835c73ee8343f39c3b8855e7bf042774865fff69e9efa8fe2ef88a93d0.png" src="../_images/ec175b835c73ee8343f39c3b8855e7bf042774865fff69e9efa8fe2ef88a93d0.png" />
+<img alt="../_images/0d772be9df4cbf81cde4f5657ed294091c80727690c8b324c2c99b2a4b7e51e6.png" src="../_images/0d772be9df4cbf81cde4f5657ed294091c80727690c8b324c2c99b2a4b7e51e6.png" />
 </div>
 </div>
-<p>By comparing the order of magnitude of the weights on this plot with respect
-to the previous plot, we see that a ridge model enforces all weights to lay in
-a more similar scale, while the overall magnitude of the weights is shrunk
-towards zero with respect to the linear regression model.</p>
-<p>You can observe that the coefficients are still unstable from one fold to
-another, and finally, the results can vary a lot depending on the choice of
-the solver (for instance try to set <code class="docutils literal notranslate"><span class="pre">solver=&quot;saga&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">solver=&quot;lsqr&quot;</span></code> instead
-of <code class="docutils literal notranslate"><span class="pre">solver=&quot;cholesky&quot;</span></code> and re-run the above cells).</p>
-<p>In the following we will attempt to resolve those remaining problems, by
+<p>Notice that the overall magnitudes of the weights are shrunk
+(yet non-zero!) with respect to the linear regression model. If you want to,
+feel free to use a symmetric log scale in the previous plot.</p>
+<p>You can also observe that even if the weights’ values are less extreme, they
+are still unstable from one fold to another. Even worst, the results can vary
+a lot depending on the choice of the solver (for instance try to set
+<code class="docutils literal notranslate"><span class="pre">solver=&quot;saga&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">solver=&quot;lsqr&quot;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">solver=&quot;cholesky&quot;</span></code> and re-run
+the above cells).</p>
+<p>In the following we attempt to resolve those remaining problems, by
 focusing on two important aspects we omitted so far:</p>
 <ul class="simple">
-<li><p>the need to scale the data, and</p></li>
-<li><p>the need to search for the best regularization parameter.</p></li>
+<li><p>the need to <strong>scale the data</strong>, and</p></li>
+<li><p>the need to <strong>search for the best regularization parameter</strong>.</p></li>
 </ul>
 </section>
 <section id="feature-scaling-and-regularization">
@@ -1132,23 +1149,21 @@ changes in the weights.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_ridge_scaled_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge weights with data scaling&quot;</span><span class="p">,</span>
-    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge regression weights with data scaling&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f741381c334d509173217d6d442b520fad3582c791fba62af11efd1712eafa0e.png" src="../_images/f741381c334d509173217d6d442b520fad3582c791fba62af11efd1712eafa0e.png" />
+<img alt="../_images/386f3ee7cdf1e961ab2a3d0434c3e360550e27d44c05d47e3695bda75a8ee104.png" src="../_images/386f3ee7cdf1e961ab2a3d0434c3e360550e27d44c05d47e3695bda75a8ee104.png" />
 </div>
 </div>
-<p>Compare to the previous plots, we see that now all weight magnitudes are
-closer and that all features are more equally contributing.</p>
-<p>In the previous example, we fixed <code class="docutils literal notranslate"><span class="pre">alpha=10</span></code>. We can now check the impact of
-the value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> by increasing its value.</p>
+<p>Compared to the previous plots, we see that now most weight magnitudes have a
+similar order of magnitude, i.e. they are more equally contributing. The
+number of unstable weights also decreased.</p>
+<p>In the previous model, we set <code class="docutils literal notranslate"><span class="pre">alpha=10</span></code>. We can now check the impact of
+<code class="docutils literal notranslate"><span class="pre">alpha</span></code> by increasing it to a very large value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge_large_alpha</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
@@ -1179,22 +1194,19 @@ the value of <code class="docutils literal notranslate"><span class="pre">alpha<
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_ridge_scaled_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge weights with data scaling and large alpha&quot;</span><span class="p">,</span>
-    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge regression weights with data scaling and large alpha&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/298342344aaa6f19e70c4288841e9438c1423a21f189eef377d205850654ab60.png" src="../_images/298342344aaa6f19e70c4288841e9438c1423a21f189eef377d205850654ab60.png" />
+<img alt="../_images/79512115f3c46a3b27f1f02006fbb11b05bca27a95e16fbdbdff2c5cfdd1eb49.png" src="../_images/79512115f3c46a3b27f1f02006fbb11b05bca27a95e16fbdbdff2c5cfdd1eb49.png" />
 </div>
 </div>
-<p>Looking specifically to weights values, we observe that increasing the value
-of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> decreases the weight values. A negative value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> would
-actually enhance large weights and promote overfitting.</p>
+<p>When examining the weight values, we notice that as the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> value
+increases, the weights decrease. A negative value of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> can lead to
+unpredictable and unstable behavior in the model.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Here, we only focus on numerical features. For categorical features, it is
@@ -1405,7 +1417,7 @@ average mean square error across folds for a given value of <code class="docutil
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
     <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
@@ -1418,7 +1430,7 @@ average mean square error across folds for a given value of <code class="docutil
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0c4e09cde3bd63084532c53a34563debe08f0c3e776512a9e6b5cc5b8da9cc6f.png" src="../_images/0c4e09cde3bd63084532c53a34563debe08f0c3e776512a9e6b5cc5b8da9cc6f.png" />
+<img alt="../_images/94da0a1821dc5eebbe20325d99d290b5358b4f4e124506f5a6d5fde598e4e438.png" src="../_images/94da0a1821dc5eebbe20325d99d290b5358b4f4e124506f5a6d5fde598e4e438.png" />
 </div>
 </div>
 <p>As we can see, regularization is just like salt in cooking: one must balance

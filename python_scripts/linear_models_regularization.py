@@ -99,8 +99,8 @@ print(
 # expect features such as `PoolArea * YrSold` to be very predictive.
 #
 # To analyze the weights of the model, we can create a dataframe. The columns of
-# the dataframe contains the feature names, while the rows store the
-# coefficients of each model of a given cross-validation fold.
+# the dataframe contain the feature names, while the rows store the coefficients
+# of each model of a given cross-validation fold.
 #
 # In order to obtain the feature names associated with each feature combination,
 # we need to extract them from the augmented data created by
@@ -114,7 +114,7 @@ model_first_fold
 
 # %% [markdown]
 # Now, we can access the fitted `LinearRegression` (step `-1` i.e. the last step
-# of the model) to recover the feature names.
+# of the `linear_regression` pipeline) to recover the feature names.
 
 # %%
 feature_names = model_first_fold[-1].feature_names_in_

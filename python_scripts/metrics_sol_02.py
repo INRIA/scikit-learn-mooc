@@ -136,7 +136,7 @@ scores.set_index("loss")
 # optimizing a loss function. This is the case for metrics that evolve in a
 # discontinuous manner with respect to the internal parameters of the model, as
 # learning solvers based on gradient descent or similar optimizers require
-# continuity (the details are belong the scope of this MOOC).
+# continuity (the details are beyond the scope of this MOOC).
 #
 # For instance, classification models are often evaluated using metrics computed
 # on hard class predictions (i.e. whether a sample belongs to a given class)

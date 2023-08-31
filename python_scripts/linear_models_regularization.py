@@ -51,8 +51,9 @@ data, target = (
 # additional features that capture some non-linear interactions between them.
 #
 # Here, we use this transformer to augment the feature space. Subsequently, we
-# train a linear regression model. We use the out-of-sample test set to evaluate
-# the generalization capabilities of our model.
+# train a linear regression model. We use cross-validation with
+# `return_train_score=True` to evaluate both the train scores and the
+# generalization capabilities of our model.
 
 # %%
 from sklearn.model_selection import cross_validate
@@ -92,11 +93,12 @@ print(
 )
 
 # %% [markdown]
-# The training score is much better than the testing score. Such a gap between
-# the training and testing scores is an indication that our model overfitted the
-# training set. Indeed, this is one of the dangers when augmenting the number of
-# features with a `PolynomialFeatures` transformer. For instance, one does not
-# expect features such as `PoolArea * YrSold` to be very predictive.
+# The training error is in average one order of magnitude lower than the testing
+# error (lower error is better). Such a gap between the training and testing
+# scores is an indication that our model overfitted the training set. Indeed,
+# this is one of the dangers when augmenting the number of features with a
+# `PolynomialFeatures` transformer. For instance, one does not expect features
+# such as `PoolArea * YrSold` to be very predictive.
 #
 # To analyze the weights of the model, we can create a dataframe. The columns of
 # the dataframe contain the feature names, while the rows store the coefficients
@@ -207,9 +209,9 @@ print(
 )
 
 # %% [markdown]
-# We see that the training and testing scores are much closer, indicating that
-# our model is less overfitting. We can compare the values of the weights of
-# ridge with the un-regularized linear regression.
+# We see that the training and testing scores get closer, indicating that our
+# model is less overfitting (yet still overfitting!). We can compare the values
+# of the weights of ridge with the un-regularized linear regression.
 
 # %%
 coefs = [est[-1].coef_ for est in cv_results["estimator"]]

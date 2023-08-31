@@ -45,14 +45,15 @@ data, target = (
 )
 
 # %% [markdown]
-# In one of the previous notebook, we showed that linear models could be used
+# In one of the previous notebooks, we showed that linear models could be used
 # even when there is no linear relationship between the `data` and `target`.
 # For instance, one can use the `PolynomialFeatures` transformer to create
 # additional features that capture some non-linear interactions between them.
 #
 # Here, we use this transformer to augment the feature space. Subsequently, we
-# train a linear regression model. We use the out-of-sample test set to evaluate
-# the generalization capabilities of our model.
+# train a linear regression model. We use cross-validation with
+# `return_train_score=True` to evaluate both the train scores and the
+# generalization capabilities of our model.
 
 # %%
 from sklearn.model_selection import cross_validate
@@ -92,20 +93,22 @@ print(
 )
 
 # %% [markdown]
-# The training score is much better than the testing score. Such a gap between
-# the training and testing scores is an indication that our model overfitted the
-# training set. Indeed, this is one of the dangers when augmenting the number of
-# features with a `PolynomialFeatures` transformer. For instance, one does not
-# expect features such as `PoolArea * YrSold` to be very predictive.
+# The training error is in average one order of magnitude lower than the testing
+# error (lower error is better). Such a gap between the training and testing
+# scores is an indication that our model overfitted the training set. Indeed,
+# this is one of the dangers when augmenting the number of features with a
+# `PolynomialFeatures` transformer. For instance, one does not expect features
+# such as `PoolArea * YrSold` to be very predictive.
 #
-# We can create a dataframe to check the weights of the model: the columns
-# contain the name of the features whereas the rows store the coefficients values
-# of each model during the cross-validation.
+# To analyze the weights of the model, we can create a dataframe. The columns of
+# the dataframe contain the feature names, while the rows store the coefficients
+# of each model of a given cross-validation fold.
 #
-# Since we used a `PolynomialFeatures` to augment the data, we extract the
-# feature names representative of each feature combination. Scikit-learn
-# provides a `feature_names_in_` method for this purpose. First, let's get the
-# first fitted model from the cross-validation.
+# In order to obtain the feature names associated with each feature combination,
+# we need to extract them from the augmented data created by
+# `PolynomialFeatures`. Fortunately, scikit-learn provides a convenient method
+# called `feature_names_in_` for this purpose. Let's begin by retrieving the
+# coefficients from the model fitted in the first cross-validation fold.
 
 # %%
 model_first_fold = cv_results["estimator"][0]
@@ -113,7 +116,7 @@ model_first_fold
 
 # %% [markdown]
 # Now, we can access the fitted `LinearRegression` (step `-1` i.e. the last step
-# of the model) to recover the feature names.
+# of the `linear_regression` pipeline) to recover the feature names.
 
 # %%
 feature_names = model_first_fold[-1].feature_names_in_
@@ -137,17 +140,29 @@ weights_linear_regression = pd.DataFrame(coefs, columns=feature_names)
 import matplotlib.pyplot as plt
 
 color = {"whiskers": "black", "medians": "black", "caps": "black"}
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(10, 10))
+weights_linear_regression.plot.box(color=color, vert=False, ax=ax)
+_ = ax.set(title="Linear regression weights (linear scale)")
+
+# %% [markdown]
+# By looking at the bar plot above it would seem that most of the features are
+# very close to zero, but this is just an effect of visualizing them on the same
+# scale as the extremely large span of `"YrSold"`. Instead we can use a
+# symmetric log scale for the plot.
+
+# %%
+color = {"whiskers": "black", "medians": "black", "caps": "black"}
+fig, ax = plt.subplots(figsize=(10, 10))
 weights_linear_regression.plot.box(color=color, vert=False, ax=ax)
 _ = ax.set(
-    title="Linear regression weights",
+    title="Linear regression weights (symmetric log scale)",
     xscale="symlog",
 )
 
 # %% [markdown]
-# Notice that we use a (symmetric) log scale for the bar plot. Observe that some
-# coefficents are extremely large while others are extremely small. Furthermore,
-# the coefficient values can be very unstable accross cross-validation folds.
+# Observe that some coefficients are extremely large while others are extremely
+# small, yet non-zero. Furthermore, the coefficient values can be very unstable
+# across cross-validation folds.
 #
 # We can force the linear regression model to consider all features in a more
 # homogeneous manner. In fact, we could force large positive or negative
@@ -194,37 +209,34 @@ print(
 )
 
 # %% [markdown]
-# We see that the training and testing scores are much closer, indicating that
-# our model is less overfitting. We can compare the values of the weights of
-# ridge with the un-regularized linear regression.
+# We see that the training and testing scores get closer, indicating that our
+# model is less overfitting (yet still overfitting!). We can compare the values
+# of the weights of ridge with the un-regularized linear regression.
 
 # %%
 coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(8, 10))
 weights_ridge.plot.box(color=color, vert=False, ax=ax)
-_ = ax.set(
-    title="Ridge weights",
-    xscale="symlog",
-)
+_ = ax.set(title="Ridge regression weights")
 
 # %% [markdown]
-# By comparing the order of magnitude of the weights on this plot with respect
-# to the previous plot, we see that a ridge model enforces all weights to lay in
-# a more similar scale, while the overall magnitude of the weights is shrunk
-# towards zero with respect to the linear regression model.
+# Notice that the overall magnitudes of the weights are shrunk
+# (yet non-zero!) with respect to the linear regression model. If you want to,
+# feel free to use a symmetric log scale in the previous plot.
 #
-# You can observe that the coefficients are still unstable from one fold to
-# another, and finally, the results can vary a lot depending on the choice of
-# the solver (for instance try to set `solver="saga"` or `solver="lsqr"` instead
-# of `solver="cholesky"` and re-run the above cells).
+# You can also observe that even if the weights' values are less extreme, they
+# are still unstable from one fold to another. Even worst, the results can vary
+# a lot depending on the choice of the solver (for instance try to set
+# `solver="saga"` or `solver="lsqr"` instead of `solver="cholesky"` and re-run
+# the above cells).
 #
-# In the following we will attempt to resolve those remaining problems, by
+# In the following we attempt to resolve those remaining problems, by
 # focusing on two important aspects we omitted so far:
-# - the need to scale the data, and
-# - the need to search for the best regularization parameter.
+# - the need to **scale the data**, and
+# - the need to **search for the best regularization parameter**.
 #
 # ## Feature scaling and regularization
 #
@@ -315,19 +327,17 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(8, 10))
 weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
-_ = ax.set(
-    title="Ridge weights with data scaling",
-    xscale="symlog",
-)
+_ = ax.set(title="Ridge regression weights with data scaling")
 
 # %% [markdown]
-# Compare to the previous plots, we see that now all weight magnitudes are
-# closer and that all features are more equally contributing.
+# Compared to the previous plots, we see that now most weight magnitudes have a
+# similar order of magnitude, i.e. they are more equally contributing. The
+# number of unstable weights also decreased.
 #
-# In the previous example, we fixed `alpha=10`. We can now check the impact of
-# the value of `alpha` by increasing its value.
+# In the previous model, we set `alpha=10`. We can now check the impact of
+# `alpha` by increasing it to a very large value.
 
 # %%
 ridge_large_alpha = make_pipeline(
@@ -350,17 +360,14 @@ coefs = [est[-1].coef_ for est in cv_results["estimator"]]
 weights_ridge_scaled_data = pd.DataFrame(coefs, columns=feature_names)
 
 # %%
-fig, ax = plt.subplots(figsize=(8, 12))
+fig, ax = plt.subplots(figsize=(8, 10))
 weights_ridge_scaled_data.plot.box(color=color, vert=False, ax=ax)
-_ = ax.set(
-    title="Ridge weights with data scaling and large alpha",
-    xscale="symlog",
-)
+_ = ax.set(title="Ridge regression weights with data scaling and large alpha")
 
 # %% [markdown]
-# Looking specifically to weights values, we observe that increasing the value
-# of `alpha` decreases the weight values. A negative value of `alpha` would
-# actually enhance large weights and promote overfitting.
+# When examining the weight values, we notice that as the `alpha` value
+# increases, the weights decrease. A negative value of `alpha` can lead to
+# unpredictable and unstable behavior in the model.
 #
 # ```{note}
 # Here, we only focus on numerical features. For categorical features, it is
@@ -465,7 +472,7 @@ cv_alphas = cv_alphas.aggregate(["mean", "std"]).T
 cv_alphas
 
 # %%
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 6))
 ax.errorbar(cv_alphas.index, cv_alphas["mean"], yerr=cv_alphas["std"])
 _ = ax.set(
     xscale="log",

@@ -66,7 +66,8 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-A `StandardScaler` transformer with the default parameter will:
+Look at the plots and the answers of the previous question. A `StandardScaler`
+transformer with the default parameter:
 
 - a) transforms the features so that they have similar ranges
 - b) transforms the features to lie in the [0.0, 1.0] range
@@ -75,9 +76,6 @@ A `StandardScaler` transformer with the default parameter will:
 - d) can help logistic regression converge faster (fewer iterations)
 
 _Select all answers that apply_
-
-Hint: look at the plots and the answers of the previous question to eliminate
-some of the wrong answers.
 ```
 
 +++
@@ -87,8 +85,7 @@ Cross-validation allows us to:
 
 - a) train the model faster
 - b) measure the generalization performance of the model
-- c) reach better generalization performance
-- d) estimate the variability of the generalization score
+- c) estimate the variability of the generalization score
 
 _Select all answers that apply_
 ```

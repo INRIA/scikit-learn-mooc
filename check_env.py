@@ -7,7 +7,9 @@ FAIL = "\x1b[41m[FAIL]\x1b[0m"
 try:
     from packaging.version import Version
 except ImportError:
-    print(FAIL, "'packaging' package not installed, install it with conda or pip")
+    print(
+        FAIL, "'packaging' package not installed, install it with conda or pip"
+    )
     sys.exit(1)
 
 # first check the python version
@@ -19,7 +21,10 @@ pyversion = Version(pyversion_str)
 if pyversion < Version("3.8"):
     print(
         FAIL,
-        "Python version 3.8 or above is required," f" but {pyversion_str} is installed.",
+        (
+            "Python version 3.8 or above is required,"
+            f" but {pyversion_str} is installed."
+        ),
     )
     sys.exit(1)
 print()
@@ -45,7 +50,10 @@ def import_version(pkg, min_ver, fail_msg=""):
         if Version(ver) < Version(min_ver):
             print(
                 FAIL,
-                f"{lib} version {min_ver} or higher required, but {ver} installed.",
+                (
+                    f"{lib} version {min_ver} or higher required, but"
+                    f" {ver} installed."
+                ),
             )
         else:
             print(OK, f"{pkg} version {ver}")
@@ -58,7 +66,7 @@ requirements = {
     "numpy": "1.16",
     "scipy": "1.2",
     "matplotlib": "3.0",
-    "sklearn": "1.2",
+    "sklearn": "1.3",
     "pandas": "1",
     "seaborn": "0.11",
     "notebook": "5.7",

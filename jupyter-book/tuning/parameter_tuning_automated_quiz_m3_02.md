@@ -110,6 +110,29 @@ spread the active ranges and improve the readability of the plot.
 
 ```{admonition} Question
 In the parallel coordinate plot obtained by the running the above code snippet,
+select the models with a score higher than 0.85. You can select the range [0.85,
+max] by clicking and holding on the `mean_test_score` axis of the parallel
+coordinate plot.
+
+Identify ranges of values for hyperparameters that always prevent the model to
+reach a test score higher than 0.85, irrespective of the other values. In other
+words, which hyperparameters values are never used to get a good model
+(i.e. with `mean_test_score` higher than 0.85).
+
+- a) too large `l2_regularization`
+- b) too small `l2_regularization`
+- c) too large `learning_rate`
+- d) too low `learning_rate`
+- e) too large `max_bins`
+- f) too low `max_bins`
+
+_Select all answers that apply_
+```
+
++++
+
+```{admonition} Question
+In the parallel coordinate plot obtained by the running the above code snippet,
 select the bad performing models.
 
 We define bad performing models as the models with a `mean_test_score` below
@@ -124,28 +147,6 @@ Looking at this plot, which parameter values always cause the model to perform b
 - d) too small `learning_rate`
 - e) too large `max_bins`
 - f) too small `max_bins`
-
-_Select all answers that apply_
-```
-
-+++
-
-```{admonition} Question
-In the parallel coordinate plot shown above, select the models with a score
-higher than 0.85. You can select the range [0.85, max] by clicking and holding
-on the `mean_test_score` axis of the parallel coordinate plot.
-
-Identify ranges of values for hyperparameters that always prevent the model to
-reach a test score higher than 0.85, irrespective of the other values. In other
-words, which hyperparameters values are never used to get a good model
-(i.e. with `mean_test_score` higher than 0.85).
-
-- a) too large `l2_regularization`
-- b) too small `l2_regularization`
-- c) too large `learning_rate`
-- d) too low `learning_rate`
-- e) too large `max_bins`
-- f) too low `max_bins`
 
 _Select all answers that apply_
 ```

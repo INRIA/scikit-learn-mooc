@@ -21,7 +21,7 @@ _Select all answers that apply_
 
 In the previous notebook, we used:
 
-- a) pandas to manipulate data
+- a) pandas to gain insights about the dataset
 - b) pandas and seaborn to visually inspect the dataset
 - c) numpy and scipy to perform numerical inspection (for instance using
   `scipy.optimize.minimize`)

@@ -118,8 +118,8 @@ _Select a single answer_
 Instead of solely using the numerical columns, let us build a pipeline that
 can process both the numerical and categorical features together as follows:
 
-- numerical features should be processed as previously done with a
-  `StandardScaler`;
+- the `numerical_features` (as defined above) should be processed as previously
+  done with a `StandardScaler`;
 - the left-out columns should be treated as categorical variables using a
   [`sklearn.preprocessing.OneHotEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html).
   To avoid any issue with rare categories that could only be present during

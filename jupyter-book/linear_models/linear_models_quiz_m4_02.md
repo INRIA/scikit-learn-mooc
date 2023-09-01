@@ -24,3 +24,15 @@ vector and `y` a vector, `coef_` and `intercept_` will be respectively:
 
 _Select a single answer_
 ```
+
++++
+
+```{admonition} Question
+The decision boundaries of a logistic regression model:
+
+- a) split classes using only one of the input features
+- b) split classes using a combination of the input features
+- c) often have curved shapes
+
+_Select a single answer_
+```

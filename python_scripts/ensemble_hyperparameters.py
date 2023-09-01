@@ -138,11 +138,13 @@ print(
 # `learning_rate`, and `max_depth` or `max_leaf_nodes` (as previously discussed
 # random forest).
 #
-# Let's first discuss the `max_iter`, which similarly to the `n_estimators`
-# hyperparameter in random forest controls the number of trees in the estimator.
-# The difference is that the actual number of trees trained by the model is
-# not entirely set by the user but depends also on the stopping criteria: the number of trees can be lower than `max_iter` if
-# adding a new tree does not improve the training loss enough.
+# Let's first discuss `max_iter` which, similarly to the `n_estimators`
+# hyperparameter in random forests, controls the number of trees in the
+# estimator. The difference is that the actual number of trees trained by the
+# model is not entirely set by the user, but depends also on the stopping
+# criteria: the number of trees can be lower than `max_iter` if adding a new
+# tree does not improve the model enough. We will give more details on this in
+# the next exercise.
 #
 # The depth of the trees is controlled by `max_depth` (or `max_leaf_nodes`). We
 # saw in the section on gradient-boosting that boosting algorithms fit the error
@@ -155,7 +157,7 @@ print(
 #
 # With this consideration in mind, the deeper the trees, the faster the
 # residuals are corrected and then less learners are required. Therefore,
-# it can be beneficial to increase `max_iter` if `max_depth` is lower.
+# it can be beneficial to increase `max_iter` if `max_depth` is low.
 #
 # Finally, we have overlooked the impact of the `learning_rate` parameter until
 # now. When fitting the residuals, we would like the tree to try to correct all
@@ -196,9 +198,9 @@ cv_results[columns].sort_values(by="mean_test_error")
 # %% [markdown]
 #
 # ```{caution}
-# Here, we tune the `max_iter` but be aware that it is better set
-# `max_iter` to a fixed, large enough value and use parameters linked to
-# `early_stopping` as we will do in Exercise M6.04.
+# Here, we tune `max_iter` but be aware that it is better to set `max_iter` to a
+# fixed, large enough value and use parameters linked to `early_stopping` as we
+# will do in Exercise M6.04.
 # ```
 #
 # In this search, we observe that for the best ranked models, having a
@@ -223,7 +225,7 @@ print(f"On average, our HGBT regressor makes an error of {error:.2f} k$")
 #
 # We summarize these details in the following table:
 #
-# | **Bagging & Random Forests**                     | **Boosting**                                       |
+# | **Bagging & Random Forests**                     | **Boosting**                                        |
 # |--------------------------------------------------|-----------------------------------------------------|
 # | fit trees **independently**                      | fit trees **sequentially**                          |
 # | each **deep tree overfits**                      | each **shallow tree underfits**                     |

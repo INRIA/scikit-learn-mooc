@@ -140,8 +140,9 @@ print(
 #
 # Let's first discuss the `max_iter`, which similarly to the `n_estimators`
 # hyperparameter in random forest controls the number of trees in the estimator.
-# The difference is that the actual number of trees required by the model is
-# not directly set by the user but depends on the stopping criteria.
+# The difference is that the actual number of trees trained by the model is
+# not entirely set by the user but depends also on the stopping criteria: the number of trees can be lower than `max_iter` if
+# adding a new tree does not improve the training loss enough.
 #
 # The depth of the trees is controlled by `max_depth` (or `max_leaf_nodes`). We
 # saw in the section on gradient-boosting that boosting algorithms fit the error
@@ -154,7 +155,7 @@ print(
 #
 # With this consideration in mind, the deeper the trees, the faster the
 # residuals are corrected and then less learners are required. Therefore,
-# `max_iter` should be increased if `max_depth` is lower.
+# it can be beneficial to increase `max_iter` if `max_depth` is lower.
 #
 # Finally, we have overlooked the impact of the `learning_rate` parameter until
 # now. When fitting the residuals, we would like the tree to try to correct all
@@ -171,7 +172,7 @@ from scipy.stats import loguniform
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 param_distributions = {
-    "max_iter": [2, 5, 10, 20, 50, 100, 200, 500],
+    "max_iter": [3, 10, 30, 100, 300, 1000],
     "max_leaf_nodes": [2, 5, 10, 20, 50, 100],
     "learning_rate": loguniform(0.01, 1),
 }
@@ -195,8 +196,9 @@ cv_results[columns].sort_values(by="mean_test_error")
 # %% [markdown]
 #
 # ```{caution}
-# Here, we tune the `max_iter` but be aware that it is better to use
-# `early_stopping` as we will do in the Exercise M6.04.
+# Here, we tune the `max_iter` but be aware that it is better set
+# `max_iter` to a fixed, large enough value and use parameters linked to
+# `early_stopping` as we will do in Exercise M6.04.
 # ```
 #
 # In this search, we observe that for the best ranked models, having a
@@ -221,7 +223,7 @@ print(f"On average, our HGBT regressor makes an error of {error:.2f} k$")
 #
 # We summarize these details in the following table:
 #
-# | **Bagging**                                      | **Boosting**                                       |
+# | **Bagging & Random Forests**                     | **Boosting**                                       |
 # |--------------------------------------------------|-----------------------------------------------------|
 # | fit trees **independently**                      | fit trees **sequentially**                          |
 # | each **deep tree overfits**                      | each **shallow tree underfits**                     |

@@ -681,7 +681,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">Random forest</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-boosting-decision-trees">Gradient-boosting decision trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-gradient-boosting-decision-trees">Histogram gradient-boosting decision trees</a></li>
 </ul>
             </nav>
         </div>
@@ -695,20 +695,16 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="hyperparameter-tuning">
 <h1>Hyperparameter tuning<a class="headerlink" href="#hyperparameter-tuning" title="Permalink to this heading">#</a></h1>
-<p>In the previous section, we did not discuss the parameters of random forest
-and gradient-boosting. However, there are a couple of things to keep in mind
-when setting these.</p>
-<p>This notebook gives crucial information regarding how to set the
-hyperparameters of both random forest and gradient boosting decision tree
-models.</p>
+<p>In the previous section, we did not discuss the hyperparameters of random
+forest and histogram gradient-boosting. This notebook gives crucial
+information regarding how to set them.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
-<p>For the sake of clarity, no cross-validation will be used to estimate the
+<p>For the sake of clarity, no nested cross-validation is used to estimate the
 variability of the testing error. We are only showing the effect of the
-parameters on the validation set of what should be the inner loop of a nested
-cross-validation.</p>
+parameters on the validation set.</p>
 </div>
-<p>We will start by loading the california housing dataset.</p>
+<p>We start by loading the california housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
@@ -727,7 +723,7 @@ cross-validation.</p>
 <h2>Random forest<a class="headerlink" href="#random-forest" title="Permalink to this heading">#</a></h2>
 <p>The main parameter to select in random forest is the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> parameter.
 In general, the more trees in the forest, the better the generalization
-performance will be. However, it will slow down the fitting and prediction
+performance would be. However, adding trees slows down the fitting and prediction
 time. The goal is to balance computing time and generalization performance
 when setting the number of estimators. Here, we fix <code class="docutils literal notranslate"><span class="pre">n_estimators=100</span></code>, which
 is already the default value.</p>
@@ -739,7 +735,7 @@ its value does not lead to a significant improvement of the validation error.</p
 </div>
 <p>Instead, we can tune the hyperparameter <code class="docutils literal notranslate"><span class="pre">max_features</span></code>, which controls the
 size of the random subset of features to consider when looking for the best
-split when growing the trees: smaller values for <code class="docutils literal notranslate"><span class="pre">max_features</span></code> will lead to
+split when growing the trees: smaller values for <code class="docutils literal notranslate"><span class="pre">max_features</span></code> lead to
 more random trees with hopefully more uncorrelated prediction errors. However
 if <code class="docutils literal notranslate"><span class="pre">max_features</span></code> is too small, predictions can be too random, even after
 averaging with the trees in the ensemble.</p>
@@ -761,9 +757,9 @@ the random forest is the bagging procedure.</p>
 <p>We can also tune the different parameters that control the depth of each tree
 in the forest. Two parameters are important for this: <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> and
 <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>. They differ in the way they control the tree structure.
-Indeed, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> will enforce to have a more symmetric tree, while
-<code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> does not impose such constraint. If <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes=None</span></code>
-then the number of leaf nodes is unlimited.</p>
+Indeed, <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> enforces growing symmetric trees, while <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>
+does not impose such constraint. If <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes=None</span></code> then the number of
+leaf nodes is unlimited.</p>
 <p>The hyperparameter <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code> controls the minimum number of samples
 required to be at a leaf node. This means that a split point (at any depth) is
 only done if it leaves at least <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code> training samples in each of
@@ -836,80 +832,80 @@ trees (i.e. shallow trees) might also lead to an underfitted forest.</p>
       <td>2</td>
       <td>None</td>
       <td>2</td>
-      <td>34.099623</td>
-      <td>0.437903</td>
+      <td>33.837726</td>
+      <td>0.469978</td>
     </tr>
     <tr>
       <th>0</th>
       <td>2</td>
       <td>1000</td>
       <td>10</td>
-      <td>37.002715</td>
-      <td>0.608524</td>
+      <td>36.698021</td>
+      <td>0.567601</td>
     </tr>
     <tr>
       <th>7</th>
       <td>None</td>
       <td>None</td>
       <td>20</td>
-      <td>37.342794</td>
-      <td>0.448684</td>
+      <td>37.364454</td>
+      <td>0.477058</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5</td>
       <td>100</td>
       <td>2</td>
-      <td>40.029967</td>
-      <td>0.553464</td>
+      <td>40.149987</td>
+      <td>0.608598</td>
     </tr>
     <tr>
       <th>8</th>
       <td>None</td>
       <td>100</td>
       <td>10</td>
-      <td>40.374254</td>
-      <td>0.622774</td>
+      <td>40.428824</td>
+      <td>0.614502</td>
     </tr>
     <tr>
       <th>6</th>
       <td>None</td>
       <td>1000</td>
       <td>50</td>
-      <td>40.897582</td>
-      <td>0.535697</td>
+      <td>40.912803</td>
+      <td>0.340477</td>
     </tr>
     <tr>
       <th>9</th>
       <td>1</td>
       <td>100</td>
       <td>2</td>
-      <td>49.920560</td>
-      <td>0.634380</td>
+      <td>50.219570</td>
+      <td>0.770384</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
       <td>100</td>
       <td>1</td>
-      <td>50.041131</td>
-      <td>0.456946</td>
+      <td>50.236519</td>
+      <td>0.715236</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1</td>
       <td>None</td>
       <td>100</td>
-      <td>54.534479</td>
-      <td>1.242402</td>
+      <td>54.845926</td>
+      <td>0.533355</td>
     </tr>
     <tr>
       <th>1</th>
       <td>3</td>
       <td>10</td>
       <td>10</td>
-      <td>54.943158</td>
-      <td>1.009246</td>
+      <td>54.930714</td>
+      <td>0.884417</td>
     </tr>
   </tbody>
 </table>
@@ -938,51 +934,57 @@ the unseen data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.83 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.88 k$
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="gradient-boosting-decision-trees">
-<h2>Gradient-boosting decision trees<a class="headerlink" href="#gradient-boosting-decision-trees" title="Permalink to this heading">#</a></h2>
-<p>For gradient-boosting, parameters are coupled, so we cannot set the parameters
-one after the other anymore. The important parameters are <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>,
+<section id="histogram-gradient-boosting-decision-trees">
+<h2>Histogram gradient-boosting decision trees<a class="headerlink" href="#histogram-gradient-boosting-decision-trees" title="Permalink to this heading">#</a></h2>
+<p>For gradient-boosting, hyperparameters are coupled, so we cannot set them
+one after the other anymore. The important hyperparameters are <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>,
 <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, and <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code> (as previously discussed
 random forest).</p>
-<p>Let’s first discuss the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> (or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>) parameter. We saw in
-the section on gradient-boosting that the algorithm fits the error of the
-previous tree in the ensemble. Thus, fitting fully grown trees would be
+<p>Let’s first discuss <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> which, similarly to the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code>
+hyperparameter in random forests, controls the number of trees in the
+estimator. The difference is that the actual number of trees trained by the
+model is not entirely set by the user, but depends also on the stopping
+criteria: the number of trees can be lower than <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> if adding a new
+tree does not improve the model enough. We will give more details on this in
+the next exercise.</p>
+<p>The depth of the trees is controlled by <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> (or <code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>). We
+saw in the section on gradient-boosting that boosting algorithms fit the error
+of the previous tree in the ensemble. Thus, fitting fully grown trees would be
 detrimental. Indeed, the first tree of the ensemble would perfectly fit
 (overfit) the data and thus no subsequent tree would be required, since there
 would be no residuals. Therefore, the tree used in gradient-boosting should
 have a low depth, typically between 3 to 8 levels, or few leaves (<span class="math notranslate nohighlight">\(2^3=8\)</span> to
-<span class="math notranslate nohighlight">\(2^8=256\)</span>). Having very weak learners at each step will help reducing
-overfitting.</p>
+<span class="math notranslate nohighlight">\(2^8=256\)</span>). Having very weak learners at each step helps reducing overfitting.</p>
 <p>With this consideration in mind, the deeper the trees, the faster the
-residuals will be corrected and less learners are required. Therefore,
-<code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> should be increased if <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is lower.</p>
+residuals are corrected and then less learners are required. Therefore,
+it can be beneficial to increase <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> if <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> is low.</p>
 <p>Finally, we have overlooked the impact of the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> parameter until
 now. When fitting the residuals, we would like the tree to try to correct all
 possible errors or only a fraction of them. The learning-rate allows you to
 control this behaviour. A small learning-rate value would only correct the
 residuals of very few samples. If a large learning-rate is set (e.g., 1), we
 would fit the residuals of all samples. So, with a very low learning-rate, we
-will need more estimators to correct the overall error. However, a too large
-learning-rate tends to obtain an overfitted ensemble, similar to having a too
-large tree depth.</p>
+would need more estimators to correct the overall error. However, a too large
+learning-rate tends to obtain an overfitted ensemble, similar to having very
+deep trees.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">loguniform</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingRegressor</span>
 
 <span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
+    <span class="s2">&quot;max_iter&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span>
     <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
     <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
 <span class="p">}</span>
 <span class="n">search_cv</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
-    <span class="n">GradientBoostingRegressor</span><span class="p">(),</span>
+    <span class="n">HistGradientBoostingRegressor</span><span class="p">(),</span>
     <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_distributions</span><span class="p">,</span>
     <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
     <span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
@@ -1019,7 +1021,7 @@ large tree depth.</p>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>param_n_estimators</th>
+      <th>param_max_iter</th>
       <th>param_max_leaf_nodes</th>
       <th>param_learning_rate</th>
       <th>mean_test_error</th>
@@ -1028,164 +1030,164 @@ large tree depth.</p>
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>200</td>
-      <td>20</td>
-      <td>0.160519</td>
-      <td>33.909937</td>
-      <td>0.426826</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>200</td>
-      <td>50</td>
-      <td>0.110585</td>
-      <td>34.779824</td>
-      <td>0.293419</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>500</td>
-      <td>5</td>
-      <td>0.771785</td>
-      <td>34.785787</td>
-      <td>0.556769</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>200</td>
-      <td>20</td>
-      <td>0.109889</td>
-      <td>35.001653</td>
-      <td>0.384146</td>
+      <th>14</th>
+      <td>300</td>
+      <td>100</td>
+      <td>0.01864</td>
+      <td>30.961931</td>
+      <td>0.284726</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>500</td>
+      <td>300</td>
+      <td>20</td>
+      <td>0.047293</td>
+      <td>31.956461</td>
+      <td>0.344678</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30</td>
+      <td>50</td>
+      <td>0.176656</td>
+      <td>32.595743</td>
+      <td>0.302709</td>
+    </tr>
+    <tr>
+      <th>19</th>
       <td>100</td>
-      <td>0.709894</td>
-      <td>35.505486</td>
-      <td>0.383539</td>
+      <td>10</td>
+      <td>0.215543</td>
+      <td>32.994402</td>
+      <td>0.395205</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>300</td>
+      <td>10</td>
+      <td>0.297739</td>
+      <td>33.102438</td>
+      <td>0.572886</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>100</td>
+      <td>20</td>
+      <td>0.083745</td>
+      <td>33.141387</td>
+      <td>0.390749</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>100</td>
+      <td>20</td>
+      <td>0.067503</td>
+      <td>33.711630</td>
+      <td>0.451641</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>300</td>
+      <td>5</td>
+      <td>0.05929</td>
+      <td>35.905287</td>
+      <td>0.408489</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>100</td>
+      <td>5</td>
+      <td>0.160519</td>
+      <td>36.316506</td>
+      <td>0.391175</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>1000</td>
+      <td>2</td>
+      <td>0.125207</td>
+      <td>40.774847</td>
+      <td>0.512391</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1000</td>
+      <td>2</td>
+      <td>0.054511</td>
+      <td>42.257351</td>
+      <td>0.644847</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>3</td>
+      <td>5</td>
+      <td>0.906226</td>
+      <td>49.904808</td>
+      <td>0.631837</td>
     </tr>
     <tr>
       <th>18</th>
       <td>10</td>
       <td>5</td>
-      <td>0.637819</td>
-      <td>42.535730</td>
-      <td>0.338066</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>500</td>
-      <td>2</td>
-      <td>0.07502</td>
-      <td>43.457866</td>
-      <td>0.704599</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>100</td>
-      <td>5</td>
-      <td>0.0351</td>
-      <td>46.558900</td>
-      <td>0.578629</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>5</td>
-      <td>20</td>
-      <td>0.202432</td>
-      <td>61.387176</td>
-      <td>0.610988</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>5</td>
-      <td>2</td>
-      <td>0.462636</td>
-      <td>65.114017</td>
-      <td>0.846987</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>10</td>
-      <td>5</td>
-      <td>0.088556</td>
-      <td>66.243538</td>
-      <td>0.720131</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>50</td>
-      <td>100</td>
-      <td>0.010904</td>
-      <td>71.847050</td>
-      <td>0.683326</td>
+      <td>0.248463</td>
+      <td>50.046127</td>
+      <td>0.660900</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>2</td>
-      <td>2</td>
-      <td>0.421054</td>
-      <td>74.384704</td>
-      <td>0.791104</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5</td>
+      <td>10</td>
       <td>100</td>
-      <td>0.070357</td>
-      <td>77.007841</td>
-      <td>0.789595</td>
+      <td>0.061034</td>
+      <td>61.572496</td>
+      <td>0.596634</td>
     </tr>
     <tr>
-      <th>16</th>
+      <th>17</th>
+      <td>3</td>
+      <td>5</td>
+      <td>0.079415</td>
+      <td>81.508378</td>
+      <td>0.934735</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10</td>
       <td>2</td>
+      <td>0.0351</td>
+      <td>82.547120</td>
+      <td>0.970037</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>3</td>
       <td>50</td>
-      <td>0.167568</td>
-      <td>77.131005</td>
-      <td>0.850380</td>
+      <td>0.019923</td>
+      <td>87.638637</td>
+      <td>1.084263</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>0.039361</td>
+      <td>87.794655</td>
+      <td>1.063414</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>1</td>
-      <td>5</td>
-      <td>0.190477</td>
-      <td>82.819015</td>
-      <td>0.976351</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>5</td>
-      <td>20</td>
-      <td>0.033815</td>
-      <td>83.765509</td>
-      <td>0.974672</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>100</td>
-      <td>0.125207</td>
-      <td>85.363288</td>
-      <td>1.040982</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>1</td>
+      <td>3</td>
       <td>10</td>
-      <td>0.081715</td>
-      <td>87.373374</td>
-      <td>1.071555</td>
+      <td>0.019351</td>
+      <td>88.369705</td>
+      <td>1.103442</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>1</td>
-      <td>20</td>
-      <td>0.014937</td>
-      <td>90.531295</td>
-      <td>1.113892</td>
+      <th>10</th>
+      <td>3</td>
+      <td>5</td>
+      <td>0.01724</td>
+      <td>88.911113</td>
+      <td>1.043453</td>
     </tr>
   </tbody>
 </table>
@@ -1193,26 +1195,26 @@ large tree depth.</p>
 </div>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
-<p>Here, we tune the <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> but be aware that is better to use
-<code class="docutils literal notranslate"><span class="pre">early_stopping</span></code> as done in the Exercise M6.04.</p>
+<p>Here, we tune <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> but be aware that it is better to set <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> to a
+fixed, large enough value and use parameters linked to <code class="docutils literal notranslate"><span class="pre">early_stopping</span></code> as we
+will do in Exercise M6.04.</p>
 </div>
-<p>In this search, we see that the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> is required to be large
-enough, i.e. &gt; 0.1. We also observe that for the best ranked models, having a
-smaller <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, will require more trees or a larger number of leaves
+<p>In this search, we observe that for the best ranked models, having a
+smaller <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, requires more trees or a larger number of leaves
 for each tree. However, it is particularly difficult to draw more detailed
-conclusions since the best value of an hyperparameter depends on the other
+conclusions since the best value of each hyperparameter depends on the other
 hyperparameter values.</p>
-<p>Now we estimate the generalization performance of the best model using the
+<p>We can now estimate the generalization performance of the best model using the
 test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">search_cv</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our GBDT regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our HGBT regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 32.97 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our HGBT regressor makes an error of 30.55 k$
 </pre></div>
 </div>
 </div>
@@ -1221,6 +1223,31 @@ test set.</p>
 of the best model. The reason is that the final model is refitted on the whole
 training set and therefore, on more data than the cross-validated models of
 the grid search procedure.</p>
+<p>We summarize these details in the following table:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Bagging &amp; Random Forests</strong></p></th>
+<th class="head"><p><strong>Boosting</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>fit trees <strong>independently</strong></p></td>
+<td><p>fit trees <strong>sequentially</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>each <strong>deep tree overfits</strong></p></td>
+<td><p>each <strong>shallow tree underfits</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>averaging the tree predictions <strong>reduces overfitting</strong></p></td>
+<td><p>sequentially adding trees <strong>reduces underfitting</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>generalization improves with the number of trees</p></td>
+<td><p>too many trees may cause overfitting</p></td>
+</tr>
+<tr class="row-even"><td><p>does not have a <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> parameter</p></td>
+<td><p>fitting the residuals is controlled by the <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 
@@ -1292,7 +1319,7 @@ the grid search procedure.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">Random forest</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-boosting-decision-trees">Gradient-boosting decision trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-gradient-boosting-decision-trees">Histogram gradient-boosting decision trees</a></li>
 </ul>
   </nav></div>
 

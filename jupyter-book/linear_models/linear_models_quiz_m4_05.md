@@ -13,18 +13,6 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-The decision boundaries of a logistic regression:
-
-- a) uses only one of the input features
-- b) uses a combination of the input features
-- c) separates a single class
-
-_Select a single answer_
-```
-
-+++
-
-```{admonition} Question
 The parameter `C` in a logistic regression is:
 
 - a) similar to the parameter `alpha` in a ridge regressor

@@ -2,6 +2,8 @@
 
 ```{admonition} Question
 Which parameters below are hyperparameters of `HistGradientBosstingClassifier`?
+Remember we only consider hyperparameters to be those that potentially impact
+the result of the learning procedure and subsequent predictions.
 
 - a) `C`
 - b) `max_leaf_nodes`

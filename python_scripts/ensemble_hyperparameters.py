@@ -8,22 +8,17 @@
 # %% [markdown]
 # # Hyperparameter tuning
 #
-# In the previous section, we did not discuss the parameters of random forest
-# and gradient-boosting. However, there are a couple of things to keep in mind
-# when setting these.
-#
-# This notebook gives crucial information regarding how to set the
-# hyperparameters of both random forest and gradient boosting decision tree
-# models.
+# In the previous section, we did not discuss the hyperparameters of random
+# forest and histogram gradient-boosting. This notebook gives crucial
+# information regarding how to set them.
 #
 # ```{caution}
-# For the sake of clarity, no cross-validation will be used to estimate the
+# For the sake of clarity, no nested cross-validation is used to estimate the
 # variability of the testing error. We are only showing the effect of the
-# parameters on the validation set of what should be the inner loop of a nested
-# cross-validation.
+# parameters on the validation set.
 # ```
 #
-# We will start by loading the california housing dataset.
+# We start by loading the california housing dataset.
 
 # %%
 from sklearn.datasets import fetch_california_housing
@@ -40,7 +35,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 #
 # The main parameter to select in random forest is the `n_estimators` parameter.
 # In general, the more trees in the forest, the better the generalization
-# performance will be. However, it will slow down the fitting and prediction
+# performance would be. However, adding trees slows down the fitting and prediction
 # time. The goal is to balance computing time and generalization performance
 # when setting the number of estimators. Here, we fix `n_estimators=100`, which
 # is already the default value.
@@ -53,7 +48,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 #
 # Instead, we can tune the hyperparameter `max_features`, which controls the
 # size of the random subset of features to consider when looking for the best
-# split when growing the trees: smaller values for `max_features` will lead to
+# split when growing the trees: smaller values for `max_features` lead to
 # more random trees with hopefully more uncorrelated prediction errors. However
 # if `max_features` is too small, predictions can be too random, even after
 # averaging with the trees in the ensemble.
@@ -69,9 +64,9 @@ print(f"In this case, n_features={len(data.columns)}")
 # We can also tune the different parameters that control the depth of each tree
 # in the forest. Two parameters are important for this: `max_depth` and
 # `max_leaf_nodes`. They differ in the way they control the tree structure.
-# Indeed, `max_depth` will enforce to have a more symmetric tree, while
-# `max_leaf_nodes` does not impose such constraint. If `max_leaf_nodes=None`
-# then the number of leaf nodes is unlimited.
+# Indeed, `max_depth` enforces growing symmetric trees, while `max_leaf_nodes`
+# does not impose such constraint. If `max_leaf_nodes=None` then the number of
+# leaf nodes is unlimited.
 #
 # The hyperparameter `min_samples_leaf` controls the minimum number of samples
 # required to be at a leaf node. This means that a split point (at any depth) is
@@ -136,26 +131,33 @@ print(
 )
 
 # %% [markdown]
-# ## Gradient-boosting decision trees
+# ## Histogram gradient-boosting decision trees
 #
-# For gradient-boosting, parameters are coupled, so we cannot set the parameters
-# one after the other anymore. The important parameters are `n_estimators`,
+# For gradient-boosting, hyperparameters are coupled, so we cannot set them
+# one after the other anymore. The important hyperparameters are `max_iter`,
 # `learning_rate`, and `max_depth` or `max_leaf_nodes` (as previously discussed
 # random forest).
 #
-# Let's first discuss the `max_depth` (or `max_leaf_nodes`) parameter. We saw in
-# the section on gradient-boosting that the algorithm fits the error of the
-# previous tree in the ensemble. Thus, fitting fully grown trees would be
+# Let's first discuss `max_iter` which, similarly to the `n_estimators`
+# hyperparameter in random forests, controls the number of trees in the
+# estimator. The difference is that the actual number of trees trained by the
+# model is not entirely set by the user, but depends also on the stopping
+# criteria: the number of trees can be lower than `max_iter` if adding a new
+# tree does not improve the model enough. We will give more details on this in
+# the next exercise.
+#
+# The depth of the trees is controlled by `max_depth` (or `max_leaf_nodes`). We
+# saw in the section on gradient-boosting that boosting algorithms fit the error
+# of the previous tree in the ensemble. Thus, fitting fully grown trees would be
 # detrimental. Indeed, the first tree of the ensemble would perfectly fit
 # (overfit) the data and thus no subsequent tree would be required, since there
 # would be no residuals. Therefore, the tree used in gradient-boosting should
 # have a low depth, typically between 3 to 8 levels, or few leaves ($2^3=8$ to
-# $2^8=256$). Having very weak learners at each step will help reducing
-# overfitting.
+# $2^8=256$). Having very weak learners at each step helps reducing overfitting.
 #
 # With this consideration in mind, the deeper the trees, the faster the
-# residuals will be corrected and less learners are required. Therefore,
-# `n_estimators` should be increased if `max_depth` is lower.
+# residuals are corrected and then less learners are required. Therefore,
+# it can be beneficial to increase `max_iter` if `max_depth` is low.
 #
 # Finally, we have overlooked the impact of the `learning_rate` parameter until
 # now. When fitting the residuals, we would like the tree to try to correct all
@@ -163,21 +165,21 @@ print(
 # control this behaviour. A small learning-rate value would only correct the
 # residuals of very few samples. If a large learning-rate is set (e.g., 1), we
 # would fit the residuals of all samples. So, with a very low learning-rate, we
-# will need more estimators to correct the overall error. However, a too large
-# learning-rate tends to obtain an overfitted ensemble, similar to having a too
-# large tree depth.
+# would need more estimators to correct the overall error. However, a too large
+# learning-rate tends to obtain an overfitted ensemble, similar to having very
+# deep trees.
 
 # %%
 from scipy.stats import loguniform
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import HistGradientBoostingRegressor
 
 param_distributions = {
-    "n_estimators": [1, 2, 5, 10, 20, 50, 100, 200, 500],
+    "max_iter": [3, 10, 30, 100, 300, 1000],
     "max_leaf_nodes": [2, 5, 10, 20, 50, 100],
     "learning_rate": loguniform(0.01, 1),
 }
 search_cv = RandomizedSearchCV(
-    GradientBoostingRegressor(),
+    HistGradientBoostingRegressor(),
     param_distributions=param_distributions,
     scoring="neg_mean_absolute_error",
     n_iter=20,
@@ -196,27 +198,37 @@ cv_results[columns].sort_values(by="mean_test_error")
 # %% [markdown]
 #
 # ```{caution}
-# Here, we tune the `n_estimators` but be aware that is better to use
-# `early_stopping` as done in the Exercise M6.04.
+# Here, we tune `max_iter` but be aware that it is better to set `max_iter` to a
+# fixed, large enough value and use parameters linked to `early_stopping` as we
+# will do in Exercise M6.04.
 # ```
 #
-# In this search, we see that the `learning_rate` is required to be large
-# enough, i.e. > 0.1. We also observe that for the best ranked models, having a
-# smaller `learning_rate`, will require more trees or a larger number of leaves
+# In this search, we observe that for the best ranked models, having a
+# smaller `learning_rate`, requires more trees or a larger number of leaves
 # for each tree. However, it is particularly difficult to draw more detailed
-# conclusions since the best value of an hyperparameter depends on the other
+# conclusions since the best value of each hyperparameter depends on the other
 # hyperparameter values.
 
 # %% [markdown]
-# Now we estimate the generalization performance of the best model using the
+# We can now estimate the generalization performance of the best model using the
 # test set.
 
 # %%
 error = -search_cv.score(data_test, target_test)
-print(f"On average, our GBDT regressor makes an error of {error:.2f} k$")
+print(f"On average, our HGBT regressor makes an error of {error:.2f} k$")
 
 # %% [markdown]
 # The mean test score in the held-out test set is slightly better than the score
 # of the best model. The reason is that the final model is refitted on the whole
 # training set and therefore, on more data than the cross-validated models of
 # the grid search procedure.
+#
+# We summarize these details in the following table:
+#
+# | **Bagging & Random Forests**                     | **Boosting**                                        |
+# |--------------------------------------------------|-----------------------------------------------------|
+# | fit trees **independently**                      | fit trees **sequentially**                          |
+# | each **deep tree overfits**                      | each **shallow tree underfits**                     |
+# | averaging the tree predictions **reduces overfitting** | sequentially adding trees **reduces underfitting** |
+# | generalization improves with the number of trees | too many trees may cause overfitting                |
+# | does not have a `learning_rate` parameter        | fitting the residuals is controlled by the `learning_rate` |

@@ -8,24 +8,14 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.03
 #
-# In the previous notebook, we showed that we can add new features based on the
-# original feature to make the model more expressive, for instance `x ** 2` or `x ** 3`.
-# In that case we only used a single feature in `data`.
+# The parameter `penalty` can control the **type** of regularization to use,
+# whereas the regularization **strength** is set using the parameter `C`.
+# Setting`penalty="none"` is equivalent to an infinitely large value of `C`. In
+# this exercise, we ask you to train a logistic regression classifier using the
+# `penalty="l2"` regularization (which happens to be the default in
+# scikit-learn) to find by yourself the effect of the parameter `C`.
 #
-# The aim of this notebook is to train a linear regression algorithm on a
-# dataset with more than a single feature. In such a "multi-dimensional" feature
-# space we can derive new features of the form `x1 * x2`, `x2 * x3`,
-# etc. Products of features are usually called "non-linear or
-# multiplicative interactions" between features.
-#
-# Feature engineering can be an important step of a model pipeline as long as
-# the new features are expected to be predictive. For instance, think of a
-# classification model to decide if a patient has risk of developing a heart
-# disease. This would depend on the patient's Body Mass Index which is defined
-# as `weight / height ** 2`.
-#
-# We load the dataset penguins dataset. We first use a set of 3 numerical
-# features to predict the target, i.e. the body mass of the penguin.
+# We start by loading the dataset.
 
 # %% [markdown]
 # ```{note}
@@ -36,99 +26,97 @@
 # %%
 import pandas as pd
 
-penguins = pd.read_csv("../datasets/penguins.csv")
-
-columns = ["Flipper Length (mm)", "Culmen Length (mm)", "Culmen Depth (mm)"]
-target_name = "Body Mass (g)"
-
-# Remove lines with missing values for the columns of interest
-penguins_non_missing = penguins[columns + [target_name]].dropna()
-
-data = penguins_non_missing[columns]
-target = penguins_non_missing[target_name]
-data.head()
-
-# %% [markdown]
-# Now it is your turn to train a linear regression model on this dataset. First,
-# create a linear regression model.
-
-# %%
-# solution
-from sklearn.linear_model import LinearRegression
-
-linear_regression = LinearRegression()
-
-# %% [markdown]
-# Execute a cross-validation with 10 folds and use the mean absolute error (MAE)
-# as metric.
-
-# %%
-# solution
-from sklearn.model_selection import cross_validate
-
-cv_results = cross_validate(
-    linear_regression,
-    data,
-    target,
-    cv=10,
-    scoring="neg_mean_absolute_error",
-    n_jobs=2,
+penguins = pd.read_csv("../datasets/penguins_classification.csv")
+# only keep the Adelie and Chinstrap classes
+penguins = (
+    penguins.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
 )
 
-# %% [markdown]
-# Compute the mean and std of the MAE in grams (g).
+culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
+target_column = "Species"
 
 # %%
-# solution
-print(
-    "Mean absolute error on testing set with original features: "
-    f"{-cv_results['test_score'].mean():.3f} ± "
-    f"{cv_results['test_score'].std():.3f} g"
-)
+from sklearn.model_selection import train_test_split
+
+penguins_train, penguins_test = train_test_split(penguins, random_state=0)
+
+data_train = penguins_train[culmen_columns]
+data_test = penguins_test[culmen_columns]
+
+target_train = penguins_train[target_column]
+target_test = penguins_test[target_column]
 
 # %% [markdown]
-# Now create a pipeline using `make_pipeline` consisting of a
-# `PolynomialFeatures` and a linear regression. Set `degree=2` and
-# `interaction_only=True` to the feature engineering step. Remember not to
-# include the bias to avoid redundancies with the linear's regression intercept.
-#
-# Use the same strategy as before to cross-validate such a pipeline.
+# First, let's create our predictive model.
 
 # %%
-# solution
-from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
 
-poly_features = PolynomialFeatures(
-    degree=2, include_bias=False, interaction_only=True
-)
-linear_regression_interactions = make_pipeline(
-    poly_features, linear_regression
-)
-
-cv_results = cross_validate(
-    linear_regression_interactions,
-    data,
-    target,
-    cv=10,
-    scoring="neg_mean_absolute_error",
-    n_jobs=2,
+logistic_regression = make_pipeline(
+    StandardScaler(), LogisticRegression(penalty="l2")
 )
 
 # %% [markdown]
-# Compute the mean and std of the MAE in grams (g) and compare with the results
-# without feature engineering.
+# Given the following candidates for the `C` parameter, find out the impact of
+# `C` on the classifier decision boundary. You can use
+# `sklearn.inspection.DecisionBoundaryDisplay.from_estimator` to plot the
+# decision function boundary.
+
+# %%
+Cs = [0.01, 0.1, 1, 10]
+
+# solution
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.inspection import DecisionBoundaryDisplay
+
+for C in Cs:
+    logistic_regression.set_params(logisticregression__C=C)
+    logistic_regression.fit(data_train, target_train)
+    accuracy = logistic_regression.score(data_test, target_test)
+
+    DecisionBoundaryDisplay.from_estimator(
+        logistic_regression,
+        data_test,
+        response_method="predict",
+        cmap="RdBu_r",
+        alpha=0.5,
+    )
+    sns.scatterplot(
+        data=penguins_test,
+        x=culmen_columns[0],
+        y=culmen_columns[1],
+        hue=target_column,
+        palette=["tab:red", "tab:blue"],
+    )
+    plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+    plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
+
+# %% [markdown]
+# Look at the impact of the `C` hyperparameter on the magnitude of the weights.
 
 # %%
 # solution
-print(
-    "Mean absolute error on testing set with interactions: "
-    f"{-cv_results['test_score'].mean():.3f} ± "
-    f"{cv_results['test_score'].std():.3f} g"
-)
+weights_ridge = []
+for C in Cs:
+    logistic_regression.set_params(logisticregression__C=C)
+    logistic_regression.fit(data_train, target_train)
+    coefs = logistic_regression[-1].coef_[0]
+    weights_ridge.append(pd.Series(coefs, index=culmen_columns))
+
+# %% tags=["solution"]
+weights_ridge = pd.concat(weights_ridge, axis=1, keys=[f"C: {C}" for C in Cs])
+weights_ridge.plot.barh()
+_ = plt.title("LogisticRegression weights depending of C")
 
 # %% [markdown] tags=["solution"]
-# We observe that the mean absolute error is lower and less spread with the
-# enriched features. In this case the "interactions" are indeed predictive. In
-# the following notebook we will see what happens when the enriched features are
-# non-predictive and how to deal with this case.
+# We see that a small `C` will shrink the weights values toward zero. It means
+# that a small `C` provides a more regularized model. Thus, `C` is the inverse
+# of the `alpha` coefficient in the `Ridge` model.
+#
+# Besides, with a strong penalty (i.e. small `C` value), the weight of the
+# feature "Culmen Depth (mm)" is almost zero. It explains why the decision
+# separation in the plot is almost perpendicular to the "Culmen Length (mm)"
+# feature.

@@ -75,45 +75,44 @@ from sklearn.inspection import DecisionBoundaryDisplay
 def plot_decision_boundary(model):
     _, axs = plt.subplots(ncols=2, figsize=(14, 5))
 
-    model.fit(data_moons, target_moons)
-    DecisionBoundaryDisplay.from_estimator(
-        model,
-        data_moons,
-        response_method="predict_proba",
-        plot_method="pcolormesh",
-        # response_method="predict",
-        cmap="RdBu",
-        alpha=0.5,
-        ax=axs[0],
-    )
-    sns.scatterplot(
-        data=moons,
-        x=feature_names[0],
-        y=feature_names[1],
-        hue=target_moons,
-        palette=["tab:red", "tab:blue"],
-        ax=axs[0],
-    )
-
-    model.fit(data_gauss, target_gauss)
-    DecisionBoundaryDisplay.from_estimator(
-        model,
-        data_gauss,
-        response_method="predict_proba",
-        plot_method="pcolormesh",
-        # response_method="predict",
-        cmap="RdBu",
-        alpha=0.5,
-        ax=axs[1],
-    )
-    sns.scatterplot(
-        data=gauss,
-        x=feature_names[0],
-        y=feature_names[1],
-        hue=target_gauss,
-        palette=["tab:red", "tab:blue"],
-        ax=axs[1],
-    )
+    for ax, (data, target) in zip(
+        axs,
+        [
+            (data_moons, target_moons),
+            (data_gauss, target_gauss),
+        ],
+    ):
+        model.fit(data, target)
+        DecisionBoundaryDisplay.from_estimator(
+            model,
+            data,
+            response_method="predict_proba",
+            plot_method="pcolormesh",
+            cmap="RdBu",
+            alpha=0.8,
+            vmin=0,
+            vmax=1,
+            ax=ax,
+        )
+        DecisionBoundaryDisplay.from_estimator(
+            model,
+            data,
+            response_method="predict_proba",
+            plot_method="contour",
+            alpha=0.8,
+            levels=[0.5],
+            linestyles="--",
+            linewidths=2,
+            ax=ax,
+        )
+        sns.scatterplot(
+            data=data,
+            x=feature_names[0],
+            y=feature_names[1],
+            hue=target,
+            palette=["tab:red", "tab:blue"],
+            ax=ax,
+        )
     return axs
 
 
@@ -131,52 +130,46 @@ axs = plot_decision_boundary(logistic_regression)
 # %%
 from sklearn.preprocessing import KBinsDiscretizer
 
-logistic_regression = make_pipeline(
-    StandardScaler(), KBinsDiscretizer(), LogisticRegression()
-)
-logistic_regression
+classifier = make_pipeline(KBinsDiscretizer(n_bins=8), LogisticRegression())
+classifier
 
 # %%
-axs = plot_decision_boundary(logistic_regression)
+axs = plot_decision_boundary(classifier)
 
 # %%
 from sklearn.preprocessing import SplineTransformer
 
-logistic_regression = make_pipeline(
-    StandardScaler(),
-    SplineTransformer(include_bias=False),
+classifier = make_pipeline(
+    SplineTransformer(n_knots=8),
     LogisticRegression(),
 )
-logistic_regression
+classifier
 
 # %%
-axs = plot_decision_boundary(logistic_regression)
-
-# %%
-from sklearn.preprocessing import PolynomialFeatures
-
-logistic_regression = make_pipeline(
-    KBinsDiscretizer(n_bins=3),
-    PolynomialFeatures(degree=2, interaction_only=True, include_bias=False),
-    LogisticRegression(),
-)
-logistic_regression
-
-# %%
-axs = plot_decision_boundary(logistic_regression)
+axs = plot_decision_boundary(classifier)
 
 # %%
 from sklearn.kernel_approximation import Nystroem
 
-logistic_regression = make_pipeline(
-    StandardScaler(),
-    SplineTransformer(extrapolation="linear", include_bias=False),
-    Nystroem(kernel="rbf", gamma=5, n_components=100),
-    LogisticRegression(C=5),
+classifier = make_pipeline(
+    Nystroem(kernel="rbf", gamma=1.0, n_components=100),
+    LogisticRegression(C=10),
 )
-logistic_regression
+classifier
 
 # %%
-axs = plot_decision_boundary(logistic_regression)
+axs = plot_decision_boundary(classifier)
 
+# %%
+from sklearn.kernel_approximation import Nystroem
+
+classifier = make_pipeline(
+    SplineTransformer(n_knots=8),
+    Nystroem(kernel="rbf", gamma=0.1, n_components=100),
+    LogisticRegression(C=10),
+)
+classifier
+
+# %%
+axs = plot_decision_boundary(classifier)
 # %%

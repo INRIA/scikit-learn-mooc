@@ -65,7 +65,7 @@ logistic_regression = make_pipeline(
 # decision function boundary.
 
 # %%
-Cs = [0.01, 0.1, 1, 10]
+Cs = [0.0001, 0.01, 0.1, 1, 1000]
 
 # solution
 import matplotlib.pyplot as plt
@@ -79,27 +79,30 @@ for C in Cs:
 
     disp = DecisionBoundaryDisplay.from_estimator(
         logistic_regression,
-        data_test,
+        data_train,
         response_method="predict_proba",
         plot_method="pcolormesh",
         cmap="RdBu_r",
-        alpha=0.5,
-        vmin=0,
-        vmax=1,
+        alpha=0.8,
+        # Setting vmin and vmax to the extreme values of the probability in
+        # order to make sure that 0.5 is mapped to white (the middle) of the
+        # blue-red colormap.
+        vmin=0.0,
+        vmax=1.0,
     )
     DecisionBoundaryDisplay.from_estimator(
         logistic_regression,
-        data_test,
+        data_train,
         response_method="predict_proba",
         plot_method="contour",
         linestyles="--",
         linewidths=1,
         alpha=0.8,
-        levels=[0.5],
+        levels=[0.5],  # 0.5 probability contour line
         ax=disp.ax_,
     )
     sns.scatterplot(
-        data=penguins_test,
+        data=penguins_train,
         x=culmen_columns[0],
         y=culmen_columns[1],
         hue=target_column,
@@ -109,29 +112,73 @@ for C in Cs:
     plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
     plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
 
+# %% [markdown] tags=["solution"]
+#
+# On this series of plots we can observe several important points:
+#
+# - the darker the color, the more confident the classifier is in its
+#   predictions. Indeed, the darker the color, the closer the predicted
+#   probability is to 0 or 1;
+# - for lower values of `C` (stronger regularization), the classifier is less
+#   confident in its predictions (the near-white area is larger);
+# - for higher values of `C` (weaker regularization), the classifier is more
+#   confident: the areas with dark blue (very confident in predicting Adelie)
+#   and dark red (very confident in predicting Chinstrap) nearly cover the
+#   entire feature space;
+# - the direction of the straight line separating the two classes is impacted
+#   by the choice of `C`: the smaller `C` (the higher the regularization), the
+#   more the decision bounday is influenced almost uniformly by all the
+#   datapoints: the decision boundary is almost perpendicular to the "Culmen
+#   Length (mm)" feature.
+# - the higher the value of `C` (the weaker the regularization), the more the
+#   decision boundary is influenced by few traing points very close to the
+#   decision boundary, in particular by the misclassified points caused by the
+#   presence of noise in the data, making this classification task non-linearly
+#   separable.
+# - also note that for small values of `C`, the decision boundary is almost
+#   vertical: the model is almost only using the feature named "Culmen Length
+#   (mm)" to make its predictions. We will explain this behavior in the next
+#   part of the exercise.
+# - finally, the 2 classes are imbalanced: there are approximately two times
+#   more Adelie than Chinstrap penguins. This explains why the decision
+#   boundary is shifted to the right when `C` gets smaller. Indeed, when `C` is
+#   near zero, the model is nearly always predicting the same class probability
+#   almost everywhere in the feature space. This class is the one that matches
+#   the proportion of each class in the training set. In our case, there are
+#   more Adelie than Chinstrap penguins in the training set: as a results the
+#   most regularized model predicts light blue almost everywhere in the feature
+#   space.
+
 # %% [markdown]
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.
 
 # %%
 # solution
-weights_ridge = []
+lr_weights = []
 for C in Cs:
     logistic_regression.set_params(logisticregression__C=C)
     logistic_regression.fit(data_train, target_train)
-    coefs = logistic_regression[-1].coef_[0]
-    weights_ridge.append(pd.Series(coefs, index=culmen_columns))
+    coefs = logistic_regression[-1].coef_.squeeze()
+    lr_weights.append(pd.Series(coefs, index=culmen_columns))
+
 
 # %% tags=["solution"]
-weights_ridge = pd.concat(weights_ridge, axis=1, keys=[f"C: {C}" for C in Cs])
-weights_ridge.plot.barh()
+lr_weights = pd.concat(lr_weights, axis=1, keys=[f"C: {C}" for C in Cs])
+lr_weights.plot.barh()
 _ = plt.title("LogisticRegression weights depending of C")
 
 # %% [markdown] tags=["solution"]
-# We see that a small `C` will shrink the weights values toward zero. It means
-# that a small `C` provides a more regularized model. Thus, `C` is the inverse
-# of the `alpha` coefficient in the `Ridge` model.
 #
-# Besides, with a strong penalty (i.e. small `C` value), the weight of the
-# feature "Culmen Depth (mm)" is almost zero. It explains why the decision
+# We see that a small `C` will shrink the weights values toward zero. It means
+# that a small `C` provides a more regularized model. Thus, `C` behaves as the
+# inverse of the `alpha` parameter in the `Ridge` model.
+#
+# Besides, with a stronger penalty (e.g. `C = 0.01`), the weight of the feature
+# named "Culmen Depth (mm)" is almost zero. It explains why the decision
 # separation in the plot is almost perpendicular to the "Culmen Length (mm)"
 # feature.
+#
+# For even stronger penalty strengths (e.g. `C = 0.0001`), the weights of both
+# features are almost zero. It explains why the decision separation in the plot
+# is almost constant in the feature space: the predicted probability is only
+# based on the intercept of the model.

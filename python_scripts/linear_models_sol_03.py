@@ -77,12 +77,26 @@ for C in Cs:
     logistic_regression.fit(data_train, target_train)
     accuracy = logistic_regression.score(data_test, target_test)
 
+    disp = DecisionBoundaryDisplay.from_estimator(
+        logistic_regression,
+        data_test,
+        response_method="predict_proba",
+        plot_method="pcolormesh",
+        cmap="RdBu_r",
+        alpha=0.5,
+        vmin=0,
+        vmax=1,
+    )
     DecisionBoundaryDisplay.from_estimator(
         logistic_regression,
         data_test,
-        response_method="predict",
-        cmap="RdBu_r",
-        alpha=0.5,
+        response_method="predict_proba",
+        plot_method="contour",
+        linestyles="--",
+        linewidths=1,
+        alpha=0.8,
+        levels=[0.5],
+        ax=disp.ax_,
     )
     sns.scatterplot(
         data=penguins_test,
@@ -90,6 +104,7 @@ for C in Cs:
         y=culmen_columns[1],
         hue=target_column,
         palette=["tab:red", "tab:blue"],
+        ax=disp.ax_,
     )
     plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
     plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")

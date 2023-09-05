@@ -38,7 +38,9 @@ target_column = "Species"
 # %%
 from sklearn.model_selection import train_test_split
 
-penguins_train, penguins_test = train_test_split(penguins, random_state=0)
+penguins_train, penguins_test = train_test_split(
+    penguins, random_state=0, test_size=0.4
+)
 
 data_train = penguins_train[culmen_columns]
 data_test = penguins_test[culmen_columns]
@@ -59,6 +61,7 @@ logistic_regression = make_pipeline(
 )
 
 # %% [markdown]
+# ## Influence of the parameter `C` on the decision boundary
 #
 # Given the following candidates for the `C` parameter, find out the impact of
 # `C` on the classifier decision boundary. You can use
@@ -75,7 +78,7 @@ logistic_regression = make_pipeline(
 # of `C`?
 
 # %%
-Cs = [0.0001, 0.01, 0.1, 1, 1000]
+Cs = [1e-6, 0.01, 0.1, 1, 10, 100, 1e6]
 
 # solution
 import matplotlib.pyplot as plt
@@ -116,7 +119,7 @@ for C in Cs:
         x=culmen_columns[0],
         y=culmen_columns[1],
         hue=target_column,
-        palette=["tab:red", "tab:blue"],
+        palette=["tab:blue", "tab:red"],
         ax=disp.ax_,
     )
     plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
@@ -160,6 +163,8 @@ for C in Cs:
 #   space.
 
 # %% [markdown]
+# ## Impact of the regularization on the weights
+#
 # Look at the impact of the `C` hyperparameter on the magnitude of the weights.
 
 # %%
@@ -188,7 +193,103 @@ _ = plt.title("LogisticRegression weights depending of C")
 # separation in the plot is almost perpendicular to the "Culmen Length (mm)"
 # feature.
 #
-# For even stronger penalty strengths (e.g. `C = 0.0001`), the weights of both
+# For even stronger penalty strengths (e.g. `C = 1e-6`), the weights of both
 # features are almost zero. It explains why the decision separation in the plot
 # is almost constant in the feature space: the predicted probability is only
 # based on the intercept of the model.
+
+# %% [markdown]
+# ## Impact of the regularization on with non-linear feature engineering
+#
+# Repeat the experiment using a non-linear feature engineering
+# pipeline, by inserting `Nystroem(kernel="rbf", gamma=1, n_components=100)`
+# between the `StandardScaler` and the `LogisticRegression` steps.
+#
+# - Does the value of `C` still impact the position of the decision boundary
+#   and the confidence of the model?
+# - What can you say about the impact of `C` on the under-fitting vs
+#   over-fitting trade-off?
+
+# %% tags=["solution"]
+from sklearn.kernel_approximation import Nystroem
+
+# solution
+classifier = make_pipeline(
+    StandardScaler(),
+    Nystroem(kernel="rbf", gamma=1.0, n_components=100, random_state=0),
+    LogisticRegression(penalty="l2", max_iter=1000),
+)
+
+for C in Cs:
+    classifier.set_params(logisticregression__C=C)
+    classifier.fit(data_train, target_train)
+    accuracy = classifier.score(data_test, target_test)
+
+    disp = DecisionBoundaryDisplay.from_estimator(
+        classifier,
+        data_train,
+        response_method="predict_proba",
+        plot_method="pcolormesh",
+        cmap="RdBu_r",
+        alpha=0.8,
+        vmin=0.0,
+        vmax=1.0,
+    )
+    DecisionBoundaryDisplay.from_estimator(
+        classifier,
+        data_train,
+        response_method="predict_proba",
+        plot_method="contour",
+        linestyles="--",
+        linewidths=1,
+        alpha=0.8,
+        levels=[0.5],  # 0.5 probability contour line
+        ax=disp.ax_,
+    )
+    sns.scatterplot(
+        data=penguins_train,
+        x=culmen_columns[0],
+        y=culmen_columns[1],
+        hue=target_column,
+        palette=["tab:blue", "tab:red"],
+        ax=disp.ax_,
+    )
+    plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+    plt.title(f"C: {C} \n Accuracy on the test set: {accuracy:.2f}")
+
+# %% [markdown] tags=["solution"]
+#
+# - For the lowest values of `C`, the overall pipeline is underfits: it
+#   constantly predicts the same class probability everywhere, and therefore
+#   the majority class, as previously.
+# - When `C` increases, the models starts to predict some datapoints from the
+#   "Chinstrap" class but the model is not very confident anywhere in the
+#   feature space.
+# - The decision boundary is no longer a straight line: the linear model is now
+#   classifying in the 100-dimensional feature space created by the `Nystroem`
+#   transformer. As are result, the decision boundary induced by the overall
+#   pipeline is now expressive enough to wrap around the minority class.
+# - For `C = 1` in particular, it finds a smooth red blob around most of the
+#   "Chinstrap" data points. When moving away from the data points, the model
+#   is less confident in its predictions and again tends to predict the
+#   majority according to the relative proportion of each class in the training
+#   set.
+# - For higher values of `C`, the model starts to overfit: it is very confident
+#   in its predictions almost everywhere, but it should not be trusted: the
+#   model also makes a larger number of mistakes on the test set (not
+#   represented here) while adopting a very curvy decision boundary to attempt
+#   to fit all the training points, including the noisy ones at the frontier
+#   between the two classes. This makes the decision boundary very sensitive to
+#   the sampling of the training set and as a result, it does not generalize
+#   well in that region. This is confirmed by the lower accuracy on the test
+#   set.
+#
+# Finally, we can also note that the linear model on the raw features was as
+# good or better than the best model using non-linear feature engineering. So
+# in this case, we did not really need this extra complexity in our pipeline.
+#
+# So to conclude, when using non-linear feature engineering, it is often
+# possible to make the pipeline overfit, even if the original feature space
+# is low-dimensional. As a result, it is important to tune the regularization
+# parameter in conjunction with the parameters of the transformers (e.g. tuning
+# `gamma` would be important here).

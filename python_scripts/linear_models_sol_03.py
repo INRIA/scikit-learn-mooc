@@ -59,10 +59,20 @@ logistic_regression = make_pipeline(
 )
 
 # %% [markdown]
+#
 # Given the following candidates for the `C` parameter, find out the impact of
 # `C` on the classifier decision boundary. You can use
 # `sklearn.inspection.DecisionBoundaryDisplay.from_estimator` to plot the
 # decision function boundary.
+#
+# - How does the value of `C` impact the number of misclassified samples in the
+# data set?
+# - How does it impact the darkness of the color associated to the decision
+# boundary?
+# - What does it mean with respect to the confidence of the classifier in
+# different regions of the feature space?
+# - Does the direction of the decision boundary change when changing the value
+# of `C`?
 
 # %%
 Cs = [0.0001, 0.01, 0.1, 1, 1000]

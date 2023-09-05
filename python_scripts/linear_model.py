@@ -9,14 +9,24 @@
 #
 # # Non-linear feature engineering for Logistic Regression
 #
+# Linear classification models can also be used for classification on
+# non-linearly separable datasets. To do so, we transform the original feature
+# feature space into a new feature space using a non-linear transformation. The
+# resulting feature space has typically more dimensions than the original
+# feature space, and as a result, the linear model can separate the data more
+# easily.
 #
+# Let us illustrate this on two synthetic datasets. Each dataset has two
+# original features and two classes to make it easy to visualize. The first
+# dataset is called the "moons" dataset as the data points from each class are
+# shaped as a crescent moon:
 
 # %%
 import numpy as np
 import pandas as pd
 from sklearn.datasets import make_moons
 
-feature_names = ["Feature #0", "Features #1"]
+feature_names = ["Feature #0", "Feature #1"]
 target_name = "class"
 
 X, y = make_moons(n_samples=100, noise=0.13, random_state=42)
@@ -28,11 +38,16 @@ moons = pd.DataFrame(
 )
 data_moons, target_moons = moons[feature_names], moons[target_name]
 
+# %% [markdown]
+#
+# The second dataset is called the "Gaussian quantiles" dataset as the data
+# points are sampled from the same (Gaussian) distribution in a 2D space with a
+# higher density of points in the center. The points closest to the center are
+# assigned to the class 1 while the points in the outer edges are assigned to
+# the class 0.
+
 # %%
 from sklearn.datasets import make_gaussian_quantiles
-
-feature_names = ["Feature #0", "Features #1"]
-target_name = "class"
 
 X, y = make_gaussian_quantiles(
     n_samples=100, n_features=2, n_classes=2, random_state=42
@@ -43,11 +58,33 @@ gauss = pd.DataFrame(
 )
 data_gauss, target_gauss = gauss[feature_names], gauss[target_name]
 
+# %% [markdown]
+#
+# The third dataset is called the "XOR" dataset as the data points are sampled
+# from a uniform distribution in a 2D space and the class is defined by the
+# Exclusive OR (XOR) operation on the two features: the target class is 1 if
+# only one of the two features is greater than 0. The target class is 0
+# otherwise.
+
+# %%
+xor = pd.DataFrame(
+    np.random.RandomState(0).uniform(low=-1, high=1, size=(200, 2)),
+    columns=feature_names,
+)
+target_xor = np.logical_xor(xor["Feature #0"] > 0, xor["Feature #1"] > 0)
+target_xor = target_xor.astype(np.int32)
+xor["class"] = target_xor
+data_xor = xor[feature_names]
+
+# %% [markdown]
+#
+# We use matplotlib to visualized the data points in both datasets:
+
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-_, axs = plt.subplots(ncols=2, figsize=(14, 5))
+_, axs = plt.subplots(ncols=3, figsize=(14, 4))
 
 sns.scatterplot(
     data=moons,
@@ -65,21 +102,32 @@ sns.scatterplot(
     palette=["tab:red", "tab:blue"],
     ax=axs[1],
 )
-axs[0].set_title("Illustration of the moons dataset")
-_ = axs[1].set_title("Illustration of the Gaussian quantiles dataset")
+sns.scatterplot(
+    data=xor,
+    x=feature_names[0],
+    y=feature_names[1],
+    hue=target_xor,
+    palette=["tab:red", "tab:blue"],
+    ax=axs[2],
+)
+axs[0].set_title("The moons dataset")
+_ = axs[1].set_title("The Gaussian quantiles dataset")
+_ = axs[2].set_title("The XOR dataset")
+
 
 # %%
 from sklearn.inspection import DecisionBoundaryDisplay
 
 
 def plot_decision_boundary(model):
-    _, axs = plt.subplots(ncols=2, figsize=(14, 5))
+    _, axs = plt.subplots(ncols=3, figsize=(14, 4))
 
     for ax, (data, target) in zip(
         axs,
         [
             (data_moons, target_moons),
             (data_gauss, target_gauss),
+            (data_xor, target_xor),
         ],
     ):
         model.fit(data, target)
@@ -116,6 +164,14 @@ def plot_decision_boundary(model):
     return axs
 
 
+# %% [markdown]
+#
+# We intuitively observe that for each dataset, the two classes are not
+# linearly separable as the classes fold around each other in a way no straight
+# line can separate the two classes. We can confirm this by fitting a linear
+# model, such as logistic regression, to each dataset and plot the decision
+# boundary of the model:
+
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
@@ -127,10 +183,21 @@ logistic_regression
 # %%
 axs = plot_decision_boundary(logistic_regression)
 
+# %% [markdown]
+#
+# This confirms that it is not possible to separate the two classes with a
+# linear model. On each plot we see a **significant number of misclassified
+# samples on the training set**! This is a typical example of **underfitting**
+# for linear models.
+
+# %% [markdown]
+#
+# ## Engineering non-linear features
+
 # %%
 from sklearn.preprocessing import KBinsDiscretizer
 
-classifier = make_pipeline(KBinsDiscretizer(n_bins=8), LogisticRegression())
+classifier = make_pipeline(KBinsDiscretizer(n_bins=5), LogisticRegression())
 classifier
 
 # %%
@@ -140,7 +207,24 @@ axs = plot_decision_boundary(classifier)
 from sklearn.preprocessing import SplineTransformer
 
 classifier = make_pipeline(
-    SplineTransformer(n_knots=8),
+    SplineTransformer(degree=3, n_knots=5),
+    LogisticRegression(),
+)
+classifier
+
+# %%
+axs = plot_decision_boundary(classifier)
+
+# %% [markdown]
+#
+# Modeling non-additive feature interactions
+
+# %%
+from sklearn.preprocessing import PolynomialFeatures
+
+classifier = make_pipeline(
+    StandardScaler(),
+    PolynomialFeatures(degree=2),
     LogisticRegression(),
 )
 classifier
@@ -152,8 +236,9 @@ axs = plot_decision_boundary(classifier)
 from sklearn.kernel_approximation import Nystroem
 
 classifier = make_pipeline(
-    Nystroem(kernel="rbf", gamma=1.0, n_components=100),
-    LogisticRegression(C=10),
+    StandardScaler(),
+    Nystroem(kernel="poly", coef0=1, n_components=100),
+    LogisticRegression(C=5),
 )
 classifier
 
@@ -164,12 +249,41 @@ axs = plot_decision_boundary(classifier)
 from sklearn.kernel_approximation import Nystroem
 
 classifier = make_pipeline(
-    SplineTransformer(n_knots=8),
-    Nystroem(kernel="rbf", gamma=0.1, n_components=100),
-    LogisticRegression(C=10),
+    StandardScaler(),
+    Nystroem(kernel="rbf", gamma=1, n_components=100),
+    LogisticRegression(C=5),
+)
+classifier
+# %%
+axs = plot_decision_boundary(classifier)
+
+# %% [markdown]
+#
+# ## Multi-step feature engineering
+#
+#
+
+# %%
+classifier = make_pipeline(
+    KBinsDiscretizer(n_bins=5),
+    Nystroem(kernel="rbf", gamma=1.0, n_components=100),
+    LogisticRegression(),
+)
+classifier
+# %%
+axs = plot_decision_boundary(classifier)
+
+# %%
+from sklearn.kernel_approximation import Nystroem
+
+classifier = make_pipeline(
+    SplineTransformer(n_knots=5),
+    Nystroem(kernel="rbf", gamma=1.0, n_components=100),
+    LogisticRegression(),
 )
 classifier
 
 # %%
 axs = plot_decision_boundary(classifier)
+
 # %%

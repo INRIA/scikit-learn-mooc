@@ -415,6 +415,12 @@ axs = plot_decision_boundary(classifier)
 # - It can be useful to combine several feature engineering transformers in a
 #   single pipeline to build a more expressive model, for instance to favor
 #   axis-aligned extrapolation while also capturing interactions.
+# - In particular, if the original dataset has both numerical and categorical
+#   features, it can be useful to apply inning or spline transformation to the
+#   numerical features and one-hot encoding to the categorical features. Then,
+#   the resulting features can be combined with a kernel approximation to model
+#   interactions between numerical and categorical features. This can be
+#   achieved with the help of the `ColumnTransformer` transformer.
 #
 # In subsequent notebooks and exercises, we will further explore the interplay
 # between regularization, feature engineering, and the under-fitting /

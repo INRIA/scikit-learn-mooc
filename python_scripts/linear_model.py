@@ -283,26 +283,47 @@ from sklearn.preprocessing import PolynomialFeatures
 
 classifier = make_pipeline(
     StandardScaler(),
-    PolynomialFeatures(degree=2),
-    LogisticRegression(),
+    PolynomialFeatures(degree=3),
+    LogisticRegression(C=10),
 )
 classifier
 
 # %%
 axs = plot_decision_boundary(classifier)
 
-# %%
+# %% [markdown]
+#
+# We can see that the decision boundary of this polynomial classifier is smooth
+# and can successfully separate the data on all three datasets (depending on
+# how we set the values of the `degree` and `C` hyperparameters.).
+#
+# It is interesting to observe that this models extrapolates very differently
+# from the previous models.
+#
+# We can obtain very similar results by using a kernel approximation technique
+# such as the Nyström method with a polynomial kernel:
+
+#  %%
 from sklearn.kernel_approximation import Nystroem
 
 classifier = make_pipeline(
     StandardScaler(),
-    Nystroem(kernel="poly", coef0=1, n_components=100),
-    LogisticRegression(C=5),
+    Nystroem(kernel="poly", degree=3, coef0=1, n_components=100),
+    LogisticRegression(C=10),
 )
 classifier
-
 # %%
 axs = plot_decision_boundary(classifier)
+
+# %% [markdown]
+#
+# The polynomial kernel approach would be interesting in cases were the
+# original feature space is already of high dimension: in these cases,
+# computing the complete polynomial expansion with `PolynomialFeatures` could
+# be intractable, while Nyström method can control the output dimensionality
+# with the `n_components` parameter.
+#
+# Let's now explore the use of a radial basis function (RBF) kernel:
 
 # %%
 from sklearn.kernel_approximation import Nystroem
@@ -318,9 +339,22 @@ axs = plot_decision_boundary(classifier)
 
 # %% [markdown]
 #
+# The resulting decision boundary is smooth and can successfully separate the
+# classes for all three datasets. Furthemore, the model extrapolates very
+# differently: in particular, it tends to be much less confident in its
+# predictions in the low density regions of the feature space.
+#
+# As for the previous polynomial pipelines, this pipeline does not favor
+# axis-aligned decision boundaries. We say that its inductive bias is
+# rotation-invariant.
+
+# %% [markdown]
+#
 # ## Multi-step feature engineering
 #
-#
+# It is possible to combine several feature engineering transformers in a
+# single pipeline to blend their respective inductive biases. For instance, we
+# can combine the binning transformation with a kernel approximation:
 
 # %%
 classifier = make_pipeline(
@@ -331,6 +365,14 @@ classifier = make_pipeline(
 classifier
 # %%
 axs = plot_decision_boundary(classifier)
+
+# %% [markdown]
+#
+# It is interesting to observe that this model is still piecewise constant with
+# axis-aligned decision boundaries everywhere, but it can not successfully deal
+# with the XOR problem.
+#
+# We can also combine the spline transformation with a kernel approximation:
 
 # %%
 from sklearn.kernel_approximation import Nystroem
@@ -345,4 +387,38 @@ classifier
 # %%
 axs = plot_decision_boundary(classifier)
 
-# %%
+# %% [markdown]
+#
+# The decision boundary of this pipeline is smooth, but with axis-aligned
+# extrapolation.
+#
+# Depending on the task, this can be considered an advantage or a drawback.
+
+# %% [markdown]
+#
+# ## Summary and take-away messages
+#
+# - Linear models such as logistic regression can be used for classification on
+#   non-linearly separable datasets by leveraging non-linear feature
+#   engineering.
+# - Transformers such as `KBinsDiscretizer` and `SplineTransformer` can be used
+#   to engineer non-linear features, for each original feature independently.
+# - As a result, these transformers cannot capture interactions between the
+#   orignal features (and the would fail on the XOR classification task).
+# - Despite this limitation they arleady augment the expressivity of the
+#   pipeline, which can be sufficient for some datasets.
+# - They also favor axis-aligned decision boundaries, in particular in the low
+#   density regions of the feature space (axis-aligned extrapolation).
+# - Transformers such as `PolynomialFeatures` and `Nystroem` can be used to
+#   engineer non-linear features that capture interactions between the original
+#   features.
+# - It can be useful to combine several feature engineering transformers in a
+#   single pipeline to build a more expressive model, for instance to favor
+#   axis-aligned extrapolation while also capturing interactions.
+#
+# In subsequent notebooks and exercises, we will further explore the interplay
+# between regularization, feature engineering, and the under-fitting /
+# overfitting trade-off.
+#
+# But first we will do an exercise to illustrate the relationship between the
+# Nyström kernel approximation and support vector machines.

@@ -118,6 +118,16 @@ _ = axs[1].set_title("The Gaussian quantiles dataset")
 _ = axs[2].set_title("The XOR dataset")
 
 
+# %% [markdown]
+#
+# We intuitively observe that for each dataset, the two classes are not
+# linearly separable as the classes fold around each other in a way no straight
+# line can separate the two classes.
+#
+# We can confirm this by fitting a linear model, such as logistic regression,
+# to each dataset and plot the decision boundary of the model. Let's first define
+# a helper function to plot the decision boundary of a model:
+
 # %%
 from sklearn.inspection import DecisionBoundaryDisplay
 
@@ -169,11 +179,8 @@ def plot_decision_boundary(model):
 
 # %% [markdown]
 #
-# We intuitively observe that for each dataset, the two classes are not
-# linearly separable as the classes fold around each other in a way no straight
-# line can separate the two classes. We can confirm this by fitting a linear
-# model, such as logistic regression, to each dataset and plot the decision
-# boundary of the model:
+# Now let's define our logistic regression model and plot its decision boundary
+# on the three datasets:
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -196,6 +203,13 @@ axs = plot_decision_boundary(logistic_regression)
 # %% [markdown]
 #
 # ## Engineering non-linear features
+#
+# As we did for the linear regression models, we will attempt to build a more
+# expressive machine learning pipeline by leveraging non-linear feature
+# engineering. We will use the techniques as for linear regression models:
+# binning, splines, polynomial features, and kernel approximation.
+#
+# Let's start with the binning transformation of the features:
 
 # %%
 from sklearn.preprocessing import KBinsDiscretizer
@@ -205,6 +219,25 @@ classifier
 
 # %%
 axs = plot_decision_boundary(classifier)
+
+# %% [markdown]
+#
+# We can see that the resulting decision boundary is constrained to follow
+# axis-aligned segments, which is very similar to what a decision tree would
+# do. Furthermore, as for decision trees, the model makes piecewise constant
+# predictions within each rectangular region.
+#
+# While this axis-aligned decision boundary is not necessarily the natural
+# decision boundary a human would have intuitively drawn on these datasets,
+# note that this makes it possible for the model to successfully separate the
+# the data for the moons dataset and the Gaussian quantiles datasets. However,
+# the model still fails to separate the data for the XOR dataset. This is
+# because the binning transformation is a feature-wise transformation and thus
+# cannot capture interactions between features that are necessary to separate
+# the XOR dataset.
+#
+# Let's now use a spline transformation of the features, which can be
+# considered a smooth version of the binning transformation:
 
 # %%
 from sklearn.preprocessing import SplineTransformer
@@ -220,7 +253,30 @@ axs = plot_decision_boundary(classifier)
 
 # %% [markdown]
 #
+# We can see that the decision boundary is now smooth, and while it favors
+# axis-aligned decision boundary in the low density regions of the feature
+# space (extrapolation), it can adopt a more curvy decision boundary in the
+# high density regions.
+#
+# Note however, that the number of knots is a hyperparameter that needs to be
+# tuned. If we use too few knots, the model will underfit the data, as shown on
+# the moons dataset. If we use too many knots, the model will overfit the data.
+#
+# However, as for the binning transformation, the model still fails to separate
+# the data for the XOR dataset, irrespective of the number of knots, for the
+# same reasons: the spline transformation is a feature-wise transformation and
+# thus cannot capture interactions between features.
+
+# %% [markdown]
+#
 # Modeling non-additive feature interactions
+#
+# We will now consider feature engineering techniques that non-additively
+# combine several original features to build each output feature in the hope of
+# capturing interactions between original features. We will consider polynomial
+# features and kernel approximation.
+#
+# Let's start with polynomial features:
 
 # %%
 from sklearn.preprocessing import PolynomialFeatures

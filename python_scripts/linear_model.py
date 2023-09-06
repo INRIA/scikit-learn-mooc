@@ -83,7 +83,10 @@ data_xor = xor[feature_names]
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
+import warnings
 
+
+warnings.filterwarnings("ignore", module="seaborn")
 _, axs = plt.subplots(ncols=3, figsize=(14, 4))
 
 sns.scatterplot(

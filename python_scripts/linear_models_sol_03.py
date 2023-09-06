@@ -84,6 +84,10 @@ Cs = [1e-6, 0.01, 0.1, 1, 10, 100, 1e6]
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.inspection import DecisionBoundaryDisplay
+import warnings
+
+
+warnings.filterwarnings("ignore", module="seaborn")
 
 for C in Cs:
     logistic_regression.set_params(logisticregression__C=C)

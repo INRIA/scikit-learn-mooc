@@ -16,7 +16,7 @@
 # feature space, and as a result, the linear model can separate the data more
 # easily.
 #
-# Let us illustrate this on two synthetic datasets. Each dataset has two
+# Let us illustrate this on three synthetic datasets. Each dataset has two
 # original features and two classes to make it easy to visualize. The first
 # dataset is called the "moons" dataset as the data points from each class are
 # shaped as a crescent moon:
@@ -223,21 +223,22 @@ axs = plot_decision_boundary(classifier)
 # %% [markdown]
 #
 # We can see that the resulting decision boundary is constrained to follow
-# axis-aligned segments, which is very similar to what a decision tree would
-# do. Furthermore, as for decision trees, the model makes piecewise constant
-# predictions within each rectangular region.
+# **axis-aligned segments**, which is very similar to what a decision tree
+# would do as we will see in a later lesson. Furthermore, as for decision
+# trees, the model makes piecewise constant predictions within each rectangular
+# region.
 #
 # While this axis-aligned decision boundary is not necessarily the natural
 # decision boundary a human would have intuitively drawn on these datasets,
 # note that this makes it possible for the model to successfully separate the
 # the data for the moons dataset and the Gaussian quantiles datasets. However,
 # the model still fails to separate the data for the XOR dataset. This is
-# because the binning transformation is a feature-wise transformation and thus
-# cannot capture interactions between features that are necessary to separate
-# the XOR dataset.
+# because **the binning transformation is a feature-wise transformation** and
+# thus **cannot capture interactions** between features that are necessary to
+# separate the XOR dataset.
 #
-# Let's now use a spline transformation of the features, which can be
-# considered a smooth version of the binning transformation:
+# Let's now use a **spline** transformation of the features, which can be
+# considered a **smooth version of the binning transformation**:
 
 # %%
 from sklearn.preprocessing import SplineTransformer
@@ -293,12 +294,16 @@ axs = plot_decision_boundary(classifier)
 
 # %% [markdown]
 #
-# We can see that the decision boundary of this polynomial classifier is smooth
-# and can successfully separate the data on all three datasets (depending on
-# how we set the values of the `degree` and `C` hyperparameters.).
+# We can see that the decision boundary of this polynomial classifier is
+# **smooth** and can successfully separate the data on all three datasets
+# (depending on how we set the values of the `degree` and `C`
+# hyperparameters.).
 #
 # It is interesting to observe that this models extrapolates very differently
-# from the previous models.
+# from the previous models: its decision boundary can take a diagonal
+# direction. Furthermore, we can observe that predictions are very confident in
+# the low density regions of the feature space, even very close to the decision
+# boundary
 #
 # We can obtain very similar results by using a kernel approximation technique
 # such as the Nyström method with a polynomial kernel:
@@ -319,9 +324,9 @@ axs = plot_decision_boundary(classifier)
 #
 # The polynomial kernel approach would be interesting in cases were the
 # original feature space is already of high dimension: in these cases,
-# computing the complete polynomial expansion with `PolynomialFeatures` could
-# be intractable, while Nyström method can control the output dimensionality
-# with the `n_components` parameter.
+# **computing the complete polynomial expansion** with `PolynomialFeatures`
+# could be **intractable**, while Nyström method can control the output
+# dimensionality with the `n_components` parameter.
 #
 # Let's now explore the use of a radial basis function (RBF) kernel:
 
@@ -339,14 +344,15 @@ axs = plot_decision_boundary(classifier)
 
 # %% [markdown]
 #
-# The resulting decision boundary is smooth and can successfully separate the
-# classes for all three datasets. Furthemore, the model extrapolates very
-# differently: in particular, it tends to be much less confident in its
-# predictions in the low density regions of the feature space.
+# The resulting decision boundary is **smooth** and can successfully separate
+# the classes for all three datasets. Furthemore, the model extrapolates very
+# differently: in particular, it tends to be **much less confident in its
+# predictions in the low density regions** of the feature space.
 #
-# As for the previous polynomial pipelines, this pipeline does not favor
-# axis-aligned decision boundaries. We say that its inductive bias is
-# rotation-invariant.
+# As for the previous polynomial pipelines, this pipeline **does not favor
+# axis-aligned decision boundaries**. It can be shown mathematically that the
+# [inductive bias](https://en.wikipedia.org/wiki/Inductive_bias) of our RBF
+# pipeline is actually rotationally invariant.
 
 # %% [markdown]
 #
@@ -402,7 +408,7 @@ axs = plot_decision_boundary(classifier)
 #   non-linearly separable datasets by leveraging non-linear feature
 #   engineering.
 # - Transformers such as `KBinsDiscretizer` and `SplineTransformer` can be used
-#   to engineer non-linear features, for each original feature independently.
+#   to engineer non-linear features independently for each original feature.
 # - As a result, these transformers cannot capture interactions between the
 #   orignal features (and the would fail on the XOR classification task).
 # - Despite this limitation they arleady augment the expressivity of the

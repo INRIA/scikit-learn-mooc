@@ -375,8 +375,9 @@ axs = plot_decision_boundary(classifier)
 # %% [markdown]
 #
 # It is interesting to observe that this model is still piecewise constant with
-# axis-aligned decision boundaries everywhere, but it can not successfully deal
-# with the XOR problem.
+# axis-aligned decision boundaries everywhere, but it can now successfully deal
+# with the XOR problem thanks to the the second step of the pipeline that can
+# model the interactions between the features transformed by the first step.
 #
 # We can also combine the spline transformation with a kernel approximation:
 

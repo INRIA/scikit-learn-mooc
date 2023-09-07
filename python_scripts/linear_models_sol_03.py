@@ -214,7 +214,7 @@ _ = plt.title("LogisticRegression weights depending of C")
 # - What can you say about the impact of `C` on the under-fitting vs
 #   over-fitting trade-off?
 
-# %% tags=["solution"]
+# %%
 from sklearn.kernel_approximation import Nystroem
 
 # solution

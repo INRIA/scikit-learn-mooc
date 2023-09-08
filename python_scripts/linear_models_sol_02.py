@@ -90,7 +90,7 @@ print(
 # Now create a pipeline using `make_pipeline` consisting of a
 # `PolynomialFeatures` and a linear regression. Set `degree=2` and
 # `interaction_only=True` to the feature engineering step. Remember not to
-# include the bias to avoid redundancies with the linear's regression intercept.
+# include the bias to avoid redundancies with the linear regression intercept.
 #
 # Use the same strategy as before to cross-validate such a pipeline.
 

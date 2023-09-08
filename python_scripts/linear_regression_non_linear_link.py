@@ -210,7 +210,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # The last possibility is to make a linear model more expressive is to use a
-# "kernel". Instead of learning a weight per feature as we previously did, a
+# "kernel". Instead of learning one weight per feature as we previously did, a
 # weight is assigned to each sample. However, not all samples are used. This is
 # the base of the support vector machine algorithm.
 #
@@ -321,7 +321,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # into several non-linearly derived new features. This makes our machine
 # learning pipeline more expressive and less likely to underfit, even if the
 # last stage of the pipeline is a simple linear regression model.
-
+#
 # For the sake of simplicity, we introduced those transformers on a toy
 # regression problem with a single input feature. However, non-linear feature
 # transformers such as Nystroem can further improve the expressiveness of

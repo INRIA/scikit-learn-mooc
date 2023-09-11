@@ -85,12 +85,11 @@ display = LearningCurveDisplay.from_estimator(
     score_type="both",  # both train and test errors
     scoring="neg_mean_absolute_error",
     negate_score=True,  # to use when metric starts with "neg_"
-    log_scale=True,  # sets log scale for the x-axis
     score_name="Mean absolute error (k$)",
     std_display_style="errorbar",
     n_jobs=2,
 )
-_ = display.ax_.set_title("Learning curve for decision tree")
+_ = display.ax_.set(xscale="log", title="Learning curve for decision tree")
 
 # %% [markdown]
 # Looking at the training error alone, we see that we get an error of 0 k$. It

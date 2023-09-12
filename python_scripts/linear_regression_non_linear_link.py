@@ -211,8 +211,10 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # %% [markdown]
 # The last possibility is to make a linear model more expressive is to use a
 # "kernel". Instead of learning one weight per feature as we previously did, a
-# weight is assigned to each sample. However, not all samples are used. This is
-# the base of the support vector machine algorithm.
+# weight is assigned to each sample. However, not all samples are used: some
+# redundant data points of the training set are assigned a weight of 0 so
+# that they do no influence the model's prediction function. This is the
+# main intuition of the support vector machine algorithm.
 #
 # The mathematical definition of "kernels" and "support vector machines" is
 # beyond the scope of this course. We encourage interested readers with a

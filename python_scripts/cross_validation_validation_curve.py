@@ -104,9 +104,10 @@ _ = plt.title("Train and test errors distribution via cross-validation")
 
 # %%
 # %%time
+import numpy as np
 from sklearn.model_selection import ValidationCurveDisplay
 
-max_depth = [1, 5, 10, 15, 20, 25]
+max_depth = np.array([1, 5, 10, 15, 20, 25])
 disp = ValidationCurveDisplay.from_estimator(
     regressor,
     data,

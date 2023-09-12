@@ -9,12 +9,12 @@
 #
 # # Non-linear feature engineering for Logistic Regression
 #
-# Linear classification models can also be used for classification on
-# non-linearly separable datasets. To do so, we transform the original feature
-# feature space into a new feature space using a non-linear transformation. The
-# resulting feature space has typically more dimensions than the original
-# feature space, and as a result, the linear model can separate the data more
-# easily.
+# In the slides at the beginning of the module we mentioned that linear
+# classification models are not suited to non-linearly separable data.
+# Nevertheless, one can still use feature engineering as previously done for
+# regression models to overcome this issue. To do so, we use non-linear
+# transformations that typically map the original feature space into a higher
+# dimension space, where the linear model can separate the data more easily.
 #
 # Let us illustrate this on three synthetic datasets. Each dataset has two
 # original features and two classes to make it easy to visualize. The first
@@ -270,7 +270,7 @@ axs = plot_decision_boundary(classifier)
 
 # %% [markdown]
 #
-# Modeling non-additive feature interactions
+# ## Modeling non-additive feature interactions
 #
 # We will now consider feature engineering techniques that non-additively
 # combine several original features to build each output feature in the hope of

@@ -158,6 +158,6 @@ _ = plt.title("Weights of the logistic regression")
 # ```{note}
 # If you want to go further, try changing the `response_method` to
 # `"predict_proba"` in the `DecisionBoundaryDisplay` above. Now the boundaries
-# encode by color the probability of belonging to either class, as mentioned in
-# the introductory slides 🎥 Intuitions on linear models.
+# encode by color the estimated probability of belonging to either class, as
+# mentioned in the introductory slides 🎥 Intuitions on linear models.
 # ```

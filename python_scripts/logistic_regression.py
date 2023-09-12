@@ -154,3 +154,10 @@ _ = plt.title("Weights of the logistic regression")
 #     x1 = coef0 / coef1 * x0 - intercept / coef1
 #
 # which is the equation of a straight line.
+#
+# ```{note}
+# If you want to go further, try changing the `response_method` to
+# `"predict_proba"` in the `DecisionBoundaryDisplay` above. Now the boundaries
+# encode by color the probability of belonging to either class, as mentioned in
+# the introductory slides 🎥 Intuitions on linear models.
+# ```

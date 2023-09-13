@@ -12,12 +12,12 @@
 # search for the best hyperparameters maximizing the generalization performance
 # of a predictive model.
 #
-# However, a grid-search approach has limitations. It does not scale when the
-# number of parameters to tune is increasing. Also, the grid will impose a
-# regularity during the search which might be problematic.
+# However, a grid-search approach has limitations. It does not scale well when
+# the number of parameters to tune increases. Also, the grid imposes a
+# regularity during the search which might not be optimal.
 #
-# In this notebook, we will present another method to tune hyperparameters
-# called randomized search.
+# In this notebook, we present a different method to tune hyperparameters called
+# randomized search.
 
 # %% [markdown]
 # ## Our predictive model
@@ -56,8 +56,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# We will create the same predictive pipeline as seen in the grid-search
-# section.
+# We create the same predictive pipeline as done for the grid-search section.
 
 # %%
 from sklearn.compose import ColumnTransformer
@@ -97,26 +96,26 @@ model
 #
 # With the `GridSearchCV` estimator, the parameters need to be specified
 # explicitly. We already mentioned that exploring a large number of values for
-# different parameters will be quickly untractable.
+# different parameters quickly becomes untractable.
 #
 # Instead, we can randomly generate the parameter candidates. Indeed, such
 # approach avoids the regularity of the grid. Hence, adding more evaluations can
 # increase the resolution in each direction. This is the case in the frequent
 # situation where the choice of some hyperparameters is not very important, as
-# for hyperparameter 2 in the figure below.
+# for the hyperparameter 2 in the figure below.
 #
 # ![Randomized vs grid search](../figures/grid_vs_random_search.svg)
 #
 # Indeed, the number of evaluation points needs to be divided across the two
 # different hyperparameters. With a grid, the danger is that the region of good
-# hyperparameters fall between the line of the grid: this region is aligned with
-# the grid given that hyperparameter 2 has a weak influence. Rather, stochastic
-# search will sample hyperparameter 1 independently from hyperparameter 2 and
-# find the optimal region.
+# hyperparameters may fall between lines of the grid. In the figure such region
+# is aligned with the grid given that hyperparameter 2 has a weak influence.
+# Rather, stochastic search samples the hyperparameter 1 independently from the
+# hyperparameter 2 and find the optimal region.
 #
 # The `RandomizedSearchCV` class allows for such stochastic search. It is used
 # similarly to the `GridSearchCV` but the sampling distributions need to be
-# specified instead of the parameter values. For instance, we will draw
+# specified instead of the parameter values. For instance, we can draw
 # candidates using a log-uniform distribution because the parameters we are
 # interested in take positive values with a natural log scaling (.1 is as close
 # to 1 as 10 is).
@@ -126,7 +125,7 @@ model
 # grid search (with `GridSearchCV`) to optimize 3 or more hyperparameters.
 # ```
 #
-# We will optimize 3 other parameters in addition to the ones we optimized in
+# We now optimize 3 other parameters in addition to the ones we optimized in
 # the notebook presenting the `GridSearchCV`:
 #
 # * `l2_regularization`: it corresponds to the strength of the regularization;
@@ -138,14 +137,14 @@ model
 # We recall the meaning of the 2 remaining parameters:
 #
 # * `learning_rate`: it corresponds to the speed at which the gradient-boosting
-#   will correct the residuals at each boosting iteration;
+#   corrects the residuals at each boosting iteration;
 # * `max_leaf_nodes`: it corresponds to the maximum number of leaves for each
 #   tree in the ensemble.
 #
 # ```{note}
 # `scipy.stats.loguniform` can be used to generate floating numbers. To generate
 # random values for integer-valued parameters (e.g. `min_samples_leaf`) we can
-# adapt is as follows:
+# adapt it as follows:
 # ```
 
 # %%

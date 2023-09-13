@@ -682,17 +682,18 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="linear-regression-for-a-non-linear-features-target-relationship">
 <h1>Linear regression for a non-linear features-target relationship<a class="headerlink" href="#linear-regression-for-a-non-linear-features-target-relationship" title="Permalink to this heading">#</a></h1>
-<p>In the previous exercise, you were asked to train a linear regression model on
-a dataset where the matrix <code class="docutils literal notranslate"><span class="pre">data</span></code> and the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> do not have a linear
-link.</p>
-<p>In this notebook, we show that even if the parametrization of linear models is
-not natively adapted to the problem at hand, it is still possible to make
-linear models more expressive by engineering additional features.</p>
+<p>In this notebook, we show that even if linear models are not natively adapted
+to express a <code class="docutils literal notranslate"><span class="pre">target</span></code> that is not a linear function of the <code class="docutils literal notranslate"><span class="pre">data</span></code>, it is still
+possible to make linear models more expressive by engineering additional
+features.</p>
 <p>A machine learning pipeline that combines a non-linear feature engineering
-step followed by a linear regression step can therefore be considered
+step followed by a linear regression step can therefore be considered a
 non-linear regression model as a whole.</p>
-<p>To illustrate these concepts, we will reuse the same dataset generated in the
-previous exercise.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.random.RandomState</span></code> allows to create a random number generator which can
+be later used to get deterministic results.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -712,8 +713,8 @@ previous exercise.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To ease the plotting, we will create a pandas dataframe containing the data
-and target:</p>
+<p>To ease the plotting, we create a pandas dataframe containing the data and
+target:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -738,8 +739,7 @@ and target:</p>
 <img alt="../_images/1bdc362e3890e313327ad7216749fdf433b2b159892175ec4a6a46676cbf2c41.png" src="../_images/1bdc362e3890e313327ad7216749fdf433b2b159892175ec4a6a46676cbf2c41.png" />
 </div>
 </div>
-<p>We will highlight the limitations of fitting a linear regression model as done
-in the previous exercise.</p>
+<p>We now observe the limitations of fitting a linear regression model.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In scikit-learn, by convention <code class="docutils literal notranslate"><span class="pre">data</span></code> (also called <code class="docutils literal notranslate"><span class="pre">X</span></code> in the scikit-learn
@@ -813,7 +813,7 @@ the attributes of the model learnt as follows:</p>
 </div>
 </div>
 </div>
-<p>It is important to note that the learnt model will not be able to handle the
+<p>It is important to note that the learnt model is not able to handle the
 non-linear relationship between <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> since linear models assume
 the relationship between <code class="docutils literal notranslate"><span class="pre">data</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code> to be linear.</p>
 <p>Indeed, there are 3 possibilities to solve this issue:</p>
@@ -968,9 +968,11 @@ manually engineered features.</p>
 </div>
 </div>
 <p>The last possibility is to make a linear model more expressive is to use a
-“kernel”. Instead of learning a weight per feature as we previously
-emphasized, a weight will be assigned to each sample. However, not all samples
-will be used. This is the base of the support vector machine algorithm.</p>
+“kernel”. Instead of learning one weight per feature as we previously did, a
+weight is assigned to each sample. However, not all samples are used: some
+redundant data points of the training set are assigned a weight of 0 so
+that they do no influence the model’s prediction function. This is the
+main intuition of the support vector machine algorithm.</p>
 <p>The mathematical definition of “kernels” and “support vector machines” is
 beyond the scope of this course. We encourage interested readers with a
 mathematical training to have a look at the scikit-learn <a class="reference external" href="https://scikit-learn.org/stable/modules/svm.html">documentation on

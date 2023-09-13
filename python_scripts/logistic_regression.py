@@ -8,11 +8,11 @@
 # %% [markdown]
 # # Linear model for classification
 #
-# In regression, we saw that the target to be predicted was a continuous
-# variable. In classification, this target will be discrete (e.g. categorical).
+# In regression, we saw that the target to be predicted is a continuous
+# variable. In classification, the target is discrete (e.g. categorical).
 #
-# We will go back to our penguin dataset. However, this time we will try to
-# predict the penguin species using the culmen information. We will also
+# In this notebook we go back to the penguin dataset. However, this time the
+# task is to predict the penguin species using the culmen information. We also
 # simplify our classification problem by selecting only 2 of the penguin species
 # to solve a binary classification problem.
 
@@ -51,8 +51,8 @@ for feature_name in culmen_columns:
 # increases, the probability that the penguin is a Chinstrap is closer to 1.
 # However, the culmen depth is not helpful for predicting the penguin species.
 #
-# For model fitting, we will separate the target from the data and we will
-# create a training and a testing set.
+# For model fitting, we separate the target from the data and we create a
+# training and a testing set.
 
 # %%
 from sklearn.model_selection import train_test_split
@@ -66,7 +66,7 @@ target_train = penguins_train[target_column]
 target_test = penguins_test[target_column]
 
 # %% [markdown]
-# The linear regression that we previously saw will predict a continuous output.
+# The linear regression that we previously saw predicts a continuous output.
 # When the target is a binary outcome, one can use the logistic function to
 # model the probability. This model is known as logistic regression.
 #
@@ -90,9 +90,9 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # feature values of the sample.
 #
 # ```{note}
-# Here, we will use the class `DecisionBoundaryDisplay`. This educational tool
-# allows us to gain some insights by plotting the decision function boundary
-# learned by the classifier in a 2 dimensional feature space.
+# Here, we use the class `DecisionBoundaryDisplay`. This educational tool allows
+# us to gain some insights by plotting the decision function boundary learned by
+# the classifier in a 2 dimensional feature space.
 #
 # Notice however that in more realistic machine learning contexts, one would
 # typically fit on more than two features at once and therefore it would not be
@@ -154,3 +154,10 @@ _ = plt.title("Weights of the logistic regression")
 #     x1 = coef0 / coef1 * x0 - intercept / coef1
 #
 # which is the equation of a straight line.
+#
+# ```{note}
+# If you want to go further, try changing the `response_method` to
+# `"predict_proba"` in the `DecisionBoundaryDisplay` above. Now the boundaries
+# encode by color the estimated probability of belonging to either class, as
+# mentioned in the introductory slides 🎥 Intuitions on linear models.
+# ```

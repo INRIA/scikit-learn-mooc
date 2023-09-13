@@ -14,7 +14,8 @@
 #
 # However, a grid-search approach has limitations. It does not scale well when
 # the number of parameters to tune increases. Also, the grid imposes a
-# regularity during the search which might not be optimal.
+# regularity during the search which might miss better parameter
+# values between two consecutive values on the grid.
 #
 # In this notebook, we present a different method to tune hyperparameters called
 # randomized search.

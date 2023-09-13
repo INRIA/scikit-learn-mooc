@@ -56,8 +56,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/matomo.js"></script>
     <script src="../_static/sklearn_mooc.js"></script>
+    <script src="../_static/matomo.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -686,11 +686,12 @@ document.write(`
 <p>In the previous notebook, we showed how to use a grid-search approach to
 search for the best hyperparameters maximizing the generalization performance
 of a predictive model.</p>
-<p>However, a grid-search approach has limitations. It does not scale when the
-number of parameters to tune is increasing. Also, the grid will impose a
-regularity during the search which might be problematic.</p>
-<p>In this notebook, we will present another method to tune hyperparameters
-called randomized search.</p>
+<p>However, a grid-search approach has limitations. It does not scale well when
+the number of parameters to tune increases. Also, the grid imposes a
+regularity during the search which might miss better parameter
+values between two consecutive values on the grid.</p>
+<p>In this notebook, we present a different method to tune hyperparameters called
+randomized search.</p>
 <section id="our-predictive-model">
 <h2>Our predictive model<a class="headerlink" href="#our-predictive-model" title="Permalink to this heading">#</a></h2>
 <p>Let us reload the dataset as we did previously:</p>
@@ -863,8 +864,7 @@ duplicates the information with <code class="docutils literal notranslate"><span
 </div>
 </div>
 </div>
-<p>We will create the same predictive pipeline as seen in the grid-search
-section.</p>
+<p>We create the same predictive pipeline as done for the grid-search section.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
@@ -943,22 +943,22 @@ section.</p>
 <h2>Tuning using a randomized-search<a class="headerlink" href="#tuning-using-a-randomized-search" title="Permalink to this heading">#</a></h2>
 <p>With the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator, the parameters need to be specified
 explicitly. We already mentioned that exploring a large number of values for
-different parameters will be quickly untractable.</p>
+different parameters quickly becomes untractable.</p>
 <p>Instead, we can randomly generate the parameter candidates. Indeed, such
 approach avoids the regularity of the grid. Hence, adding more evaluations can
 increase the resolution in each direction. This is the case in the frequent
 situation where the choice of some hyperparameters is not very important, as
-for hyperparameter 2 in the figure below.</p>
+for the hyperparameter 2 in the figure below.</p>
 <p><img alt="Randomized vs grid search" src="../_images/grid_vs_random_search.svg" /></p>
 <p>Indeed, the number of evaluation points needs to be divided across the two
 different hyperparameters. With a grid, the danger is that the region of good
-hyperparameters fall between the line of the grid: this region is aligned with
-the grid given that hyperparameter 2 has a weak influence. Rather, stochastic
-search will sample hyperparameter 1 independently from hyperparameter 2 and
-find the optimal region.</p>
+hyperparameters may fall between lines of the grid. In the figure such region
+is aligned with the grid given that hyperparameter 2 has a weak influence.
+Rather, stochastic search samples the hyperparameter 1 independently from the
+hyperparameter 2 and find the optimal region.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code> class allows for such stochastic search. It is used
 similarly to the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> but the sampling distributions need to be
-specified instead of the parameter values. For instance, we will draw
+specified instead of the parameter values. For instance, we can draw
 candidates using a log-uniform distribution because the parameters we are
 interested in take positive values with a natural log scaling (.1 is as close
 to 1 as 10 is).</p>
@@ -967,7 +967,7 @@ to 1 as 10 is).</p>
 <p>Random search (with <code class="docutils literal notranslate"><span class="pre">RandomizedSearchCV</span></code>) is typically beneficial compared to
 grid search (with <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>) to optimize 3 or more hyperparameters.</p>
 </div>
-<p>We will optimize 3 other parameters in addition to the ones we optimized in
+<p>We now optimize 3 other parameters in addition to the ones we optimized in
 the notebook presenting the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">l2_regularization</span></code>: it corresponds to the strength of the regularization;</p></li>
@@ -979,7 +979,7 @@ histograms.</p></li>
 <p>We recall the meaning of the 2 remaining parameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>: it corresponds to the speed at which the gradient-boosting
-will correct the residuals at each boosting iteration;</p></li>
+corrects the residuals at each boosting iteration;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">max_leaf_nodes</span></code>: it corresponds to the maximum number of leaves for each
 tree in the ensemble.</p></li>
 </ul>
@@ -987,7 +987,7 @@ tree in the ensemble.</p></li>
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">scipy.stats.loguniform</span></code> can be used to generate floating numbers. To generate
 random values for integer-valued parameters (e.g. <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>) we can
-adapt is as follows:</p>
+adapt it as follows:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

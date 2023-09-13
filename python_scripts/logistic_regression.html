@@ -672,10 +672,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="linear-model-for-classification">
 <h1>Linear model for classification<a class="headerlink" href="#linear-model-for-classification" title="Permalink to this heading">#</a></h1>
-<p>In regression, we saw that the target to be predicted was a continuous
-variable. In classification, this target will be discrete (e.g. categorical).</p>
-<p>We will go back to our penguin dataset. However, this time we will try to
-predict the penguin species using the culmen information. We will also
+<p>In regression, we saw that the target to be predicted is a continuous
+variable. In classification, the target is discrete (e.g. categorical).</p>
+<p>In this notebook we go back to the penguin dataset. However, this time the
+task is to predict the penguin species using the culmen information. We also
 simplify our classification problem by selecting only 2 of the penguin species
 to solve a binary classification problem.</p>
 <div class="admonition note">
@@ -720,8 +720,8 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <p>We can observe that we have quite a simple problem. When the culmen length
 increases, the probability that the penguin is a Chinstrap is closer to 1.
 However, the culmen depth is not helpful for predicting the penguin species.</p>
-<p>For model fitting, we will separate the target from the data and we will
-create a training and a testing set.</p>
+<p>For model fitting, we separate the target from the data and we create a
+training and a testing set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -737,7 +737,7 @@ create a training and a testing set.</p>
 </div>
 </div>
 </div>
-<p>The linear regression that we previously saw will predict a continuous output.
+<p>The linear regression that we previously saw predicts a continuous output.
 When the target is a binary outcome, one can use the logistic function to
 model the probability. This model is known as logistic regression.</p>
 <p>Scikit-learn provides the class <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> which implements this
@@ -767,9 +767,9 @@ the rule used by our predictive model to affect a class label given the
 feature values of the sample.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Here, we will use the class <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code>. This educational tool
-allows us to gain some insights by plotting the decision function boundary
-learned by the classifier in a 2 dimensional feature space.</p>
+<p>Here, we use the class <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code>. This educational tool allows
+us to gain some insights by plotting the decision function boundary learned by
+the classifier in a 2 dimensional feature space.</p>
 <p>Notice however that in more realistic machine learning contexts, one would
 typically fit on more than two features at once and therefore it would not be
 possible to display such a visualization of the decision boundary in
@@ -852,6 +852,13 @@ is:</p>
 </pre></div>
 </div>
 <p>which is the equation of a straight line.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to go further, try changing the <code class="docutils literal notranslate"><span class="pre">response_method</span></code> to
+<code class="docutils literal notranslate"><span class="pre">&quot;predict_proba&quot;</span></code> in the <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code> above. Now the boundaries
+encode by color the estimated probability of belonging to either class, as
+mentioned in the introductory slides 🎥 Intuitions on linear models.</p>
+</div>
 </section>
 
     <script type="text/x-thebe-config">

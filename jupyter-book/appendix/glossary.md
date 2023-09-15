@@ -6,6 +6,14 @@ of this page.
 
 ## Main terms used in this course
 
+### API
+
+Refers to both the specific interfaces for estimators implemented in
+scikit-learn and the generalized conventions across types of estimators.
+
+In scikit-learn we try to adopt simple conventions and limit to a minimum the
+number of methods an object must implement.
+
 ### classification
 
 Type of problems where the goal is to [predict](#predict-prediction) a

@@ -166,6 +166,9 @@ data_train_scaled
 # `fit` and then `transform`.
 #
 # ![Transformer fit_transform diagram](../figures/api_diagram-transformer.fit_transform.svg)
+#
+# In scikit-learn jargon, a **transformer** is defined as an estimator (an
+# object with a `fit` method) supporting `transform` or `fit_transform`.
 
 # %%
 data_train_scaled = scaler.fit_transform(data_train)

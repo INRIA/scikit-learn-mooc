@@ -125,12 +125,13 @@ linear_regression_interactions[0].transform(data[:5])
 # %% [markdown] tags=["solution"]
 #
 # We observe that 3 features are generated, corresponding to the different
-# combinations of products of the 3 original features. So we have 6
-# intermediate features in total.
+# combinations of products of the 3 original features, i.e. we have 6
+# intermediate features in total. In general, given `p` original features, one
+# has `p * (p - 1) / 2` interactions.
 #
-# For instance let's check that the value in the 1st row and the 5th column
-# (3384.7) is the product of the values at the first and third columns
-# (respectively 181.0 and 18.7) of the same row:
+# Let's now check that the value in the 1st row and the 5th column (3384.7) is
+# the product of the values at the first and third columns (respectively 181.0
+# and 18.7) of the same row:
 
 # %%
 # solution
@@ -209,6 +210,13 @@ _ = disp.ax_.set(
     ylabel="Mean absolute error (g)",
     title="Validation curve for Nystroem regression",
 )
+
+# %% [markdown] tags=["solution"]
+# In the validation curve above we can observe that a small number of components
+# leads to an underfitting model, whereas a large number of components leads to
+# an overfitting model. The optimal number of Nyström components is around 10
+# for this dataset.
+
 # %%
 # solution
 nystroem_regression.set_params(nystroem__n_components=10)
@@ -227,19 +235,12 @@ print(
 )
 
 # %% [markdown] tags=["solution"]
+# In this case we have a model with 10 features instead of 6, and which has
+# approximately the same prediction error as the model with interactions.
 #
-# So in the end we have a model with 10 features instead of 6, and the
-# prediction error is approximately the same.
-#
-# We also observe on the validation curve for the number of components of the
-# `Nystroem` transformer that the a too small number of components leads to an
-# underfitting model, while a too large number of components leads to an
-# overfitting model. The optimal number of Nyström components is around 10 for
-# this dataset.
-#
-# Note that if we had `p = 100` original features (instead of 3), the
-# `PolynomialFeatures` transformer would have generated `p * (p - 1) / 2 =
-# 4950` additional interaction features (so 5150 intermediate features in
+# Notice that if we had `p = 100` original features (instead of 3), the
+# `PolynomialFeatures` transformer would have generated `100 * (100 - 1) / 2 =
+# 4950` additional interaction features (so we would have 5050 features in
 # total). The resulting pipeline would have been much slower to train and
 # predict and would have had a much larger memory footprint. Furthermore, the
 # large number of interaction features would probably have resulted in an

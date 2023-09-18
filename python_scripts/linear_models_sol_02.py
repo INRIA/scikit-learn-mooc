@@ -127,6 +127,10 @@ linear_regression_interactions[0].transform(data[:5])
 # We observe that 3 features are generated, corresponding to the different
 # combinations of products of the 3 original features. So we have 6
 # intermediate features in total.
+#
+# For instance let's check that the value in the 1st row and the 5th column
+# (3384.7) is the product of the values at the first and third columns
+# (respectively 181.0 and 18.7) of the same row:
 
 # %%
 # solution

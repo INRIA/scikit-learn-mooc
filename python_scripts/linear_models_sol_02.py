@@ -123,8 +123,10 @@ linear_regression_interactions.fit(data, target)
 linear_regression_interactions[0].transform(data[:5])
 
 # %% [markdown] tags=["solution"]
+#
 # We observe that 3 features are generated, corresponding to the different
-# combinations of products of the 3 original features.
+# combinations of products of the 3 original features. So we have 6
+# intermediate features in total.
 
 # %%
 # solution
@@ -154,21 +156,23 @@ print(
 )
 
 # %% [markdown] tags=["solution"]
+#
 # We observe that the MAE is lower and less spread with the enriched features.
-# In this case the "interactions" are indeed predictive. Later in this module we
-# will see what happens when the enriched features are non-predictive and how to
-# deal with this case.
+# In this case the additional "interaction" features are indeed predictive.
+# Later in this module we will see what happens when the enriched features are
+# non-predictive and how to deal with this case.
 
 # %% [markdown]
-# Now let's try to see if we can build an alternatively pipeline with fewer
-# intermediate features while keeping a similar predictive power. To do so,
-# try using the `Nystroem` transformer instead of `PolynomialFeatures`. Set
-# the kernel parameter to `"poly"` and `degree` to 2. Adjust the number of
+#
+# Now let's try to build an alternative pipeline with an adjustable number of
+# intermediate features while keeping a similar predictive power. To do so, try
+# using the `Nystroem` transformer instead of `PolynomialFeatures`. Set the
+# kernel parameter to `"poly"` and `degree` to 2. Adjust the number of
 # components to be as small as possible while keeping a good cross-validation
 # performance.
 #
-# Hint: Use a `ValidationCurveDisplay` with `param_range = np.array([1, 2, 5,
-# 10, 20, 50, 100])` to find the optimal `n_components`.
+# Hint: Use a `ValidationCurveDisplay` with `param_range = np.array([5, 10, 50,
+# 100])` to find the optimal `n_components`.
 
 # %%
 # solution
@@ -182,7 +186,7 @@ nystroem_regression = make_pipeline(
     linear_regression,
 )
 
-param_range = np.array([1, 2, 5, 10, 20, 50, 100])
+param_range = np.array([5, 10, 50, 100])
 disp = ValidationCurveDisplay.from_estimator(
     nystroem_regression,
     data,
@@ -217,3 +221,32 @@ print(
     f"{-cv_results['test_score'].mean():.3f} ± "
     f"{cv_results['test_score'].std():.3f} g"
 )
+
+# %% [markdown] tags=["solution"]
+#
+# So in the end we have a model with 10 features instead of 6, and the
+# prediction error is approximately the same.
+#
+# We also observe on the validation curve for the number of components of the
+# `Nystroem` transformer that the a too small number of components leads to an
+# underfitting model, while a too large number of components leads to an
+# overfitting model. The optimal number of Nyström components is around 10 for
+# this dataset.
+#
+# Note that if we had `p = 100` original features (instead of 3), the
+# `PolynomialFeatures` transformer would have generated `p * (p - 1) / 2 =
+# 4950` additional interaction features (so 5150 intermediate features in
+# total). The resulting pipeline would have been much slower to train and
+# predict and would have had a much larger memory footprint. Furthermore, the
+# large number of interaction features would probably have resulted in an
+# overfitting model.
+#
+# On the other hand, the `Nystroem` transformer generates a user-adjustable
+# number of features (`n_components`). Furthermore, the optimal number of
+# components is usually much smaller than that. So the `Nystroem` transformer
+# can be more scalable when the number of original features is too large for
+# `PolynomialFeatures` to be used.
+#
+# The main downside of the `Nystroem` transformer is that it is not possible to
+# easily interpret the meaning of the generated features and therefore the
+# meaning of the learned coefficients for the downstream linear model.

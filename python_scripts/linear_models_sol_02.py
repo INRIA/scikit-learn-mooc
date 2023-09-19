@@ -114,8 +114,7 @@ linear_regression_interactions = make_pipeline(
 # %% [markdown]
 # Transform the first 5 rows of the dataset and look at the column names. How
 # many features are generated at the output of the `PolynomialFeatures` step in
-# the previous pipeline? Check that the values for the new interactions features
-# are correct for a few of them.
+# the previous pipeline?
 
 # %%
 # solution
@@ -123,12 +122,16 @@ linear_regression_interactions.fit(data, target)
 linear_regression_interactions[0].transform(data[:5])
 
 # %% [markdown] tags=["solution"]
-#
 # We observe that 3 features are generated, corresponding to the different
 # combinations of products of the 3 original features, i.e. we have 6
 # intermediate features in total. In general, given `p` original features, one
 # has `p * (p - 1) / 2` interactions.
-#
+
+# %% [markdown]
+# Check that the values for the new interaction features are correct for a few
+# of them.
+
+# %% [markdown] tags=["solution"]
 # Let's now check that the value in the 1st row and the 5th column (3384.7) is
 # the product of the values at the first and third columns (respectively 181.0
 # and 18.7) of the same row:
@@ -161,7 +164,6 @@ print(
 )
 
 # %% [markdown] tags=["solution"]
-#
 # We observe that the MAE is lower and less spread with the enriched features.
 # In this case the additional "interaction" features are indeed predictive.
 # Later in this module we will see what happens when the enriched features are
@@ -218,7 +220,7 @@ _ = disp.ax_.set(
 # for this dataset.
 
 # %% [markdown]
-# How does the mean and std of the MAE for the Nystroem pipeline with optimal
+# How do the mean and std of the MAE for the Nystroem pipeline with optimal
 # `n_components` compare to the other previous models?
 
 # %%

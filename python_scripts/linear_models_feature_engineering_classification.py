@@ -196,8 +196,14 @@ plot_decision_boundary(logistic_regression, title="Linear classifier")
 #
 # This confirms that it is not possible to separate the two classes with a
 # linear model. On each plot we see a **significant number of misclassified
-# samples on the training set**! This is a typical example of **underfitting**
-# for linear models.
+# samples on the training set**!
+#
+# In particular, the last plot shows a model that performs specially bad: it
+# ends up correctly classifying a majority the samples in the positive class,
+# but as a result, it makes classification errors for every sample of the
+# negative class.
+#
+# Those three plots show typical cases of **underfitting** for linear models.
 
 # %% [markdown]
 #
@@ -205,8 +211,8 @@ plot_decision_boundary(logistic_regression, title="Linear classifier")
 #
 # As we did for the linear regression models, we will attempt to build a more
 # expressive machine learning pipeline by leveraging non-linear feature
-# engineering. We will use the techniques as for linear regression models:
-# binning, splines, polynomial features, and kernel approximation.
+# engineering, with techniques such as binning, splines, polynomial features,
+# and kernel approximation.
 #
 # Let's start with the binning transformation of the features:
 
@@ -227,17 +233,19 @@ plot_decision_boundary(classifier, title="Binning classifier")
 # trees, the model makes piecewise constant predictions within each rectangular
 # region.
 #
-# While this axis-aligned decision boundary is not necessarily the natural
-# decision boundary a human would have intuitively drawn on these datasets,
-# note that this makes it possible for the model to successfully separate the
-# the data for the moons dataset and the Gaussian quantiles datasets. However,
-# the model still fails to separate the data for the XOR dataset. This is
-# because **the binning transformation is a feature-wise transformation** and
-# thus **cannot capture interactions** between features that are necessary to
-# separate the XOR dataset.
+# This axis-aligned decision boundary is not necessarily the natural decision
+# boundary a human would have intuitively drawn for the moons dataset and the
+# Gaussian quantiles datasets. It still makes it possible for the model to
+# successfully separate the the data. However, binning alone does not help the
+# classifier separate the data for the XOR dataset. This is because **the
+# binning transformation is a feature-wise transformation** and thus **cannot
+# capture interactions** between features that are necessary to separate the
+# XOR dataset.
 #
-# Let's now use a **spline** transformation of the features, which can be
-# considered a **smooth version of the binning transformation**:
+# Let's now consider a **spline** transformation of the original features. This
+# transformation can be considered a **smooth version of the binning
+# transformation**. You can find more details in the [scikit-learn user guide](
+# https://scikit-learn.org/stable/modules/preprocessing.html#spline-transformer).
 
 # %%
 from sklearn.preprocessing import SplineTransformer
@@ -264,8 +272,8 @@ plot_decision_boundary(classifier, title="Spline classifier")
 #
 # However, as for the binning transformation, the model still fails to separate
 # the data for the XOR dataset, irrespective of the number of knots, for the
-# same reasons: the spline transformation is a feature-wise transformation and
-# thus cannot capture interactions between features.
+# same reasons: **the spline transformation is a feature-wise transformation**
+# and thus **cannot capture interactions** between features.
 
 # %% [markdown]
 #

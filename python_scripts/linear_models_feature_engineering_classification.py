@@ -83,10 +83,8 @@ data_xor = xor[feature_names]
 # %%
 import matplotlib.pyplot as plt
 import seaborn as sns
-import warnings
 
 
-warnings.filterwarnings("ignore", module="seaborn")
 _, axs = plt.subplots(ncols=3, figsize=(14, 4))
 
 sns.scatterplot(
@@ -132,8 +130,8 @@ _ = axs[2].set_title("The XOR dataset")
 from sklearn.inspection import DecisionBoundaryDisplay
 
 
-def plot_decision_boundary(model):
-    _, axs = plt.subplots(ncols=3, figsize=(14, 4))
+def plot_decision_boundary(model, title=None):
+    fig, axs = plt.subplots(ncols=3, figsize=(14, 4))
 
     for ax, (data, target) in zip(
         axs,
@@ -174,7 +172,8 @@ def plot_decision_boundary(model):
             palette=["tab:red", "tab:blue"],
             ax=ax,
         )
-    return axs
+    if title is not None:
+        fig.suptitle(title)
 
 
 # %% [markdown]
@@ -191,7 +190,7 @@ logistic_regression = make_pipeline(StandardScaler(), LogisticRegression())
 logistic_regression
 
 # %%
-axs = plot_decision_boundary(logistic_regression)
+plot_decision_boundary(logistic_regression, title="Linear classifier")
 
 # %% [markdown]
 #
@@ -218,7 +217,7 @@ classifier = make_pipeline(KBinsDiscretizer(n_bins=5), LogisticRegression())
 classifier
 
 # %%
-axs = plot_decision_boundary(classifier)
+plot_decision_boundary(classifier, title="Binning classifier")
 
 # %% [markdown]
 #
@@ -250,7 +249,7 @@ classifier = make_pipeline(
 classifier
 
 # %%
-axs = plot_decision_boundary(classifier)
+plot_decision_boundary(classifier, title="Spline classifier")
 
 # %% [markdown]
 #
@@ -290,7 +289,7 @@ classifier = make_pipeline(
 classifier
 
 # %%
-axs = plot_decision_boundary(classifier)
+plot_decision_boundary(classifier, title="Polynomial classifier")
 
 # %% [markdown]
 #
@@ -318,7 +317,7 @@ classifier = make_pipeline(
 )
 classifier
 # %%
-axs = plot_decision_boundary(classifier)
+plot_decision_boundary(classifier, title="Polynomial Nystroem classifier")
 
 # %% [markdown]
 #
@@ -340,7 +339,7 @@ classifier = make_pipeline(
 )
 classifier
 # %%
-axs = plot_decision_boundary(classifier)
+plot_decision_boundary(classifier, title="RBF Nystroem classifier")
 
 # %% [markdown]
 #
@@ -370,7 +369,7 @@ classifier = make_pipeline(
 )
 classifier
 # %%
-axs = plot_decision_boundary(classifier)
+plot_decision_boundary(classifier, title="Binning + Nystroem classifier")
 
 # %% [markdown]
 #
@@ -392,7 +391,7 @@ classifier = make_pipeline(
 classifier
 
 # %%
-axs = plot_decision_boundary(classifier)
+plot_decision_boundary(classifier, title="Spline + RBF Nystroem classifier")
 
 # %% [markdown]
 #

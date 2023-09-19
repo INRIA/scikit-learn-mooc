@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -82,6 +83,15 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -630,10 +640,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -641,7 +651,7 @@ document.write(`
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -688,19 +698,21 @@ document.write(`
 <h1>First model with scikit-learn<a class="headerlink" href="#first-model-with-scikit-learn" title="Permalink to this heading">#</a></h1>
 <p>In this notebook, we present how to build predictive models on tabular
 datasets, with only numerical features.</p>
-<p>In particular we will highlight:</p>
+<p>In particular we highlight:</p>
 <ul class="simple">
 <li><p>the scikit-learn API: <code class="docutils literal notranslate"><span class="pre">.fit(X,</span> <span class="pre">y)</span></code>/<code class="docutils literal notranslate"><span class="pre">.predict(X)</span></code>/<code class="docutils literal notranslate"><span class="pre">.score(X,</span> <span class="pre">y)</span></code>;</p></li>
 <li><p>how to evaluate the generalization performance of a model with a train-test
 split.</p></li>
 </ul>
+<p>Here API stands for “Application Programming Interface” and refers to a set of
+conventions to build self-consistent software. Notice that you can visit the
+Glossary for more info on technical jargon.</p>
 <section id="loading-the-dataset-with-pandas">
 <h2>Loading the dataset with Pandas<a class="headerlink" href="#loading-the-dataset-with-pandas" title="Permalink to this heading">#</a></h2>
-<p>We will use the same dataset “adult_census” described in the previous
-notebook. For more details about the dataset see
-<a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a>.</p>
+<p>We use the “adult_census” dataset described in the previous notebook. For more
+details about the dataset see <a class="reference external" href="http://www.openml.org/d/1590">http://www.openml.org/d/1590</a>.</p>
 <p>Numerical data is the most natural type of data used in machine learning and
-can (almost) directly be fed into predictive models. We will load a subset of
+can (almost) directly be fed into predictive models. Here we load a subset of
 the original data with only the numerical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -893,7 +905,7 @@ Name: class, Length: 39073, dtype: object
 </table>
 </div></div></div>
 </div>
-<p>We can now linger on the variables, also denominated features, that we will
+<p>We can now linger on the variables, also denominated features, that we later
 use to build our predictive model. In addition, we can also check how many
 samples are available in our dataset.</p>
 <div class="cell docutils container">
@@ -926,7 +938,7 @@ samples are available in our dataset.</p>
 </section>
 <section id="fit-a-model-and-make-predictions">
 <h2>Fit a model and make predictions<a class="headerlink" href="#fit-a-model-and-make-predictions" title="Permalink to this heading">#</a></h2>
-<p>We will build a classification model using the “K-nearest neighbors” strategy.
+<p>We now build a classification model using the “K-nearest neighbors” strategy.
 To predict the target of a new sample, a k-nearest neighbors takes into
 account its <code class="docutils literal notranslate"><span class="pre">k</span></code> closest samples in the training set and predicts the majority
 target of these samples.</p>
@@ -950,10 +962,11 @@ target data.</p>
 </div>
 <p>Learning can be represented as follows:</p>
 <p><img alt="Predictor fit diagram" src="../_images/api_diagram-predictor.fit.svg" /></p>
-<p>The method <code class="docutils literal notranslate"><span class="pre">fit</span></code> is composed of two elements: (i) a <strong>learning algorithm</strong> and
+<p>In scikit-learn an object that has a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called an <strong>estimator</strong>.
+The method <code class="docutils literal notranslate"><span class="pre">fit</span></code> is composed of two elements: (i) a <strong>learning algorithm</strong> and
 (ii) some <strong>model states</strong>. The learning algorithm takes the training data and
-training target as input and sets the model states. These model states will be
-used later to either predict (for classifiers and regressors) or transform
+training target as input and sets the model states. These model states are
+later used to either predict (for classifiers and regressors) or transform
 data (for transformers).</p>
 <p>Both the learning algorithm and the type of model states are specific to each
 type of model.</p>
@@ -971,13 +984,14 @@ commonly called <code class="docutils literal notranslate"><span class="pre">y</
 </div>
 </div>
 </div>
-<p>We can illustrate the prediction mechanism as follows:</p>
+<p>An estimator (an object with a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method) with a <code class="docutils literal notranslate"><span class="pre">predict</span></code> method is called
+a <strong>predictor</strong>. We can illustrate the prediction mechanism as follows:</p>
 <p><img alt="Predictor predict diagram" src="../_images/api_diagram-predictor.predict.svg" /></p>
-<p>To predict, a model uses a <strong>prediction function</strong> that will use the input
-data together with the model states. As for the learning algorithm and the
-model states, the prediction function is specific for each type of model.</p>
+<p>To predict, a model uses a <strong>prediction function</strong> that uses the input data
+together with the model states. As for the learning algorithm and the model
+states, the prediction function is specific for each type of model.</p>
 <p>Let’s now have a look at the computed predictions. For the sake of simplicity,
-we will look at the five first predicted targets.</p>
+we look at the five first predicted targets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
@@ -1123,7 +1137,9 @@ returns their performance metric.</p>
 </div>
 </div>
 </div>
-<p>Let’s check the underlying mechanism when the <code class="docutils literal notranslate"><span class="pre">score</span></code> method is called:</p>
+<p>We use the generic term <strong>model</strong> for objects whose goodness of fit can be
+measured using the <code class="docutils literal notranslate"><span class="pre">score</span></code> method. Let’s check the underlying mechanism when
+calling <code class="docutils literal notranslate"><span class="pre">score</span></code>:</p>
 <p><img alt="Predictor score diagram" src="../_images/api_diagram-predictor.score.svg" /></p>
 <p>To compute the score, the predictor first computes the predictions (using the
 <code class="docutils literal notranslate"><span class="pre">predict</span></code> method) and then uses a scoring function to compare the true target
@@ -1137,13 +1153,13 @@ We will discuss later in more detail how predictive models should be
 evaluated.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>In this MOOC, we will refer to <strong>generalization performance</strong> of a model when
-referring to the test score or test error obtained by comparing the
-prediction of a model and the true targets. Equivalent terms for
-<strong>generalization performance</strong> are predictive performance and statistical
-performance. We will refer to <strong>computational performance</strong> of a predictive
-model when assessing the computational costs of training a predictive model
-or using it to make predictions.</p>
+<p>In this MOOC, we refer to <strong>generalization performance</strong> of a model when
+referring to the test score or test error obtained by comparing the prediction
+of a model and the true targets. Equivalent terms for <strong>generalization
+performance</strong> are predictive performance and statistical performance. We refer
+to <strong>computational performance</strong> of a predictive model when assessing the
+computational costs of training a predictive model or using it to make
+predictions.</p>
 </div>
 </section>
 <section id="notebook-recap">
@@ -1154,7 +1170,8 @@ or using it to make predictions.</p>
 <li><p>evaluated its generalization performance on the testing data;</p></li>
 <li><p>introduced the scikit-learn API <code class="docutils literal notranslate"><span class="pre">.fit(X,</span> <span class="pre">y)</span></code> (to train a model),
 <code class="docutils literal notranslate"><span class="pre">.predict(X)</span></code> (to make predictions) and <code class="docutils literal notranslate"><span class="pre">.score(X,</span> <span class="pre">y)</span></code> (to evaluate a
-model).</p></li>
+model);</p></li>
+<li><p>introduced the jargon for estimator, predictor and model.</p></li>
 </ul>
 </section>
 </section>
@@ -1184,11 +1201,10 @@ model).</p></li>
 
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../predictive_modeling_pipeline/02_numerical_pipeline_index.html"
@@ -1208,10 +1224,7 @@ model).</p></li>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1291,8 +1304,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -82,6 +83,15 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -630,10 +640,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -641,7 +651,7 @@ document.write(`
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -672,23 +682,16 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="set-and-get-hyperparameters-in-scikit-learn">
 <h1>Set and get hyperparameters in scikit-learn<a class="headerlink" href="#set-and-get-hyperparameters-in-scikit-learn" title="Permalink to this heading">#</a></h1>
-<p>The process of learning a predictive model is driven by a set of internal
-parameters and a set of training data. These internal parameters are called
-hyperparameters and are specific for each family of models. In addition, a
-specific set of hyperparameters are optimal for a specific dataset and thus
-they need to be optimized.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In this notebook we will use the words “hyperparameters” and “parameters”
-interchangeably.</p>
-</div>
+<p>Recall that hyperparameters refer to the parameters that control the learning
+process of a predictive model and are specific for each family of models. In
+addition, the optimal set of hyperparameters is specific to each dataset and
+thus they always need to be optimized.</p>
 <p>This notebook shows how one can get and set the value of a hyperparameter in a
-scikit-learn estimator. We recall that hyperparameters refer to the parameter
-that will control the learning process.</p>
+scikit-learn estimator.</p>
 <p>They should not be confused with the fitted parameters, resulting from the
 training. These fitted parameters are recognizable in scikit-learn because
 they are spelled with a final underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>, for instance <code class="docutils literal notranslate"><span class="pre">model.coef_</span></code>.</p>
-<p>We will start by loading the adult census dataset and only use the numerical
+<p>We start by loading the adult census dataset and only use the numerical
 features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -821,7 +824,7 @@ cross-validation.</p>
 </div>
 </div>
 <p>We created a model with the default <code class="docutils literal notranslate"><span class="pre">C</span></code> value that is equal to 1. If we wanted
-to use a different <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter we could have done so when we created the
+to use a different <code class="docutils literal notranslate"><span class="pre">C</span></code> hyperparameter we could have done so when we created the
 <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> object with something like <code class="docutils literal notranslate"><span class="pre">LogisticRegression(C=1e-3)</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -829,9 +832,9 @@ to use a different <code class="docutils literal notranslate"><span class="pre">
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">documentation</a>.
 Be aware that we will focus on linear models in an upcoming module.</p>
 </div>
-<p>We can also change the parameter of a model after it has been created with the
-<code class="docutils literal notranslate"><span class="pre">set_params</span></code> method, which is available for all scikit-learn estimators. For
-example, we can set <code class="docutils literal notranslate"><span class="pre">C=1e-3</span></code>, fit and evaluate the model:</p>
+<p>We can also change the hyperparameter of a model after it has been created
+with the <code class="docutils literal notranslate"><span class="pre">set_params</span></code> method, which is available for all scikit-learn
+estimators. For example, we can set <code class="docutils literal notranslate"><span class="pre">C=1e-3</span></code>, fit and evaluate the model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">classifier__C</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
@@ -851,13 +854,13 @@ example, we can set <code class="docutils literal notranslate"><span class="pre"
 </div>
 </div>
 </div>
-<p>When the model of interest is a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, the parameter names are of the
-form <code class="docutils literal notranslate"><span class="pre">&lt;model_name&gt;__&lt;parameter_name&gt;</span></code> (note the double underscore in the
-middle). In our case, <code class="docutils literal notranslate"><span class="pre">classifier</span></code> comes from the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> definition and
-<code class="docutils literal notranslate"><span class="pre">C</span></code> is the parameter name of <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>.</p>
+<p>When the model of interest is a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>, the hyperparameter names are of
+the form <code class="docutils literal notranslate"><span class="pre">&lt;model_name&gt;__&lt;hyperparameter_name&gt;</span></code> (note the double underscore in
+the middle). In our case, <code class="docutils literal notranslate"><span class="pre">classifier</span></code> comes from the <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> definition
+and <code class="docutils literal notranslate"><span class="pre">C</span></code> is the hyperparameter name of <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>.</p>
 <p>In general, you can use the <code class="docutils literal notranslate"><span class="pre">get_params</span></code> method on scikit-learn models to list
-all the parameters with their values. For example, if you want to get all the
-parameter names, you can use:</p>
+all the hyperparameters with their values. For example, if you want to get all
+the hyperparameter names, you can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">get_params</span><span class="p">():</span>
@@ -893,9 +896,9 @@ classifier__warm_start
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">.get_params()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">dict</span></code> whose keys are the parameter names and whose
-values are the parameter values. If you want to get the value of a single
-parameter, for example <code class="docutils literal notranslate"><span class="pre">classifier__C</span></code>, you can use:</p>
+<p><code class="docutils literal notranslate"><span class="pre">.get_params()</span></code> returns a <code class="docutils literal notranslate"><span class="pre">dict</span></code> whose keys are the hyperparameter names and
+whose values are the hyperparameter values. If you want to get the value of a
+single hyperparameter, for example <code class="docutils literal notranslate"><span class="pre">classifier__C</span></code>, you can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">get_params</span><span class="p">()[</span><span class="s2">&quot;classifier__C&quot;</span><span class="p">]</span>
@@ -959,7 +962,7 @@ the model, and it is thus no longer independent from this model.</p>
 </div>
 <p>In this notebook we have seen:</p>
 <ul class="simple">
-<li><p>how to use <code class="docutils literal notranslate"><span class="pre">get_params</span></code> and <code class="docutils literal notranslate"><span class="pre">set_params</span></code> to get the parameters of a model
+<li><p>how to use <code class="docutils literal notranslate"><span class="pre">get_params</span></code> and <code class="docutils literal notranslate"><span class="pre">set_params</span></code> to get the hyperparameters of a model
 and set them.</p></li>
 </ul>
 </section>
@@ -989,11 +992,10 @@ and set them.</p></li>
 
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../tuning/parameter_tuning_manual_index.html"
@@ -1013,10 +1015,7 @@ and set them.</p></li>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1078,8 +1077,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09"></script>
 
   <footer class="bd-footer">
   </footer>

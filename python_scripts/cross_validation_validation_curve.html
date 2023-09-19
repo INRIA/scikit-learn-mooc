@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=927b94d3fcb96560df09" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=927b94d3fcb96560df09"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -82,6 +83,15 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -630,10 +640,10 @@ const thebe_selector_output = ".output, .cell_output"
 
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -641,7 +651,7 @@ document.write(`
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
@@ -687,8 +697,8 @@ document.write(`
 <p>In the previous notebook, we presented the general cross-validation framework
 and how it helps us quantify the training and testing errors as well as their
 fluctuations.</p>
-<p>In this notebook, we will put these two errors into perspective and show how
-they can help us know if our model generalizes, overfits, or underfits.</p>
+<p>In this notebook, we put these two errors into perspective and show how they
+can help us know if our model generalizes, overfits, or underfits.</p>
 <p>Let’s first load the data and create the same model as in the previous
 notebook.</p>
 <div class="cell docutils container">
@@ -719,7 +729,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <section id="overfitting-vs-underfitting">
 <h2>Overfitting vs. underfitting<a class="headerlink" href="#overfitting-vs-underfitting" title="Permalink to this heading">#</a></h2>
 <p>To better understand the generalization performance of our model and maybe
-find insights on how to improve it, we will compare the testing error with the
+find insights on how to improve it, we compare the testing error with the
 training error. Thus, we need to compute the error on the training set, which
 is possible using the <code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
 <div class="cell docutils container">
@@ -781,12 +791,18 @@ make good prediction on the test set.</p>
 </section>
 <section id="validation-curve">
 <h2>Validation curve<a class="headerlink" href="#validation-curve" title="Permalink to this heading">#</a></h2>
+<p>We call <strong>hyperparameters</strong> those parameters that potentially impact the
+result of the learning and subsequent predictions of a predictor. For example:</p>
+<ul class="simple">
+<li><p>the number of neighbors in a k-nearest neighbor model;</p></li>
+<li><p>the degree of the polynomial.</p></li>
+</ul>
 <p>Some model hyperparameters are usually the key to go from a model that
 underfits to a model that overfits, hopefully going through a region were we
 can get a good balance between the two. We can acquire knowledge by plotting a
 curve called the validation curve. This curve can also be applied to the above
 experiment and varies the value of a hyperparameter.</p>
-<p>For the decision tree, the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter is used to control the
+<p>For the decision tree, the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> hyperparameter is used to control the
 tradeoff between under-fitting and over-fitting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -857,7 +873,7 @@ are quite clear. This is not necessarily always the case.</p>
 <ul class="simple">
 <li><p>how to identify whether a model is generalizing, overfitting, or
 underfitting;</p></li>
-<li><p>how to check influence of a hyperparameter on the tradeoff underfit/overfit.</p></li>
+<li><p>how to check influence of a hyperparameter on the underfit/overfit tradeoff.</p></li>
 </ul>
 </section>
 </section>
@@ -887,11 +903,10 @@ underfitting;</p></li>
 
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="../overfit/learning_validation_curves_slides.html"
@@ -911,10 +926,7 @@ underfitting;</p></li>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -992,8 +1004,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=927b94d3fcb96560df09"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=927b94d3fcb96560df09"></script>
 
   <footer class="bd-footer">
   </footer>

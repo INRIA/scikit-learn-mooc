@@ -131,11 +131,14 @@ function to also compute the train score.
 
 +++
 
-We will now study the effect of the parameter `n_neighbors` on the train and
-test score using a validation curve. You can use the following parameter range:
+We now study the effect of the parameter `n_neighbors` on the train and test
+score using a validation curve. You can use the following parameter range:
 
 ```python
-param_range = [1, 2, 5, 10, 20, 50, 100, 200, 500]
+import numpy as np
+
+
+param_range = np.array([1, 2, 5, 10, 20, 50, 100, 200, 500])
 ```
 
 Also, use a 5-fold cross-validation and compute the balanced accuracy score
@@ -157,7 +160,7 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Select the true affirmations stated below:
+Select the most correct of the affirmations stated below:
 
 - a) The model overfits for a range of `n_neighbors` values between 1 to 10
 - b) The model overfits for a range of `n_neighbors` values between 10 to 100
@@ -169,7 +172,7 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-Select which of the following statements are true:
+Select the most correct of the affirmations stated below:
 
 - a) The model best generalizes for a range of `n_neighbors` values between 1 to 10
 - b) The model best generalizes for a range of `n_neighbors` values between 10 to 100

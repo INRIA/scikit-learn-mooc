@@ -85,7 +85,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-_, axs = plt.subplots(ncols=3, figsize=(14, 4))
+_, axs = plt.subplots(ncols=3, figsize=(14, 4), constrained_layout=True)
 
 sns.scatterplot(
     data=moons,
@@ -131,7 +131,11 @@ from sklearn.inspection import DecisionBoundaryDisplay
 
 
 def plot_decision_boundary(model, title=None):
-    fig, axs = plt.subplots(ncols=3, figsize=(14, 4))
+    fig, axs = plt.subplots(
+        ncols=3,
+        figsize=(14, 4),
+        constrained_layout=True,
+    )
 
     for ax, (data, target) in zip(
         axs,

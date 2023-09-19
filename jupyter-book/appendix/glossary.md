@@ -8,31 +8,25 @@ of this page.
 
 ### API
 
-Refers to both the specific interfaces for estimators implemented in
-scikit-learn and the generalized conventions across types of estimators.
+Acronym that stands for "Application Programming Interface". It can have a
+slightly different meaning in different contexts: in some cases it can be used
+to designate an online service that can be accessed by remote programs. In the
+context of an online service, the term "API" can be used both to designate the
+service itself, and the technical specification of the programming interface
+used by people who write client applications that connect to this service.
 
-The (public) API of scikit-learn is documented via the docstrings of public
-functions, classes and methods; and can be browsed online at:
+In the context of an offline library such as scikit-learn, it means the list of
+all (public) functions, classes and methods in the library, along with their
+documentation via docstrings. It and can be browsed online at:
 
 - https://scikit-learn.org/stable/modules/classes.html
 
 In scikit-learn we try to adopt simple conventions and limit to a minimum the
 number of methods an object must implement. Furthermore, scikit-learn tries to
-use consistent method names for different estimators of the same category:
-e.g. all transformers expose `fit`, `fit_transform` and `transform` methods
-and generally accept similar arguments of type and shapes for those methods.
+use consistent method names for different estimators of the same category: e.g.
+all transformers expose `fit`, `fit_transform` and `transform` methods and
+generally accept similar arguments of type and shapes for those methods.
 
-Note that, more generally, "API" is an acronym that stands for "Application
-Programming Interface". It can have a slightly different meaning in different
-contexts: in some cases it can be used to designate an online service that can be
-accessed by remote programs. In the context of an online service, the term "API"
-can be used both to designate the service itself, and the technical specification
-of the programming interface used by people who write client applications that
-connect to this service.
-
-In the context of an (offline) library such as scikit-learn, it just means the
-list of all (public) functions, classes and methods in the library, along with the
-specification of the accepted argument types.
 ### classification
 
 Type of problems where the goal is to [predict](#predict-prediction) a

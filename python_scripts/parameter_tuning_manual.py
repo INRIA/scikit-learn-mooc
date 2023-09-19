@@ -8,26 +8,19 @@
 # %% [markdown]
 # # Set and get hyperparameters in scikit-learn
 #
-# The process of learning a predictive model is driven by a set of internal
-# parameters and a set of training data. These internal parameters are called
-# hyperparameters and are specific for each family of models. In addition, a
-# specific set of hyperparameters are optimal for a specific dataset and thus
-# they need to be optimized.
-#
-# ```{note}
-# In this notebook we will use the words "hyperparameters" and "parameters"
-# interchangeably.
-# ```
+# Recall that hyperparameters refer to the parameters that control the learning
+# process of a predictive model and are specific for each family of models. In
+# addition, the optimal set of hyperparameters is specific to each dataset and
+# thus they always need to be optimized.
 #
 # This notebook shows how one can get and set the value of a hyperparameter in a
-# scikit-learn estimator. We recall that hyperparameters refer to the parameter
-# that will control the learning process.
+# scikit-learn estimator.
 #
 # They should not be confused with the fitted parameters, resulting from the
 # training. These fitted parameters are recognizable in scikit-learn because
 # they are spelled with a final underscore `_`, for instance `model.coef_`.
 #
-# We will start by loading the adult census dataset and only use the numerical
+# We start by loading the adult census dataset and only use the numerical
 # features.
 
 # %%
@@ -83,7 +76,7 @@ print(
 
 # %% [markdown]
 # We created a model with the default `C` value that is equal to 1. If we wanted
-# to use a different `C` parameter we could have done so when we created the
+# to use a different `C` hyperparameter we could have done so when we created the
 # `LogisticRegression` object with something like `LogisticRegression(C=1e-3)`.
 #
 # ```{note}
@@ -92,9 +85,9 @@ print(
 # Be aware that we will focus on linear models in an upcoming module.
 # ```
 #
-# We can also change the parameter of a model after it has been created with the
-# `set_params` method, which is available for all scikit-learn estimators. For
-# example, we can set `C=1e-3`, fit and evaluate the model:
+# We can also change the hyperparameter of a model after it has been created
+# with the `set_params` method, which is available for all scikit-learn
+# estimators. For example, we can set `C=1e-3`, fit and evaluate the model:
 
 # %%
 model.set_params(classifier__C=1e-3)
@@ -106,23 +99,23 @@ print(
 )
 
 # %% [markdown]
-# When the model of interest is a `Pipeline`, the parameter names are of the
-# form `<model_name>__<parameter_name>` (note the double underscore in the
-# middle). In our case, `classifier` comes from the `Pipeline` definition and
-# `C` is the parameter name of `LogisticRegression`.
+# When the model of interest is a `Pipeline`, the hyperparameter names are of
+# the form `<model_name>__<hyperparameter_name>` (note the double underscore in
+# the middle). In our case, `classifier` comes from the `Pipeline` definition
+# and `C` is the hyperparameter name of `LogisticRegression`.
 #
 # In general, you can use the `get_params` method on scikit-learn models to list
-# all the parameters with their values. For example, if you want to get all the
-# parameter names, you can use:
+# all the hyperparameters with their values. For example, if you want to get all
+# the hyperparameter names, you can use:
 
 # %%
 for parameter in model.get_params():
     print(parameter)
 
 # %% [markdown]
-# `.get_params()` returns a `dict` whose keys are the parameter names and whose
-# values are the parameter values. If you want to get the value of a single
-# parameter, for example `classifier__C`, you can use:
+# `.get_params()` returns a `dict` whose keys are the hyperparameter names and
+# whose values are the hyperparameter values. If you want to get the value of a
+# single hyperparameter, for example `classifier__C`, you can use:
 
 # %%
 model.get_params()["classifier__C"]
@@ -158,5 +151,5 @@ for C in [1e-3, 1e-2, 1e-1, 1, 10]:
 # %% [markdown]
 # In this notebook we have seen:
 #
-# - how to use `get_params` and `set_params` to get the parameters of a model
+# - how to use `get_params` and `set_params` to get the hyperparameters of a model
 #   and set them.

@@ -11,20 +11,23 @@
 # In this notebook, we present how to build predictive models on tabular
 # datasets, with only numerical features.
 #
-# In particular we will highlight:
+# In particular we highlight:
 #
 # * the scikit-learn API: `.fit(X, y)`/`.predict(X)`/`.score(X, y)`;
 # * how to evaluate the generalization performance of a model with a train-test
 #   split.
 #
+# Here API stands for "Application Programming Interface" and refers to a set of
+# conventions to build self-consistent software. Notice that you can visit the
+# Glossary for more info on technical jargon.
+#
 # ## Loading the dataset with Pandas
 #
-# We will use the same dataset "adult_census" described in the previous
-# notebook. For more details about the dataset see
-# <http://www.openml.org/d/1590>.
+# We use the "adult_census" dataset described in the previous notebook. For more
+# details about the dataset see <http://www.openml.org/d/1590>.
 #
 # Numerical data is the most natural type of data used in machine learning and
-# can (almost) directly be fed into predictive models. We will load a subset of
+# can (almost) directly be fed into predictive models. Here we load a subset of
 # the original data with only the numerical columns.
 
 # %%
@@ -56,7 +59,7 @@ data = adult_census.drop(columns=[target_name])
 data.head()
 
 # %% [markdown]
-# We can now linger on the variables, also denominated features, that we will
+# We can now linger on the variables, also denominated features, that we later
 # use to build our predictive model. In addition, we can also check how many
 # samples are available in our dataset.
 
@@ -72,7 +75,7 @@ print(
 # %% [markdown]
 # ## Fit a model and make predictions
 #
-# We will build a classification model using the "K-nearest neighbors" strategy.
+# We now build a classification model using the "K-nearest neighbors" strategy.
 # To predict the target of a new sample, a k-nearest neighbors takes into
 # account its `k` closest samples in the training set and predicts the majority
 # target of these samples.
@@ -97,10 +100,11 @@ _ = model.fit(data, target)
 #
 # ![Predictor fit diagram](../figures/api_diagram-predictor.fit.svg)
 #
+# In scikit-learn an object that has a `fit` method is called an **estimator**.
 # The method `fit` is composed of two elements: (i) a **learning algorithm** and
 # (ii) some **model states**. The learning algorithm takes the training data and
-# training target as input and sets the model states. These model states will be
-# used later to either predict (for classifiers and regressors) or transform
+# training target as input and sets the model states. These model states are
+# later used to either predict (for classifiers and regressors) or transform
 # data (for transformers).
 #
 # Both the learning algorithm and the type of model states are specific to each
@@ -120,17 +124,18 @@ _ = model.fit(data, target)
 target_predicted = model.predict(data)
 
 # %% [markdown]
-# We can illustrate the prediction mechanism as follows:
+# An estimator (an object with a `fit` method) with a `predict` method is called
+# a **predictor**. We can illustrate the prediction mechanism as follows:
 #
 # ![Predictor predict diagram](../figures/api_diagram-predictor.predict.svg)
 #
-# To predict, a model uses a **prediction function** that will use the input
-# data together with the model states. As for the learning algorithm and the
-# model states, the prediction function is specific for each type of model.
+# To predict, a model uses a **prediction function** that uses the input data
+# together with the model states. As for the learning algorithm and the model
+# states, the prediction function is specific for each type of model.
 
 # %% [markdown]
 # Let's now have a look at the computed predictions. For the sake of simplicity,
-# we will look at the five first predicted targets.
+# we look at the five first predicted targets.
 
 # %%
 target_predicted[:5]
@@ -214,7 +219,9 @@ model_name = model.__class__.__name__
 print(f"The test accuracy using a {model_name} is {accuracy:.3f}")
 
 # %% [markdown]
-# Let's check the underlying mechanism when the `score` method is called:
+# We use the generic term **model** for objects whose goodness of fit can be
+# measured using the `score` method. Let's check the underlying mechanism when
+# calling `score`:
 #
 # ![Predictor score diagram](../figures/api_diagram-predictor.score.svg)
 #
@@ -234,13 +241,13 @@ print(f"The test accuracy using a {model_name} is {accuracy:.3f}")
 
 # %% [markdown]
 # ```{note}
-# In this MOOC, we will refer to **generalization performance** of a model when
-# referring to the test score or test error obtained by comparing the
-# prediction of a model and the true targets. Equivalent terms for
-# **generalization performance** are predictive performance and statistical
-# performance. We will refer to **computational performance** of a predictive
-# model when assessing the computational costs of training a predictive model
-# or using it to make predictions.
+# In this MOOC, we refer to **generalization performance** of a model when
+# referring to the test score or test error obtained by comparing the prediction
+# of a model and the true targets. Equivalent terms for **generalization
+# performance** are predictive performance and statistical performance. We refer
+# to **computational performance** of a predictive model when assessing the
+# computational costs of training a predictive model or using it to make
+# predictions.
 # ```
 
 # %% [markdown]
@@ -252,4 +259,5 @@ print(f"The test accuracy using a {model_name} is {accuracy:.3f}")
 # * evaluated its generalization performance on the testing data;
 # * introduced the scikit-learn API `.fit(X, y)` (to train a model),
 #   `.predict(X)` (to make predictions) and `.score(X, y)` (to evaluate a
-#   model).
+#   model);
+# * introduced the jargon for estimator, predictor and model.

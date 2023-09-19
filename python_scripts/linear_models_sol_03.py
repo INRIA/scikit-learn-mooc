@@ -8,8 +8,9 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.03
 #
-# The parameter `penalty` can control the **type** of regularization to use,
-# whereas the regularization **strength** is set using the parameter `C`.
+# The scikit-learn implementation of logistic regression has a `penalty`
+# hyperparameter that controls the **type** of regularization to apply, whereas
+# the regularization **strength** is set using the `C` hyperparameter.
 # Setting`penalty="none"` is equivalent to an infinitely large value of `C`. In
 # this exercise, we ask you to train a logistic regression classifier using the
 # `penalty="l2"` regularization (which happens to be the default in

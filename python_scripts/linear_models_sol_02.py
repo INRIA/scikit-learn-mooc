@@ -217,6 +217,10 @@ _ = disp.ax_.set(
 # an overfitting model. The optimal number of Nyström components is around 10
 # for this dataset.
 
+# %% [markdown]
+# How does the mean and std of the MAE for the Nystroem pipeline with optimal
+# `n_components` compare to the other previous models?
+
 # %%
 # solution
 nystroem_regression.set_params(nystroem__n_components=10)

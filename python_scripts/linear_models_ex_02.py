@@ -125,5 +125,9 @@ data.head()
 # %%
 # Write your code here.
 
+# %% [markdown]
+# How does the mean and std of the MAE for the Nystroem pipeline with optimal
+# `n_components` compare to the other previous models?
+
 # %%
 # Write your code here.

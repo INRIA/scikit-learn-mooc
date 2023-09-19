@@ -9,14 +9,14 @@
 # # 📃 Solution for Exercise M4.02
 #
 # In the previous notebook, we showed that we can add new features based on the
-# original feature to make the model more expressive, for instance `x ** 2` or
+# original feature `x` to make the model more expressive, for instance `x ** 2` or
 # `x ** 3`. In that case we only used a single feature in `data`.
 #
 # The aim of this notebook is to train a linear regression algorithm on a
 # dataset with more than a single feature. In such a "multi-dimensional" feature
-# space we can derive new features of the form `x1 * x2`, `x2 * x3`,
-# etc. Products of features are usually called "non-linear or
-# multiplicative interactions" between features.
+# space we can derive new features of the form `x1 * x2`, `x2 * x3`, etc.
+# Products of features are usually called "non-linear" or "multiplicative"
+# interactions between features.
 #
 # Feature engineering can be an important step of a model pipeline as long as
 # the new features are expected to be predictive. For instance, think of a

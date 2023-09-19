@@ -683,13 +683,13 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="exercise-m4-02">
 <h1>📝 Exercise M4.02<a class="headerlink" href="#exercise-m4-02" title="Permalink to this heading">#</a></h1>
 <p>In the previous notebook, we showed that we can add new features based on the
-original feature to make the model more expressive, for instance <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">**</span> <span class="pre">2</span></code> or <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">**</span> <span class="pre">3</span></code>.
-In that case we only used a single feature in <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
+original feature <code class="docutils literal notranslate"><span class="pre">x</span></code> to make the model more expressive, for instance <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">**</span> <span class="pre">2</span></code> or
+<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">**</span> <span class="pre">3</span></code>. In that case we only used a single feature in <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <p>The aim of this notebook is to train a linear regression algorithm on a
 dataset with more than a single feature. In such a “multi-dimensional” feature
-space we can derive new features of the form <code class="docutils literal notranslate"><span class="pre">x1</span> <span class="pre">*</span> <span class="pre">x2</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span> <span class="pre">*</span> <span class="pre">x3</span></code>,
-etc. Products of features are usually called “non-linear or
-multiplicative interactions” between features.</p>
+space we can derive new features of the form <code class="docutils literal notranslate"><span class="pre">x1</span> <span class="pre">*</span> <span class="pre">x2</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span> <span class="pre">*</span> <span class="pre">x3</span></code>, etc.
+Products of features are usually called “non-linear” or “multiplicative”
+interactions between features.</p>
 <p>Feature engineering can be an important step of a model pipeline as long as
 the new features are expected to be predictive. For instance, think of a
 classification model to decide if a patient has risk of developing a heart
@@ -797,7 +797,9 @@ as metric.</p>
 </div>
 </div>
 </div>
-<p>Compute the mean and std of the MAE in grams (g).</p>
+<p>Compute the mean and std of the MAE in grams (g). Remember you have to revert
+the sign introduced when metrics start with <code class="docutils literal notranslate"><span class="pre">neg_</span></code>, such as in
+<code class="docutils literal notranslate"><span class="pre">&quot;neg_mean_absolute_error&quot;</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -808,8 +810,11 @@ as metric.</p>
 <p>Now create a pipeline using <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> consisting of a
 <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> and a linear regression. Set <code class="docutils literal notranslate"><span class="pre">degree=2</span></code> and
 <code class="docutils literal notranslate"><span class="pre">interaction_only=True</span></code> to the feature engineering step. Remember not to
-include the bias to avoid redundancies with the linear’s regression intercept.</p>
-<p>Use the same strategy as before to cross-validate such a pipeline.</p>
+include a “bias” feature (that is a constant-valued feature) to avoid
+introducing a redundancy with the intercept of the subsequent linear
+regression model.</p>
+<p>You may want to use the <code class="docutils literal notranslate"><span class="pre">.set_output(transform=&quot;pandas&quot;)</span></code> method of the
+pipeline to answer the next question.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
@@ -817,8 +822,51 @@ include the bias to avoid redundancies with the linear’s regression intercept.
 </div>
 </div>
 </div>
-<p>Compute the mean and std of the MAE in grams (g) and compare with the results
+<p>Transform the first 5 rows of the dataset and look at the column names. How
+many features are generated at the output of the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> step in
+the previous pipeline?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check that the values for the new interaction features are correct for a few
+of them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use the same cross-validation strategy as done previously to estimate the mean
+and std of the MAE in grams (g) for such a pipeline. Compare with the results
 without feature engineering.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s try to build an alternative pipeline with an adjustable number of
+intermediate features while keeping a similar predictive power. To do so, try
+using the <code class="docutils literal notranslate"><span class="pre">Nystroem</span></code> transformer instead of <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code>. Set the
+kernel parameter to <code class="docutils literal notranslate"><span class="pre">&quot;poly&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">degree</span></code> to 2. Adjust the number of
+components to be as small as possible while keeping a good cross-validation
+performance.</p>
+<p>Hint: Use a <code class="docutils literal notranslate"><span class="pre">ValidationCurveDisplay</span></code> with <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">np.array([5,</span> <span class="pre">10,</span> <span class="pre">50,</span> <span class="pre">100])</span></code> to find the optimal <code class="docutils literal notranslate"><span class="pre">n_components</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>How do the mean and std of the MAE for the Nystroem pipeline with optimal
+<code class="docutils literal notranslate"><span class="pre">n_components</span></code> compare to the other previous models?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Write your code here.</span>

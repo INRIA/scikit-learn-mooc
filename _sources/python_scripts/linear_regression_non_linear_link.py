@@ -299,11 +299,17 @@ ax = sns.scatterplot(
 ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
+# %% [markdown]
+# `Nystroem` is a nice alternative to `PolynomialFeatures` that makes it
+# possible to keep the memory usage of the transformed dataset under control.
+# However, interpreting the meaning of the intermediate features can be
+# challenging.
+
 # %%
 from sklearn.kernel_approximation import Nystroem
 
 nystroem_regression = make_pipeline(
-    Nystroem(n_components=5),
+    Nystroem(kernel="poly", degree=3, n_components=5, random_state=0),
     LinearRegression(),
 )
 nystroem_regression.fit(data, target)

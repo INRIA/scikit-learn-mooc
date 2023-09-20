@@ -155,9 +155,69 @@ _ = plt.title("Weights of the logistic regression")
 #
 # which is the equation of a straight line.
 #
-# ```{note}
-# If you want to go further, try changing the `response_method` to
-# `"predict_proba"` in the `DecisionBoundaryDisplay` above. Now the boundaries
-# encode by color the estimated probability of belonging to either class, as
-# mentioned in the introductory slides 🎥 Intuitions on linear models.
+# ## (Estimated) predicted probabilities
+#
+# The `predict` method in classification models return what we call a "hard
+# class prediction", i.e. whether a sample belongs to a given class. We can
+# confirm the intuition given by the `DecisionBoundaryDisplay` by testing on a
+# hypothetical `sample`:
+
+# %%
+sample = pd.DataFrame({"Culmen Length (mm)": [45], "Culmen Depth (mm)": [17]})
+logistic_regression.predict(sample)
+
+# %% [markdown]
+# In this case, the logistic regression predicts the Chinstrap specie.
+#
+# As mentioned in the introductory slides 🎥 Intuitions on linear models, one
+# can alternatively use the `predict_proba` method to compute continuous values
+# ("soft predictions") that correspond to an estimation of the confidence of the
+# target belonging to each class.
+
+# %%
+y_pred_proba = logistic_regression.predict_proba(sample)
+y_proba_sample = pd.Series(
+    y_pred_proba.ravel(), index=logistic_regression.classes_
+)
+y_proba_sample.plot.bar()
+plt.ylabel("Estimated probability")
+_ = plt.title("Probability of the sample belonging to a penguin class")
+
+# %% [markdown]
+# Notice that the (estimated) predicted probabilities sum to one.
+#
+# ```{warning}
+# We insist that the output of `predict_proba` are just estimations. Their
+# reliability on being actual probabilities depends on the quality of the model.
+# Even classifiers with good generalization performance may be overconfident for
+# some individuals and underconfident for others.
 # ```
+#
+# Similarly to the hard decision boundary shown above, one can set the
+# `response_method` to `"predict_proba"` in the `DecisionBoundaryDisplay` to
+# rather show the confidence on individual classifications. In such case the
+# boundaries encode the estimated probablities by color.
+
+# %%
+DecisionBoundaryDisplay.from_estimator(
+    logistic_regression,
+    data_test,
+    response_method="predict_proba",
+    cmap="RdBu_r",
+    alpha=0.5,
+)
+sns.scatterplot(
+    data=penguins_test,
+    x=culmen_columns[0],
+    y=culmen_columns[1],
+    hue=target_column,
+    palette=["tab:red", "tab:blue"],
+)
+_ = plt.title("Predicted probability of the trained\n LogisticRegression")
+
+# %% [markdown]
+# For users interested in the mathematical aspect of `predict_proba` for the
+# logistic regression, a good starting point is learning about the [softmax
+# function](https://en.wikipedia.org/wiki/Softmax_function), which is a
+# generalization of the [logistic
+# function](https://en.wikipedia.org/wiki/Logistic_function).

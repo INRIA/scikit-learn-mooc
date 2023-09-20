@@ -82,38 +82,48 @@ data_xor = xor[feature_names]
 
 # %%
 import matplotlib.pyplot as plt
-import seaborn as sns
+from matplotlib.colors import ListedColormap
 
 
 _, axs = plt.subplots(ncols=3, figsize=(14, 4), constrained_layout=True)
 
-sns.scatterplot(
-    data=moons,
-    x=feature_names[0],
-    y=feature_names[1],
-    hue=target_moons,
-    palette=["tab:red", "tab:blue"],
-    ax=axs[0],
+common_scatter_plot_params = dict(
+    cmap=ListedColormap(["tab:red", "tab:blue"]),
+    edgecolor="white",
+    linewidth=1,
 )
-sns.scatterplot(
-    data=gauss,
-    x=feature_names[0],
-    y=feature_names[1],
-    hue=target_gauss,
-    palette=["tab:red", "tab:blue"],
-    ax=axs[1],
+
+axs[0].scatter(
+    data_moons[feature_names[0]],
+    data_moons[feature_names[1]],
+    c=target_moons,
+    **common_scatter_plot_params,
 )
-sns.scatterplot(
-    data=xor,
-    x=feature_names[0],
-    y=feature_names[1],
-    hue=target_xor,
-    palette=["tab:red", "tab:blue"],
-    ax=axs[2],
+axs[1].scatter(
+    data_gauss[feature_names[0]],
+    data_gauss[feature_names[1]],
+    c=target_gauss,
+    **common_scatter_plot_params,
 )
-axs[0].set_title("The moons dataset")
-_ = axs[1].set_title("The Gaussian quantiles dataset")
-_ = axs[2].set_title("The XOR dataset")
+axs[2].scatter(
+    data_xor[feature_names[0]],
+    data_xor[feature_names[1]],
+    c=target_xor,
+    **common_scatter_plot_params,
+)
+axs[0].set(
+    title="The moons dataset",
+    xlabel=feature_names[0],
+    ylabel=feature_names[1],
+)
+axs[1].set(
+    title="The Gaussian quantiles dataset",
+    xlabel=feature_names[0],
+)
+axs[2].set(
+    title="The XOR dataset",
+    xlabel=feature_names[0],
+)
 
 
 # %% [markdown]
@@ -131,19 +141,21 @@ from sklearn.inspection import DecisionBoundaryDisplay
 
 
 def plot_decision_boundary(model, title=None):
+    datasets = [
+        (data_moons, target_moons),
+        (data_gauss, target_gauss),
+        (data_xor, target_xor),
+    ]
     fig, axs = plt.subplots(
         ncols=3,
         figsize=(14, 4),
         constrained_layout=True,
     )
 
-    for ax, (data, target) in zip(
+    for i, ax, (data, target) in zip(
+        range(len(datasets)),
         axs,
-        [
-            (data_moons, target_moons),
-            (data_gauss, target_gauss),
-            (data_xor, target_xor),
-        ],
+        datasets,
     ):
         model.fit(data, target)
         DecisionBoundaryDisplay.from_estimator(
@@ -168,14 +180,14 @@ def plot_decision_boundary(model, title=None):
             linewidths=2,
             ax=ax,
         )
-        sns.scatterplot(
-            data=data,
-            x=feature_names[0],
-            y=feature_names[1],
-            hue=target,
-            palette=["tab:red", "tab:blue"],
-            ax=ax,
+        ax.scatter(
+            data[feature_names[0]],
+            data[feature_names[1]],
+            c=target,
+            **common_scatter_plot_params,
         )
+        if i > 0:
+            ax.set_ylabel(None)
     if title is not None:
         fig.suptitle(title)
 

@@ -196,7 +196,8 @@ _ = plt.title("Probability of the sample belonging to a penguin class")
 # Similarly to the hard decision boundary shown above, one can set the
 # `response_method` to `"predict_proba"` in the `DecisionBoundaryDisplay` to
 # rather show the confidence on individual classifications. In such case the
-# boundaries encode the estimated probablities by color.
+# boundaries encode the estimated probablities by color and, in particular, the
+# softer the color, the more unsure about which class to choose.
 
 # %%
 DecisionBoundaryDisplay.from_estimator(

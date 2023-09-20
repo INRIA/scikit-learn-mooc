@@ -868,46 +868,12 @@ structure to see what was the threshold found during the training.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_name</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="n">feature_name</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">InvalidParameterError</span><span class="g g-Whitespace">                     </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_name</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/sklearn/utils/_param_validation.py:201,</span> in <span class="ni">validate_params.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">198</span> <span class="n">to_ignore</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">,</span> <span class="s2">&quot;cls&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">199</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">to_ignore</span><span class="p">}</span>
-<span class="ne">--&gt; </span><span class="mi">201</span> <span class="n">validate_parameter_constraints</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span>     <span class="n">parameter_constraints</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">caller_name</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span>
-<span class="g g-Whitespace">    </span><span class="mi">203</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">206</span>     <span class="k">with</span> <span class="n">config_context</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">207</span>         <span class="n">skip_parameter_validation</span><span class="o">=</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">208</span>             <span class="n">prefer_skip_nested_validation</span> <span class="ow">or</span> <span class="n">global_skip_validation</span>
-<span class="g g-Whitespace">    </span><span class="mi">209</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">210</span>     <span class="p">):</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/sklearn/utils/_param_validation.py:95,</span> in <span class="ni">validate_parameter_constraints</span><span class="nt">(parameter_constraints, params, caller_name)</span>
-<span class="g g-Whitespace">     </span><span class="mi">89</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span>     <span class="n">constraints_str</span> <span class="o">=</span> <span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span>         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">constraints</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="si">}</span><span class="s2"> or&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">92</span>         <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">constraints</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span>     <span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">95</span> <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">96</span>     <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">param_name</span><span class="si">!r}</span><span class="s2"> parameter of </span><span class="si">{</span><span class="n">caller_name</span><span class="si">}</span><span class="s2"> must be&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">constraints_str</span><span class="si">}</span><span class="s2">. Got </span><span class="si">{</span><span class="n">param_val</span><span class="si">!r}</span><span class="s2"> instead.&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="p">)</span>
-
-<span class="ne">InvalidParameterError</span>: The &#39;feature_names&#39; parameter of plot_tree must be an instance of &#39;list&#39; or None. Got &#39;Flipper Length (mm)&#39; instead.
-</pre></div>
-</div>
-<img alt="../_images/9f21a39bc2b0a19cc45969df78dcccc5fd9870f29fba546504887e9ee55a0db5.png" src="../_images/9f21a39bc2b0a19cc45969df78dcccc5fd9870f29fba546504887e9ee55a0db5.png" />
+<img alt="../_images/82746c0f031e405e93cbc54a642878ed9a0fba63d7418812bb542d1563bf6f44.png" src="../_images/82746c0f031e405e93cbc54a642878ed9a0fba63d7418812bb542d1563bf6f44.png" />
 </div>
 </div>
 <p>The threshold for our feature (flipper length) is 206.5 mm. The predicted
@@ -936,6 +902,15 @@ depth in a regression setting:</p>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction function using a DecisionTreeRegressor&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+  if pd.api.types.is_categorical_dtype(vector):
+/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
+  if pd.api.types.is_categorical_dtype(vector):
+</pre></div>
+</div>
+<img alt="../_images/b5513a2713137124729934b53bb524415098038105a031483264b720b2d5ada8.png" src="../_images/b5513a2713137124729934b53bb524415098038105a031483264b720b2d5ada8.png" />
 </div>
 </div>
 <p>Increasing the depth of the tree will increase the number of partition and

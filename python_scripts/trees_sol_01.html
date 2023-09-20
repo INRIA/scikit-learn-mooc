@@ -788,7 +788,7 @@ function <code class="docutils literal notranslate"><span class="pre">sklearn.tr
 <span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span>
     <span class="n">tree</span><span class="p">,</span>
     <span class="n">feature_names</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">,</span>
-    <span class="n">class_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+    <span class="n">class_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
     <span class="n">impurity</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
 <span class="p">)</span>
@@ -796,47 +796,7 @@ function <code class="docutils literal notranslate"><span class="pre">sklearn.tr
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">InvalidParameterError</span><span class="g g-Whitespace">                     </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">tree</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">feature_names</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">class_names</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">impurity</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/sklearn/utils/_param_validation.py:201,</span> in <span class="ni">validate_params.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">198</span> <span class="n">to_ignore</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">,</span> <span class="s2">&quot;cls&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">199</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">to_ignore</span><span class="p">}</span>
-<span class="ne">--&gt; </span><span class="mi">201</span> <span class="n">validate_parameter_constraints</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span>     <span class="n">parameter_constraints</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">caller_name</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="vm">__qualname__</span>
-<span class="g g-Whitespace">    </span><span class="mi">203</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">206</span>     <span class="k">with</span> <span class="n">config_context</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">207</span>         <span class="n">skip_parameter_validation</span><span class="o">=</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">208</span>             <span class="n">prefer_skip_nested_validation</span> <span class="ow">or</span> <span class="n">global_skip_validation</span>
-<span class="g g-Whitespace">    </span><span class="mi">209</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">210</span>     <span class="p">):</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/sklearn/utils/_param_validation.py:95,</span> in <span class="ni">validate_parameter_constraints</span><span class="nt">(parameter_constraints, params, caller_name)</span>
-<span class="g g-Whitespace">     </span><span class="mi">89</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span>     <span class="n">constraints_str</span> <span class="o">=</span> <span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span>         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">constraints</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="si">}</span><span class="s2"> or&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">92</span>         <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">constraints</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span>     <span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">95</span> <span class="k">raise</span> <span class="n">InvalidParameterError</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">96</span>     <span class="sa">f</span><span class="s2">&quot;The </span><span class="si">{</span><span class="n">param_name</span><span class="si">!r}</span><span class="s2"> parameter of </span><span class="si">{</span><span class="n">caller_name</span><span class="si">}</span><span class="s2"> must be&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">constraints_str</span><span class="si">}</span><span class="s2">. Got </span><span class="si">{</span><span class="n">param_val</span><span class="si">!r}</span><span class="s2"> instead.&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="p">)</span>
-
-<span class="ne">InvalidParameterError</span>: The &#39;class_names&#39; parameter of plot_tree must be an instance of &#39;list&#39; or None. Got array([&#39;Adelie&#39;, &#39;Chinstrap&#39;, &#39;Gentoo&#39;], dtype=object) instead.
-</pre></div>
-</div>
-<img alt="../_images/a2bed710f5a41ee84dd6e5a2c3885991d230e4a57096e173fee67fc6efd182ee.png" src="../_images/a2bed710f5a41ee84dd6e5a2c3885991d230e4a57096e173fee67fc6efd182ee.png" />
+<img alt="../_images/f0e066e08f16dcd394844559ac0593f7b60fdce3215f837fb45592055931aa66.png" src="../_images/f0e066e08f16dcd394844559ac0593f7b60fdce3215f837fb45592055931aa66.png" />
 </div>
 </div>
 <p>The resulting tree has 7 nodes: 3 of them are “split nodes” and 4 are “leaf
@@ -849,6 +809,11 @@ we saw that such a simple tree was enough to classify the penguins’ species.</
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="n">test_score</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy of the DecisionTreeClassifier: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy of the DecisionTreeClassifier: 0.97
 </pre></div>
 </div>
 </div>

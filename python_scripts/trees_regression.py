@@ -144,7 +144,7 @@ _ = plt.title("Prediction function using a DecisionTreeRegressor")
 from sklearn.tree import plot_tree
 
 _, ax = plt.subplots(figsize=(8, 6))
-_ = plot_tree(tree, feature_names=feature_name, ax=ax)
+_ = plot_tree(tree, feature_names=[feature_name], ax=ax)
 
 # %% [markdown]
 # The threshold for our feature (flipper length) is 206.5 mm. The predicted

@@ -85,7 +85,10 @@ _Select a single answer_
 Plot the validation curve of the `n_estimators` parameters defined by:
 
 ```python
-n_estimators = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1_000]
+import numpy as np
+
+
+n_estimators = np.array([1, 2, 5, 10, 20, 50, 100, 200, 500, 1_000])
 ```
 
 ```{admonition} Question
@@ -182,7 +185,7 @@ Build a validation curve for a `sklearn.ensemble.HistGradientBoostingRegressor`
 varying `max_iter` as follows:
 
 ```python
-max_iter = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1_000]
+max_iters = np.array([1, 2, 5, 10, 20, 50, 100, 200, 500])
 ```
 
 We recall that `max_iter` corresponds to the number of trees in the boosted

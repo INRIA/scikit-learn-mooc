@@ -205,8 +205,11 @@ _ = plt.title("Probability of the sample belonging to a penguin class")
 # Similarly to the hard decision boundary shown above, one can set the
 # `response_method` to `"predict_proba"` in the `DecisionBoundaryDisplay` to
 # rather show the confidence on individual classifications. In such case the
-# boundaries encode the estimated probablities by color and, in particular, the
-# softer the color, the more unsure about which class to choose.
+# boundaries encode the estimated probablities by color and, in particular for
+# [matplotlib diverging
+# colormaps](https://matplotlib.org/stable/users/explain/colors/colormaps.html#diverging)
+# such as `"RdBu_r"`, the softer the color, the more unsure about which class to
+# choose (the probability of 0.5 is mapped to white).
 
 # %%
 DecisionBoundaryDisplay.from_estimator(

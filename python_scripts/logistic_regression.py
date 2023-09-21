@@ -232,7 +232,7 @@ _ = plt.title("Predicted probability of the trained\n LogisticRegression")
 # The [scikit-learn user guide](
 # https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)
 # gives a more precise description of the `predict_proba` method of the
-# `LogisticRegression`. Even more details can be found on Wikipedia about the
+# `LogisticRegression`. More detailed info can be found on Wikipedia about the
 # normalization functions: [softmax
 # function](https://en.wikipedia.org/wiki/Softmax_function) used by logistic
 # regression on multi-class problems and the [logistic

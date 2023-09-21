@@ -163,14 +163,16 @@ _ = plt.title("Weights of the logistic regression")
 # testing on a hypothetical `sample`:
 
 # %%
-test_penguin = pd.DataFrame({"Culmen Length (mm)": [45], "Culmen Depth (mm)": [17]})
+test_penguin = pd.DataFrame(
+    {"Culmen Length (mm)": [45], "Culmen Depth (mm)": [17]}
+)
 logistic_regression.predict(test_penguin)
 
 # %% [markdown]
-# In this case, our logistic regression classifier predicts the Chinstrap species.
-# Note that this agrees with the decision boundary plot above: the coordinates of
-# this test data point match a location close to the decision boundary, in the red
-# region.
+# In this case, our logistic regression classifier predicts the Chinstrap
+# species. Note that this agrees with the decision boundary plot above: the
+# coordinates of this test data point match a location close to the decision
+# boundary, in the red region.
 #
 # As mentioned in the introductory slides 🎥 Intuitions on linear models, one
 # can alternatively use the `predict_proba` method to compute continuous values
@@ -178,7 +180,7 @@ logistic_regression.predict(test_penguin)
 # target belonging to each class.
 
 # %%
-y_pred_proba = logistic_regression.predict_proba(sample)
+y_pred_proba = logistic_regression.predict_proba(test_penguin)
 y_pred_proba
 
 # %%
@@ -195,9 +197,9 @@ _ = plt.title("Probability of the sample belonging to a penguin class")
 # ```{warning}
 # We insist that the output of `predict_proba` are just estimations. Their
 # reliability on being a good estimate of the true conditional class-assignment
-# probabilities depends on the quality of the model.
-# Even classifiers with a high accuracy on a test set may be overconfident for
-# some individuals and underconfident for others.
+# probabilities depends on the quality of the model. Even classifiers with a
+# high accuracy on a test set may be overconfident for some individuals and
+# underconfident for others.
 # ```
 #
 # Similarly to the hard decision boundary shown above, one can set the
@@ -226,11 +228,10 @@ _ = plt.title("Predicted probability of the trained\n LogisticRegression")
 # %% [markdown]
 # The [scikit-learn user guide](
 # https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)
-# gives a more precise description of the `predict_proba` method
-# of the `LogisticRegression`.
-# Even more details can be found on Wikipedia about the normalization
-# functions: [softmax
-# function](https://en.wikipedia.org/wiki/Softmax_function) used by logistic regression
-# on multi-class problems and the [logistic
+# gives a more precise description of the `predict_proba` method of the
+# `LogisticRegression`. Even more details can be found on Wikipedia about the
+# normalization functions: [softmax
+# function](https://en.wikipedia.org/wiki/Softmax_function) used by logistic
+# regression on multi-class problems and the [logistic
 # function](https://en.wikipedia.org/wiki/Logistic_function) used for binary
 # classifications problems.

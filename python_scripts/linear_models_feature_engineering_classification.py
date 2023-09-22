@@ -40,11 +40,11 @@ data_moons, target_moons = moons[feature_names], moons[target_name]
 
 # %% [markdown]
 #
-# The second dataset is called the "Gaussian quantiles" dataset as the data
-# points are sampled from the same (Gaussian) distribution in a 2D space with a
-# higher density of points in the center. The points closest to the center are
-# assigned to the class 1 while the points in the outer edges are assigned to
-# the class 0.
+# The second dataset is called the "Gaussian quantiles" dataset as all data
+# points are sampled from a 2D Gaussian distribution regardless of the class.
+# The points closest to the center are assigned to the class 1 while the points
+# in the outer edges are assigned to the class 0, resulting in concentric
+# circles.
 
 # %%
 from sklearn.datasets import make_gaussian_quantiles
@@ -78,7 +78,7 @@ data_xor = xor[feature_names]
 
 # %% [markdown]
 #
-# We use matplotlib to visualized the data points in both datasets:
+# We use matplotlib to visualize all the datasets at a glance:
 
 # %%
 import matplotlib.pyplot as plt
@@ -128,13 +128,13 @@ axs[2].set(
 
 # %% [markdown]
 #
-# We intuitively observe that for each dataset, the two classes are not
-# linearly separable as the classes fold around each other in a way no straight
-# line can separate the two classes.
+# We intuitively observe that there is no (single) straight line that can
+# separate the two classes in any of the datasets. We can confirm this by
+# fitting a linear model, such as a logistic regression, to each dataset and
+# plot the decision boundary of the model.
 #
-# We can confirm this by fitting a linear model, such as logistic regression,
-# to each dataset and plot the decision boundary of the model. Let's first define
-# a helper function to plot the decision boundary of a model:
+# Let's first define a function to help us fit a given model and plot its
+# decision boundary on the previous datasets at a glance:
 
 # %%
 from sklearn.inspection import DecisionBoundaryDisplay
@@ -165,6 +165,9 @@ def plot_decision_boundary(model, title=None):
             plot_method="pcolormesh",
             cmap="RdBu",
             alpha=0.8,
+            # Setting vmin and vmax to the extreme values of the probability to
+            # ensure that 0.5 is mapped to white (the middle) of the blue-red
+            # colormap.
             vmin=0,
             vmax=1,
             ax=ax,
@@ -175,7 +178,7 @@ def plot_decision_boundary(model, title=None):
             response_method="predict_proba",
             plot_method="contour",
             alpha=0.8,
-            levels=[0.5],
+            levels=[0.5],   # 0.5 probability contour line
             linestyles="--",
             linewidths=2,
             ax=ax,
@@ -212,20 +215,17 @@ plot_decision_boundary(logistic_regression, title="Linear classifier")
 #
 # This confirms that it is not possible to separate the two classes with a
 # linear model. On each plot we see a **significant number of misclassified
-# samples on the training set**!
+# samples on the training set**! The three plots show typical cases of
+# **underfitting** for linear models.
 #
-# In particular, the last plot shows a model that performs specially bad: it
-# ends up correctly classifying a majority the samples in the positive class,
-# but as a result, it makes classification errors for every sample of the
-# negative class.
-#
-# Those three plots show typical cases of **underfitting** for linear models.
+# Also, the last two plots show soft colors, meaning that the model is highly
+# unsure about which class to choose.
 
 # %% [markdown]
 #
 # ## Engineering non-linear features
 #
-# As we did for the linear regression models, we will attempt to build a more
+# As we did for the linear regression models, we now attempt to build a more
 # expressive machine learning pipeline by leveraging non-linear feature
 # engineering, with techniques such as binning, splines, polynomial features,
 # and kernel approximation.
@@ -244,15 +244,14 @@ plot_decision_boundary(classifier, title="Binning classifier")
 # %% [markdown]
 #
 # We can see that the resulting decision boundary is constrained to follow
-# **axis-aligned segments**, which is very similar to what a decision tree
-# would do as we will see in a later lesson. Furthermore, as for decision
-# trees, the model makes piecewise constant predictions within each rectangular
-# region.
+# **axis-aligned segments**, which is very similar to what a decision tree would
+# do as we will see in the next Module. Furthermore, as for decision trees, the
+# model makes piecewise constant predictions within each rectangular region.
 #
 # This axis-aligned decision boundary is not necessarily the natural decision
 # boundary a human would have intuitively drawn for the moons dataset and the
 # Gaussian quantiles datasets. It still makes it possible for the model to
-# successfully separate the the data. However, binning alone does not help the
+# successfully separate the data. However, binning alone does not help the
 # classifier separate the data for the XOR dataset. This is because **the
 # binning transformation is a feature-wise transformation** and thus **cannot
 # capture interactions** between features that are necessary to separate the
@@ -278,13 +277,12 @@ plot_decision_boundary(classifier, title="Spline classifier")
 # %% [markdown]
 #
 # We can see that the decision boundary is now smooth, and while it favors
-# axis-aligned decision boundary in the low density regions of the feature
-# space (extrapolation), it can adopt a more curvy decision boundary in the
-# high density regions.
+# axis-aligned decision rules when extrapolating in low density regions, it can
+# adopt a more curvy decision boundary in the high density regions.
 #
 # Note however, that the number of knots is a hyperparameter that needs to be
-# tuned. If we use too few knots, the model will underfit the data, as shown on
-# the moons dataset. If we use too many knots, the model will overfit the data.
+# tuned. If we use too few knots, the model would underfit the data, as shown on
+# the moons dataset. If we use too many knots, the model would overfit the data.
 #
 # However, as for the binning transformation, the model still fails to separate
 # the data for the XOR dataset, irrespective of the number of knots, for the
@@ -295,19 +293,18 @@ plot_decision_boundary(classifier, title="Spline classifier")
 #
 # ## Modeling non-additive feature interactions
 #
-# We will now consider feature engineering techniques that non-additively
-# combine several original features to build each output feature in the hope of
-# capturing interactions between original features. We will consider polynomial
-# features and kernel approximation.
+# We now consider feature engineering techniques that non-linearly combine the
+# original features in the hope of capturing interactions between them. We will
+# consider polynomial features and kernel approximation.
 #
-# Let's start with polynomial features:
+# Let's start with the polynomial features:
 
 # %%
 from sklearn.preprocessing import PolynomialFeatures
 
 classifier = make_pipeline(
     StandardScaler(),
-    PolynomialFeatures(degree=3),
+    PolynomialFeatures(degree=3, include_bias=False),
     LogisticRegression(C=10),
 )
 classifier
@@ -320,7 +317,7 @@ plot_decision_boundary(classifier, title="Polynomial classifier")
 # We can see that the decision boundary of this polynomial classifier is
 # **smooth** and can successfully separate the data on all three datasets
 # (depending on how we set the values of the `degree` and `C`
-# hyperparameters.).
+# hyperparameters).
 #
 # It is interesting to observe that this models extrapolates very differently
 # from the previous models: its decision boundary can take a diagonal
@@ -373,7 +370,7 @@ plot_decision_boundary(classifier, title="RBF Nystroem classifier")
 # predictions in the low density regions** of the feature space.
 #
 # As for the previous polynomial pipelines, this pipeline **does not favor
-# axis-aligned decision boundaries**. It can be shown mathematically that the
+# axis-aligned decision rules**. It can be shown mathematically that the
 # [inductive bias](https://en.wikipedia.org/wiki/Inductive_bias) of our RBF
 # pipeline is actually rotationally invariant.
 
@@ -399,7 +396,7 @@ plot_decision_boundary(classifier, title="Binning + Nystroem classifier")
 #
 # It is interesting to observe that this model is still piecewise constant with
 # axis-aligned decision boundaries everywhere, but it can now successfully deal
-# with the XOR problem thanks to the the second step of the pipeline that can
+# with the XOR problem thanks to the second step of the pipeline that can
 # model the interactions between the features transformed by the first step.
 #
 # We can also combine the spline transformation with a kernel approximation:
@@ -434,8 +431,8 @@ plot_decision_boundary(classifier, title="Spline + RBF Nystroem classifier")
 # - Transformers such as `KBinsDiscretizer` and `SplineTransformer` can be used
 #   to engineer non-linear features independently for each original feature.
 # - As a result, these transformers cannot capture interactions between the
-#   orignal features (and the would fail on the XOR classification task).
-# - Despite this limitation they arleady augment the expressivity of the
+#   orignal features (and then would fail on the XOR classification task).
+# - Despite this limitation they already augment the expressivity of the
 #   pipeline, which can be sufficient for some datasets.
 # - They also favor axis-aligned decision boundaries, in particular in the low
 #   density regions of the feature space (axis-aligned extrapolation).
@@ -446,11 +443,11 @@ plot_decision_boundary(classifier, title="Spline + RBF Nystroem classifier")
 #   single pipeline to build a more expressive model, for instance to favor
 #   axis-aligned extrapolation while also capturing interactions.
 # - In particular, if the original dataset has both numerical and categorical
-#   features, it can be useful to apply inning or spline transformation to the
+#   features, it can be useful to apply binning or a spline transformation to the
 #   numerical features and one-hot encoding to the categorical features. Then,
 #   the resulting features can be combined with a kernel approximation to model
 #   interactions between numerical and categorical features. This can be
-#   achieved with the help of the `ColumnTransformer` transformer.
+#   achieved with the help of `ColumnTransformer`.
 #
 # In subsequent notebooks and exercises, we will further explore the interplay
 # between regularization, feature engineering, and the under-fitting /

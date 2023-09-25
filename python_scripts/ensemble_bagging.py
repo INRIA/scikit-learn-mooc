@@ -270,7 +270,7 @@ _ = plt.title("Predictions of bagged trees")
 #
 # ## Bagging in scikit-learn
 #
-# Scikit-learn implements the bagging procedure as a "meta-estimator", that is
+# Scikit-learn implements the bagging procedure as a **meta-estimator**, that is,
 # an estimator that wraps another estimator: it takes a base model that is
 # cloned several times and trained independently on each bootstrap sample.
 #

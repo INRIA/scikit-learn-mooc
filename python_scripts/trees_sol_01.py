@@ -86,7 +86,7 @@ _, ax = plt.subplots(figsize=(16, 12))
 _ = plot_tree(
     tree,
     feature_names=culmen_columns,
-    class_names=tree.classes_,
+    class_names=tree.classes_.tolist(),
     impurity=False,
     ax=ax,
 )

@@ -15,14 +15,14 @@
 # # 📝 Exercise M4.02
 #
 # In the previous notebook, we showed that we can add new features based on the
-# original feature to make the model more expressive, for instance `x ** 2` or `x ** 3`.
-# In that case we only used a single feature in `data`.
+# original feature `x` to make the model more expressive, for instance `x ** 2` or
+# `x ** 3`. In that case we only used a single feature in `data`.
 #
 # The aim of this notebook is to train a linear regression algorithm on a
 # dataset with more than a single feature. In such a "multi-dimensional" feature
-# space we can derive new features of the form `x1 * x2`, `x2 * x3`,
-# etc. Products of features are usually called "non-linear or
-# multiplicative interactions" between features.
+# space we can derive new features of the form `x1 * x2`, `x2 * x3`, etc.
+# Products of features are usually called "non-linear" or "multiplicative"
+# interactions between features.
 #
 # Feature engineering can be an important step of a model pipeline as long as
 # the new features are expected to be predictive. For instance, think of a
@@ -69,7 +69,9 @@ data.head()
 # Write your code here.
 
 # %% [markdown]
-# Compute the mean and std of the MAE in grams (g).
+# Compute the mean and std of the MAE in grams (g). Remember you have to revert
+# the sign introduced when metrics start with `neg_`, such as in
+# `"neg_mean_absolute_error"`.
 
 # %%
 # Write your code here.
@@ -78,16 +80,57 @@ data.head()
 # Now create a pipeline using `make_pipeline` consisting of a
 # `PolynomialFeatures` and a linear regression. Set `degree=2` and
 # `interaction_only=True` to the feature engineering step. Remember not to
-# include the bias to avoid redundancies with the linear's regression intercept.
+# include a "bias" feature (that is a constant-valued feature) to avoid
+# introducing a redundancy with the intercept of the subsequent linear
+# regression model.
 #
-# Use the same strategy as before to cross-validate such a pipeline.
+# You may want to use the `.set_output(transform="pandas")` method of the
+# pipeline to answer the next question.
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Compute the mean and std of the MAE in grams (g) and compare with the results
+# Transform the first 5 rows of the dataset and look at the column names. How
+# many features are generated at the output of the `PolynomialFeatures` step in
+# the previous pipeline?
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Check that the values for the new interaction features are correct for a few
+# of them.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Use the same cross-validation strategy as done previously to estimate the mean
+# and std of the MAE in grams (g) for such a pipeline. Compare with the results
 # without feature engineering.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+#
+# Now let's try to build an alternative pipeline with an adjustable number of
+# intermediate features while keeping a similar predictive power. To do so, try
+# using the `Nystroem` transformer instead of `PolynomialFeatures`. Set the
+# kernel parameter to `"poly"` and `degree` to 2. Adjust the number of
+# components to be as small as possible while keeping a good cross-validation
+# performance.
+#
+# Hint: Use a `ValidationCurveDisplay` with `param_range = np.array([5, 10, 50,
+# 100])` to find the optimal `n_components`.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# How do the mean and std of the MAE for the Nystroem pipeline with optimal
+# `n_components` compare to the other previous models?
 
 # %%
 # Write your code here.

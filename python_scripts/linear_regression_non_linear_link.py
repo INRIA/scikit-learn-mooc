@@ -8,20 +8,19 @@
 # %% [markdown]
 # # Linear regression for a non-linear features-target relationship
 #
-# In the previous exercise, you were asked to train a linear regression model on
-# a dataset where the matrix `data` and the vector `target` do not have a linear
-# link.
-#
-# In this notebook, we show that even if the parametrization of linear models is
-# not natively adapted to the problem at hand, it is still possible to make
-# linear models more expressive by engineering additional features.
+# In this notebook, we show that even if linear models are not natively adapted
+# to express a `target` that is not a linear function of the `data`, it is still
+# possible to make linear models more expressive by engineering additional
+# features.
 #
 # A machine learning pipeline that combines a non-linear feature engineering
-# step followed by a linear regression step can therefore be considered
+# step followed by a linear regression step can therefore be considered a
 # non-linear regression model as a whole.
 #
-# To illustrate these concepts, we will reuse the same dataset generated in the
-# previous exercise.
+# ```{tip}
+# `np.random.RandomState` allows to create a random number generator which can
+# be later used to get deterministic results.
+# ```
 
 # %%
 import numpy as np
@@ -38,8 +37,8 @@ target = data**3 - 0.5 * data**2 + noise
 
 # %% [markdown]
 # ```{note}
-# To ease the plotting, we will create a pandas dataframe containing the data
-# and target:
+# To ease the plotting, we create a pandas dataframe containing the data and
+# target:
 # ```
 
 # %%
@@ -55,8 +54,7 @@ _ = sns.scatterplot(
 )
 
 # %% [markdown]
-# We will highlight the limitations of fitting a linear regression model as done
-# in the previous exercise.
+# We now observe the limitations of fitting a linear regression model.
 #
 # ```{warning}
 # In scikit-learn, by convention `data` (also called `X` in the scikit-learn
@@ -102,7 +100,7 @@ print(
 )
 
 # %% [markdown]
-# It is important to note that the learnt model will not be able to handle the
+# It is important to note that the learnt model is not able to handle the
 # non-linear relationship between `data` and `target` since linear models assume
 # the relationship between `data` and `target` to be linear.
 #
@@ -212,9 +210,11 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # The last possibility is to make a linear model more expressive is to use a
-# "kernel". Instead of learning a weight per feature as we previously
-# emphasized, a weight will be assigned to each sample. However, not all samples
-# will be used. This is the base of the support vector machine algorithm.
+# "kernel". Instead of learning one weight per feature as we previously did, a
+# weight is assigned to each sample. However, not all samples are used: some
+# redundant data points of the training set are assigned a weight of 0 so
+# that they do no influence the model's prediction function. This is the
+# main intuition of the support vector machine algorithm.
 #
 # The mathematical definition of "kernels" and "support vector machines" is
 # beyond the scope of this course. We encourage interested readers with a
@@ -299,11 +299,17 @@ ax = sns.scatterplot(
 ax.plot(data, target_predicted)
 _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
+# %% [markdown]
+# `Nystroem` is a nice alternative to `PolynomialFeatures` that makes it
+# possible to keep the memory usage of the transformed dataset under control.
+# However, interpreting the meaning of the intermediate features can be
+# challenging.
+
 # %%
 from sklearn.kernel_approximation import Nystroem
 
 nystroem_regression = make_pipeline(
-    Nystroem(n_components=5),
+    Nystroem(kernel="poly", degree=3, n_components=5, random_state=0),
     LinearRegression(),
 )
 nystroem_regression.fit(data, target)
@@ -323,7 +329,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # into several non-linearly derived new features. This makes our machine
 # learning pipeline more expressive and less likely to underfit, even if the
 # last stage of the pipeline is a simple linear regression model.
-
+#
 # For the sake of simplicity, we introduced those transformers on a toy
 # regression problem with a single input feature. However, non-linear feature
 # transformers such as Nystroem can further improve the expressiveness of

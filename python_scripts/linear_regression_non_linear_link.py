@@ -6,7 +6,7 @@
 # ---
 
 # %% [markdown]
-# # Linear regression for a non-linear features-target relationship
+# # Non-linear feature engineering for Linear Regression
 #
 # In this notebook, we show that even if linear models are not natively adapted
 # to express a `target` that is not a linear function of the `data`, it is still
@@ -54,8 +54,6 @@ _ = sns.scatterplot(
 )
 
 # %% [markdown]
-# We now observe the limitations of fitting a linear regression model.
-#
 # ```{warning}
 # In scikit-learn, by convention `data` (also called `X` in the scikit-learn
 # documentation) should be a 2D matrix of shape `(n_samples, n_features)`.
@@ -69,26 +67,40 @@ _ = sns.scatterplot(
 data = data.reshape((-1, 1))
 data.shape
 
+# %% [markdown]
+# To avoid writing the same code in multiple places we define a helper function
+# that fits, scores and plots the different regression models.
+
+
+# %%
+def fit_score_plot_regression(model, title=None):
+    model.fit(data, target)
+    target_predicted = model.predict(data)
+    mse = mean_squared_error(target, target_predicted)
+    ax = sns.scatterplot(
+        data=full_data, x="input_feature", y="target", color="black", alpha=0.5
+    )
+    ax.plot(data, target_predicted)
+    if title is not None:
+        _ = ax.set_title(title + f" (MSE = {mse:.2f})")
+    else:
+        _ = ax.set_title(f"Mean squared error = {mse:.2f}")
+
+
+# %% [markdown]
+# We now observe the limitations of fitting a linear regression model.
+
 # %%
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
 linear_regression = LinearRegression()
-linear_regression.fit(data, target)
-target_predicted = linear_regression.predict(data)
+linear_regression
 
 # %%
-mse = mean_squared_error(target, target_predicted)
-
-# %%
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
-)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
+fit_score_plot_regression(linear_regression, title="Simple linear regression")
 
 # %% [markdown]
-#
 # Here the coefficient and intercept learnt by `LinearRegression` define the
 # best "straight line" that fits the data. We can inspect the coefficients using
 # the attributes of the model learnt as follows:
@@ -100,10 +112,8 @@ print(
 )
 
 # %% [markdown]
-# It is important to note that the learnt model is not able to handle the
-# non-linear relationship between `data` and `target` since linear models assume
-# the relationship between `data` and `target` to be linear.
-#
+# Notice that the learnt model cannot handle the non-linear relationship between
+# `data` and `target` because linear models assume a linear relationship.
 # Indeed, there are 3 possibilities to solve this issue:
 #
 # 1. choose a model that can natively deal with non-linearity,
@@ -119,15 +129,10 @@ print(
 from sklearn.tree import DecisionTreeRegressor
 
 tree = DecisionTreeRegressor(max_depth=3).fit(data, target)
-target_predicted = tree.predict(data)
-mse = mean_squared_error(target, target_predicted)
+tree
 
 # %%
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
-)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
+fit_score_plot_regression(tree, title="Decision tree regression")
 
 # %% [markdown]
 # Instead of having a model which can natively deal with non-linearity, we could
@@ -147,28 +152,26 @@ data.shape
 data_expanded = np.concatenate([data, data**2, data**3], axis=1)
 data_expanded.shape
 
-
-# %%
-linear_regression.fit(data_expanded, target)
-target_predicted = linear_regression.predict(data_expanded)
-mse = mean_squared_error(target, target_predicted)
-
-# %%
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
-)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
-
 # %% [markdown]
-# We can see that even with a linear model, we can overcome the linearity
-# limitation of the model by adding the non-linear components in the design of
-# additional features. Here, we created new features by knowing the way the
-# target was generated.
-#
 # Instead of manually creating such polynomial features one could directly use
 # [sklearn.preprocessing.PolynomialFeatures](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html).
-#
+
+# %%
+from sklearn.preprocessing import PolynomialFeatures
+
+polynomial_expansion = PolynomialFeatures(degree=3, include_bias=False)
+
+# %% [markdown]
+# In the previous cell we had to set `include_bias=False` as otherwise we would
+# create a constant feature perfectly correlated to the `intercept_` introduced
+# by the `LinearRegression`. We can verify that this procedure is equivalent to
+# creating the features by hand up to numerical error by computing the maximum
+# of the absolute values of the differences between the features generated by
+# both methods and checking that it is close to zero:
+
+np.abs(polynomial_expansion.fit_transform(data) - data_expanded).max()
+
+# %% [markdown]
 # To demonstrate the use of the `PolynomialFeatures` class, we use a
 # scikit-learn pipeline which first transforms the features and then fit the
 # regression model.
@@ -181,34 +184,17 @@ polynomial_regression = make_pipeline(
     PolynomialFeatures(degree=3, include_bias=False),
     LinearRegression(),
 )
-polynomial_regression.fit(data, target)
-target_predicted = polynomial_regression.predict(data)
-mse = mean_squared_error(target, target_predicted)
-
-# %% [markdown]
-# In the previous cell we had to set `include_bias=False` as otherwise we would
-# create a column perfectly correlated to the `intercept_` introduced by the
-# `LinearRegression`. We can verify that this procedure is equivalent to
-# creating the features by hand up to numerical error by computing the maximum
-# of the absolute values of the differences between the features generated by
-# both methods and checking that it is close to zero:
+polynomial_regression
 
 # %%
-np.abs(polynomial_regression[0].fit_transform(data) - data_expanded).max()
+fit_score_plot_regression(polynomial_regression, title="Polynomial regression")
 
 # %% [markdown]
-# Then it should not be surprising that the predictions of the
-# `PolynomialFeatures` pipeline match the predictions of the linear model fit on
-# manually engineered features.
-
-# %%
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
-)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
-
-# %% [markdown]
+# We can see that even with a linear model, we can overcome the linearity
+# limitation of the model by adding the non-linear components in the design of
+# additional features. Here, we created new features by knowing the way the
+# target was generated.
+#
 # The last possibility is to make a linear model more expressive is to use a
 # "kernel". Instead of learning one weight per feature as we previously did, a
 # weight is assigned to each sample. However, not all samples are used: some
@@ -231,16 +217,10 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 from sklearn.svm import SVR
 
 svr = SVR(kernel="linear")
-svr.fit(data, target)
-target_predicted = svr.predict(data)
-mse = mean_squared_error(target, target_predicted)
+svr
 
 # %%
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
-)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
+fit_score_plot_regression(svr, title="Linear support vector machine")
 
 # %% [markdown]
 # The predictions of our SVR with a linear kernel are all aligned on a straight
@@ -256,16 +236,10 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %%
 svr = SVR(kernel="poly", degree=3)
-svr.fit(data, target)
-target_predicted = svr.predict(data)
-mse = mean_squared_error(target, target_predicted)
+svr
 
 # %%
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
-)
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
+fit_score_plot_regression(svr, title="Polynomial support vector machine")
 
 # %% [markdown]
 # Kernel methods such as SVR are very efficient for small to medium datasets.
@@ -276,7 +250,7 @@ _ = ax.set_title(f"Mean squared error = {mse:.2f}")
 # as
 # [KBinsDiscretizer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html)
 # or
-# [Nystroem](https://scikit-learn.org/stable/modules/generated/sklearn.kernel_approximation.Nystroem.html).
+# [SplineTransformer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.SplineTransformer.html).
 #
 # Here again we refer the interested reader to the documentation to get a proper
 # definition of those methods. The following just gives an intuitive overview of
@@ -289,15 +263,22 @@ binned_regression = make_pipeline(
     KBinsDiscretizer(n_bins=8),
     LinearRegression(),
 )
-binned_regression.fit(data, target)
-target_predicted = binned_regression.predict(data)
-mse = mean_squared_error(target, target_predicted)
+binned_regression
 
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
+# %%
+fit_score_plot_regression(binned_regression, title="Binned regression")
+
+# %%
+from sklearn.preprocessing import SplineTransformer
+
+spline_regression = make_pipeline(
+    SplineTransformer(degree=3, include_bias=False),
+    LinearRegression(),
 )
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
+spline_regression
+
+# %%
+fit_score_plot_regression(spline_regression, title="Binned regression")
 
 # %% [markdown]
 # `Nystroem` is a nice alternative to `PolynomialFeatures` that makes it
@@ -312,15 +293,12 @@ nystroem_regression = make_pipeline(
     Nystroem(kernel="poly", degree=3, n_components=5, random_state=0),
     LinearRegression(),
 )
-nystroem_regression.fit(data, target)
-target_predicted = nystroem_regression.predict(data)
-mse = mean_squared_error(target, target_predicted)
+nystroem_regression
 
-ax = sns.scatterplot(
-    data=full_data, x="input_feature", y="target", color="black", alpha=0.5
+# %%
+fit_score_plot_regression(
+    nystroem_regression, title="Polynomial Nystroem regression"
 )
-ax.plot(data, target_predicted)
-_ = ax.set_title(f"Mean squared error = {mse:.2f}")
 
 # %% [markdown]
 # ## Notebook Recap

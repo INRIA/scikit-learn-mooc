@@ -178,10 +178,28 @@ logistic_regression.predict(test_penguin)
 # one can alternatively use the `predict_proba` method to compute continuous
 # values ("soft predictions") that correspond to an estimation of the confidence
 # of the target belonging to each class.
+#
+# For a binary classification scenario, the logistic regression makes both hard
+# and soft predictions based on the [logistic
+# function](https://en.wikipedia.org/wiki/Logistic_function) (also called
+# sigmoid function), which is S-shaped and maps any input into a value between 0
+# and 1.
 
 # %%
 y_pred_proba = logistic_regression.predict_proba(test_penguin)
 y_pred_proba
+
+# %% [markdown]
+# More in general, the output of `predict_proba` is an array of shape
+# (`n_samples`, `n_classes`)
+
+# %%
+y_pred_proba.shape
+
+# %% [markdown]
+# Also notice that the sum of (estimated) predicted probabilities across classes
+# is 1.0 for each given sample. We can visualize them for our `test_penguin` as
+# follows:
 
 # %%
 y_proba_sample = pd.Series(
@@ -192,8 +210,6 @@ plt.ylabel("Estimated probability")
 _ = plt.title("Probability of the sample belonging to a penguin class")
 
 # %% [markdown]
-# Notice that the (estimated) predicted probabilities sum to one.
-#
 # ```{warning}
 # We insist that the output of `predict_proba` are just estimations. Their
 # reliability on being a good estimate of the true conditional class-assignment
@@ -209,7 +225,12 @@ _ = plt.title("Probability of the sample belonging to a penguin class")
 # using [matplotlib diverging
 # colormaps](https://matplotlib.org/stable/users/explain/colors/colormaps.html#diverging)
 # such as `"RdBu_r"`, the softer the color, the more unsure about which class to
-# choose (the probability of 0.5 is mapped to white).
+# choose (the probability of 0.5 is mapped to white color).
+#
+# Equivalently, towards the tails of the curve the sigmoid function approaches
+# its asymptotic values of 0 or 1, which are mapped to darker colors. Indeed,
+# the closer the predicted probability is to 0 or 1, the more confident the
+# classifier is in its predictions.
 
 # %%
 DecisionBoundaryDisplay.from_estimator(
@@ -229,12 +250,11 @@ sns.scatterplot(
 _ = plt.title("Predicted probability of the trained\n LogisticRegression")
 
 # %% [markdown]
-# The [scikit-learn user guide](
+# For multi-class classification the logistic regression uses the [softmax
+# function](https://en.wikipedia.org/wiki/Softmax_function) to make predictions.
+# Giving more details on that scenario is beyond the scope of this MOOC.
+#
+# In any case, interested users are refered to the [scikit-learn user guide](
 # https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)
-# gives a more precise description of the `predict_proba` method of the
-# `LogisticRegression`. More detailed info can be found on Wikipedia about the
-# normalization functions: [softmax
-# function](https://en.wikipedia.org/wiki/Softmax_function) used by logistic
-# regression on multi-class problems and the [logistic
-# function](https://en.wikipedia.org/wiki/Logistic_function) used for binary
-# classifications problems.
+# for a more mathematical description of the `predict_proba` method of the
+# `LogisticRegression` and the respective normalization functions.

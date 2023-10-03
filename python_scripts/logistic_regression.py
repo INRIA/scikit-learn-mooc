@@ -121,26 +121,8 @@ sns.scatterplot(
 _ = plt.title("Decision boundary of the trained\n LogisticRegression")
 
 # %% [markdown]
-# Thus, we see that our decision function is represented by a line separating
-# the 2 classes.
-#
-# Since the line is oblique, it means that we used a combination of both
-# features:
-
-# %%
-coefs = logistic_regression[-1].coef_[0]  # the coefficients is a 2d array
-weights = pd.Series(coefs, index=culmen_columns)
-
-# %%
-weights.plot.barh()
-_ = plt.title("Weights of the logistic regression")
-
-# %% [markdown]
-# Indeed, both coefficients are non-null. If one of them had been zero, the
-# decision boundary would have been either horizontal or vertical.
-#
-# Furthermore the intercept is also non-zero, which means that the decision does
-# not go through the point with (0, 0) coordinates.
+# Thus, we see that our decision function is represented by a straight line
+# separating the 2 classes.
 #
 # For the mathematically inclined reader, the equation of the decision boundary
 # is:
@@ -154,6 +136,36 @@ _ = plt.title("Weights of the logistic regression")
 #     x1 = coef0 / coef1 * x0 - intercept / coef1
 #
 # which is the equation of a straight line.
+#
+# Since the line is oblique, it means that both coefficients (also called
+# weights) are non-null:
+
+# %%
+coefs = logistic_regression[-1].coef_[0]
+weights = pd.Series(coefs, index=culmen_columns)
+weights
+
+# %% [markdown]
+# You can [access pipeline
+# steps](https://scikit-learn.org/stable/modules/compose.html#access-pipeline-steps)
+# by name or position. In the code above `logistic_regression[-1]` means the
+# last step of the pipeline. Then you can query the attributes of that step such
+# as `coef_`. Notice also that the `coef_` attribute is an array of shape (1,
+# `n_features`) an then we access it via its first entry. Alternatively one
+# could use `coef_.ravel()`.
+#
+# We are now ready to visualize the weight values as a barplot:
+
+# %%
+weights.plot.barh()
+_ = plt.title("Weights of the logistic regression")
+
+# %% [markdown]
+# If one of the weights had been zero, the decision boundary would have been
+# either horizontal or vertical.
+#
+# Furthermore the intercept is also non-zero, which means that the decision does
+# not go through the point with (0, 0) coordinates.
 #
 # ## (Estimated) predicted probabilities
 #

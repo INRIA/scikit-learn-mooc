@@ -17,10 +17,10 @@
 # step followed by a linear regression step can therefore be considered a
 # non-linear regression model as a whole.
 #
-# ```{tip}
-# `np.random.RandomState` allows to create a random number generator which can
-# be later used to get deterministic results.
-# ```
+# In this occasion we are not loading a dataset, but creating our own custom
+# data consisting of a single feature. The target is built as a cubic polynomial
+# on said feature. To make things a bit more challenging, we add some random
+# fluctuations to the target.
 
 # %%
 import numpy as np
@@ -36,10 +36,13 @@ noise = rng.randn(n_sample) * 0.3
 target = data**3 - 0.5 * data**2 + noise
 
 # %% [markdown]
-# ```{note}
+# ```{tip}
+# `np.random.RandomState` allows to create a random number generator which can
+# be later used to get deterministic results.
+# ```
+#
 # To ease the plotting, we create a pandas dataframe containing the data and
 # target:
-# ```
 
 # %%
 import pandas as pd

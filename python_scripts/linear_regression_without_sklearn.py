@@ -9,8 +9,8 @@
 # # Linear regression without scikit-learn
 #
 # In this notebook, we introduce linear regression. Before presenting the
-# available scikit-learn classes, we will provide some insights with a simple
-# example. We will use a dataset that contains measurements taken on penguins.
+# available scikit-learn classes, here we provide some insights with a simple
+# example. We use a dataset that contains measurements taken on penguins.
 
 # %% [markdown]
 # ```{note}
@@ -25,8 +25,8 @@ penguins = pd.read_csv("../datasets/penguins_regression.csv")
 penguins.head()
 
 # %% [markdown]
-# We will formulate the following problem: using the flipper length of a
-# penguin, we would like to infer its mass.
+# We aim to solve the following problem: using the flipper length of a penguin,
+# we would like to infer its mass.
 
 # %%
 import seaborn as sns
@@ -72,8 +72,8 @@ def linear_model_flipper_mass(
 
 # %% [markdown]
 # Using the model we defined above, we can check the body mass values predicted
-# for a range of flipper lengths. We will set `weight_flipper_length` to be 45
-# and `intercept_body_mass` to be -5000.
+# for a range of flipper lengths. We set `weight_flipper_length` and
+# `intercept_body_mass` to arbitrary values of 45 and -5000, respectively.
 
 # %%
 import numpy as np
@@ -101,7 +101,7 @@ _ = ax.set_title(label.format(weight_flipper_length, intercept_body_mass))
 # %% [markdown]
 # The variable `weight_flipper_length` is a weight applied to the feature
 # `flipper_length` in order to make the inference. When this coefficient is
-# positive, it means that penguins with longer flipper lengths will have larger
+# positive, it means that penguins with longer flipper lengths have larger
 # body masses. If the coefficient is negative, it means that penguins with
 # shorter flipper lengths have larger body masses. Graphically, this coefficient
 # is represented by the slope of the curve in the plot. Below we show what the
@@ -129,7 +129,7 @@ _ = ax.set_title(label.format(weight_flipper_length, intercept_body_mass))
 # %% [markdown]
 # In our case, this coefficient has a meaningful unit: g/mm. For instance, a
 # coefficient of 40 g/mm, means that for each additional millimeter in flipper
-# length, the body weight predicted will increase by 40 g.
+# length, the body weight predicted increases by 40 g.
 
 # %%
 body_mass_180 = linear_model_flipper_mass(
@@ -150,8 +150,8 @@ print(
 # This parameter corresponds to the value on the y-axis if `flipper_length=0`
 # (which in our case is only a mathematical consideration, as in our data, the
 #  value of `flipper_length` only goes from 170mm to 230mm). This y-value when
-# x=0 is called the y-intercept. If `intercept_body_mass` is 0, the curve will
-# pass through the origin:
+# x=0 is called the y-intercept. If `intercept_body_mass` is 0, the curve passes
+# through the origin:
 
 # %%
 weight_flipper_length = 25
@@ -171,7 +171,7 @@ ax.plot(flipper_length_range, predicted_body_mass)
 _ = ax.set_title(label.format(weight_flipper_length, intercept_body_mass))
 
 # %% [markdown]
-# Otherwise, it will pass through the `intercept_body_mass` value:
+# Otherwise, it passes through the `intercept_body_mass` value:
 
 # %%
 weight_flipper_length = 45

@@ -26,3 +26,16 @@ and `intercept_`?
 
 _Select a single answer_
 ```
+
++++
+
+```{admonition} Question
+Combining (one or more) feature engineering transformers in a single pipeline:
+
+- a) increases the expressivity of the model
+- b) ensures that models extrapolate accurately regardless of its distribution
+- c) may require tuning additional hyperparameters
+- d) inherently prevents any underfitting
+
+_Select all answers that apply_
+```

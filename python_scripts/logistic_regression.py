@@ -6,7 +6,7 @@
 # ---
 
 # %% [markdown]
-# # Linear model for classification
+# # Linear models for classification
 #
 # In regression, we saw that the target to be predicted is a continuous
 # variable. In classification, the target is discrete (e.g. categorical).
@@ -121,26 +121,8 @@ sns.scatterplot(
 _ = plt.title("Decision boundary of the trained\n LogisticRegression")
 
 # %% [markdown]
-# Thus, we see that our decision function is represented by a line separating
-# the 2 classes.
-#
-# Since the line is oblique, it means that we used a combination of both
-# features:
-
-# %%
-coefs = logistic_regression[-1].coef_[0]  # the coefficients is a 2d array
-weights = pd.Series(coefs, index=culmen_columns)
-
-# %%
-weights.plot.barh()
-_ = plt.title("Weights of the logistic regression")
-
-# %% [markdown]
-# Indeed, both coefficients are non-null. If one of them had been zero, the
-# decision boundary would have been either horizontal or vertical.
-#
-# Furthermore the intercept is also non-zero, which means that the decision does
-# not go through the point with (0, 0) coordinates.
+# Thus, we see that our decision function is represented by a straight line
+# separating the 2 classes.
 #
 # For the mathematically inclined reader, the equation of the decision boundary
 # is:
@@ -154,6 +136,36 @@ _ = plt.title("Weights of the logistic regression")
 #     x1 = coef0 / coef1 * x0 - intercept / coef1
 #
 # which is the equation of a straight line.
+#
+# Since the line is oblique, it means that both coefficients (also called
+# weights) are non-null:
+
+# %%
+coefs = logistic_regression[-1].coef_[0]
+weights = pd.Series(coefs, index=[f"Weight for '{c}'" for c in culmen_columns])
+weights
+
+# %% [markdown]
+# You can [access pipeline
+# steps](https://scikit-learn.org/stable/modules/compose.html#access-pipeline-steps)
+# by name or position. In the code above `logistic_regression[-1]` means the
+# last step of the pipeline. Then you can access the attributes of that step such
+# as `coef_`. Notice also that the `coef_` attribute is an array of shape (1,
+# `n_features`) an then we access it via its first entry. Alternatively one
+# could use `coef_.ravel()`.
+#
+# We are now ready to visualize the weight values as a barplot:
+
+# %%
+weights.plot.barh()
+_ = plt.title("Weights of the logistic regression")
+
+# %% [markdown]
+# If one of the weights had been zero, the decision boundary would have been
+# either horizontal or vertical.
+#
+# Furthermore the intercept is also non-zero, which means that the decision does
+# not go through the point with (0, 0) coordinates.
 #
 # ## (Estimated) predicted probabilities
 #
@@ -178,10 +190,28 @@ logistic_regression.predict(test_penguin)
 # one can alternatively use the `predict_proba` method to compute continuous
 # values ("soft predictions") that correspond to an estimation of the confidence
 # of the target belonging to each class.
+#
+# For a binary classification scenario, the logistic regression makes both hard
+# and soft predictions based on the [logistic
+# function](https://en.wikipedia.org/wiki/Logistic_function) (also called
+# sigmoid function), which is S-shaped and maps any input into a value between 0
+# and 1.
 
 # %%
 y_pred_proba = logistic_regression.predict_proba(test_penguin)
 y_pred_proba
+
+# %% [markdown]
+# More in general, the output of `predict_proba` is an array of shape
+# (`n_samples`, `n_classes`)
+
+# %%
+y_pred_proba.shape
+
+# %% [markdown]
+# Also notice that the sum of (estimated) predicted probabilities across classes
+# is 1.0 for each given sample. We can visualize them for our `test_penguin` as
+# follows:
 
 # %%
 y_proba_sample = pd.Series(
@@ -192,8 +222,6 @@ plt.ylabel("Estimated probability")
 _ = plt.title("Probability of the sample belonging to a penguin class")
 
 # %% [markdown]
-# Notice that the (estimated) predicted probabilities sum to one.
-#
 # ```{warning}
 # We insist that the output of `predict_proba` are just estimations. Their
 # reliability on being a good estimate of the true conditional class-assignment
@@ -209,7 +237,12 @@ _ = plt.title("Probability of the sample belonging to a penguin class")
 # using [matplotlib diverging
 # colormaps](https://matplotlib.org/stable/users/explain/colors/colormaps.html#diverging)
 # such as `"RdBu_r"`, the softer the color, the more unsure about which class to
-# choose (the probability of 0.5 is mapped to white).
+# choose (the probability of 0.5 is mapped to white color).
+#
+# Equivalently, towards the tails of the curve the sigmoid function approaches
+# its asymptotic values of 0 or 1, which are mapped to darker colors. Indeed,
+# the closer the predicted probability is to 0 or 1, the more confident the
+# classifier is in its predictions.
 
 # %%
 DecisionBoundaryDisplay.from_estimator(
@@ -229,12 +262,11 @@ sns.scatterplot(
 _ = plt.title("Predicted probability of the trained\n LogisticRegression")
 
 # %% [markdown]
-# The [scikit-learn user guide](
+# For multi-class classification the logistic regression uses the [softmax
+# function](https://en.wikipedia.org/wiki/Softmax_function) to make predictions.
+# Giving more details on that scenario is beyond the scope of this MOOC.
+#
+# In any case, interested users are refered to the [scikit-learn user guide](
 # https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)
-# gives a more precise description of the `predict_proba` method of the
-# `LogisticRegression`. More detailed info can be found on Wikipedia about the
-# normalization functions: [softmax
-# function](https://en.wikipedia.org/wiki/Softmax_function) used by logistic
-# regression on multi-class problems and the [logistic
-# function](https://en.wikipedia.org/wiki/Logistic_function) used for binary
-# classifications problems.
+# for a more mathematical description of the `predict_proba` method of the
+# `LogisticRegression` and the respective normalization functions.

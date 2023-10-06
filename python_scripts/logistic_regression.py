@@ -6,7 +6,7 @@
 # ---
 
 # %% [markdown]
-# # Linear model for classification
+# # Linear models for classification
 #
 # In regression, we saw that the target to be predicted is a continuous
 # variable. In classification, the target is discrete (e.g. categorical).

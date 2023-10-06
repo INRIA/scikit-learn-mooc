@@ -142,14 +142,14 @@ _ = plt.title("Decision boundary of the trained\n LogisticRegression")
 
 # %%
 coefs = logistic_regression[-1].coef_[0]
-weights = pd.Series(coefs, index=culmen_columns)
+weights = pd.Series(coefs, index=[f"Weight for '{c}'" for c in culmen_columns])
 weights
 
 # %% [markdown]
 # You can [access pipeline
 # steps](https://scikit-learn.org/stable/modules/compose.html#access-pipeline-steps)
 # by name or position. In the code above `logistic_regression[-1]` means the
-# last step of the pipeline. Then you can query the attributes of that step such
+# last step of the pipeline. Then you can access the attributes of that step such
 # as `coef_`. Notice also that the `coef_` attribute is an array of shape (1,
 # `n_features`) an then we access it via its first entry. Alternatively one
 # could use `coef_.ravel()`.

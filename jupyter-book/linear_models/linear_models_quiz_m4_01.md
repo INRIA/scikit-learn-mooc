@@ -17,7 +17,7 @@ _Select a single answer_
 
 ```{admonition} Question
 Is it possible to get a perfect fit (zero prediction error on the training set)
-with a linear classifier on a non-linearly separable dataset?
+with a linear classifier by itself on a non-linearly separable dataset?
 
 - a) yes
 - b) no

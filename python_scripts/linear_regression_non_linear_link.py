@@ -281,7 +281,7 @@ spline_regression = make_pipeline(
 spline_regression
 
 # %%
-fit_score_plot_regression(spline_regression, title="Binned regression")
+fit_score_plot_regression(spline_regression, title="Spline regression")
 
 # %% [markdown]
 # `Nystroem` is a nice alternative to `PolynomialFeatures` that makes it

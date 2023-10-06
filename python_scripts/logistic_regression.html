@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Linear model for classification &#8212; Scikit-learn course</title>
+    <title>Linear models for classification &#8212; Scikit-learn course</title>
   
   
   
@@ -270,7 +270,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="linear_models_ex_01.html">📝 Exercise M4.01</a></li>
 <li class="toctree-l2"><a class="reference internal" href="linear_models_sol_01.html">📃 Solution for Exercise M4.01</a></li>
 <li class="toctree-l2"><a class="reference internal" href="linear_regression_in_sklearn.html">Linear regression using scikit-learn</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Linear model for classification</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Linear models for classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../linear_models/linear_models_quiz_m4_02.html">✅ Quiz M4.02</a></li>
 </ul>
 </li>
@@ -669,7 +669,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Linear model for classification</h1>
+    <h1>Linear models for classification</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -691,8 +691,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="linear-model-for-classification">
-<h1>Linear model for classification<a class="headerlink" href="#linear-model-for-classification" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="linear-models-for-classification">
+<h1>Linear models for classification<a class="headerlink" href="#linear-models-for-classification" title="Permalink to this heading">#</a></h1>
 <p>In regression, we saw that the target to be predicted is a continuous
 variable. In classification, the target is discrete (e.g. categorical).</p>
 <p>In this notebook we go back to the penguin dataset. However, this time the
@@ -820,48 +820,11 @@ general.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-</pre></div>
-</div>
-<img alt="../_images/02c6c4ff44f07de7d6469ff1bebcc173d7928518102d679afca86d16b3c0b6d2.png" src="../_images/02c6c4ff44f07de7d6469ff1bebcc173d7928518102d679afca86d16b3c0b6d2.png" />
+<img alt="../_images/f46d6d48b1b44f5c93b776ae4d3798b4c03b32b838843d853edd6711d65d6545.png" src="../_images/f46d6d48b1b44f5c93b776ae4d3798b4c03b32b838843d853edd6711d65d6545.png" />
 </div>
 </div>
-<p>Thus, we see that our decision function is represented by a line separating
-the 2 classes.</p>
-<p>Since the line is oblique, it means that we used a combination of both
-features:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># the coefficients is a 2d array</span>
-<span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Weights of the logistic regression&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/997327ce5219c0953b3ca3c9aa0c8a85475b79196ddf3440c68f1d91c77afe36.png" src="../_images/997327ce5219c0953b3ca3c9aa0c8a85475b79196ddf3440c68f1d91c77afe36.png" />
-</div>
-</div>
-<p>Indeed, both coefficients are non-null. If one of them had been zero, the
-decision boundary would have been either horizontal or vertical.</p>
-<p>Furthermore the intercept is also non-zero, which means that the decision does
-not go through the point with (0, 0) coordinates.</p>
+<p>Thus, we see that our decision function is represented by a straight line
+separating the 2 classes.</p>
 <p>For the mathematically inclined reader, the equation of the decision boundary
 is:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>coef0 * x0 + coef1 * x1 + intercept = 0
@@ -873,6 +836,47 @@ is:</p>
 </pre></div>
 </div>
 <p>which is the equation of a straight line.</p>
+<p>Since the line is oblique, it means that both coefficients (also called
+weights) are non-null:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Weight for &#39;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">culmen_columns</span><span class="p">])</span>
+<span class="n">weights</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight for &#39;Culmen Length (mm)&#39;    3.724988
+Weight for &#39;Culmen Depth (mm)&#39;    -1.096500
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can <a class="reference external" href="https://scikit-learn.org/stable/modules/compose.html#access-pipeline-steps">access pipeline
+steps</a>
+by name or position. In the code above <code class="docutils literal notranslate"><span class="pre">logistic_regression[-1]</span></code> means the
+last step of the pipeline. Then you can access the attributes of that step such
+as <code class="docutils literal notranslate"><span class="pre">coef_</span></code>. Notice also that the <code class="docutils literal notranslate"><span class="pre">coef_</span></code> attribute is an array of shape (1,
+<code class="docutils literal notranslate"><span class="pre">n_features</span></code>) an then we access it via its first entry. Alternatively one
+could use <code class="docutils literal notranslate"><span class="pre">coef_.ravel()</span></code>.</p>
+<p>We are now ready to visualize the weight values as a barplot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Weights of the logistic regression&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/51be103ac26bff670694013d91b4d439515266766f7bc87fec8845480c5479a5.png" src="../_images/51be103ac26bff670694013d91b4d439515266766f7bc87fec8845480c5479a5.png" />
+</div>
+</div>
+<p>If one of the weights had been zero, the decision boundary would have been
+either horizontal or vertical.</p>
+<p>Furthermore the intercept is also non-zero, which means that the decision does
+not go through the point with (0, 0) coordinates.</p>
 <section id="estimated-predicted-probabilities">
 <h2>(Estimated) predicted probabilities<a class="headerlink" href="#estimated-predicted-probabilities" title="Permalink to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">predict</span></code> method in classification models returns what we call a “hard
@@ -902,6 +906,11 @@ boundary, in the red region.</p>
 one can alternatively use the <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> method to compute continuous
 values (“soft predictions”) that correspond to an estimation of the confidence
 of the target belonging to each class.</p>
+<p>For a binary classification scenario, the logistic regression makes both hard
+and soft predictions based on the <a class="reference external" href="https://en.wikipedia.org/wiki/Logistic_function">logistic
+function</a> (also called
+sigmoid function), which is S-shaped and maps any input into a value between 0
+and 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">test_penguin</span><span class="p">)</span>
@@ -915,6 +924,23 @@ of the target belonging to each class.</p>
 </div>
 </div>
 </div>
+<p>More in general, the output of <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> is an array of shape
+(<code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">n_classes</span></code>)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_proba</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 2)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Also notice that the sum of (estimated) predicted probabilities across classes
+is 1.0 for each given sample. We can visualize them for our <code class="docutils literal notranslate"><span class="pre">test_penguin</span></code> as
+follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_proba_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
@@ -930,7 +956,6 @@ of the target belonging to each class.</p>
 <img alt="../_images/c12119dddd346e370966363bbfec278e9da716ff68287f594b7c37f11a168924.png" src="../_images/c12119dddd346e370966363bbfec278e9da716ff68287f594b7c37f11a168924.png" />
 </div>
 </div>
-<p>Notice that the (estimated) predicted probabilities sum to one.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>We insist that the output of <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> are just estimations. Their
@@ -946,7 +971,11 @@ boundaries encode the estimated probablities by color. In particular, when
 using <a class="reference external" href="https://matplotlib.org/stable/users/explain/colors/colormaps.html#diverging">matplotlib diverging
 colormaps</a>
 such as <code class="docutils literal notranslate"><span class="pre">&quot;RdBu_r&quot;</span></code>, the softer the color, the more unsure about which class to
-choose (the probability of 0.5 is mapped to white).</p>
+choose (the probability of 0.5 is mapped to white color).</p>
+<p>Equivalently, towards the tails of the curve the sigmoid function approaches
+its asymptotic values of 0 or 1, which are mapped to darker colors. Indeed,
+the closer the predicted probability is to 0 or 1, the more confident the
+classifier is in its predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
@@ -968,29 +997,15 @@ choose (the probability of 0.5 is mapped to white).</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-/opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages/seaborn/_oldcore.py:1498: FutureWarning: is_categorical_dtype is deprecated and will be removed in a future version. Use isinstance(dtype, CategoricalDtype) instead
-  if pd.api.types.is_categorical_dtype(vector):
-</pre></div>
-</div>
-<img alt="../_images/fe75f4412b076799c815a9647fab2797a08e86b41d562379c22488016ea57f1e.png" src="../_images/fe75f4412b076799c815a9647fab2797a08e86b41d562379c22488016ea57f1e.png" />
+<img alt="../_images/c61a833ae07f16e0ef31400075465aee2b01ef39c75d6933da7e46ae250c15ee.png" src="../_images/c61a833ae07f16e0ef31400075465aee2b01ef39c75d6933da7e46ae250c15ee.png" />
 </div>
 </div>
-<p>The <a class="reference external" href="https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression">scikit-learn user guide</a>
-gives a more precise description of the <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> method of the
-<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>. More detailed info can be found on Wikipedia about the
-normalization functions: <a class="reference external" href="https://en.wikipedia.org/wiki/Softmax_function">softmax
-function</a> used by logistic
-regression on multi-class problems and the <a class="reference external" href="https://en.wikipedia.org/wiki/Logistic_function">logistic
-function</a> used for binary
-classifications problems.</p>
+<p>For multi-class classification the logistic regression uses the <a class="reference external" href="https://en.wikipedia.org/wiki/Softmax_function">softmax
+function</a> to make predictions.
+Giving more details on that scenario is beyond the scope of this MOOC.</p>
+<p>In any case, interested users are refered to the <a class="reference external" href="https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression">scikit-learn user guide</a>
+for a more mathematical description of the <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> method of the
+<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> and the respective normalization functions.</p>
 </section>
 </section>
 

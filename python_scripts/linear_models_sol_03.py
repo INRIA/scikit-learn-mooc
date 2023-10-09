@@ -168,7 +168,7 @@ for C in Cs:
 # Finally, for small values of `C` the position of the decision boundary is
 # affected by the class imbalance: when `C` is near zero, the model predicts the
 # majority class (as seen in the training set) everywhere in the feature space.
-# In our case, there are approximately two times more Adelie than "Chinstrap"
+# In our case, there are approximately two times more "Adelie" than "Chinstrap"
 # penguins. This explains why the decision boundary is shifted to the right when
 # `C` gets smaller. Indeed, the most regularized model predicts light blue
 # almost everywhere in the feature space.
@@ -209,7 +209,7 @@ _ = plt.title("LogisticRegression weights depending of C")
 # For even stronger penalty strengths (e.g. `C = 1e-6`), the weights of both
 # features are almost zero. It explains why the decision separation in the plot
 # is almost constant in the feature space: the predicted probability is only
-# based on the intercept of the model.
+# based on the intercept parameter of the model (which is never regularized).
 
 # %% [markdown]
 # ## Impact of the regularization on with non-linear feature engineering

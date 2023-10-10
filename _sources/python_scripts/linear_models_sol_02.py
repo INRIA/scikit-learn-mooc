@@ -138,9 +138,9 @@ linear_regression_interactions[0].transform(data[:5])
 
 # %%
 # solution
-culmen_length_first_sample = 181.0
+flipper_length_first_sample = 181.0
 culmen_depth_first_sample = 18.7
-culmen_length_first_sample * culmen_depth_first_sample
+flipper_length_first_sample * culmen_depth_first_sample
 
 # %% [markdown]
 # Use the same cross-validation strategy as done previously to estimate the mean

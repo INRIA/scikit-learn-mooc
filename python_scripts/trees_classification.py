@@ -241,12 +241,12 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # In the next exercise, you will increase the tree depth to get an intuition on
 # how such parameter affects the space partitioning.
 #
-# Finally, we can try to visualize the output of predict_proba for a multiclass
-# problem using `DecisionBoundaryDisplay`, except that For a K-class problem,
-# you'll have K probability outputs for each data point. Visualizing all these
-# on a single plot can quickly become tricky to interpret. It is then common to
-# instead produce K separate plots, one for each class, in a one-vs-rest (or
-# one-vs-all) fashion.
+# Finally, we can try to visualize the output of `predict_proba` for a
+# multiclass problem using `DecisionBoundaryDisplay`, except that For a K-class
+# problem, you'll have K probability outputs for each data point. Visualizing
+# all these on a single plot can quickly become tricky to interpret. It is then
+# common to instead produce K separate plots, one for each class, in a
+# one-vs-rest (or one-vs-all) fashion.
 #
 # For example, in the plot below, the first column shows in red the certainty on
 # classifying a data point as belonging to the "Adelie" class. Notice that the

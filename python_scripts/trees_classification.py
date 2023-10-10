@@ -213,8 +213,8 @@ print(
 
 # %% [markdown]
 # It is also important to note that the culmen length has been disregarded for
-# the moment. It means that regardless of its value, it is not be used during
-# the prediction.
+# the moment. It means that regardless of its value, it is not used during the
+# prediction.
 
 # %%
 test_penguin_3 = pd.DataFrame(

@@ -141,29 +141,33 @@ for C in Cs:
 # confidence on the predictions:
 #
 # - For low values of `C` (strong regularization), the classifier is less
-#   confident in its predictions. We are enforcing a spread sigmoid.
+#   confident in its predictions. We are enforcing a **spread sigmoid**.
 # - For high values of `C` (weak regularization), the classifier is more
 #   confident: the areas with dark blue (very confident in predicting "Adelie")
 #   and dark red (very confident in predicting "Chinstrap") nearly cover the
-#   entire feature space. We are enforcing a steep sigmoid.
+#   entire feature space. We are enforcing a **steep sigmoid**.
 #
-# To answer the next question, think that the decision rules are mostly
-# determined by data points in the transition zone of the sigmoid, i.e. in the
-# soft-colored region. From the previous observations we can then deduce that:
+# To answer the next question, think that misclassified data points are more
+# costly when the classifier is more confident on the decision. Decision rules
+# are mostly driven by avoiding such cost. From the previous observations we can
+# then deduce that:
 #
-# - The smaller the `C` (the stronger the regularization), the more the decision
-#   boundary is influenced almost uniformly by all the data points. This leads
-#   to a less expressive model, which may underfit.
+# - The smaller the `C` (the stronger the regularization), the lower the cost
+#   of a misclassification. As more data points lay in the low-confidence
+#   zone, the more the decision rules are influenced almost uniformly by all
+#   the data points. This leads to a less expressive model, which may underfit.
 # - The higher the value of `C` (the weaker the regularization), the more the
-#   decision is influenced by a few training points very close to the boundary.
-#   Remember that models overfit when the number of samples in the training set
-#   is too small, as at least a minimum of samples is needed to average the
-#   noise out.
+#   decision is influenced by a few training points very close to the boundary,
+#   where decisions are costly. Remember that models may overfit if the number
+#   of samples in the training set is too small, as at least a minimum of
+#   samples is needed to average the noise out.
 #
-# The orientation is the result of two effects: the number of data points near
-# the boundary as mentioned above (notice how the contour line tries to align
-# with the data points in the transition zone) and the magnitude of the weights
-# of the model. The latter is explained in the next part of the exercise.
+# The orientation is the result of two factors: minimizing the number of
+# misclassified training points with high confidence and their distance to the
+# decision boundary (notice how the contour line tries to align with the most
+# misclassified data points in the dark-colored zone). This is closely related
+# to the value of the weights of the model, which is explained in the next part
+# of the exercise.
 #
 # Finally, for small values of `C` the position of the decision boundary is
 # affected by the class imbalance: when `C` is near zero, the model predicts the
@@ -266,10 +270,11 @@ for C in Cs:
 # Finally, we can also note that the linear model on the raw features was as
 # good or better than the best model using non-linear feature engineering. So in
 # this case, we did not really need this extra complexity in our pipeline.
-# Simpler is better!
+# **Simpler is better!**
 #
 # So to conclude, when using non-linear feature engineering, it is often
 # possible to make the pipeline overfit, even if the original feature space is
 # low-dimensional. As a result, it is important to tune the regularization
 # parameter in conjunction with the parameters of the transformers (e.g. tuning
-# `gamma` would be important here).
+# `gamma` would be important here). This has a direct impact on the certainty of
+# the predictions.

@@ -114,3 +114,64 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # which is not surprising since this partition was almost pure. If the feature
 # value is above the threshold, we predict the Gentoo penguin, the class that is
 # most probable.
+#
+# ## (Estimated) predicted probabilities in multi-class problems
+#
+# For those interested, one can further try to visualize the output of
+# `predict_proba` for a multiclass problem using `DecisionBoundaryDisplay`,
+# except that For a K-class problem, you will have K probability outputs for
+# each data point. Visualizing all these on a single plot can quickly become
+# tricky to interpret. It is then common to instead produce K separate plots,
+# one for each class, in a one-vs-rest (or one-vs-all) fashion.
+#
+# For example, in the plot below, the first plot on the left shows in red the
+# certainty on classifying a data point as belonging to the "Adelie" class. In
+# the same plot, the blue color represents the certainty of **not** belonging to
+# the "Adelie" class. The same logic applies to the other plots in the figure.
+
+# %% tags=["solution"]
+import numpy as np
+
+xx = np.linspace(30, 60, 100)
+yy = np.linspace(10, 23, 100)
+xx, yy = np.meshgrid(xx, yy)
+Xfull = pd.DataFrame(
+    {"Culmen Length (mm)": xx.ravel(), "Culmen Depth (mm)": yy.ravel()}
+)
+
+probas = tree.predict_proba(Xfull)
+n_classes = len(np.unique(tree.classes_))
+
+_, axs = plt.subplots(ncols=3, nrows=1, sharey=True, figsize=(12, 5))
+plt.suptitle("Predicted probabilities for decision tree model", y=0.8)
+
+for k in range(n_classes):
+    axs[k].set_title(f"Class {tree.classes_[k]}")
+    imshow_handle = axs[k].imshow(
+        probas[:, k].reshape((100, 100)),
+        extent=(30, 60, 10, 23),
+        vmin=0.0,
+        vmax=1.0,
+        origin="lower",
+        cmap="RdBu_r",
+    )
+    axs[k].set_xlabel("Culmen Length (mm)")
+    if k == 0:
+        axs[k].set_ylabel("Culmen Depth (mm)")
+    idx = target_test == tree.classes_[k]
+    axs[k].scatter(
+        data_test["Culmen Length (mm)"].loc[idx],
+        data_test["Culmen Depth (mm)"].loc[idx],
+        marker="o",
+        c="w",
+        edgecolor="k",
+    )
+
+ax = plt.axes([0.15, 0.04, 0.7, 0.05])
+plt.colorbar(imshow_handle, cax=ax, orientation="horizontal")
+_ = plt.title("Probability")
+
+# %% [markdown] tags=["solution"]
+# In scikit-learn v1.4 `DecisionBoundaryDisplay` will support a `class_of_interest`
+# parameter that will allow in particular for a visualization of `predict_proba` in
+# multi-class settings.

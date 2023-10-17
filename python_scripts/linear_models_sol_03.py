@@ -140,7 +140,7 @@ print(
 
 # %% [markdown]
 # For the following questions, you can use the following snippet to get the
-# feature names after the preprocessing performed.
+# feature names from the column transformer here named `preprocessor`.
 
 # %%
 preprocessor.fit(data)

@@ -10,6 +10,9 @@
 #
 # In this notebook we illustrate decision trees in a multiclass classification
 # problem by using the penguins dataset with 2 features and 3 classes.
+#
+# For the sake of simplicity, we focus the discussion on the hyperparamter
+# `max_depth`, which controls the maximal depth of the decision tree.
 
 # %% [markdown]
 # ```{note}
@@ -96,24 +99,26 @@ test_score = linear_model.score(data_test, target_test)
 print(f"Accuracy of the LogisticRegression: {test_score:.2f}")
 
 # %% [markdown]
-# Unlike linear models, decision trees are non-parametric models: they are not
+# Unlike linear models, the decision rules for the decision trees are not
 # controlled by a mathematical decision function and do not have weights or an
 # intercept to be optimized.
 #
-# Indeed, decision trees partition the space by considering a single feature at
-# a time. The number of splits both depends on the hyperparameters and the number of
-# data points in the training set: the larger the training set, the more splits
-# can be considered by the model (assuming a flexible enough choice for the
-# hyperparameters).
+# Instead, the decision rules of trees can be defined in terms of
+# - the feature index,
+# - the threshold values used at each split,
+# - the respective value to predict.
 #
-# For a decision tree, the trainable "parameters" can be defined as the feature
-# index and threshold values used in each the split nodes along with the predicted
-# value stored in each leaf node in the tree. As the number of nodes can grow when
-# changing the number of data points in the training set, the number of trainable
-# parameters grows as well. This is why we say that decision trees are non-parametric
-# models.
+# As the number of splitting nodes may grow when changing the number of data
+# points in the training set, the number of trainable decision rules grows as
+# well. This is why we say that decision trees are non-parametric models.
 #
-# Let's first visualize the shape of the decision boundary of a decision tree 
+# Decision trees partition the feature space by considering a single feature at
+# a time. The number of splits depends on both the hyperparameters and the
+# number of data points in the training set: the larger the training set, the
+# more splits can be considered by the model (assuming a flexible enough choice
+# for the hyperparameters).
+#
+# Let's first visualize the shape of the decision boundary of a decision tree
 # when we set the `max_depth` hyperparameter to only allow for a single split to
 # partition the feature space.
 

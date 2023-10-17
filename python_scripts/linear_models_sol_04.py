@@ -70,6 +70,7 @@ from sklearn.inspection import DecisionBoundaryDisplay
 def plot_decision_boundary(model):
     model.fit(data_train, target_train)
     accuracy = model.score(data_test, target_test)
+    C = model.get_params()["logisticregression__C"]
 
     disp = DecisionBoundaryDisplay.from_estimator(
         model,
@@ -235,7 +236,7 @@ from sklearn.kernel_approximation import Nystroem
 classifier = make_pipeline(
     StandardScaler(),
     Nystroem(kernel="rbf", gamma=1.0, n_components=100, random_state=0),
-    LogisticRegression(penalty="l2", max_iter=1000),
+    LogisticRegression(max_iter=1000),
 )
 
 for C in Cs:

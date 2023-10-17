@@ -53,15 +53,22 @@ linear_model.fit(data_train, target_train)
 
 # %%
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import seaborn as sns
 
 from sklearn.inspection import DecisionBoundaryDisplay
 
+tab10_norm = mpl.colors.Normalize(vmin=-0.5, vmax=8.5)
 # create a palette to be used in the scatterplot
-palette = ["tab:red", "tab:blue", "black"]
+palette = ["tab:blue", "tab:green", "tab:orange"]
 
-DecisionBoundaryDisplay.from_estimator(
-    linear_model, data_train, response_method="predict", cmap="RdBu", alpha=0.5
+dbd = DecisionBoundaryDisplay.from_estimator(
+    linear_model,
+    data_train,
+    response_method="predict",
+    cmap="tab10",
+    norm=tab10_norm,
+    alpha=0.5,
 )
 sns.scatterplot(
     data=penguins,
@@ -105,7 +112,12 @@ tree.fit(data_train, target_train)
 
 # %%
 DecisionBoundaryDisplay.from_estimator(
-    tree, data_train, response_method="predict", cmap="RdBu", alpha=0.5
+    tree,
+    data_train,
+    response_method="predict",
+    cmap="tab10",
+    norm=tab10_norm,
+    alpha=0.5,
 )
 sns.scatterplot(
     data=penguins,

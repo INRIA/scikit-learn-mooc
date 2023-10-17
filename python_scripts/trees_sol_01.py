@@ -58,13 +58,22 @@ tree.fit(data_train, target_train)
 # %%
 # solution
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import seaborn as sns
 
 from sklearn.inspection import DecisionBoundaryDisplay
 
-palette = ["tab:red", "tab:blue", "black"]
+
+tab10_norm = mpl.colors.Normalize(vmin=-0.5, vmax=8.5)
+
+palette = ["tab:blue", "tab:green", "tab:orange"]
 DecisionBoundaryDisplay.from_estimator(
-    tree, data_train, response_method="predict", cmap="RdBu", alpha=0.5
+    tree,
+    data_train,
+    response_method="predict",
+    cmap="tab10",
+    norm=tab10_norm,
+    alpha=0.5,
 )
 ax = sns.scatterplot(
     data=penguins,
@@ -155,7 +164,8 @@ for k in range(n_classes):
         vmin=0.0,
         vmax=1.0,
         origin="lower",
-        cmap="RdBu_r",
+        cmap="viridis",
+        # alpha=0.5,
     )
     axs[k].set_xlabel("Culmen Length (mm)")
     if k == 0:

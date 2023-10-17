@@ -101,8 +101,21 @@ print(f"Accuracy of the LogisticRegression: {test_score:.2f}")
 # intercept to be optimized.
 #
 # Indeed, decision trees partition the space by considering a single feature at
-# a time. Let's illustrate this behaviour by having a decision tree make a
-# single split to partition the feature space.
+# a time. The number of splits both depends on the hyperparameters and the number of
+# data points in the training set: the larger the training set, the more splits
+# can be considered by the model (assuming a flexible enough choice for the
+# hyperparameters).
+#
+# For a decision tree, the trainable "parameters" can be defined as the feature
+# index and threshold values used in each the split nodes along with the predicted
+# value stored in each leaf node in the tree. As the number of nodes can grow when
+# changing the number of data points in the training set, the number of trainable
+# parameters grows as well. This is why we say that decision trees are non-parametric
+# models.
+#
+# Let's first visualize the shape of the decision boundary of a decision tree 
+# when we set the `max_depth` hyperparameter to only allow for a single split to
+# partition the feature space.
 
 # %%
 from sklearn.tree import DecisionTreeClassifier
@@ -133,7 +146,7 @@ _ = plt.title("Decision boundary using a decision tree")
 # The partitions found by the algorithm separates the data along the axis
 # "Culmen Depth", discarding the feature "Culmen Length". Thus, it highlights
 # that a decision tree does not use a combination of features when making a
-# split. We can look more in depth at the tree structure.
+# single split. We can look more in depth at the tree structure.
 
 # %%
 from sklearn.tree import plot_tree
@@ -251,4 +264,4 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # good results.
 #
 # In the next exercise, you will increase the tree depth to get an intuition on
-# how such parameter affects the space partitioning.
+# how such a parameter affects the space partitioning.

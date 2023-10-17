@@ -54,7 +54,10 @@ tree.fit(data_train, target_train)
 #
 # Hint: Use the class `DecisionBoundaryDisplay` from the module
 # `sklearn.inspection` as shown in previous course notebooks.
-
+#
+# Warning: at this time, it is not possible to use `response_method="predict_proba"`
+# for multiclass problems. This is a planned feature for a future version of
+# scikit-learn. In the mean time, you can use `response_method="predict"` instead.
 # %%
 # solution
 import matplotlib.pyplot as plt
@@ -184,6 +187,10 @@ plt.colorbar(imshow_handle, cax=ax, orientation="horizontal")
 _ = plt.title("Probability")
 
 # %% [markdown] tags=["solution"]
-# In scikit-learn v1.4 `DecisionBoundaryDisplay` will support a `class_of_interest`
-# parameter that will allow in particular for a visualization of `predict_proba` in
-# multi-class settings.
+# In future versions of scikit-learn `DecisionBoundaryDisplay` will support a
+# `class_of_interest` parameter that will allow in particular for a visualization of
+# `predict_proba` in multi-class settings.
+#
+# We also plan to make it possible to visualize the `predict_proba` values for the
+# class with the maximum predicted probability (without having to pass a given a fixed
+# `class_of_interest` value).

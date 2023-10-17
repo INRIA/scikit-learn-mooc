@@ -6,7 +6,7 @@
 # ---
 
 # %% [markdown]
-# # 📃 Solution for Exercise M4.03
+# # 📃 Solution for Exercise M4.04
 #
 # In the previous Module we tuned the hyperparameter `C` of the logistic
 # regression without mentioning that it controls the regularization strength.

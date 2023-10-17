@@ -253,34 +253,3 @@ print(
 # categorical variables have many levels. This can increase the computational
 # cost of your model and promote overfitting, as we will see in a future
 # notebook.
-
-# %% [markdown]
-# What is the effect of decreasing the `C` parameter on the coefficients?
-
-# - a) shrinking the magnitude of the weights towards zeros
-# - b) increasing the magnitude of the weights
-# - c) reducing the weights' variance
-# - d) increasing the weights' variance
-# - e) it has no influence on the weights' variance
-
-# solution: a) c)
-
-# The following snippet allows to check the variability of the coefficients
-# with a logistic regression with the parameter `C=0.01`.
-
-# %%
-model = make_pipeline(preprocessor, LogisticRegression(C=0.01, max_iter=5000))
-cv_results = cross_validate(
-    model, data, target, cv=10, return_estimator=True, n_jobs=2
-)
-coefs = [pipeline[-1].coef_[0] for pipeline in cv_results["estimator"]]
-coefs = pd.DataFrame(coefs, columns=feature_names)
-_, ax = plt.subplots(figsize=(10, 35))
-ax.set(xlim=(-0.1, 2.5))  # to keep the same scale as previous plot
-_ = coefs.abs().plot.box(color=color, vert=False, ax=ax)
-
-# %% [markdown]
-# One can clearly see that, with stronger regularization, (lower value
-# for C), the coefficients are closer to 0 on average.
-# Furthermore, the width of the boxes, that reflects the cross-validation
-# induced variability, has shrunk significantly.

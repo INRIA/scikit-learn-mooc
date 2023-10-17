@@ -656,7 +656,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -672,6 +674,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-of-the-parameter-c-on-the-decision-boundary">Influence of the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code> on the decision boundary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impact-of-the-regularization-on-the-weights">Impact of the regularization on the weights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impact-of-the-regularization-on-with-non-linear-feature-engineering">Impact of the regularization on with non-linear feature engineering</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -683,13 +695,17 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="solution-for-exercise-m4-03">
 <h1>📃 Solution for Exercise M4.03<a class="headerlink" href="#solution-for-exercise-m4-03" title="Permalink to this heading">#</a></h1>
-<p>The parameter <code class="docutils literal notranslate"><span class="pre">penalty</span></code> can control the <strong>type</strong> of regularization to use,
-whereas the regularization <strong>strength</strong> is set using the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code>.
-Setting<code class="docutils literal notranslate"><span class="pre">penalty=&quot;none&quot;</span></code> is equivalent to an infinitely large value of <code class="docutils literal notranslate"><span class="pre">C</span></code>. In
-this exercise, we ask you to train a logistic regression classifier using the
-<code class="docutils literal notranslate"><span class="pre">penalty=&quot;l2&quot;</span></code> regularization (which happens to be the default in
-scikit-learn) to find by yourself the effect of the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
-<p>We start by loading the dataset.</p>
+<p>In the previous Module we tuned the hyperparameter <code class="docutils literal notranslate"><span class="pre">C</span></code> of the logistic
+regression without mentioning that it controls the regularization strength.
+Later, on the slides on 🎥 <strong>Intuitions on regularized linear models</strong> we
+metioned that a small <code class="docutils literal notranslate"><span class="pre">C</span></code> provides a more regularized model, whereas a
+non-regularized model is obtained with an infinitely large value of <code class="docutils literal notranslate"><span class="pre">C</span></code>.
+Indeed, <code class="docutils literal notranslate"><span class="pre">C</span></code> behaves as the inverse of the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> coefficient in the <code class="docutils literal notranslate"><span class="pre">Ridge</span></code>
+model.</p>
+<p>In this exercise, we ask you to train a logistic regression classifier using
+different values of the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code> to find its effects by yourself.</p>
+<p>We start by loading the dataset. We only keep the Adelie and Chinstrap classes
+to keep the discussion simple.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want a deeper overview regarding this dataset, you can refer to the
@@ -700,7 +716,6 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
-<span class="c1"># only keep the Adelie and Chinstrap classes</span>
 <span class="n">penguins</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">penguins</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;Adelie&quot;</span><span class="p">,</span> <span class="s2">&quot;Chinstrap&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="p">)</span>
@@ -715,7 +730,9 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-<span class="n">penguins_train</span><span class="p">,</span> <span class="n">penguins_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">penguins_train</span><span class="p">,</span> <span class="n">penguins_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">penguins</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.4</span>
+<span class="p">)</span>
 
 <span class="n">data_train</span> <span class="o">=</span> <span class="n">penguins_train</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">]</span>
 <span class="n">data_test</span> <span class="o">=</span> <span class="n">penguins_test</span><span class="p">[</span><span class="n">culmen_columns</span><span class="p">]</span>
@@ -726,97 +743,258 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 </div>
-<p>First, let’s create our predictive model.</p>
+<p>We define a function to help us fit a given <code class="docutils literal notranslate"><span class="pre">model</span></code> and plot its decision
+boundary. We recall that by using a <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code> with diverging
+colormap, <code class="docutils literal notranslate"><span class="pre">vmin=0</span></code> and <code class="docutils literal notranslate"><span class="pre">vmax=1</span></code>, we ensure that the 0.5 probability is mapped
+to the white color. Equivalently, the darker the color, the closer the
+predicted probability is to 0 or 1 and the more confident the classifier is in
+its predictions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
-
-<span class="n">logistic_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Given the following candidates for the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter, find out the impact of
-<code class="docutils literal notranslate"><span class="pre">C</span></code> on the classifier decision boundary. You can use
-<code class="docutils literal notranslate"><span class="pre">sklearn.inspection.DecisionBoundaryDisplay.from_estimator</span></code> to plot the
-decision function boundary.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-
-<span class="c1"># solution</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
-<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
-    <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
-    <span class="n">logistic_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
-    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 
-    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-        <span class="n">logistic_regression</span><span class="p">,</span>
-        <span class="n">data_test</span><span class="p">,</span>
-        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+<span class="k">def</span> <span class="nf">plot_decision_boundary</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">data_train</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict_proba&quot;</span><span class="p">,</span>
+        <span class="n">plot_method</span><span class="o">=</span><span class="s2">&quot;pcolormesh&quot;</span><span class="p">,</span>
         <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
-        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">data_train</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict_proba&quot;</span><span class="p">,</span>
+        <span class="n">plot_method</span><span class="o">=</span><span class="s2">&quot;contour&quot;</span><span class="p">,</span>
+        <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+        <span class="n">linewidths</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-        <span class="n">data</span><span class="o">=</span><span class="n">penguins_test</span><span class="p">,</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">penguins_train</span><span class="p">,</span>
         <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
         <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
         <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-        <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">],</span>
+        <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:red&quot;</span><span class="p">],</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;C: </span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> Accuracy on the test set: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<p>Let’s now create our predictive model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">logistic_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="influence-of-the-parameter-c-on-the-decision-boundary">
+<h2>Influence of the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code> on the decision boundary<a class="headerlink" href="#influence-of-the-parameter-c-on-the-decision-boundary" title="Permalink to this heading">#</a></h2>
+<p>Given the following candidates for the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter and the
+<code class="docutils literal notranslate"><span class="pre">plot_decision_boundary</span></code> function, find out the impact of <code class="docutils literal notranslate"><span class="pre">C</span></code> on the
+classifier’s decision boundary.</p>
+<ul class="simple">
+<li><p>How does the value of <code class="docutils literal notranslate"><span class="pre">C</span></code> impact the confidence on the predictions?</p></li>
+<li><p>How does it impact the underfit/overfit trade-off?</p></li>
+<li><p>How does it impact the position and orientation of the decision boundary?</p></li>
+</ul>
+<p>Try to give an interpretation on the reason for such behavior.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Cs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">]</span>
+
+<span class="c1"># solution</span>
+<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
+    <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">plot_decision_boundary</span><span class="p">(</span><span class="n">logistic_regression</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="cell_output docutils container">
-<img alt="../_images/dd7f27dbcdf5564035e27c670f3123f844e7a981f8c63287750ece5b61a44928.png" src="../_images/dd7f27dbcdf5564035e27c670f3123f844e7a981f8c63287750ece5b61a44928.png" />
-<img alt="../_images/b292d3662c24fda8d7cbb974f613e06bc0eab2b7400074243c74184b04574c1c.png" src="../_images/b292d3662c24fda8d7cbb974f613e06bc0eab2b7400074243c74184b04574c1c.png" />
-<img alt="../_images/d6eafcd252a9a80ed6880db211eccc646407dd995a818a381022e7cbeba3db42.png" src="../_images/d6eafcd252a9a80ed6880db211eccc646407dd995a818a381022e7cbeba3db42.png" />
-<img alt="../_images/a4aec66658c53ca38b826f418b4b3db906c1a92ab89a9ddef7eb6c0c1867396d.png" src="../_images/a4aec66658c53ca38b826f418b4b3db906c1a92ab89a9ddef7eb6c0c1867396d.png" />
+<img alt="../_images/4995b02ae7b2d0dec5f4214107dd113c296209f435f295ac352e7de6fd7f5abb.png" src="../_images/4995b02ae7b2d0dec5f4214107dd113c296209f435f295ac352e7de6fd7f5abb.png" />
+<img alt="../_images/ca8118111e8a08b91b86eccb27d4c40542f7d4455efdbd2e0d985bf5615b293c.png" src="../_images/ca8118111e8a08b91b86eccb27d4c40542f7d4455efdbd2e0d985bf5615b293c.png" />
+<img alt="../_images/032d44039813a98a96b553b070215955b70d851f6f9fac169280d9be52105833.png" src="../_images/032d44039813a98a96b553b070215955b70d851f6f9fac169280d9be52105833.png" />
+<img alt="../_images/9e0634a92164f80e2d757d4a2bc574f1dea6cc857294526748584ac48c6c2b47.png" src="../_images/9e0634a92164f80e2d757d4a2bc574f1dea6cc857294526748584ac48c6c2b47.png" />
+<img alt="../_images/e0e8d7699e085bb07f9674f12dfeaa5dd14ee4b5dace4789a6d858e77b673d09.png" src="../_images/e0e8d7699e085bb07f9674f12dfeaa5dd14ee4b5dace4789a6d858e77b673d09.png" />
+<img alt="../_images/07c9345090d559dd29999ec0ee6c672b7ca65345dbe11259882d774345129b9b.png" src="../_images/07c9345090d559dd29999ec0ee6c672b7ca65345dbe11259882d774345129b9b.png" />
+<img alt="../_images/0cb9478c8ebafd1110a77a3591feb59f7009ca636e3eda3619943c8f950c57f3.png" src="../_images/0cb9478c8ebafd1110a77a3591feb59f7009ca636e3eda3619943c8f950c57f3.png" />
 </div>
 </div>
-<p>Look at the impact of the <code class="docutils literal notranslate"><span class="pre">C</span></code> hyperparameter on the magnitude of the weights.</p>
+<p>On this series of plots we can observe several important points. Regarding the
+confidence on the predictions:</p>
+<ul class="simple">
+<li><p>For low values of <code class="docutils literal notranslate"><span class="pre">C</span></code> (strong regularization), the classifier is less
+confident in its predictions. We are enforcing a <strong>spread sigmoid</strong>.</p></li>
+<li><p>For high values of <code class="docutils literal notranslate"><span class="pre">C</span></code> (weak regularization), the classifier is more
+confident: the areas with dark blue (very confident in predicting “Adelie”)
+and dark red (very confident in predicting “Chinstrap”) nearly cover the
+entire feature space. We are enforcing a <strong>steep sigmoid</strong>.</p></li>
+</ul>
+<p>To answer the next question, think that misclassified data points are more
+costly when the classifier is more confident on the decision. Decision rules
+are mostly driven by avoiding such cost. From the previous observations we can
+then deduce that:</p>
+<ul class="simple">
+<li><p>The smaller the <code class="docutils literal notranslate"><span class="pre">C</span></code> (the stronger the regularization), the lower the cost
+of a misclassification. As more data points lay in the low-confidence
+zone, the more the decision rules are influenced almost uniformly by all
+the data points. This leads to a less expressive model, which may underfit.</p></li>
+<li><p>The higher the value of <code class="docutils literal notranslate"><span class="pre">C</span></code> (the weaker the regularization), the more the
+decision is influenced by a few training points very close to the boundary,
+where decisions are costly. Remember that models may overfit if the number
+of samples in the training set is too small, as at least a minimum of
+samples is needed to average the noise out.</p></li>
+</ul>
+<p>The orientation is the result of two factors: minimizing the number of
+misclassified training points with high confidence and their distance to the
+decision boundary (notice how the contour line tries to align with the most
+misclassified data points in the dark-colored zone). This is closely related
+to the value of the weights of the model, which is explained in the next part
+of the exercise.</p>
+<p>Finally, for small values of <code class="docutils literal notranslate"><span class="pre">C</span></code> the position of the decision boundary is
+affected by the class imbalance: when <code class="docutils literal notranslate"><span class="pre">C</span></code> is near zero, the model predicts the
+majority class (as seen in the training set) everywhere in the feature space.
+In our case, there are approximately two times more “Adelie” than “Chinstrap”
+penguins. This explains why the decision boundary is shifted to the right when
+<code class="docutils literal notranslate"><span class="pre">C</span></code> gets smaller. Indeed, the most regularized model predicts light blue
+almost everywhere in the feature space.</p>
+</section>
+<section id="impact-of-the-regularization-on-the-weights">
+<h2>Impact of the regularization on the weights<a class="headerlink" href="#impact-of-the-regularization-on-the-weights" title="Permalink to this heading">#</a></h2>
+<p>Look at the impact of the <code class="docutils literal notranslate"><span class="pre">C</span></code> hyperparameter on the magnitude of the weights.
+<strong>Hint</strong>: You can <a class="reference external" href="https://scikit-learn.org/stable/modules/compose.html#access-pipeline-steps">access pipeline
+steps</a>
+by name or position. Then you can query the attributes of that step such as
+<code class="docutils literal notranslate"><span class="pre">coef_</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="n">weights_ridge</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lr_weights</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
     <span class="n">logistic_regression</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
     <span class="n">logistic_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
     <span class="n">coefs</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">weights_ridge</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">))</span>
+    <span class="n">lr_weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">weights_ridge</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C: </span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">])</span>
-<span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">lr_weights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C: </span><span class="si">{</span><span class="n">C</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">])</span>
+<span class="n">lr_weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;LogisticRegression weights depending of C&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0e50749bd867085e6fd9c797f89a1870ff6983514e8822934f333abef22f2156.png" src="../_images/0e50749bd867085e6fd9c797f89a1870ff6983514e8822934f333abef22f2156.png" />
+<img alt="../_images/d29a899ee748eecaddc699f51059d814483a9f000303fa449509f98bdf524abe.png" src="../_images/d29a899ee748eecaddc699f51059d814483a9f000303fa449509f98bdf524abe.png" />
 </div>
 </div>
-<p>We see that a small <code class="docutils literal notranslate"><span class="pre">C</span></code> will shrink the weights values toward zero. It means
-that a small <code class="docutils literal notranslate"><span class="pre">C</span></code> provides a more regularized model. Thus, <code class="docutils literal notranslate"><span class="pre">C</span></code> is the inverse
-of the <code class="docutils literal notranslate"><span class="pre">alpha</span></code> coefficient in the <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> model.</p>
-<p>Besides, with a strong penalty (i.e. small <code class="docutils literal notranslate"><span class="pre">C</span></code> value), the weight of the
-feature “Culmen Depth (mm)” is almost zero. It explains why the decision
+<p>As small <code class="docutils literal notranslate"><span class="pre">C</span></code> provides a more regularized model, it shrinks the weights values
+toward zero, as in the <code class="docutils literal notranslate"><span class="pre">Ridge</span></code> model.</p>
+<p>In particular, with a strong penalty (e.g. <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">0.01</span></code>), the weight of the feature
+named “Culmen Depth (mm)” is almost zero. It explains why the decision
 separation in the plot is almost perpendicular to the “Culmen Length (mm)”
 feature.</p>
+<p>For even stronger penalty strengths (e.g. <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">1e-6</span></code>), the weights of both
+features are almost zero. It explains why the decision separation in the plot
+is almost constant in the feature space: the predicted probability is only
+based on the intercept parameter of the model (which is never regularized).</p>
+</section>
+<section id="impact-of-the-regularization-on-with-non-linear-feature-engineering">
+<h2>Impact of the regularization on with non-linear feature engineering<a class="headerlink" href="#impact-of-the-regularization-on-with-non-linear-feature-engineering" title="Permalink to this heading">#</a></h2>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">plot_decision_boundary</span></code> function to repeat the experiment using a
+non-linear feature engineering pipeline. For such purpose, insert
+<code class="docutils literal notranslate"><span class="pre">Nystroem(kernel=&quot;rbf&quot;,</span> <span class="pre">gamma=1,</span> <span class="pre">n_components=100)</span></code> between the
+<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> and the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> steps.</p>
+<ul class="simple">
+<li><p>Does the value of <code class="docutils literal notranslate"><span class="pre">C</span></code> still impact the position of the decision boundary and
+the confidence of the model?</p></li>
+<li><p>What can you say about the impact of <code class="docutils literal notranslate"><span class="pre">C</span></code> on the underfitting vs overfitting
+trade-off?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.kernel_approximation</span> <span class="kn">import</span> <span class="n">Nystroem</span>
+
+<span class="c1"># solution</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">StandardScaler</span><span class="p">(),</span>
+    <span class="n">Nystroem</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="n">Cs</span><span class="p">:</span>
+    <span class="n">classifier</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">logisticregression__C</span><span class="o">=</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">plot_decision_boundary</span><span class="p">(</span><span class="n">classifier</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4995b02ae7b2d0dec5f4214107dd113c296209f435f295ac352e7de6fd7f5abb.png" src="../_images/4995b02ae7b2d0dec5f4214107dd113c296209f435f295ac352e7de6fd7f5abb.png" />
+<img alt="../_images/4f064fcce2c9e74d5ca165c4b7a9d97adde6663fed9522e918e28a68073dd161.png" src="../_images/4f064fcce2c9e74d5ca165c4b7a9d97adde6663fed9522e918e28a68073dd161.png" />
+<img alt="../_images/7f99620cd8492571c1c6d809a38e7f691d3bffc6797b6c8f68bcca57101d2426.png" src="../_images/7f99620cd8492571c1c6d809a38e7f691d3bffc6797b6c8f68bcca57101d2426.png" />
+<img alt="../_images/eaf825e25e641c4d8d6a242333ddfe7631a486b0cf3b5a2a87d34fac8c796537.png" src="../_images/eaf825e25e641c4d8d6a242333ddfe7631a486b0cf3b5a2a87d34fac8c796537.png" />
+<img alt="../_images/453858549e380f9ecfac873f0dc202778dafe5323277d31a517a0d5f0437aa29.png" src="../_images/453858549e380f9ecfac873f0dc202778dafe5323277d31a517a0d5f0437aa29.png" />
+<img alt="../_images/e64c91b30862454474c755622a6a99fbf325cb90fde784598bc71a96daecd3ac.png" src="../_images/e64c91b30862454474c755622a6a99fbf325cb90fde784598bc71a96daecd3ac.png" />
+<img alt="../_images/4b8d72068b16a40033d1ae1c3e43e24f8a0695a944be1ef86aa1f8d61d157cc2.png" src="../_images/4b8d72068b16a40033d1ae1c3e43e24f8a0695a944be1ef86aa1f8d61d157cc2.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>For the lowest values of <code class="docutils literal notranslate"><span class="pre">C</span></code>, the overall pipeline underfits: it predicts
+the majority class everywhere, as previously.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">C</span></code> increases, the models starts to predict some datapoints from the
+“Chinstrap” class but the model is not very confident anywhere in the
+feature space.</p></li>
+<li><p>The decision boundary is no longer a straight line: the linear model is now
+classifying in the 100-dimensional feature space created by the <code class="docutils literal notranslate"><span class="pre">Nystroem</span></code>
+transformer. As are result, the decision boundary induced by the overall
+pipeline is now expressive enough to wrap around the minority class.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">1</span></code> in particular, it finds a smooth red blob around most of the
+“Chinstrap” data points. When moving away from the data points, the model is
+less confident in its predictions and again tends to predict the majority
+class according to the proportion in the training set.</p></li>
+<li><p>For higher values of <code class="docutils literal notranslate"><span class="pre">C</span></code>, the model starts to overfit: it is very confident
+in its predictions almost everywhere, but it should not be trusted: the
+model also makes a larger number of mistakes on the test set (not shown in
+the plot) while adopting a very curvy decision boundary to attempt fitting
+all the training points, including the noisy ones at the frontier between
+the two classes. This makes the decision boundary very sensitive to the
+sampling of the training set and as a result, it does not generalize well in
+that region. This is confirmed by the (slightly) lower accuracy on the test
+set.</p></li>
+</ul>
+<p>Finally, we can also note that the linear model on the raw features was as
+good or better than the best model using non-linear feature engineering. So in
+this case, we did not really need this extra complexity in our pipeline.
+<strong>Simpler is better!</strong></p>
+<p>So to conclude, when using non-linear feature engineering, it is often
+possible to make the pipeline overfit, even if the original feature space is
+low-dimensional. As a result, it is important to tune the regularization
+parameter in conjunction with the parameters of the transformers (e.g. tuning
+<code class="docutils literal notranslate"><span class="pre">gamma</span></code> would be important here). This has a direct impact on the certainty of
+the predictions.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -873,6 +1051,22 @@ feature.</p>
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#influence-of-the-parameter-c-on-the-decision-boundary">Influence of the parameter <code class="docutils literal notranslate"><span class="pre">C</span></code> on the decision boundary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impact-of-the-regularization-on-the-weights">Impact of the regularization on the weights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impact-of-the-regularization-on-with-non-linear-feature-engineering">Impact of the regularization on with non-linear feature engineering</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -183,13 +183,15 @@ _ = coefs.abs().plot.box(color=color, vert=False, ax=ax)
 # coefficients.
 
 # %% [markdown]
-# Now create a pipeline using consisting of a `PolynomialFeatures` and a
-# logistic regression with `C=0.01`. Set `degree=2` and `interaction_only=True`
-# to the feature engineering step. Remember not to include a "bias" feature
-# (that is a constant-valued feature) to avoid introducing a redundancy with the
-# intercept of the subsequent linear regression model.
+# Now create a similar pipeline consisting of preprocessor for both numerical
+# and categorical features, followed by a `PolynomialFeatures` and a logistic
+# regression with `C=0.01`. Set `degree=2` and `interaction_only=True` to the
+# feature engineering step. Remember not to include a "bias" feature to avoid
+# introducing a redundancy with the intercept of the subsequent logistic
+# regression.
 
 # %%
+# solution
 from sklearn.preprocessing import PolynomialFeatures
 
 model_with_interaction = make_pipeline(
@@ -199,7 +201,14 @@ model_with_interaction = make_pipeline(
 )
 model_with_interaction
 
+# %% [markdown]
+# By comparing the cross-validation test scores of both models fold-to-fold,
+# count the number of times the model using multiplicative interactions and both
+# numerical and categorical features has a better test score than the model
+# without interactions.
+
 # %%
+# solution
 cv_results_interactions = cross_validate(
     model_with_interaction,
     data,
@@ -212,6 +221,7 @@ test_score_interactions = cv_results_interactions["test_score"]
 test_score_interactions
 
 # %%
+# solution
 plt.scatter(
     indices, test_score_lr, color="tab:blue", label="numerical features only"
 )
@@ -227,7 +237,6 @@ plt.scatter(
     color="black",
     label="all features and interactions",
 )
-# plt.ylim((0, 1))
 plt.xlabel("Cross-validation iteration")
 plt.ylabel("Accuracy")
 _ = plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")

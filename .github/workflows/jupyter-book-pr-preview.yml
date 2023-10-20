@@ -19,18 +19,18 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
           context: 'JupyterBook preview'
 
+      - name: Get pull request number
+        id: pull-request-number
+        run: |
+          export PULL_REQUEST_NUMBER=${{github.event.workflow_run.event.number}}
+          echo "result=${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
+
       - uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: deploy-gh-pages.yml
           pr: ${{steps.pull-request-number.outputs.result}}
           name: jupyter-book
-
-      - name: Get pull request number
-        id: pull-request-number
-        run: |
-          export PULL_REQUEST_NUMBER=$(cat pull_request_number)
-          echo "result=${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
 
       - uses: actions/setup-node@v3
         with:

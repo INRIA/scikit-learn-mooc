@@ -142,10 +142,11 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # to interpret. It is then common to instead produce K separate plots, one for
 # each class, in a one-vs-rest (or one-vs-all) fashion.
 #
-# For example, in the plot below, the first plot on the left shows in red the
+# For example, in the plot below, the first plot on the left shows in yellow the
 # certainty on classifying a data point as belonging to the "Adelie" class. In
-# the same plot, the blue color represents the certainty of **not** belonging to
-# the "Adelie" class. The same logic applies to the other plots in the figure.
+# the same plot, the spectre from green to purple represents the certainty of
+# **not** belonging to the "Adelie" class. The same logic applies to the other
+# plots in the figure.
 
 # %% tags=["solution"]
 import numpy as np
@@ -164,7 +165,9 @@ _, axs = plt.subplots(ncols=3, nrows=1, sharey=True, figsize=(12, 5))
 plt.suptitle("Predicted probabilities for decision tree model", y=0.8)
 
 for class_of_interest in range(n_classes):
-    axs[class_of_interest].set_title(f"Class {tree.classes_[class_of_interest]}")
+    axs[class_of_interest].set_title(
+        f"Class {tree.classes_[class_of_interest]}"
+    )
     imshow_handle = axs[class_of_interest].imshow(
         probas[:, class_of_interest].reshape((100, 100)),
         extent=(30, 60, 10, 23),
@@ -190,6 +193,14 @@ plt.colorbar(imshow_handle, cax=ax, orientation="horizontal")
 _ = plt.title("Probability")
 
 # %% [markdown] tags=["solution"]
+# ```{note}
+# You may have noticed that we are no longer using a diverging colormap. Indeed,
+# the chance level for a one-vs-rest binarization of the multi-class
+# classification problem is almost never at predicted probability of 0.5. So
+# using a colormap with a neutral white at 0.5 might give a false impression on
+# the certainty.
+# ```
+#
 # In future versions of scikit-learn `DecisionBoundaryDisplay` will support a
 # `class_of_interest` parameter that will allow in particular for a
 # visualization of `predict_proba` in multi-class settings.

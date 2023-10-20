@@ -163,21 +163,21 @@ n_classes = len(np.unique(tree.classes_))
 _, axs = plt.subplots(ncols=3, nrows=1, sharey=True, figsize=(12, 5))
 plt.suptitle("Predicted probabilities for decision tree model", y=0.8)
 
-for k in range(n_classes):
-    axs[k].set_title(f"Class {tree.classes_[k]}")
-    imshow_handle = axs[k].imshow(
-        probas[:, k].reshape((100, 100)),
+for class_of_interest in range(n_classes):
+    axs[class_of_interest].set_title(f"Class {tree.classes_[class_of_interest]}")
+    imshow_handle = axs[class_of_interest].imshow(
+        probas[:, class_of_interest].reshape((100, 100)),
         extent=(30, 60, 10, 23),
         vmin=0.0,
         vmax=1.0,
         origin="lower",
         cmap="viridis",
     )
-    axs[k].set_xlabel("Culmen Length (mm)")
-    if k == 0:
-        axs[k].set_ylabel("Culmen Depth (mm)")
-    idx = target_test == tree.classes_[k]
-    axs[k].scatter(
+    axs[class_of_interest].set_xlabel("Culmen Length (mm)")
+    if class_of_interest == 0:
+        axs[class_of_interest].set_ylabel("Culmen Depth (mm)")
+    idx = target_test == tree.classes_[class_of_interest]
+    axs[class_of_interest].scatter(
         data_test["Culmen Length (mm)"].loc[idx],
         data_test["Culmen Depth (mm)"].loc[idx],
         marker="o",

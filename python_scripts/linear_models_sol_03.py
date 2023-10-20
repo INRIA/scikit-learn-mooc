@@ -80,12 +80,15 @@ target = adult_census["class"]
 data = adult_census.drop(columns=["class", "education-num"])
 
 # %% [markdown]
-# Create a predictive model where the categorical data must be one-hot encoded,
-# the numerical data must be scaled, and the predictor is a logistic regression
-# classifier. Use the same 10-fold cross-validation strategy with
-# `return_estimator=True` as above to evaluate this complex pipeline.
+# Create a predictive model where:
+# - The numerical data must be scaled.
+# - The categorical data must be one-hot encoded, set `min_frequency=0.01` to
+#   group categories concerning less than 1% of the total samples.
+# - The predictor is a `LogisticRegression`. You may need to increase the number
+#   of `max_iter`, which is 100 by default.
 #
-# You may need to increase the number of `max_iter`, which is 100 by default.
+# Use the same 10-fold cross-validation strategy with `return_estimator=True` as
+# above to evaluate this complex pipeline.
 
 # %%
 # solution
@@ -97,7 +100,10 @@ categorical_columns = selector(dtype_include=object)(data)
 numerical_columns = selector(dtype_exclude=object)(data)
 
 preprocessor = make_column_transformer(
-    (OneHotEncoder(handle_unknown="ignore"), categorical_columns),
+    (
+        OneHotEncoder(handle_unknown="ignore", min_frequency=0.01),
+        categorical_columns,
+    ),
     (StandardScaler(), numerical_columns),
 )
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=5_000))
@@ -158,12 +164,8 @@ feature_names
 
 # %% [markdown]
 # Which of the following pairs of features is most impacting the predictions of
-# the logistic regression classifier based on the relative magnitude of its
+# the logistic regression classifier based on the absolute magnitude of its
 # coefficients?
-
-# - a) `"hours-per-week"` and `"native-country_Columbia"`
-# - b) `"workclass_?"` and `"native_country_?"`
-# - c) `"capital-gain"` and `"education_Doctorate"`
 
 # %%
 # solution
@@ -177,18 +179,14 @@ _ = coefs.abs().plot.box(color=color, vert=False, ax=ax)
 
 # %% [markdown] tags=["solution"]
 # We can visually inspect the coefficients and observe that `"capital-gain"` and
-# `"education_Doctorate"` are impacting the predictions the most. However,
-# notice the coefficient of `"capital-gain"` is quite unstable across folds. In
-# the next section we will see how regularization affects the stability of the
-# coefficients.
+# `"education_Doctorate"` are impacting the predictions the most.
 
 # %% [markdown]
-# Now create a similar pipeline consisting of preprocessor for both numerical
-# and categorical features, followed by a `PolynomialFeatures` and a logistic
-# regression with `C=0.01`. Set `degree=2` and `interaction_only=True` to the
-# feature engineering step. Remember not to include a "bias" feature to avoid
-# introducing a redundancy with the intercept of the subsequent logistic
-# regression.
+# Now create a similar pipeline consisting of the same preprocessor as above,
+# followed by a `PolynomialFeatures` and a logistic regression with `C=0.01`.
+# Set `degree=2` and `interaction_only=True` to the feature engineering step.
+# Remember not to include a "bias" feature to avoid introducing a redundancy
+# with the intercept of the subsequent logistic regression.
 
 # %%
 # solution

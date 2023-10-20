@@ -57,12 +57,15 @@ target = adult_census["class"]
 data = adult_census.drop(columns=["class", "education-num"])
 
 # %% [markdown]
-# Create a predictive model where the categorical data must be one-hot encoded,
-# the numerical data must be scaled, and the predictor is a logistic regression
-# classifier. Use the same 10-fold cross-validation strategy with
-# `return_estimator=True` as above to evaluate this complex pipeline.
+# Create a predictive model where:
+# - The numerical data must be scaled.
+# - The categorical data must be one-hot encoded, set `min_frequency=0.01` to
+#   group categories concerning less than 1% of the total samples.
+# - The predictor is a `LogisticRegression`. You may need to increase the number
+#   of `max_iter`, which is 100 by default.
 #
-# You may need to increase the number of `max_iter`, which is 100 by default.
+# Use the same 10-fold cross-validation strategy with `return_estimator=True` as
+# above to evaluate this complex pipeline.
 
 # %%
 # Write your code here.
@@ -95,23 +98,18 @@ data = adult_census.drop(columns=["class", "education-num"])
 
 # %% [markdown]
 # Which of the following pairs of features is most impacting the predictions of
-# the logistic regression classifier based on the relative magnitude of its
+# the logistic regression classifier based on the absolute magnitude of its
 # coefficients?
-#
-# - a) `"hours-per-week"` and `"native-country_Columbia"`
-# - b) `"workclass_?"` and `"native_country_?"`
-# - c) `"capital-gain"` and `"education_Doctorate"`
 
 # %%
 # Write your code here.
 
 # %% [markdown]
-# Now create a similar pipeline consisting of preprocessor for both numerical
-# and categorical features, followed by a `PolynomialFeatures` and a logistic
-# regression with `C=0.01`. Set `degree=2` and `interaction_only=True` to the
-# feature engineering step. Remember not to include a "bias" feature to avoid
-# introducing a redundancy with the intercept of the subsequent logistic
-# regression.
+# Now create a similar pipeline consisting of the same preprocessor as above,
+# followed by a `PolynomialFeatures` and a logistic regression with `C=0.01`.
+# Set `degree=2` and `interaction_only=True` to the feature engineering step.
+# Remember not to include a "bias" feature to avoid introducing a redundancy
+# with the intercept of the subsequent logistic regression.
 
 # %%
 # Write your code here.

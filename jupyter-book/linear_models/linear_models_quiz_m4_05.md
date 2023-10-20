@@ -25,10 +25,11 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-In logistic regression, increasing the regularization strength makes the model:
+In logistic regression, increasing the regularization strength (by
+decreasing the value of `C`) makes the model:
 
 - a) more likely to overfit to the training data
-- b) more flexible, fitting closely to the training data
+- b) more confident: the values returned by `predict_proba` are closer to 0 or 1
 - c) less complex, potentially underfitting the training data
 
 _Select a single answer_

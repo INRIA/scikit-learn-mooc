@@ -33,7 +33,7 @@ _Select a single answer_
 Combining (one or more) feature engineering transformers in a single pipeline:
 
 - a) increases the expressivity of the model
-- b) ensures that models extrapolate accurately regardless of its distribution
+- b) ensures that models extrapolate accurately regardless of the distribution of the data
 - c) may require tuning additional hyperparameters
 - d) inherently prevents any underfitting
 

@@ -107,9 +107,11 @@ print(f"Accuracy of the LogisticRegression: {test_score:.2f}")
 # - the threshold value used at each split node,
 # - the value to predict at each leaf node.
 #
-# As the number of splitting nodes may grow when changing the number of data
-# points in the training set, the number of trainable decision rules grows as
-# well. This is why we say that decision trees are non-parametric models.
+# As the number of split and leaf nodes may grow when changing the number of data
+# points in the training set, the number of adjustable components taking part in
+# the decision rule would grow as well. This is why we say that decision trees are
+# non-parametric models: the number of trainable parameters depends on the 
+# size and regularity of the training set.
 #
 # Decision trees partition the feature space by considering a single feature at
 # a time. The number of splits depends on both the hyperparameters and the

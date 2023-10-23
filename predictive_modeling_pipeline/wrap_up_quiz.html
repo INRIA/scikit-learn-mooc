@@ -760,15 +760,35 @@ the prediction, you can pass the parameter <code class="docutils literal notrans
 </ul>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>One way to compare two models is by comparing the cross-validation test scores
-of both models fold-to-fold, i.e. counting the number of folds where one model
-has a better test score than the other. Let’s compare the model using all
-features with the model consisting of only numerical features. Select the range
-of folds where the former has a better test score than the latter:</p>
+<p>What is the accuracy score obtained by 10-fold cross-validation of the pipeline
+using both the numerical and categorical features?</p>
 <ul class="simple">
-<li><p>a) [0, 3]: the pipeline using all features is substantially worse than the pipeline using only numerical feature</p></li>
-<li><p>b) [4, 6]: both pipelines are almost equivalent</p></li>
-<li><p>c) [7, 10]: the pipeline using all features is substantially better than the pipeline using only numerical feature</p></li>
+<li><p>a) ~0.7</p></li>
+<li><p>b) ~0.9</p></li>
+<li><p>c) ~1.0</p></li>
+</ul>
+<p><em>Select a single answer</em></p>
+</div>
+<p>One way to compare two models is by comparing their means, but small differences
+in performance measures might easily turn out to be merely by chance (e.g.
+when using random resampling during cross-validation), and not because one
+model predicts systematically better than the other.</p>
+<p>Another way is to compare cross-validation test scores of both models
+fold-to-fold, i.e. counting the number of folds where one model has a better
+test score than the other. This provides some extra information: are some
+partitions of the data making the classifaction task particularly easy or hard
+for both models?</p>
+<p>Let’s visualize the second approach.</p>
+<p><img alt="Fold-to-fold comparison" src="../_images/numerical_pipeline_wrap_up_quiz_comparison.png" /></p>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Select the true statement.</p>
+<p>The number of folds where the model using all features perform better than the
+model using only numerical features lies in the range:</p>
+<ul class="simple">
+<li><p>a) [0, 3]: the model using all features is consistently worse</p></li>
+<li><p>b) [4, 6]: both models are almost equivalent</p></li>
+<li><p>c) [7, 10]: the model using all features is consistently better</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>

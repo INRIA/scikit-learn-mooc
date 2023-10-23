@@ -779,116 +779,56 @@ ridge regressors obtained on each fold.</p>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
-<p>Now, we will tackle a classification problem instead of a regression problem.
-Load the Adult Census dataset with the following snippet of code and we will
-work only with <strong>numerical features</strong>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">([</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;floating&quot;</span><span class="p">])</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
+<p>So far we only used the list of <code class="docutils literal notranslate"><span class="pre">numerical_features</span></code> to build the predictive
+model. Now create a preprocessor to deal separately with the numerical and
+categorical columns:</p>
+<ul class="simple">
+<li><p>categorical features can be selected if they have an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type;</p></li>
+<li><p>use an <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> to encode the categorical features;</p></li>
+<li><p>numerical features should correspond to the <code class="docutils literal notranslate"><span class="pre">numerical_features</span></code> as defined
+above. This is a subset of the features that are not an <code class="docutils literal notranslate"><span class="pre">object</span></code> data type;</p></li>
+<li><p>use an <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> to scale the numerical features.</p></li>
+</ul>
+<p>The last step of the pipeline should be a <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> with the same set of <code class="docutils literal notranslate"><span class="pre">alphas</span></code>
+to evaluate as previously.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>How many numerical features are present in the dataset contained in the
-variable <code class="docutils literal notranslate"><span class="pre">data</span></code>?</p>
+<p>By comparing the cross-validation test scores fold-to-fold for the model with
+<code class="docutils literal notranslate"><span class="pre">numerical_features</span></code> only and the model with both <code class="docutils literal notranslate"><span class="pre">numerical_features</span></code> and
+<code class="docutils literal notranslate"><span class="pre">categorical_features</span></code>, count the number of times the simple model has a better
+test score than the model with all features. Select the range which this number
+belongs to:</p>
 <ul class="simple">
-<li><p>a) 3</p></li>
-<li><p>b) 4</p></li>
-<li><p>c) 5</p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-</div>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Compare the generalization performance using the accuracy of the two following
-predictive models using a 10-fold cross-validation:</p>
-<ul class="simple">
-<li><p>a linear model composed of a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> and a <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></p></li>
-<li><p>a <code class="docutils literal notranslate"><span class="pre">DummyClassifier</span></code> predicting the most frequent class</p></li>
-</ul>
-<p>By comparing the cross-validation test scores of both models fold-to-fold, count the number
-of times the linear model has a better test score than the dummy classifier
-Select the range which this number belongs to:</p>
-<ul class="simple">
-<li><p>a) [0, 3]: the linear model is substantially worse than the dummy classifier</p></li>
+<li><p>a) [0, 3]: the simple model is consistently worse than the model with all features</p></li>
 <li><p>b) [4, 6]: both models are almost equivalent</p></li>
-<li><p>c) [7, 10]: the linear model is substantially better than the dummy classifier</p></li>
+<li><p>c) [7, 10]: the simple model is consistently better than the model with all features</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
 </div>
+<p>In this Module we saw that non-linear feature engineering may yield a more
+predictive pipeline, as long as we take care of adjusting the regularization to
+avoid overfitting.</p>
+<p>Try this approach by building a new pipeline similar to the previous one but
+replacing the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> by a <code class="docutils literal notranslate"><span class="pre">SplineTransformer</span></code> (with default
+hyperparameter values) to better model the non-linear influence of the
+numerical features.</p>
+<p>Furthermore, let the new pipeline model feature interactions by adding a new
+<code class="docutils literal notranslate"><span class="pre">Nystroem</span></code> step between the preprocessor and the <code class="docutils literal notranslate"><span class="pre">RidgeCV</span></code> estimator. Set
+<code class="docutils literal notranslate"><span class="pre">kernel=&quot;poly&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">degree=2</span></code> and <code class="docutils literal notranslate"><span class="pre">n_components=300</span></code> for this new feature
+engineering step.</p>
 <div class="admonition-question admonition">
 <p class="admonition-title">Question</p>
-<p>What is the most important feature seen by the logistic regression?</p>
+<p>By comparing the cross-validation test scores fold-to-fold for the model with
+both <code class="docutils literal notranslate"><span class="pre">numerical_features</span></code> and <code class="docutils literal notranslate"><span class="pre">categorical_features</span></code>, and the model that
+performs non-linear feature engineering; count the number of times the
+non-linear pipeline has a better test score than the model with simpler
+preprocessing. Select the range which this number belongs to:</p>
 <ul class="simple">
-<li><p>a) <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code></p></li>
-<li><p>b) <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code></p></li>
-<li><p>c) <code class="docutils literal notranslate"><span class="pre">&quot;capital-loss&quot;</span></code></p></li>
-<li><p>d) <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code></p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-</div>
-<p>Now, we will work with <strong>both numerical and categorical features</strong>. You can
-load Adult Census with the following snippet:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>Create a predictive model where the categorical data must be one-hot encoded,
-the numerical data must be scaled, and the predictor is a
-logistic regression classifier.</p>
-<p>Use the same 10-fold cross-validation strategy as above to evaluate this
-complex pipeline.</p>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Look at the cross-validation test scores for both models and count the number of
-times the model using both numerical and categorical features has a better
-test score than the model using only numerical features.
-Select the range which this number belongs to:</p>
-<ul class="simple">
-<li><p>a) [0, 3]: the model using both numerical and categorical features is
-substantially worse than the model using only numerical features</p></li>
+<li><p>a) [0, 3]: the new non-linear pipeline is consistently worse than the previous pipeline</p></li>
 <li><p>b) [4, 6]: both models are almost equivalent</p></li>
-<li><p>c) [7, 10]: the model using both numerical and categorical features is
-substantially better than the model using only numerical features</p></li>
+<li><p>c) [7, 10]: the new non-linear pipeline is consistently better than the previous pipeline</p></li>
 </ul>
 <p><em>Select a single answer</em></p>
-</div>
-<p>For the following questions, you can use the following snippet to get the
-feature names after the preprocessing performed.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">feature_names</span> <span class="o">=</span> <span class="p">(</span><span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s2">&quot;onehotencoder&quot;</span><span class="p">]</span>
-                             <span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span><span class="n">categorical_columns</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">feature_names</span> <span class="o">+=</span> <span class="n">numerical_columns</span>
-<span class="n">feature_names</span>
-</pre></div>
-</div>
-<p>There is as many feature names as coefficients in the last step of your
-predictive pipeline.</p>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>Which of the following pair of features is most impacting the
-predictions of the logistic regression classifier based on
-the relative magnitude of its coefficients?</p>
-<ul class="simple">
-<li><p>a) <code class="docutils literal notranslate"><span class="pre">&quot;hours-per-week&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;native-country_Columbia&quot;</span></code></p></li>
-<li><p>b) <code class="docutils literal notranslate"><span class="pre">&quot;workclass_?&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;native_country_?&quot;</span></code></p></li>
-<li><p>c) <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;education_Doctorate&quot;</span></code></p></li>
-</ul>
-<p><em>Select a single answer</em></p>
-</div>
-<div class="admonition-question admonition">
-<p class="admonition-title">Question</p>
-<p>What is the effect of decreasing the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter on the coefficients?</p>
-<ul class="simple">
-<li><p>a) shrinking the magnitude of the weights towards zeros</p></li>
-<li><p>b) increasing the magnitude of the weights</p></li>
-<li><p>c) reducing the weights’ variance</p></li>
-<li><p>d) increasing the weights’ variance</p></li>
-<li><p>e) it has no influence on the weights’ variance</p></li>
-</ul>
-<p><em>Select all answers that apply</em></p>
 </div>
 </section>
 

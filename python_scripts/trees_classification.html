@@ -683,8 +683,10 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="build-a-classification-decision-tree">
 <h1>Build a classification decision tree<a class="headerlink" href="#build-a-classification-decision-tree" title="Permalink to this heading">#</a></h1>
-<p>We will illustrate how decision tree fit data with a simple classification
-problem using the penguins dataset.</p>
+<p>In this notebook we illustrate decision trees in a multiclass classification
+problem by using the penguins dataset with 2 features and 3 classes.</p>
+<p>For the sake of simplicity, we focus the discussion on the hyperparamter
+<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, which controls the maximal depth of the decision tree.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you want a deeper overview regarding this dataset, you can refer to the
@@ -701,8 +703,8 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 </div>
-<p>Besides, we split the data into two subsets to investigate how trees will
-predict values based on an out-of-samples dataset.</p>
+<p>First, we split the data into two subsets to investigate how trees predict
+values based on unseen data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -715,15 +717,13 @@ predict values based on an out-of-samples dataset.</p>
 </div>
 </div>
 </div>
-<p>In a previous notebook, we learnt that a linear classifier will define a
-linear separation to split classes using a linear combination of the input
-features. In our 2-dimensional space, it means that a linear classifier will
-define some oblique lines that best separate our classes. We define a function
-below that, given a set of data points and a classifier, will plot the
-decision boundaries learnt by the classifier.</p>
-<p>Thus, for a linear classifier, we will obtain the following decision
-boundaries. These boundaries lines indicate where the model changes its
-prediction from one class to another.</p>
+<p>In a previous notebook, we learnt that linear classifiers define a linear
+separation to split classes using a linear combination of the input features.
+In our 2-dimensional feature space, it means that a linear classifier finds
+the oblique lines that best separate the classes. This is still true for
+multiclass problems, except that more than one line is fitted. We can use
+<code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code> to plot the decision boundaries learnt by the
+classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -739,15 +739,22 @@ prediction from one class to another.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
+<span class="n">tab10_norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
 <span class="c1"># create a palette to be used in the scatterplot</span>
-<span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
+<span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:green&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:orange&quot;</span><span class="p">]</span>
 
-<span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">linear_model</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">dbd</span> <span class="o">=</span> <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">linear_model</span><span class="p">,</span>
+    <span class="n">data_train</span><span class="p">,</span>
+    <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="n">tab10_norm</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span>
@@ -763,12 +770,12 @@ prediction from one class to another.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5da50bd32f227ef0b482658c09a95d6a78d674154375c5cc81c15a223fe4e123.png" src="../_images/5da50bd32f227ef0b482658c09a95d6a78d674154375c5cc81c15a223fe4e123.png" />
+<img alt="../_images/386babf8e72d4629b8e927cb1a02ada077bfe6ff2858f83b1046958ca8e54234.png" src="../_images/386babf8e72d4629b8e927cb1a02ada077bfe6ff2858f83b1046958ca8e54234.png" />
 </div>
 </div>
 <p>We see that the lines are a combination of the input features since they are
 not perpendicular a specific axis. Indeed, this is due to the model
-parametrization that we saw in the previous notebook, controlled by the
+parametrization that we saw in some previous notebooks, i.e. controlled by the
 model’s weights and intercept.</p>
 <p>Besides, it seems that the linear model would be a good candidate for such
 problem as it gives good accuracy.</p>
@@ -786,12 +793,25 @@ problem as it gives good accuracy.</p>
 </div>
 </div>
 </div>
-<p>Unlike linear models, decision trees are non-parametric models: they are not
-controlled by a mathematical decision function and do not have weights or
-intercept to be optimized.</p>
-<p>Indeed, decision trees will partition the space by considering a single
-feature at a time. Let’s illustrate this behaviour by having a decision tree
-make a single split to partition the feature space.</p>
+<p>Unlike linear models, the decision rule for the decision tree is not
+controlled by a simple linear combination of weights and feature values.</p>
+<p>Instead, the decision rules of trees can be defined in terms of</p>
+<ul class="simple">
+<li><p>the feature index used at each split node of the tree,</p></li>
+<li><p>the threshold value used at each split node,</p></li>
+<li><p>the value to predict at each leaf node.</p></li>
+</ul>
+<p>Decision trees partition the feature space by considering a single feature at
+a time. The number of splits depends on both the hyperparameters and the
+number of data points in the training set: the more flexible the
+hyperparameters and the larger the training set, the more splits can be
+considered by the model.</p>
+<p>As the number of adjustable components taking part in the decision rule
+changes with the training size, we say that decision trees are non-parametric
+models.</p>
+<p>Let’s now visualize the shape of the decision boundary of a decision tree when
+we set the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> hyperparameter to only allow for a single split to
+partition the feature space.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
@@ -807,7 +827,12 @@ make a single split to partition the feature space.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
-    <span class="n">tree</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+    <span class="n">tree</span><span class="p">,</span>
+    <span class="n">data_train</span><span class="p">,</span>
+    <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;tab10&quot;</span><span class="p">,</span>
+    <span class="n">norm</span><span class="o">=</span><span class="n">tab10_norm</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span>
@@ -822,13 +847,13 @@ make a single split to partition the feature space.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/baf2d67941a41fe92ca817e9032fb8ac6de0f758b1b2a320f913fcc74eef9997.png" src="../_images/baf2d67941a41fe92ca817e9032fb8ac6de0f758b1b2a320f913fcc74eef9997.png" />
+<img alt="../_images/3c85a435399ff601141341442fc870d06598ac02a53702a173bf28576dcd935a.png" src="../_images/3c85a435399ff601141341442fc870d06598ac02a53702a173bf28576dcd935a.png" />
 </div>
 </div>
 <p>The partitions found by the algorithm separates the data along the axis
 “Culmen Depth”, discarding the feature “Culmen Length”. Thus, it highlights
-that a decision tree does not use a combination of feature when making a
-split. We can look more in depth at the tree structure.</p>
+that a decision tree does not use a combination of features when making a
+single split. We can look more in depth at the tree structure.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
@@ -857,21 +882,23 @@ a figure and an axis with a specific size. Then, we can pass the axis to the
 <p>We see that the split was done on the culmen depth feature. The original
 dataset was subdivided into 2 sets based on the culmen depth (inferior or
 superior to 16.45 mm).</p>
-<p>This partition of the dataset minimizes the class diversities in each
+<p>This partition of the dataset minimizes the class diversity in each
 sub-partitions. This measure is also known as a <strong>criterion</strong>, and is a
 settable parameter.</p>
 <p>If we look more closely at the partition, we see that the sample superior to
-16.45 belongs mainly to the Adelie class. Looking at the values, we indeed
-observe 103 Adelie individuals in this space. We also count 52 Chinstrap
-samples and 6 Gentoo samples. We can make similar interpretation for the
+16.45 belongs mainly to the “Adelie” class. Looking at the values, we indeed
+observe 103 “Adelie” individuals in this space. We also count 52 “Chinstrap”
+samples and 6 “Gentoo” samples. We can make similar interpretation for the
 partition defined by a threshold inferior to 16.45mm. In this case, the most
-represented class is the Gentoo species.</p>
+represented class is the “Gentoo” species.</p>
 <p>Let’s see how our tree would work as a predictor. Let’s start with a case
 where the culmen depth is inferior to the threshold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">]})</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_penguin_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">]}</span>
+<span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_penguin_1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -881,12 +908,14 @@ where the culmen depth is inferior to the threshold.</p>
 </div>
 </div>
 </div>
-<p>The class predicted is the Gentoo. We can now check what happens if we pass a
+<p>The class predicted is the “Gentoo”. We can now check what happens if we pass a
 culmen depth superior to the threshold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">]})</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_penguin_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">]}</span>
+<span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_penguin_2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -896,15 +925,15 @@ culmen depth superior to the threshold.</p>
 </div>
 </div>
 </div>
-<p>In this case, the tree predicts the Adelie specie.</p>
-<p>Thus, we can conclude that a decision tree classifier will predict the most
+<p>In this case, the tree predicts the “Adelie” specie.</p>
+<p>Thus, we can conclude that a decision tree classifier predicts the most
 represented class within a partition.</p>
 <p>During the training, we have a count of samples in each partition, we can also
 compute the probability of belonging to a specific class within this
 partition.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">sample_2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">test_penguin_2</span><span class="p">)</span>
 <span class="n">y_proba_class_0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_pred_proba</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -948,14 +977,14 @@ Gentoo: 0.037
 </div>
 </div>
 <p>It is also important to note that the culmen length has been disregarded for
-the moment. It means that whatever the value given, it will not be used during
-the prediction.</p>
+the moment. It means that regardless of its value, it is not used during the
+prediction.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_penguin_3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10_000</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">]}</span>
 <span class="p">)</span>
-<span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">sample_3</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">test_penguin_3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -982,11 +1011,12 @@ accuracy is low when compared to the linear model.</p>
 </div>
 </div>
 </div>
-<p>Indeed, it is not a surprise. We saw earlier that a single feature will not be
-able to separate all three species. However, from the previous analysis we saw
-that by using both features we should be able to get fairly good results.</p>
-<p>In the next exercise, you will increase the size of the tree depth. You will
-get intuitions on how the space partitioning is repeated over time.</p>
+<p>Indeed, it is not a surprise. We saw earlier that a single feature is not able
+to separate all three species: it underfits. However, from the previous
+analysis we saw that by using both features we should be able to get fairly
+good results.</p>
+<p>In the next exercise, you will increase the tree depth to get an intuition on
+how such a parameter affects the space partitioning.</p>
 </section>
 
     <script type="text/x-thebe-config">

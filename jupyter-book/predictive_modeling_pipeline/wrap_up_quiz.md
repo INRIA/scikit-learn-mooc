@@ -127,15 +127,43 @@ can process both the numerical and categorical features together as follows:
   `OneHotEncoder`.
 
 ```{admonition} Question
-One way to compare two models is by comparing the cross-validation test scores
-of both models fold-to-fold, i.e. counting the number of folds where one model
-has a better test score than the other. Let's compare the model using all
-features with the model consisting of only numerical features. Select the range
-of folds where the former has a better test score than the latter:
+What is the accuracy score obtained by 10-fold cross-validation of the pipeline
+using both the numerical and categorical features?
 
-- a) [0, 3]: the pipeline using all features is substantially worse than the pipeline using only numerical feature
-- b) [4, 6]: both pipelines are almost equivalent
-- c) [7, 10]: the pipeline using all features is substantially better than the pipeline using only numerical feature
+- a) ~0.7
+- b) ~0.9
+- c) ~1.0
+
+_Select a single answer_
+```
+
++++
+
+One way to compare two models is by comparing their means, but small differences
+in performance measures might easily turn out to be merely by chance (e.g.
+when using random resampling during cross-validation), and not because one
+model predicts systematically better than the other.
+
+Another way is to compare cross-validation test scores of both models
+fold-to-fold, i.e. counting the number of folds where one model has a better
+test score than the other. This provides some extra information: are some
+partitions of the data making the classifaction task particularly easy or hard
+for both models?
+
+Let's visualize the second approach.
+
+![Fold-to-fold comparison](../../figures/numerical_pipeline_wrap_up_quiz_comparison.png)
+
+```{admonition} Question
+Select the true statement.
+
+The number of folds where the model using all features perform better than the
+model using only numerical features lies in the range:
+
+- a) [0, 3]: the model using all features is consistently worse
+- b) [4, 6]: both models are almost equivalent
+- c) [7, 10]: the model using all features is consistently better
+
 
 _Select a single answer_
 ```

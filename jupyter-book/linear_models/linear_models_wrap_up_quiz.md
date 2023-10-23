@@ -153,132 +153,59 @@ _Select a single answer_
 
 +++
 
-Now, we will tackle a classification problem instead of a regression problem.
-Load the Adult Census dataset with the following snippet of code and we will
-work only with **numerical features**.
+So far we only used the list of `numerical_features` to build the predictive
+model. Now create a preprocessor to deal separately with the numerical and
+categorical columns:
 
-```python
-adult_census = pd.read_csv("../datasets/adult-census.csv")
-target = adult_census["class"]
-data = adult_census.select_dtypes(["integer", "floating"])
-data = data.drop(columns=["education-num"])
-```
+- categorical features can be selected if they have an `object` data type;
+- use an `OneHotEncoder` to encode the categorical features;
+- numerical features should correspond to the `numerical_features` as defined
+  above. This is a subset of the features that are not an `object` data type;
+- use an `StandardScaler` to scale the numerical features.
 
-```{admonition} Question
-How many numerical features are present in the dataset contained in the
-variable `data`?
-
-- a) 3
-- b) 4
-- c) 5
-
-_Select a single answer_
-```
-
-+++
+The last step of the pipeline should be a `RidgeCV` with the same set of `alphas`
+to evaluate as previously.
 
 ```{admonition} Question
-Compare the generalization performance using the accuracy of the two following
-predictive models using a 10-fold cross-validation:
+By comparing the cross-validation test scores fold-to-fold for the model with
+`numerical_features` only and the model with both `numerical_features` and
+`categorical_features`, count the number of times the simple model has a better
+test score than the model with all features. Select the range which this number
+belongs to:
 
-- a linear model composed of a `StandardScaler` and a `LogisticRegression`
-- a `DummyClassifier` predicting the most frequent class
-
-By comparing the cross-validation test scores of both models fold-to-fold, count the number
-of times the linear model has a better test score than the dummy classifier
-Select the range which this number belongs to:
-
-- a) [0, 3]: the linear model is substantially worse than the dummy classifier
+- a) [0, 3]: the simple model is consistently worse than the model with all features
 - b) [4, 6]: both models are almost equivalent
-- c) [7, 10]: the linear model is substantially better than the dummy classifier
+- c) [7, 10]: the simple model is consistently better than the model with all features
 
 _Select a single answer_
 ```
 
 +++
 
-```{admonition} Question
-What is the most important feature seen by the logistic regression?
+In this Module we saw that non-linear feature engineering may yield a more
+predictive pipeline, as long as we take care of adjusting the regularization to
+avoid overfitting.
 
-- a) `"age"`
-- b) `"capital-gain"`
-- c) `"capital-loss"`
-- d) `"hours-per-week"`
+Try this approach by building a new pipeline similar to the previous one but
+replacing the `StandardScaler` by a `SplineTransformer` (with default
+hyperparameter values) to better model the non-linear influence of the
+numerical features.
 
-_Select a single answer_
-```
-
-+++
-
-Now, we will work with **both numerical and categorical features**. You can
-load Adult Census with the following snippet:
-
-```python
-adult_census = pd.read_csv("../datasets/adult-census.csv")
-target = adult_census["class"]
-data = adult_census.drop(columns=["class", "education-num"])
-```
-
-Create a predictive model where the categorical data must be one-hot encoded,
-the numerical data must be scaled, and the predictor is a
-logistic regression classifier.
-
-Use the same 10-fold cross-validation strategy as above to evaluate this
-complex pipeline.
+Furthermore, let the new pipeline model feature interactions by adding a new
+`Nystroem` step between the preprocessor and the `RidgeCV` estimator. Set
+`kernel="poly"`, `degree=2` and `n_components=300` for this new feature
+engineering step.
 
 ```{admonition} Question
-Look at the cross-validation test scores for both models and count the number of
-times the model using both numerical and categorical features has a better
-test score than the model using only numerical features.
-Select the range which this number belongs to:
+By comparing the cross-validation test scores fold-to-fold for the model with
+both `numerical_features` and `categorical_features`, and the model that
+performs non-linear feature engineering; count the number of times the
+non-linear pipeline has a better test score than the model with simpler
+preprocessing. Select the range which this number belongs to:
 
-- a) [0, 3]: the model using both numerical and categorical features is
-  substantially worse than the model using only numerical features
+- a) [0, 3]: the new non-linear pipeline is consistently worse than the previous pipeline
 - b) [4, 6]: both models are almost equivalent
-- c) [7, 10]: the model using both numerical and categorical features is
-  substantially better than the model using only numerical features
+- c) [7, 10]: the new non-linear pipeline is consistently better than the previous pipeline
 
 _Select a single answer_
-```
-
-+++
-
-For the following questions, you can use the following snippet to get the
-feature names after the preprocessing performed.
-
-```python
-preprocessor.fit(data)
-feature_names = (preprocessor.named_transformers_["onehotencoder"]
-                             .get_feature_names_out(categorical_columns)).tolist()
-feature_names += numerical_columns
-feature_names
-```
-
-There is as many feature names as coefficients in the last step of your
-predictive pipeline.
-
-```{admonition} Question
-Which of the following pair of features is most impacting the
-predictions of the logistic regression classifier based on
-the relative magnitude of its coefficients?
-
-- a) `"hours-per-week"` and `"native-country_Columbia"`
-- b) `"workclass_?"` and `"native_country_?"`
-- c) `"capital-gain"` and `"education_Doctorate"`
-
-_Select a single answer_
-```
-
-+++
-
-```{admonition} Question
-What is the effect of decreasing the `C` parameter on the coefficients?
-
-- a) shrinking the magnitude of the weights towards zeros
-- b) increasing the magnitude of the weights
-- c) reducing the weights' variance
-- d) increasing the weights' variance
-- e) it has no influence on the weights' variance
-
-_Select all answers that apply_
 ```

@@ -47,7 +47,6 @@ preprocessor = ColumnTransformer(
         )
     ],
     remainder="passthrough",
-    sparse_threshold=0,
 )
 
 from sklearn.ensemble import HistGradientBoostingClassifier

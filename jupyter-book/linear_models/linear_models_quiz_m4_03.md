@@ -91,18 +91,6 @@ _Select a single answer_
 
 +++
 
-The [LogisticRegression documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
-says:
-
-> C : Inverse of regularization strength; smaller values specify stronger regularization.
-
-The [Ridge documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html)
-says:
-
-> alpha : Regularization strength; Larger values specify stronger regularization.
-
-+++
-
 ```{admonition} Question
 In logistic regression, increasing the regularization strength (by
 decreasing the value of `C`) makes the model:

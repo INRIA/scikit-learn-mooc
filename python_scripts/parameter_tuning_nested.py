@@ -56,7 +56,6 @@ preprocessor = ColumnTransformer(
         ("cat_preprocessor", categorical_preprocessor, categorical_columns),
     ],
     remainder="passthrough",
-    sparse_threshold=0,
 )
 
 # %%

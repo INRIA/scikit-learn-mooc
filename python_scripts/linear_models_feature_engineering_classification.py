@@ -279,15 +279,21 @@ plot_decision_boundary(classifier, title="Spline classifier")
 # We can see that the decision boundary is now smooth, and while it favors
 # axis-aligned decision rules when extrapolating in low density regions, it can
 # adopt a more curvy decision boundary in the high density regions.
-#
-# Note however, that the number of knots is a hyperparameter that needs to be
-# tuned. If we use too few knots, the model would underfit the data, as shown on
-# the moons dataset. If we use too many knots, the model would overfit the data.
-#
 # However, as for the binning transformation, the model still fails to separate
 # the data for the XOR dataset, irrespective of the number of knots, for the
 # same reasons: **the spline transformation is a feature-wise transformation**
 # and thus **cannot capture interactions** between features.
+#
+# Take into account that the number of knots is a hyperparameter that needs to be
+# tuned. If we use too few knots, the model would underfit the data, as shown on
+# the moons dataset. If we use too many knots, the model would overfit the data.
+#
+# ```{note}
+# Notice that `KBinsDiscretizer` and `SplineTransformer` do not require
+# additional scaling. Indeed, they can replace the scaling step for numerical
+# features, as the former maps the features into the range [0, `n_bins`] and the
+# later maps them into the range [0, 1].
+# ```
 
 # %% [markdown]
 #

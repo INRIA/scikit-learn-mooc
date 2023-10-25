@@ -1,26 +1,14 @@
 # ✅ Quiz M4.02
 
 ```{admonition} Question
-If we fit a linear regression where `X` is a single column vector, how many
-parameters our model will be made of?
 
-- a) 1
-- b) 2
-- c) 3
+Let us consider a pipeline that combines a polynomial feature extraction of
+degree 2 and a linear regression model. Let us assume that the linear regression
+coefficients are all non-zero and that the dataset contains a single feature.
+Is the prediction function of this pipeline a straight line?
 
-_Select a single answer_
-```
-
-+++
-
-```{admonition} Question
-If we train a scikit-learn `LinearRegression` with `X` being a single column
-vector and `y` a vector, `coef_` and `intercept_` will be respectively:
-
-- a) an array of shape (1, 1) and a number
-- b) an array of shape (1,) and an array of shape (1,)
-- c) an array of shape (1, 1) and an array of shape (1,)
-- d) an array of shape (1,) and a number
+- a) yes
+- b) no
 
 _Select a single answer_
 ```
@@ -28,24 +16,13 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-The decision boundaries of a logistic regression model:
+Fitting a linear regression where `X` has `n_features` columns and the target
+is a single continuous vector, what is the respective type/shape of `coef_`
+and `intercept_`?
 
-- a) split classes using only one of the input features
-- b) split classes using a combination of the input features
-- c) often have curved shapes
-
-_Select a single answer_
-```
-
-+++
-
-```{admonition} Question
-For a binary classification task, what is the shape of the array returned by the
-`predict_proba` method for 10 input samples?
-
-- a) (10,)
-- b) (10, 2)
-- c) (2, 10)
+- a) it is not possible to fit a linear regression in dimension higher than 2
+- b) array of shape (`n_features`,) and a float
+- c) array of shape (1, `n_features`) and an array of shape (1,)
 
 _Select a single answer_
 ```
@@ -53,12 +30,12 @@ _Select a single answer_
 +++
 
 ```{admonition} Question
-In logistic regression's `predict_proba` method in scikit-learn, which of the
-following statements is true regarding the predicted probabilities?
+Combining (one or more) feature engineering transformers in a single pipeline:
 
-- a) The sum of probabilities across different classes for a given sample is always equal to 1.0.
-- b) The sum of probabilities across all samples for a given class is always equal to 1.0.
-- c) The sum of probabilities across all features for a given class is always equal to 1.0.
+- a) increases the expressivity of the model
+- b) ensures that models extrapolate accurately regardless of the distribution of the data
+- c) may require tuning additional hyperparameters
+- d) inherently prevents any underfitting
 
-_Select a single answer_
+_Select all answers that apply_
 ```

@@ -935,7 +935,10 @@ and kernel approximation.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">KBinsDiscretizer</span>
 
-<span class="n">classifier</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">KBinsDiscretizer</span><span class="p">(</span><span class="n">n_bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;onehot&quot;</span><span class="p">),</span>  <span class="c1"># already the default params</span>
+    <span class="n">LogisticRegression</span><span class="p">(),</span>
+<span class="p">)</span>
 <span class="n">classifier</span>
 </pre></div>
 </div>
@@ -999,14 +1002,20 @@ transformation</strong>. You can find more details in the <a class="reference ex
 </div>
 <p>We can see that the decision boundary is now smooth, and while it favors
 axis-aligned decision rules when extrapolating in low density regions, it can
-adopt a more curvy decision boundary in the high density regions.</p>
-<p>Note however, that the number of knots is a hyperparameter that needs to be
-tuned. If we use too few knots, the model would underfit the data, as shown on
-the moons dataset. If we use too many knots, the model would overfit the data.</p>
-<p>However, as for the binning transformation, the model still fails to separate
+adopt a more curvy decision boundary in the high density regions.
+However, as for the binning transformation, the model still fails to separate
 the data for the XOR dataset, irrespective of the number of knots, for the
 same reasons: <strong>the spline transformation is a feature-wise transformation</strong>
 and thus <strong>cannot capture interactions</strong> between features.</p>
+<p>Take into account that the number of knots is a hyperparameter that needs to be
+tuned. If we use too few knots, the model would underfit the data, as shown on
+the moons dataset. If we use too many knots, the model would overfit the data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice that <code class="docutils literal notranslate"><span class="pre">KBinsDiscretizer(encode=&quot;onehot&quot;)</span></code> and <code class="docutils literal notranslate"><span class="pre">SplineTransformer</span></code> do not
+require additional scaling. Indeed, they can replace the scaling step for
+numerical features: they both create features with values in the [0, 1] range.</p>
+</div>
 </section>
 <section id="modeling-non-additive-feature-interactions">
 <h2>Modeling non-additive feature interactions<a class="headerlink" href="#modeling-non-additive-feature-interactions" title="Permalink to this heading">#</a></h2>
@@ -1084,7 +1093,7 @@ such as the Nyström method with a polynomial kernel:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d98cf10afde42d00cba794b3555d7e9ba000cebdef829967a70a33ccba1b60db.png" src="../_images/d98cf10afde42d00cba794b3555d7e9ba000cebdef829967a70a33ccba1b60db.png" />
+<img alt="../_images/96da411b5c4ebfaa3ebeb9c05c1fa91e8164f132b58558585e11ad4b7d55a671.png" src="../_images/96da411b5c4ebfaa3ebeb9c05c1fa91e8164f132b58558585e11ad4b7d55a671.png" />
 </div>
 </div>
 <p>The polynomial kernel approach would be interesting in cases were the
@@ -1120,7 +1129,7 @@ dimensionality with the <code class="docutils literal notranslate"><span class="
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a830e52976bbc92558a4865dcfe3ea4ee88afda4db3236c609b4f65dca9f6558.png" src="../_images/a830e52976bbc92558a4865dcfe3ea4ee88afda4db3236c609b4f65dca9f6558.png" />
+<img alt="../_images/fb409cbf68b13df4149fba8f25d820751b1e5ad85c2612c3fe73045a40c0c004.png" src="../_images/fb409cbf68b13df4149fba8f25d820751b1e5ad85c2612c3fe73045a40c0c004.png" />
 </div>
 </div>
 <p>The resulting decision boundary is <strong>smooth</strong> and can successfully separate
@@ -1197,7 +1206,7 @@ model the interactions between the features transformed by the first step.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/65904496ae44a4a185e7c69818a8751bd821541b100b26091cf76db157f5a3f6.png" src="../_images/65904496ae44a4a185e7c69818a8751bd821541b100b26091cf76db157f5a3f6.png" />
+<img alt="../_images/aa30de15e213b5786f4300f81791f9ae43dbe0b3edb40fcea1c7d5ec46154031.png" src="../_images/aa30de15e213b5786f4300f81791f9ae43dbe0b3edb40fcea1c7d5ec46154031.png" />
 </div>
 </div>
 <p>The decision boundary of this pipeline is smooth, but with axis-aligned

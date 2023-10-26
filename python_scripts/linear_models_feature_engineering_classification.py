@@ -235,7 +235,10 @@ plot_decision_boundary(logistic_regression, title="Linear classifier")
 # %%
 from sklearn.preprocessing import KBinsDiscretizer
 
-classifier = make_pipeline(KBinsDiscretizer(n_bins=5), LogisticRegression())
+classifier = make_pipeline(
+    KBinsDiscretizer(n_bins=5, encode="onehot"),  # already the default params
+    LogisticRegression(),
+)
 classifier
 
 # %%
@@ -290,8 +293,8 @@ plot_decision_boundary(classifier, title="Spline classifier")
 #
 # ```{note}
 # Notice that `KBinsDiscretizer(encode="onehot")` and `SplineTransformer` do not
-# require additional scaling. Indeed, they can replace the scaling step for numerical
-# features: they both create features with values in the [0, 1] range.
+# require additional scaling. Indeed, they can replace the scaling step for
+# numerical features: they both create features with values in the [0, 1] range.
 # ```
 
 # %% [markdown]

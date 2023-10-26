@@ -289,10 +289,9 @@ plot_decision_boundary(classifier, title="Spline classifier")
 # the moons dataset. If we use too many knots, the model would overfit the data.
 #
 # ```{note}
-# Notice that `KBinsDiscretizer` and `SplineTransformer` do not require
-# additional scaling. Indeed, they can replace the scaling step for numerical
-# features, as the former maps the features into the range [0, `n_bins`] and the
-# later maps them into the range [0, 1].
+# Notice that `KBinsDiscretizer(encode="onehot")` and `SplineTransformer` do not
+# require additional scaling. Indeed, they can replace the scaling step for numerical
+# features: they both create features with values in the [0, 1] range.
 # ```
 
 # %% [markdown]

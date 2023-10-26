@@ -114,3 +114,5 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # which is not surprising since this partition was almost pure. If the feature
 # value is above the threshold, we predict the Gentoo penguin, the class that is
 # most probable.
+#
+# DEBUG

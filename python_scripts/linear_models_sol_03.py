@@ -145,10 +145,22 @@ print(
 )
 
 # %% [markdown]
-# For the following questions, you can use the following snippet to get the
-# feature names from the column transformer here named `preprocessor`.
+# For the following questions, you can copy adn paste the following snippet to
+# get the feature names from the column transformer here named `preprocessor`.
+#
+# ```python
+# preprocessor.fit(data)
+# feature_names = (
+#     preprocessor.named_transformers_["onehotencoder"].get_feature_names_out(
+#         categorical_columns
+#     )
+# ).tolist()
+# feature_names += numerical_columns
+# feature_names
+# ```
 
 # %%
+# solution
 preprocessor.fit(data)
 feature_names = (
     preprocessor.named_transformers_["onehotencoder"].get_feature_names_out(

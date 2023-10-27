@@ -79,10 +79,10 @@ data = adult_census.drop(columns=["class", "education-num"])
 # Write your code here.
 
 # %% [markdown]
-# For the following questions, you can use the following snippet to get the
-# feature names from the column transformer here named `preprocessor`.
-
-# %%
+# For the following questions, you can copy adn paste the following snippet to
+# get the feature names from the column transformer here named `preprocessor`.
+#
+# ```python
 # preprocessor.fit(data)
 # feature_names = (
 #     preprocessor.named_transformers_["onehotencoder"].get_feature_names_out(
@@ -91,6 +91,10 @@ data = adult_census.drop(columns=["class", "education-num"])
 # ).tolist()
 # feature_names += numerical_columns
 # feature_names
+# ```
+
+# %%
+# Write your code here.
 
 # %% [markdown]
 # Notice that there are as many feature names as coefficients in the last step

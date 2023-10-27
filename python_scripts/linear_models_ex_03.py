@@ -14,69 +14,118 @@
 # %% [markdown]
 # # 📝 Exercise M4.03
 #
-# The parameter `penalty` can control the **type** of regularization to use,
-# whereas the regularization **strength** is set using the parameter `C`.
-# Setting`penalty="none"` is equivalent to an infinitely large value of `C`. In
-# this exercise, we ask you to train a logistic regression classifier using the
-# `penalty="l2"` regularization (which happens to be the default in
-# scikit-learn) to find by yourself the effect of the parameter `C`.
-#
-# We start by loading the dataset.
-
-# %% [markdown]
-# ```{note}
-# If you want a deeper overview regarding this dataset, you can refer to the
-# Appendix - Datasets description section at the end of this MOOC.
-# ```
+# Now, we tackle a more realistic classification problem instead of making a
+# synthetic dataset. We start by loading the Adult Census dataset with the
+# following snippet. For the moment we retain only the **numerical features**.
 
 # %%
 import pandas as pd
 
-penguins = pd.read_csv("../datasets/penguins_classification.csv")
-# only keep the Adelie and Chinstrap classes
-penguins = (
-    penguins.set_index("Species").loc[["Adelie", "Chinstrap"]].reset_index()
-)
-
-culmen_columns = ["Culmen Length (mm)", "Culmen Depth (mm)"]
-target_column = "Species"
-
-# %%
-from sklearn.model_selection import train_test_split
-
-penguins_train, penguins_test = train_test_split(penguins, random_state=0)
-
-data_train = penguins_train[culmen_columns]
-data_test = penguins_test[culmen_columns]
-
-target_train = penguins_train[target_column]
-target_test = penguins_test[target_column]
+adult_census = pd.read_csv("../datasets/adult-census.csv")
+target = adult_census["class"]
+data = adult_census.select_dtypes(["integer", "floating"])
+data = data.drop(columns=["education-num"])
+data
 
 # %% [markdown]
-# First, let's create our predictive model.
+# We confirm that all the selected features are numerical.
+#
+# Compute the generalization performance in terms of accuracy of a linear model
+# composed of a `StandardScaler` and a `LogisticRegression`. Use a 10-fold
+# cross-validation with `return_estimator=True` to be able to inspect the
+# trained estimators.
 
 # %%
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-
-logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty="l2")
-)
-
-# %% [markdown]
-# Given the following candidates for the `C` parameter, find out the impact of
-# `C` on the classifier decision boundary. You can use
-# `sklearn.inspection.DecisionBoundaryDisplay.from_estimator` to plot the
-# decision function boundary.
-
-# %%
-Cs = [0.01, 0.1, 1, 10]
-
 # Write your code here.
 
 # %% [markdown]
-# Look at the impact of the `C` hyperparameter on the magnitude of the weights.
+# What is the most important feature seen by the logistic regression?
+#
+# You can use a boxplot to compare the absolute values of the coefficients while
+# also visualizing the variability induced by the cross-validation resampling.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Let's now work with **both numerical and categorical features**. You can
+# reload the Adult Census dataset with the following snippet:
+
+# %%
+adult_census = pd.read_csv("../datasets/adult-census.csv")
+target = adult_census["class"]
+data = adult_census.drop(columns=["class", "education-num"])
+
+# %% [markdown]
+# Create a predictive model where:
+# - The numerical data must be scaled.
+# - The categorical data must be one-hot encoded, set `min_frequency=0.01` to
+#   group categories concerning less than 1% of the total samples.
+# - The predictor is a `LogisticRegression`. You may need to increase the number
+#   of `max_iter`, which is 100 by default.
+#
+# Use the same 10-fold cross-validation strategy with `return_estimator=True` as
+# above to evaluate this complex pipeline.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# By comparing the cross-validation test scores of both models fold-to-fold,
+# count the number of times the model using both numerical and categorical
+# features has a better test score than the model using only numerical features.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# For the following questions, you can copy adn paste the following snippet to
+# get the feature names from the column transformer here named `preprocessor`.
+#
+# ```python
+# preprocessor.fit(data)
+# feature_names = (
+#     preprocessor.named_transformers_["onehotencoder"].get_feature_names_out(
+#         categorical_columns
+#     )
+# ).tolist()
+# feature_names += numerical_columns
+# feature_names
+# ```
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Notice that there are as many feature names as coefficients in the last step
+# of your predictive pipeline.
+
+# %% [markdown]
+# Which of the following pairs of features is most impacting the predictions of
+# the logistic regression classifier based on the absolute magnitude of its
+# coefficients?
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# Now create a similar pipeline consisting of the same preprocessor as above,
+# followed by a `PolynomialFeatures` and a logistic regression with `C=0.01`.
+# Set `degree=2` and `interaction_only=True` to the feature engineering step.
+# Remember not to include a "bias" feature to avoid introducing a redundancy
+# with the intercept of the subsequent logistic regression.
+
+# %%
+# Write your code here.
+
+# %% [markdown]
+# By comparing the cross-validation test scores of both models fold-to-fold,
+# count the number of times the model using multiplicative interactions and both
+# numerical and categorical features has a better test score than the model
+# without interactions.
+
+# %%
+# Write your code here.
 
 # %%
 # Write your code here.

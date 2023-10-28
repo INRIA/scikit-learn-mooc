@@ -22,8 +22,8 @@ jobs:
       - name: Get pull request number
         id: pull-request-number
         run: |
-          export PULL_REQUEST_NUMBER=${{github.event.workflow_run.event.number}}
-          echo "PULL_REQUEST_NUMBER=${{github.event.workflow_run.event.number}}"
+          export PULL_REQUEST_NUMBER=${{github.event.workflow_run.pull_requests[0].number}}
+          echo "PULL_REQUEST_NUMBER=$PULL_REQUEST_NUMBER"
           echo "result=${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
 
       - uses: dawidd6/action-download-artifact@v2

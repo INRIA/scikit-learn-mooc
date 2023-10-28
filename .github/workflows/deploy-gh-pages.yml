@@ -48,6 +48,7 @@ jobs:
         GITHUB_PULL_REQUEST_NUMBER: ${{github.event.number}}
       run: |
         bash build_tools/build_jupyter_book.sh
+        echo "Storing PR number ${{github.event.number}} to 'pull_request_number' file"
         echo ${{github.event.number}} > pull_request_number
 
     - name: Upload jupyter-book artifact for PRs

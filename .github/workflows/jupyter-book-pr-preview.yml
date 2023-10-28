@@ -23,6 +23,7 @@ jobs:
         id: pull-request-number
         run: |
           export PULL_REQUEST_NUMBER=${{github.event.workflow_run.event.number}}
+          echo "PULL_REQUEST_NUMBER=${{github.event.workflow_run.event.number}}"
           echo "result=${PULL_REQUEST_NUMBER}" >> $GITHUB_OUTPUT
 
       - uses: dawidd6/action-download-artifact@v2
@@ -40,7 +41,9 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{secrets.NETLIFY_AUTH_TOKEN}}
           NETLIFY_SITE_ID: ${{secrets.NETLIFY_SITE_ID}}
-        run: netlify deploy --dir=jupyter-book/_build/html --alias=pull-request-${{steps.pull-request-number.outputs.result}}
+        run: |
+          echo "Deploying PR ${{steps.pull-request-number.outputs.result}} to Netlify"
+          netlify deploy --dir=jupyter-book/_build/html --alias=pull-request-${{steps.pull-request-number.outputs.result}}
 
       - name: 'Commit Status: Update deployment status'
         uses: myrotvorets/set-commit-status-action@1.1.6

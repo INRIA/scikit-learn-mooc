@@ -44,13 +44,17 @@ jobs:
           v2-refs/heads/main
 
     - name: Build the JupyterBook
+      run: |
+        bash build_tools/build_jupyter_book.sh
+
+    - name: Save the PR number
       env:
         GITHUB_PULL_REQUEST_NUMBER: ${{github.event.number}}
       run: |
-        bash build_tools/build_jupyter_book.sh
+        echo "Storing PR number ${{github.event.number}} to 'pull_request_number' file"
         echo ${{github.event.number}} > pull_request_number
 
-    - name: Upload jupyter-book artifact for PRs
+    - name: Upload jupyter-book artifact for preview in PRs
       if: ${{ github.event_name == 'pull_request' }}
       uses: actions/upload-artifact@v3
       with:
@@ -59,7 +63,7 @@ jobs:
           jupyter-book/_build/html
           pull_request_number
 
-    - name: GitHub Pages action
+    - name: Update the main gh-page website
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       uses: peaceiris/actions-gh-pages@v3.6.1
       with:

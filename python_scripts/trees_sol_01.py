@@ -133,8 +133,6 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # value is above the threshold, we predict the Gentoo penguin, the class that is
 # most probable.
 #
-# DEBUG
-#
 # ## (Estimated) predicted probabilities in multi-class problems
 #
 # For those interested, one can further try to visualize the output of
@@ -210,5 +208,3 @@ _ = plt.title("Probability")
 # We also plan to make it possible to visualize the `predict_proba` values for
 # the class with the maximum predicted probability (without having to pass a
 # given a fixed `class_of_interest` value).
-#
-# DEBUG

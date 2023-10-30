@@ -44,6 +44,8 @@ jobs:
           v2-refs/heads/main
 
     - name: Build the JupyterBook
+      env:
+        GITHUB_PULL_REQUEST_NUMBER: ${{github.event.number}}
       run: |
         bash build_tools/build_jupyter_book.sh
 

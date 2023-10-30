@@ -30,16 +30,18 @@ write_changed_html() {
     if [ -n "$GITHUB_PULL_REQUEST_NUMBER" ]
     then
         GITHUB_PULL_REQUEST_URL="https://github.com/inria/scikit-learn-mooc/pull/$GITHUB_PULL_REQUEST_NUMBER"
-        echo "The following files may have been changed by PR $GITHUB_PR_NUMBER:"
+        echo "The following files may have been changed by PR $GITHUB_PULL_REQUEST_NUMBER:"
         echo "$affected"
         (
             echo '<html><body>'
-            echo 'Files changed by PR <a href="'"$GITHUB_PR_URL"'">'"$GITHUB_PR_URL</a>"
+            echo "Files changed by PR <a href=\"$GITHUB_PULL_REQUEST_URL\">$GITHUB_PULL_REQUEST_URL</a>"
             echo '<ul>'
             echo "$affected" | sed 's|.*|<li><a href="&">&</a> [<a href="https://inria.github.io/scikit-learn-mooc/&">main</a>]|'
             echo '</ul><p>This PR JupyterBook <a href="index.html">index</a>'
             echo '</ul></body></html>'
         ) > "$jupyter_book_build_dir/_changed.html"
+    else
+        echo "The variable 'GITHUB_PULL_REQUEST_NUMBER' is not defined: not writing the '_changed.html' file."
     fi
 }
 

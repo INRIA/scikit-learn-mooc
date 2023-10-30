@@ -19,10 +19,12 @@ jobs:
           sha: ${{ github.event.workflow_run.head_sha }}
           context: 'JupyterBook preview'
 
-      - name: Download artifacts
-        run: gh run download --name jupyter-book ${{ github.event.workflow_run.id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: deploy-gh-pages.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: jupyter-book
 
       - name: Get pull request number
         id: pull-request-number

@@ -208,5 +208,3 @@ _ = plt.title("Probability")
 # We also plan to make it possible to visualize the `predict_proba` values for
 # the class with the maximum predicted probability (without having to pass a
 # given a fixed `class_of_interest` value).
-#
-# DEBUG

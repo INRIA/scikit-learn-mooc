@@ -227,14 +227,9 @@ fit_and_plot_classification(
 _ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %% [markdown]
-# As expected, we see that the blue blob on the right and the red blob on the
-# top are easily separated. However, more splits will be required to better
+# As expected, we see that the blue blob in the lower right and the red blob on
+# the top are easily separated. However, more splits will be required to better
 # split the blob were both blue and red data points are mixed.
-#
-# Indeed, we see that red blob on the top and the blue blob on the right of the
-# plot are perfectly separated. However, the tree is still making mistakes in
-# the area where the blobs are mixed together. Let's check the tree
-# representation.
 
 # %%
 from sklearn.tree import plot_tree

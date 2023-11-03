@@ -6,7 +6,7 @@
 # ---
 
 # %% [markdown]
-# # The Adult census dataset
+# # The adult census dataset
 #
 # [This dataset](http://www.openml.org/d/1590) is a collection of demographic
 # information for the adult population as of 1994 in the USA. The prediction

@@ -145,7 +145,7 @@ print(
 )
 
 # %% [markdown]
-# For the following questions, you can copy adn paste the following snippet to
+# For the following questions, you can copy and paste the following snippet to
 # get the feature names from the column transformer here named `preprocessor`.
 #
 # ```python

@@ -48,7 +48,7 @@ Using python in /home/lesteve/miniconda3/envs/scikit-learn-course
 [ OK ] matplotlib version 3.3.3
 [ OK ] sklearn version 1.3
 [ OK ] pandas version 2.0
-[ OK ] seaborn version 0.11.1
+[ OK ] seaborn version 0.13
 [ OK ] notebook version 6.2.0
 [ OK ] plotly version 5.10.0
 ```

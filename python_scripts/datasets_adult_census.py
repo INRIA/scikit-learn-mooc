@@ -111,8 +111,12 @@ fig.show()
 # features. Similarly, a `"capital-loss"` above `4000` seems to lead to
 # low-income.
 #
-# In this case we can additionaly observe that the variables `"age"` and
-# `"relationship"` are more correlated than the others:
+# Even if it is beyond the scope of the present MOOC, one can additionally
+# explore correlations between features, for example, using Spearman's rank
+# correlation, as the more popular Pearson's correlation is only appropriate for
+# continuous data that is normally distributed and linearly related. Spearman's
+# correlation is more versatile in dealing with non-linear relationships and
+# ordinal data, but it is not meant for nominal categorical data.
 
 # %%
 import matplotlib.pyplot as plt
@@ -122,7 +126,8 @@ from scipy.cluster import hierarchy
 from scipy.spatial.distance import squareform
 from scipy.stats import spearmanr
 
-X = adult_census[columns_to_plot].drop(columns="class")
+# Keep numerical features only
+X = adult_census[columns_to_plot].drop(columns=["class", "relationship"])
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
 corr = spearmanr(X).correlation
 
@@ -139,9 +144,17 @@ dendro = hierarchy.dendrogram(
 )
 dendro_idx = np.arange(0, len(dendro["ivl"]))
 
-ax2.imshow(corr[dendro["leaves"], :][:, dendro["leaves"]])
+ax2.imshow(corr[dendro["leaves"], :][:, dendro["leaves"]], cmap="coolwarm")
 ax2.set_xticks(dendro_idx)
 ax2.set_yticks(dendro_idx)
 ax2.set_xticklabels(dendro["ivl"], rotation="vertical")
 ax2.set_yticklabels(dendro["ivl"])
 _ = fig.tight_layout()
+
+# %% [markdown]
+# Using a [diverging
+# colormap](https://matplotlib.org/stable/users/explain/colors/colormaps.html#diverging)
+# such as "coolwarm", the softer the color, the less (anti)correlation between
+# features (no correlation is mapped to white color). In this case dark blue
+# represents strong negative correlations and dark red means strong positive
+# correlations. Indeed, any feature is perfectly correlated to itself.

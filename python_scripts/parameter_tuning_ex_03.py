@@ -29,7 +29,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# In this exercise, we will progressively define the regression pipeline and
+# In this exercise, we progressively define the regression pipeline and
 # later tune its hyperparameters.
 #
 # Start by defining a pipeline that:

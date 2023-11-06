@@ -20,7 +20,7 @@
 # By extrapolation, we refer to values predicted by a model outside of the range
 # of feature values seen during the training.
 #
-# We will first load the regression data.
+# We first load the regression data.
 
 # %%
 import pandas as pd
@@ -61,10 +61,10 @@ data_train, target_train = penguins[[feature_name]], penguins[target_name]
 # Write your code here.
 
 # %% [markdown]
-# Now, we will check the extrapolation capabilities of each model. Create a
-# dataset containing a broader range of values than your previous dataset, in
-# other words, add values below and above the minimum and the maximum of the
-# flipper length seen during training.
+# Now, we check the extrapolation capabilities of each model. Create a dataset
+# containing a broader range of values than your previous dataset, in other
+# words, add values below and above the minimum and the maximum of the flipper
+# length seen during training.
 
 # %%
 # Write your code here.

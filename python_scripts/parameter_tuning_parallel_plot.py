@@ -110,8 +110,8 @@ fig.show()
 # spread the active ranges and improve the readability of the plot.
 # ```
 #
-# The parallel coordinates plot will display the values of the hyperparameters
-# on different columns while the performance metric is color coded. Thus, we are
+# The parallel coordinates plot displays the values of the hyperparameters on
+# different columns while the performance metric is color coded. Thus, we are
 # able to quickly inspect if there is a range of hyperparameters which is
 # working or not.
 #

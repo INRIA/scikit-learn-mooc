@@ -8,11 +8,11 @@
 # %% [markdown]
 # # Importance of decision tree hyperparameters on generalization
 #
-# In this notebook, we will illustrate the importance of some key
-# hyperparameters on the decision tree; we will demonstrate their effects on the
-# classification and regression problems we saw previously.
+# In this notebook, we illustrate the importance of some key hyperparameters on
+# the decision tree; we demonstrate their effects on the classification and
+# regression problems we saw previously.
 #
-# First, we will load the classification and regression datasets.
+# First, we load the classification and regression datasets.
 
 # %%
 import pandas as pd
@@ -35,7 +35,7 @@ data_reg = pd.read_csv("../datasets/penguins_regression.csv")
 # %% [markdown]
 # ## Create helper functions
 #
-# We will create some helper functions to plot the data samples as well as the
+# We create some helper functions to plot the data samples as well as the
 # decision boundary for classification and the regression line for regression.
 
 # %%
@@ -135,10 +135,10 @@ _ = plt.title(f"Deep regression tree with max-depth of {max_depth}")
 
 # %% [markdown]
 # For both classification and regression setting, we observe that increasing the
-# depth will make the tree model more expressive. However, a tree that is too
-# deep will overfit the training data, creating partitions which are only
-# correct for "outliers" (noisy samples). The `max_depth` is one of the
-# hyperparameters that one should optimize via cross-validation and grid-search.
+# depth makes the tree model more expressive. However, a tree that is too deep
+# may overfit the training data, creating partitions which are only correct for
+# "outliers" (noisy samples). The `max_depth` is one of the hyperparameters that
+# one should optimize via cross-validation and grid-search.
 
 # %%
 from sklearn.model_selection import GridSearchCV
@@ -172,15 +172,15 @@ _ = plt.title(
 #
 # The `max_depth` hyperparameter controls the overall complexity of the tree.
 # This parameter is adequate under the assumption that a tree is built
-# symmetrically. However, there is no guarantee that a tree will be symmetrical.
+# symmetrically. However, there is no reason why a tree should be symmetrical.
 # Indeed, optimal generalization performance could be reached by growing some of
 # the branches deeper than some others.
 #
-# We will build a dataset where we will illustrate this asymmetry. We will
-# generate a dataset composed of 2 subsets: one subset where a clear separation
-# should be found by the tree and another subset where samples from both classes
-# will be mixed. It implies that a decision tree will need more splits to
-# classify properly samples from the second subset than from the first subset.
+# We build a dataset where we illustrate this asymmetry. We generate a dataset
+# composed of 2 subsets: one subset where a clear separation should be found by
+# the tree and another subset where samples from both classes are mixed. It
+# implies that a decision tree needs more splits to classify properly samples
+# from the second subset than from the first subset.
 
 # %%
 from sklearn.datasets import make_blobs
@@ -188,11 +188,11 @@ from sklearn.datasets import make_blobs
 data_clf_columns = ["Feature #0", "Feature #1"]
 target_clf_column = "Class"
 
-# Blobs that will be interlaced
+# Blobs that are interlaced
 X_1, y_1 = make_blobs(
     n_samples=300, centers=[[0, 0], [-1, -1]], random_state=0
 )
-# Blobs that will be easily separated
+# Blobs that can be easily separated
 X_2, y_2 = make_blobs(n_samples=300, centers=[[3, 6], [7, 0]], random_state=0)
 
 X = np.concatenate([X_1, X_2], axis=0)
@@ -214,9 +214,8 @@ sns.scatterplot(
 _ = plt.title("Synthetic dataset")
 
 # %% [markdown]
-# We will first train a shallow decision tree with `max_depth=2`. We would
-# expect this depth to be enough to separate the blobs that are easy to
-# separate.
+# We first train a shallow decision tree with `max_depth=2`. We would expect
+# this depth to be enough to separate the blobs that are easy to separate.
 
 # %%
 max_depth = 2
@@ -228,7 +227,7 @@ _ = plt.title(f"Decision tree with max-depth of {max_depth}")
 
 # %% [markdown]
 # As expected, we see that the blue blob in the lower right and the red blob on
-# the top are easily separated. However, more splits will be required to better
+# the top are easily separated. However, more splits are required to better
 # split the blob were both blue and red data points are mixed.
 
 # %%
@@ -239,7 +238,7 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 
 # %% [markdown]
 # We see that the right branch achieves perfect classification. Now, we increase
-# the depth to check how the tree will grow.
+# the depth to check how the tree grows.
 
 # %%
 max_depth = 6
@@ -260,8 +259,8 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 # beneficial that a branch continue growing.
 #
 # The hyperparameters `min_samples_leaf`, `min_samples_split`, `max_leaf_nodes`,
-# or `min_impurity_decrease` allows growing asymmetric trees and apply a
-# constraint at the leaves or nodes level. We will check the effect of
+# or `min_impurity_decrease` allow growing asymmetric trees and apply a
+# constraint at the leaves or nodes level. We check the effect of
 # `min_samples_leaf`.
 
 # %%
@@ -280,5 +279,5 @@ _ = plot_tree(tree_clf, ax=ax, feature_names=data_clf_columns)
 
 # %% [markdown]
 # This hyperparameter allows to have leaves with a minimum number of samples and
-# no further splits will be searched otherwise. Therefore, these hyperparameters
+# no further splits are searched otherwise. Therefore, these hyperparameters
 # could be an alternative to fix the `max_depth` hyperparameter.

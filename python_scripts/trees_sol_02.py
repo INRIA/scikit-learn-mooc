@@ -132,7 +132,7 @@ _ = plt.title("Prediction of linear model and a decision tree")
 
 # %% [markdown] tags=["solution"]
 # The linear model extrapolates using the fitted model for flipper lengths < 175
-# mm and > 235 mm. In fact, we are using the model parametrization to make this
+# mm and > 235 mm. In fact, we are using the model parametrization to make these
 # predictions.
 #
 # As mentioned, decision trees are non-parametric models and we observe that

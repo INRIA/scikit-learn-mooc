@@ -31,9 +31,9 @@ target_name = "Body Mass (g)"
 data_train, target_train = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
-# To illustrate how decision trees are predicting in a regression setting, we
-# create a synthetic dataset containing all possible flipper length from the
-# minimum to the maximum of the original data.
+# To illustrate how decision trees predict in a regression setting, we create a
+# synthetic dataset containing some of the possible flipper length values
+# between the minimum and the maximum of the original data.
 
 # %%
 import numpy as np
@@ -55,7 +55,7 @@ data_test = pd.DataFrame(
 #
 # However, computing an evaluation metric on such a synthetic test set would be
 # meaningless since the synthetic dataset does not follow the same distribution
-# as the real world data on which the model is deployed.
+# as the real world data on which the model would be deployed.
 
 # %%
 import matplotlib.pyplot as plt
@@ -169,7 +169,7 @@ plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")
 
 # %% [markdown]
-# Increasing the depth of the tree increases the number of partition and thus
+# Increasing the depth of the tree increases the number of partitions and thus
 # the number of constant values that the tree is capable of predicting.
 #
 # In this notebook, we highlighted the differences in behavior of a decision

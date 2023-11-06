@@ -49,7 +49,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# We define a pipeline as seen in the first module. It handle both numerical and
+# We define a pipeline as seen in the first module, to handle both numerical and
 # categorical features.
 #
 # The first step is to select all the categorical columns.

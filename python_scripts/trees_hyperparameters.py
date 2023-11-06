@@ -136,7 +136,7 @@ _ = plt.title(f"Deep regression tree with max-depth of {max_depth}")
 # %% [markdown]
 # For both classification and regression setting, we observe that increasing the
 # depth makes the tree model more expressive. However, a tree that is too deep
-# overfits the training data, creating partitions which are only correct for
+# may overfit the training data, creating partitions which are only correct for
 # "outliers" (noisy samples). The `max_depth` is one of the hyperparameters that
 # one should optimize via cross-validation and grid-search.
 
@@ -172,7 +172,7 @@ _ = plt.title(
 #
 # The `max_depth` hyperparameter controls the overall complexity of the tree.
 # This parameter is adequate under the assumption that a tree is built
-# symmetrically. However, there is no guarantee that a tree is symmetrical.
+# symmetrically. However, there is no reason why a tree should be symmetrical.
 # Indeed, optimal generalization performance could be reached by growing some of
 # the branches deeper than some others.
 #
@@ -192,7 +192,7 @@ target_clf_column = "Class"
 X_1, y_1 = make_blobs(
     n_samples=300, centers=[[0, 0], [-1, -1]], random_state=0
 )
-# Blobs that are easily separated
+# Blobs that can be easily separated
 X_2, y_2 = make_blobs(n_samples=300, centers=[[3, 6], [7, 0]], random_state=0)
 
 X = np.concatenate([X_1, X_2], axis=0)

@@ -9,7 +9,7 @@
 # # Hyperparameter tuning by grid-search
 #
 # In the previous notebook, we saw that hyperparameters can affect the
-# generalization performance of a model. In this notebook, we will show how to
+# generalization performance of a model. In this notebook, we show how to
 # optimize hyperparameters using a grid-search approach.
 
 # %% [markdown]
@@ -49,8 +49,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# We will define a pipeline as seen in the first module. It will handle both
-# numerical and categorical features.
+# We define a pipeline as seen in the first module, to handle both numerical and
+# categorical features.
 #
 # The first step is to select all the categorical columns.
 
@@ -61,7 +61,7 @@ categorical_columns_selector = selector(dtype_include=object)
 categorical_columns = categorical_columns_selector(data)
 
 # %% [markdown]
-# Here we will use a tree-based model as a classifier (i.e.
+# Here we use a tree-based model as a classifier (i.e.
 # `HistGradientBoostingClassifier`). That means:
 #
 # * Numerical variables don't need scaling;
@@ -119,8 +119,8 @@ model
 # code.
 #
 # Let's see how to use the `GridSearchCV` estimator for doing such search. Since
-# the grid-search will be costly, we will only explore the combination
-# learning-rate and the maximum number of nodes.
+# the grid-search is costly, we only explore the combination learning-rate and
+# the maximum number of nodes.
 
 # %%
 # %%time
@@ -134,7 +134,7 @@ model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=2, cv=2)
 model_grid_search.fit(data_train, target_train)
 
 # %% [markdown]
-# Finally, we will check the accuracy of our model using the test set.
+# Finally, we check the accuracy of our model using the test set.
 
 # %%
 accuracy = model_grid_search.score(data_test, target_test)
@@ -155,17 +155,17 @@ print(
 
 # %% [markdown]
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines all
-# hyperparameters and their associated values. The grid-search will be in charge
+# hyperparameters and their associated values. The grid-search is in charge
 # of creating all possible combinations and test them.
 #
-# The number of combinations will be equal to the product of the number of
-# values to explore for each parameter (e.g. in our example 4 x 3 combinations).
-# Thus, adding new parameters with their associated values to be explored become
+# The number of combinations are equal to the product of the number of values to
+# explore for each parameter (e.g. in our example 4 x 3 combinations). Thus,
+# adding new parameters with their associated values to be explored become
 # rapidly computationally expensive.
 #
 # Once the grid-search is fitted, it can be used as any other predictor by
-# calling `predict` and `predict_proba`. Internally, it will use the model with
-# the best parameters found during `fit`.
+# calling `predict` and `predict_proba`. Internally, it uses the model with the
+# best parameters found during `fit`.
 #
 # Get predictions for the 5 first samples using the estimator with the best
 # parameters.
@@ -186,8 +186,8 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 # parameters "by hand" through a double for loop.
 #
 # In addition, we can inspect all results which are stored in the attribute
-# `cv_results_` of the grid-search. We will filter some specific columns from
-# these results.
+# `cv_results_` of the grid-search. We filter some specific columns from these
+# results.
 
 # %%
 cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
@@ -220,9 +220,9 @@ cv_results
 # With only 2 parameters, we might want to visualize the grid-search as a
 # heatmap. We need to transform our `cv_results` into a dataframe where:
 #
-# - the rows will correspond to the learning-rate values;
-# - the columns will correspond to the maximum number of leaf;
-# - the content of the dataframe will be the mean test scores.
+# - the rows correspond to the learning-rate values;
+# - the columns correspond to the maximum number of leaf;
+# - the content of the dataframe is the mean test scores.
 
 # %%
 pivoted_cv_results = cv_results.pivot_table(
@@ -259,7 +259,7 @@ ax.invert_yaxis()
 #
 # The precise meaning of those two parameters will be explained later.
 #
-# For now we will note that, in general, **there is no unique optimal parameter
+# For now we note that, in general, **there is no unique optimal parameter
 # setting**: 4 models out of the 12 parameter configurations reach the maximal
 # accuracy (up to small random fluctuations caused by the sampling of the
 # training set).

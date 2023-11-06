@@ -23,8 +23,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# In this exercise, we will progressively define the regression pipeline and
-# later tune its hyperparameters.
+# In this exercise, we progressively define the regression pipeline and later
+# tune its hyperparameters.
 #
 # Start by defining a pipeline that:
 # * uses a `StandardScaler` to normalize the numerical data;
@@ -108,8 +108,8 @@ import pandas as pd
 cv_results = pd.DataFrame(model_random_search.cv_results_)
 
 # %% [markdown] tags=["solution"]
-# To simplify the axis of the plot, we will rename the column of the dataframe
-# and only select the mean test score and the value of the hyperparameters.
+# To simplify the axis of the plot, we rename the column of the dataframe and
+# only select the mean test score and the value of the hyperparameters.
 
 # %% tags=["solution"]
 column_name_mapping = {
@@ -170,7 +170,7 @@ fig.show()
 # vary between 0 and 10,000 (e.g. the variable `"Population"`) and B is a
 # feature that varies between 1 and 10 (e.g. the variable `"AveRooms"`), then
 # distances between samples (rows of the dataframe) are mostly impacted by
-# differences in values of the column A, while values of the column B will be
+# differences in values of the column A, while values of the column B are
 # comparatively ignored. If one applies StandardScaler to such a database, both
 # the values of A and B will be approximately between -3 and 3 and the neighbor
 # structure will be impacted more or less equivalently by both variables.

@@ -14,7 +14,7 @@
 # By extrapolation, we refer to values predicted by a model outside of the range
 # of feature values seen during the training.
 #
-# We will first load the regression data.
+# We first load the regression data.
 
 # %%
 import pandas as pd
@@ -92,10 +92,10 @@ _ = plt.title("Prediction of linear model and a decision tree")
 # interpolate.
 
 # %% [markdown]
-# Now, we will check the extrapolation capabilities of each model. Create a
-# dataset containing a broader range of values than your previous dataset, in
-# other words, add values below and above the minimum and the maximum of the
-# flipper length seen during training.
+# Now, we check the extrapolation capabilities of each model. Create a dataset
+# containing a broader range of values than your previous dataset, in other
+# words, add values below and above the minimum and the maximum of the flipper
+# length seen during training.
 
 # %%
 # solution
@@ -131,9 +131,9 @@ plt.legend()
 _ = plt.title("Prediction of linear model and a decision tree")
 
 # %% [markdown] tags=["solution"]
-# The linear model will extrapolate using the fitted model for flipper lengths <
-# 175 mm and > 235 mm. In fact, we are using the model parametrization to make
-# this predictions.
+# The linear model extrapolates using the fitted model for flipper lengths < 175
+# mm and > 235 mm. In fact, we are using the model parametrization to make these
+# predictions.
 #
 # As mentioned, decision trees are non-parametric models and we observe that
 # they cannot extrapolate. For flipper lengths below the minimum, the mass of

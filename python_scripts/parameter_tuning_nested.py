@@ -12,12 +12,12 @@
 # However, we did not present a proper framework to evaluate the tuned models.
 # Instead, we focused on the mechanism used to find the best set of parameters.
 #
-# In this notebook, we will reuse some knowledge presented in the module
-# "Selecting the best model" to show how to evaluate models where
-# hyperparameters need to be tuned.
+# In this notebook, we reuse some knowledge presented in the module "Selecting
+# the best model" to show how to evaluate models where hyperparameters need to
+# be tuned.
 #
-# Thus, we will first load the dataset and create the predictive model that we
-# want to optimize and later on, evaluate.
+# Thus, we first load the dataset and create the predictive model that we want
+# to optimize and later on, evaluate.
 #
 # ## Loading the dataset
 #
@@ -111,7 +111,7 @@ print(
 # ### With hyperparameter tuning
 #
 # As shown in the previous notebook, one can use a search strategy that uses
-# cross-validation to find the best set of parameters. Here, we will use a
+# cross-validation to find the best set of parameters. Here, we use a
 # grid-search strategy and reproduce the steps done in the previous notebook.
 #
 # First, we have to embed our model into a grid-search and specify the

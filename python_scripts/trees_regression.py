@@ -31,9 +31,9 @@ target_name = "Body Mass (g)"
 data_train, target_train = penguins[[feature_name]], penguins[target_name]
 
 # %% [markdown]
-# To illustrate how decision trees are predicting in a regression setting, we
-# will create a synthetic dataset containing all possible flipper length from
-# the minimum to the maximum of the original data.
+# To illustrate how decision trees predict in a regression setting, we create a
+# synthetic dataset containing some of the possible flipper length values
+# between the minimum and the maximum of the original data.
 
 # %%
 import numpy as np
@@ -53,9 +53,9 @@ data_test = pd.DataFrame(
 # some intuitive understanding on the shape of the decision function of the
 # learned decision trees.
 #
-# However computing an evaluation metric on such a synthetic test set would be
+# However, computing an evaluation metric on such a synthetic test set would be
 # meaningless since the synthetic dataset does not follow the same distribution
-# as the real world data on which the model will be deployed.
+# as the real world data on which the model would be deployed.
 
 # %%
 import matplotlib.pyplot as plt
@@ -67,7 +67,7 @@ sns.scatterplot(
 _ = plt.title("Illustration of the regression dataset used")
 
 # %% [markdown]
-# We will first illustrate the difference between a linear model and a decision
+# We first illustrate the difference between a linear model and a decision
 # tree.
 
 # %%
@@ -112,9 +112,8 @@ _ = plt.title("Prediction function using a LinearRegression")
 
 # %% [markdown]
 # Contrary to linear models, decision trees are non-parametric models: they do
-# not make assumptions about the way data is distributed. This will affect the
-# prediction scheme. Repeating the above experiment will highlight the
-# differences.
+# not make assumptions about the way data is distributed. This affects the
+# prediction scheme. Repeating the above experiment highlights the differences.
 
 # %%
 from sklearn.tree import DecisionTreeRegressor
@@ -170,8 +169,8 @@ plt.legend()
 _ = plt.title("Prediction function using a DecisionTreeRegressor")
 
 # %% [markdown]
-# Increasing the depth of the tree will increase the number of partition and
-# thus the number of constant values that the tree is capable of predicting.
+# Increasing the depth of the tree increases the number of partitions and thus
+# the number of constant values that the tree is capable of predicting.
 #
 # In this notebook, we highlighted the differences in behavior of a decision
 # tree used in a classification problem in contrast to a regression problem.

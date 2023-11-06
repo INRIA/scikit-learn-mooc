@@ -15,7 +15,7 @@
 #
 # ## Classification dataset
 #
-# We will use this dataset in classification setting to predict the penguins'
+# We use this dataset in classification setting to predict the penguins'
 # species from anatomical information.
 #
 # Each penguin is from one of the three following species: Adelie, Gentoo, and
@@ -26,15 +26,15 @@
 # penguins](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png)
 #
 # This problem is a classification problem since the target is categorical. We
-# will limit our input data to a subset of the original features to simplify our
-# explanations when presenting the decision tree algorithm. Indeed, we will use
+# limit our input data to a subset of the original features to simplify our
+# explanations when presenting the decision tree algorithm. Indeed, we use
 # features based on penguins' culmen measurement. You can learn more about the
 # penguins' culmen with the illustration below:
 #
 # ![Image of
 # culmen](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/culmen_depth.png)
 #
-# We will start by loading this subset of the dataset.
+# We start by loading this subset of the dataset.
 
 # %%
 import pandas as pd
@@ -73,11 +73,11 @@ pairplot_figure.fig.set_size_inches(9, 6.5)
 #
 # In a regression setting, the target is a continuous variable instead of
 # categories. Here, we use two features of the dataset to make such a problem:
-# the flipper length will be used as data and the body mass will be the target.
-# In short, we want to predict the body mass using the flipper length.
+# the flipper length is used as data and the body mass as the target. In short,
+# we want to predict the body mass using the flipper length.
 #
-# We will load the dataset and visualize the relationship between the flipper
-# length and the body mass of penguins.
+# We load the dataset and visualize the relationship between the flipper length
+# and the body mass of penguins.
 
 # %%
 penguins = pd.read_csv("../datasets/penguins_regression.csv")

@@ -29,8 +29,8 @@ import pandas as pd
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We will first split our dataset to have the target separated from the data
-# used to train our predictive model.
+# We first split our dataset to have the target separated from the data used to
+# train our predictive model.
 
 # %%
 target_name = "class"
@@ -58,8 +58,8 @@ data_numeric_train, data_numeric_test, target_train, target_test = (
 )
 
 # %% [markdown]
-# Use a `DummyClassifier` such that the resulting classifier will always predict
-# the class `' >50K'`. What is the accuracy score on the test set? Repeat the
+# Use a `DummyClassifier` such that the resulting classifier always predict the
+# class `' >50K'`. What is the accuracy score on the test set? Repeat the
 # experiment by always predicting the class `' <=50K'`.
 #
 # Hint: you can set the `strategy` parameter of the `DummyClassifier` to achieve
@@ -79,8 +79,8 @@ print(f"Accuracy of a model predicting only high revenue: {score:.3f}")
 
 # %% [markdown] tags=["solution"]
 # We clearly see that the score is below 0.5 which might be surprising at first.
-# We will now check the generalization performance of a model which always
-# predict the low revenue class, i.e. `" <=50K"`.
+# We now check the generalization performance of a model which always predict
+# the low revenue class, i.e. `" <=50K"`.
 
 # %% tags=["solution"]
 class_to_predict = " <=50K"
@@ -97,7 +97,7 @@ print(f"Accuracy of a model predicting only low revenue: {score:.3f}")
 
 # %% [markdown] tags=["solution"]
 # Therefore, any predictive model giving results below this dummy classifier
-# will not be helpful.
+# would not be helpful.
 
 # %% tags=["solution"]
 adult_census["class"].value_counts()

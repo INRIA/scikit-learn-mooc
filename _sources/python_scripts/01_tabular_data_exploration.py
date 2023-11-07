@@ -8,8 +8,8 @@
 # %% [markdown]
 # # First look at our dataset
 #
-# In this notebook, we will look at the necessary steps required before any
-#  machine learning takes place. It involves:
+# In this notebook, we look at the necessary steps required before any machine
+#  learning takes place. It involves:
 #
 # * loading the data;
 # * looking at the variables in the dataset, in particular, differentiate
@@ -21,14 +21,14 @@
 # %% [markdown]
 # ## Loading the adult census dataset
 #
-# We will use data from the 1994 US census that we downloaded from
+# We use data from the 1994 US census that we downloaded from
 # [OpenML](http://openml.org/).
 #
 # You can look at the OpenML webpage to learn more about this dataset:
 # <http://www.openml.org/d/1590>
 #
-# The dataset is available as a CSV (Comma-Separated Values) file and we will
-# use `pandas` to read it.
+# The dataset is available as a CSV (Comma-Separated Values) file and we use
+# `pandas` to read it.
 #
 # ```{note}
 # [Pandas](https://pandas.pydata.org/) is a Python library used for
@@ -74,9 +74,9 @@ adult_census.head()
 # The column named **class** is our target variable (i.e., the variable which we
 # want to predict). The two possible classes are `<=50K` (low-revenue) and
 # `>50K` (high-revenue). The resulting prediction problem is therefore a binary
-# classification problem as `class` has only two possible values. We will use
-# the left-over columns (any column other than `class`) as input variables for
-# our model.
+# classification problem as `class` has only two possible values. We use the
+# left-over columns (any column other than `class`) as input variables for our
+# model.
 
 # %%
 target_column = "class"
@@ -90,7 +90,7 @@ adult_census[target_column].value_counts()
 # and may need special techniques when building a predictive model.
 #
 # For example in a medical setting, if we are trying to predict whether subjects
-# will develop a rare disease, there will be a lot more healthy subjects than
+# may develop a rare disease, there would be a lot more healthy subjects than
 # ill subjects in the dataset.
 # ```
 
@@ -247,8 +247,8 @@ pd.crosstab(
 # %%
 import seaborn as sns
 
-# We will plot a subset of the data to keep the plot readable and make the
-# plotting faster
+# We plot a subset of the data to keep the plot readable and make the plotting
+# faster
 n_samples_to_plot = 5000
 columns = ["age", "education-num", "hours-per-week"]
 _ = sns.pairplot(
@@ -320,12 +320,12 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 #   a mix of blue points and orange points. It seems complicated to choose which
 #   class we should predict in this region.
 #
-# It is interesting to note that some machine learning models will work
-# similarly to what we did: they are known as decision tree models. The two
-# thresholds that we chose (27 years and 40 hours) are somewhat arbitrary, i.e.
-# we chose them by only looking at the pairplot. In contrast, a decision tree
-# will choose the "best" splits based on data without human intervention or
-# inspection. Decision trees will be covered more in detail in a future module.
+# It is interesting to note that some machine learning models work similarly to
+# what we did: they are known as decision tree models. The two thresholds that
+# we chose (27 years and 40 hours) are somewhat arbitrary, i.e. we chose them by
+# only looking at the pairplot. In contrast, a decision tree chooses the "best"
+# splits based on data without human intervention or inspection. Decision trees
+# will be covered more in detail in a future module.
 #
 # Note that machine learning is often used when creating rules by hand is not
 # straightforward. For example because we are in high dimension (many features

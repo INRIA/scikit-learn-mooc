@@ -694,8 +694,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="preprocessing-for-numerical-features">
 <h1>Preprocessing for numerical features<a class="headerlink" href="#preprocessing-for-numerical-features" title="Permalink to this heading">#</a></h1>
-<p>In this notebook, we will still use only numerical features.</p>
-<p>We will introduce these new aspects:</p>
+<p>In this notebook, we still use numerical features only.</p>
+<p>Here we introduce these new aspects:</p>
 <ul class="simple">
 <li><p>an example of preprocessing, namely <strong>scaling numerical variables</strong>;</p></li>
 <li><p>using a scikit-learn <strong>pipeline</strong> to chain preprocessing and model training.</p></li>
@@ -712,8 +712,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>We will now drop the target from the data we will use to train our predictive
-model.</p>
+<p>We now drop the target from the data we use to train our predictive model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
@@ -847,7 +846,7 @@ dataset.</p>
 </div>
 <p>We see that the dataset’s features span across different ranges. Some
 algorithms make some assumptions regarding the feature distributions and
-usually normalizing features will be helpful to address these assumptions.</p>
+normalizing features is usually helpful to address such assumptions.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Here are some reasons for scaling features:</p>
@@ -863,11 +862,11 @@ faster when the features are scaled.</p></li>
 <p>Whether or not a machine learning model requires scaling the features depends
 on the model family. Linear models such as logistic regression generally
 benefit from scaling the features while other models such as decision trees do
-not need such preprocessing (but will not suffer from it).</p>
+not need such preprocessing (but would not suffer from it).</p>
 <p>We show how to apply such normalization using a scikit-learn transformer
 called <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. This transformer shifts and scales each feature
 individually so that they all have a 0-mean and a unit standard deviation.</p>
-<p>We will investigate different steps used in scikit-learn to achieve such a
+<p>We now investigate different steps used in scikit-learn to achieve such a
 transformation of the data.</p>
 <p>First, one needs to call the method <code class="docutils literal notranslate"><span class="pre">fit</span></code> in order to learn the scaling from
 the data.</p>
@@ -893,10 +892,10 @@ for each feature and store them into some NumPy arrays. Here, these statistics
 are the model states.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The fact that the model states of this scaler are arrays of means and
-standard deviations is specific to the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. Other
-scikit-learn transformers will compute different statistics and store them
-as model states, in the same fashion.</p>
+<p>The fact that the model states of this scaler are arrays of means and standard
+deviations is specific to the <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. Other scikit-learn
+transformers may compute different statistics and store them as model states,
+in a similar fashion.</p>
 </div>
 <p>We can inspect the computed means and standard deviations.</p>
 <div class="cell docutils container">
@@ -1129,7 +1128,7 @@ the data itself but the axes get shifted and scaled.</p>
 </div>
 <p>We can easily combine sequential operations with a scikit-learn <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>,
 which chains together operations and is used as any other classifier or
-regressor. The helper function <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> will create a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>: it
+regressor. The helper function <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> creates a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code>: it
 takes as arguments the successive transformations to perform, followed by the
 classifier or regressor model.</p>
 <div class="cell docutils container">
@@ -1150,8 +1149,8 @@ classifier or regressor model.</p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">make_pipeline</span></code> function did not require us to give a name to each step.
 Indeed, it was automatically assigned based on the name of the classes
-provided; a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> will be a step named <code class="docutils literal notranslate"><span class="pre">&quot;standardscaler&quot;</span></code> in the
-resulting pipeline. We can check the name of each steps of our model:</p>
+provided; a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> step is named <code class="docutils literal notranslate"><span class="pre">&quot;standardscaler&quot;</span></code> in the resulting
+pipeline. We can check the name of each steps of our model:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">named_steps</span>
@@ -1181,7 +1180,7 @@ resulting pipeline. We can check the name of each steps of our model:</p>
 the following diagram:</p>
 <p><img alt="pipeline fit diagram" src="../_images/api_diagram-pipeline.fit.svg" /></p>
 <p>When calling <code class="docutils literal notranslate"><span class="pre">model.fit</span></code>, the method <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> from each underlying
-transformer (here a single transformer) in the pipeline will be called to:</p>
+transformer (here a single transformer) in the pipeline is called to:</p>
 <ul class="simple">
 <li><p>learn their internal model states</p></li>
 <li><p>transform the training data. Finally, the preprocessed data are provided to
@@ -1207,7 +1206,7 @@ train the predictor.</p></li>
 called to preprocess the data. Note that there is no need to call the <code class="docutils literal notranslate"><span class="pre">fit</span></code>
 method for these transformers because we are using the internal model states
 computed when calling <code class="docutils literal notranslate"><span class="pre">model.fit</span></code>. The preprocessed data is then provided to
-the predictor that will output the predicted target by calling its method
+the predictor that outputs the predicted target by calling its method
 <code class="docutils literal notranslate"><span class="pre">predict</span></code>.</p>
 <p>As a shorthand, we can check the score of the full predictive pipeline calling
 the method <code class="docutils literal notranslate"><span class="pre">model.score</span></code>. Thus, let’s check the computational and

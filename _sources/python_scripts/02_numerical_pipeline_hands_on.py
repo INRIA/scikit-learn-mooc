@@ -21,8 +21,7 @@
 # * using a scikit-learn helper to separate data into train-test sets;
 # * training and evaluating a more complex scikit-learn model.
 #
-# We will start by loading the adult census dataset used during the data
-# exploration.
+# We start by loading the adult census dataset used during the data exploration.
 #
 # ## Loading the entire dataset
 #
@@ -70,12 +69,12 @@ target
 # numerical data usually requires very little work before getting started with
 # training.
 #
-# The first task here will be to identify numerical data in our dataset.
+# The first task here is to identify numerical data in our dataset.
 #
 # ```{caution}
-# Numerical data are represented with numbers, but numbers are not always
-# representing numerical data. Categories could already be encoded with
-# numbers and you will need to identify these features.
+# Numerical data are represented with numbers, but numbers do not always
+# represent numerical data. Categories could already be encoded with
+# numbers and you may need to identify these features.
 # ```
 #
 # Thus, we can check the data type for each of the column in the dataset.
@@ -123,7 +122,7 @@ data["age"].describe()
 # %% [markdown]
 # We can see the age varies between 17 and 90 years.
 #
-# We could extend our analysis and we will find that `"capital-gain"`,
+# We could extend our analysis and we would find that `"capital-gain"`,
 # `"capital-loss"`, and `"hours-per-week"` are also representing quantitative
 # data.
 #
@@ -162,7 +161,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 # %% [markdown]
 # When calling the function `train_test_split`, we specified that we would like
 # to have 25% of samples in the testing set while the remaining samples (75%)
-# will be available in the training set. We can check quickly if we got what we
+# are assigned to the training set. We can check quickly if we got what we
 # expected.
 
 # %%
@@ -182,8 +181,8 @@ print(
 # %% [markdown]
 # In the previous notebook, we used a k-nearest neighbors model. While this
 # model is intuitive to understand, it is not widely used in practice. Now, we
-# will use a more useful model, called a logistic regression, which belongs to
-# the linear models family.
+# use a more useful model, called a logistic regression, which belongs to the
+# linear models family.
 #
 # ```{note}
 # In short, linear models find a set of weights to combine features linearly
@@ -192,8 +191,8 @@ print(
 # * if `0.1 * age + 3.3 * hours-per-week - 15.1 > 0`, predict `high-income`
 # * otherwise predict `low-income`
 #
-# Linear models, and in particular the logistic regression, will be covered in
-# more details in the "Linear models" module later in this course. For now the
+# Linear models, and in particular the logistic regression, will be covered
+# more in detail in the "Linear models" module later in this course. For now the
 # focus is to use this logistic regression model in scikit-learn rather than
 # understand how it works in details.
 # ```

@@ -8,9 +8,9 @@
 # %% [markdown]
 # # Encoding of categorical variables
 #
-# In this notebook, we will present typical ways of dealing with
-# **categorical variables** by encoding them, namely **ordinal encoding** and
-# **one-hot encoding**.
+# In this notebook, we present some typical ways of dealing with **categorical
+# variables** by encoding them, namely **ordinal encoding** and **one-hot
+# encoding**.
 
 # %% [markdown]
 # Let's first load the entire adult dataset containing both numerical and
@@ -62,9 +62,9 @@ data.dtypes
 # ## Select features based on their data type
 #
 # In the previous notebook, we manually defined the numerical columns. We could
-# do a similar approach. Instead, we will use the scikit-learn helper function
-# `make_column_selector`, which allows us to select columns based on
-# their data type. We will illustrate how to use this helper.
+# do a similar approach. Instead, we can use the scikit-learn helper function
+# `make_column_selector`, which allows us to select columns based on their data
+# type. We now illustrate how to use this helper.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -97,9 +97,8 @@ print(f"The dataset is composed of {data_categorical.shape[1]} features")
 # ### Encoding ordinal categories
 #
 # The most intuitive strategy is to encode each category with a different
-# number. The `OrdinalEncoder` will transform the data in such manner.
-# We will start by encoding a single column to understand how the encoding
-# works.
+# number. The `OrdinalEncoder` transforms the data in such manner. We start by
+# encoding a single column to understand how the encoding works.
 
 # %%
 from sklearn.preprocessing import OrdinalEncoder
@@ -160,13 +159,13 @@ print(f"The dataset encoded contains {data_encoded.shape[1]} features")
 #
 # `OneHotEncoder` is an alternative encoder that prevents the downstream
 # models to make a false assumption about the ordering of categories. For a
-# given feature, it will create as many new columns as there are possible
+# given feature, it creates as many new columns as there are possible
 # categories. For a given sample, the value of the column corresponding to the
-# category will be set to `1` while all the columns of the other categories
-# will be set to `0`.
+# category is set to `1` while all the columns of the other categories
+# are set to `0`.
 #
-# We will start by encoding a single feature (e.g. `"education"`) to illustrate
-# how the encoding works.
+# We can encode a single feature (e.g. `"education"`) to illustrate how the
+# encoding works.
 
 # %%
 from sklearn.preprocessing import OneHotEncoder
@@ -187,7 +186,7 @@ education_encoded
 # ```
 
 # %% [markdown]
-# We see that encoding a single feature will give a dataframe full of zeros
+# We see that encoding a single feature gives a dataframe full of zeros
 # and ones. Each category (unique value) became a column; the encoding
 # returned, for each sample, a 1 to specify which category it belongs to.
 #
@@ -215,8 +214,8 @@ print(f"The encoded dataset contains {data_encoded.shape[1]} features")
 # %% [markdown]
 # ### Choosing an encoding strategy
 #
-# Choosing an encoding strategy will depend on the underlying models and the
-# type of categories (i.e. ordinal vs. nominal).
+# Choosing an encoding strategy depends on the underlying models and the type of
+# categories (i.e. ordinal vs. nominal).
 
 # %% [markdown]
 # ```{note}
@@ -226,12 +225,11 @@ print(f"The encoded dataset contains {data_encoded.shape[1]} features")
 # ```
 
 # %% [markdown]
-#
-# Using an `OrdinalEncoder` will output ordinal categories. This means
+# Using an `OrdinalEncoder` outputs ordinal categories. This means
 # that there is an order in the resulting categories (e.g. `0 < 1 < 2`). The
 # impact of violating this ordering assumption is really dependent on the
-# downstream models. Linear models will be impacted by misordered categories
-# while tree-based models will not.
+# downstream models. Linear models would be impacted by misordered categories
+# while tree-based models would not.
 #
 # You can still use an `OrdinalEncoder` with linear models but you need to be
 # sure that:
@@ -265,7 +263,7 @@ data["native-country"].value_counts()
 # We see that the `"Holand-Netherlands"` category is occurring rarely. This will
 # be a problem during cross-validation: if the sample ends up in the test set
 # during splitting then the classifier would not have seen the category during
-# training and will not be able to encode it.
+# training and would not be able to encode it.
 #
 # In scikit-learn, there are some possible solutions to bypass this issue:
 #
@@ -289,9 +287,9 @@ data["native-country"].value_counts()
 # ```{tip}
 # Be aware the `OrdinalEncoder` exposes a parameter also named `handle_unknown`.
 # It can be set to `use_encoded_value`. If that option is chosen, you can define
-# a fixed value to which all unknowns will be set to during `transform`. For
-# example, `OrdinalEncoder(handle_unknown='use_encoded_value',
-# unknown_value=42)` will set all values encountered during `transform` to `42`
+# a fixed value that is assigned to all unknown categories during `transform`.
+# For example, `OrdinalEncoder(handle_unknown='use_encoded_value',
+# unknown_value=-1)` would set all values encountered during `transform` to `-1`
 # which are not part of the data encountered during the `fit` call. You are
 # going to use these parameters in the next exercise.
 # ```

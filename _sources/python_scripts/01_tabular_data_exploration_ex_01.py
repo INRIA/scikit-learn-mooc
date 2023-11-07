@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.15.2
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -59,5 +59,5 @@
 # Write your code here.
 
 # %% [markdown]
-# Looking at these distributions, how hard do you think it will be to classify
+# Looking at these distributions, how hard do you think it would be to classify
 # the penguins only using `"culmen depth"` and `"culmen length"`?

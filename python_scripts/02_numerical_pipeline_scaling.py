@@ -8,9 +8,9 @@
 # %% [markdown]
 # # Preprocessing for numerical features
 #
-# In this notebook, we will still use only numerical features.
+# In this notebook, we still use numerical features only.
 #
-# We will introduce these new aspects:
+# Here we introduce these new aspects:
 #
 # * an example of preprocessing, namely **scaling numerical variables**;
 # * using a scikit-learn **pipeline** to chain preprocessing and model training.
@@ -25,8 +25,7 @@ import pandas as pd
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We will now drop the target from the data we will use to train our predictive
-# model.
+# We now drop the target from the data we use to train our predictive model.
 
 # %%
 target_name = "class"
@@ -67,7 +66,7 @@ data_train.describe()
 # %% [markdown]
 # We see that the dataset's features span across different ranges. Some
 # algorithms make some assumptions regarding the feature distributions and
-# usually normalizing features will be helpful to address these assumptions.
+# normalizing features is usually helpful to address such assumptions.
 #
 # ```{tip}
 # Here are some reasons for scaling features:
@@ -84,13 +83,13 @@ data_train.describe()
 # Whether or not a machine learning model requires scaling the features depends
 # on the model family. Linear models such as logistic regression generally
 # benefit from scaling the features while other models such as decision trees do
-# not need such preprocessing (but will not suffer from it).
+# not need such preprocessing (but would not suffer from it).
 #
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer shifts and scales each feature
 # individually so that they all have a 0-mean and a unit standard deviation.
 #
-# We will investigate different steps used in scikit-learn to achieve such a
+# We now investigate different steps used in scikit-learn to achieve such a
 # transformation of the data.
 #
 # First, one needs to call the method `fit` in order to learn the scaling from
@@ -115,10 +114,10 @@ scaler.fit(data_train)
 # are the model states.
 #
 # ```{note}
-# The fact that the model states of this scaler are arrays of means and
-# standard deviations is specific to the `StandardScaler`. Other
-# scikit-learn transformers will compute different statistics and store them
-# as model states, in the same fashion.
+# The fact that the model states of this scaler are arrays of means and standard
+# deviations is specific to the `StandardScaler`. Other scikit-learn
+# transformers may compute different statistics and store them as model states,
+# in a similar fashion.
 # ```
 #
 # We can inspect the computed means and standard deviations.
@@ -225,7 +224,7 @@ _ = plt.suptitle(
 # %% [markdown]
 # We can easily combine sequential operations with a scikit-learn `Pipeline`,
 # which chains together operations and is used as any other classifier or
-# regressor. The helper function `make_pipeline` will create a `Pipeline`: it
+# regressor. The helper function `make_pipeline` creates a `Pipeline`: it
 # takes as arguments the successive transformations to perform, followed by the
 # classifier or regressor model.
 
@@ -240,8 +239,8 @@ model
 # %% [markdown]
 # The `make_pipeline` function did not require us to give a name to each step.
 # Indeed, it was automatically assigned based on the name of the classes
-# provided; a `StandardScaler` will be a step named `"standardscaler"` in the
-# resulting pipeline. We can check the name of each steps of our model:
+# provided; a `StandardScaler` step is named `"standardscaler"` in the resulting
+# pipeline. We can check the name of each steps of our model:
 
 # %%
 model.named_steps
@@ -263,7 +262,7 @@ elapsed_time = time.time() - start
 # ![pipeline fit diagram](../figures/api_diagram-pipeline.fit.svg)
 #
 # When calling `model.fit`, the method `fit_transform` from each underlying
-# transformer (here a single transformer) in the pipeline will be called to:
+# transformer (here a single transformer) in the pipeline is called to:
 #
 # - learn their internal model states
 # - transform the training data. Finally, the preprocessed data are provided to
@@ -284,7 +283,7 @@ predicted_target[:5]
 # called to preprocess the data. Note that there is no need to call the `fit`
 # method for these transformers because we are using the internal model states
 # computed when calling `model.fit`. The preprocessed data is then provided to
-# the predictor that will output the predicted target by calling its method
+# the predictor that outputs the predicted target by calling its method
 # `predict`.
 #
 # As a shorthand, we can check the score of the full predictive pipeline calling

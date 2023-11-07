@@ -33,9 +33,8 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 # %% [markdown]
 # In the previous notebook, we used `sklearn.compose.make_column_selector` to
 # automatically select columns with a specific data type (also called `dtype`).
-# Here, we will use this selector to get only the columns containing strings
-# (column with `object` dtype) that correspond to categorical features in our
-# dataset.
+# Here, we use this selector to get only the columns containing strings (column
+# with `object` dtype) that correspond to categorical features in our dataset.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -71,11 +70,11 @@ model = make_pipeline(
 #
 # ```{note}
 # Be aware that if an error happened during the cross-validation,
-# `cross_validate` will raise a warning and return NaN (Not a Number) as scores.
+# `cross_validate` would raise a warning and return NaN (Not a Number) as scores.
 # To make it raise a standard Python exception with a traceback, you can pass
 # the `error_score="raise"` argument in the call to `cross_validate`. An
-# exception will be raised instead of a warning at the first encountered problem
-# and `cross_validate` will stop right away instead of returning NaN values.
+# exception would be raised instead of a warning at the first encountered problem
+# and `cross_validate` would stop right away instead of returning NaN values.
 # This is particularly handy when developing complex machine learning pipelines.
 # ```
 
@@ -114,8 +113,8 @@ print(
 
 # %% [markdown]
 # Now, we would like to compare the generalization performance of our previous
-# model with a new model where instead of using an `OrdinalEncoder`, we will use
-# a `OneHotEncoder`. Repeat the model evaluation using cross-validation. Compare
+# model with a new model where instead of using an `OrdinalEncoder`, we use a
+# `OneHotEncoder`. Repeat the model evaluation using cross-validation. Compare
 # the score of both models and conclude on the impact of choosing a specific
 # encoding strategy when using a linear model.
 
@@ -139,4 +138,4 @@ print(
 #
 # The important message here is: linear model and `OrdinalEncoder` are used
 # together only for ordinal categorical features, i.e. features that have a
-# specific ordering. Otherwise, your model will perform poorly.
+# specific ordering. Otherwise, your model would perform poorly.

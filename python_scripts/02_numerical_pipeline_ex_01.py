@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.15.2
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -35,8 +35,8 @@ import pandas as pd
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 
 # %% [markdown]
-# We will first split our dataset to have the target separated from the data
-# used to train our predictive model.
+# We first split our dataset to have the target separated from the data used to
+# train our predictive model.
 
 # %%
 target_name = "class"
@@ -61,8 +61,8 @@ from sklearn.model_selection import train_test_split
 # Write your code here.
 
 # %% [markdown]
-# Use a `DummyClassifier` such that the resulting classifier will always predict
-# the class `' >50K'`. What is the accuracy score on the test set? Repeat the
+# Use a `DummyClassifier` such that the resulting classifier always predict the
+# class `' >50K'`. What is the accuracy score on the test set? Repeat the
 # experiment by always predicting the class `' <=50K'`.
 #
 # Hint: you can set the `strategy` parameter of the `DummyClassifier` to achieve

@@ -32,11 +32,12 @@ target = adult_census["class"]
 # number of neighbors we are going to use to make a prediction for a new data
 # point.
 #
-# What is the default value of the `n_neighbors` parameter? Hint: Look at the
-# documentation on the [scikit-learn
+# What is the default value of the `n_neighbors` parameter?
+#
+# **Hint**: Look at the documentation on the [scikit-learn
 # website](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html)
 # or directly access the description inside your notebook by running the
-# following cell. This will open a pager pointing to the documentation.
+# following cell. This opens a pager pointing to the documentation.
 
 # %%
 from sklearn.neighbors import KNeighborsClassifier

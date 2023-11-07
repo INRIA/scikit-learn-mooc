@@ -19,8 +19,8 @@
 # ## First we load the dataset
 
 # %% [markdown]
-# We need to define our data and target. In this case we will build a
-# classification model
+# We need to define our data and target. In this case we build a classification
+# model
 
 # %%
 import pandas as pd

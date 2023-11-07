@@ -8,12 +8,12 @@
 # %% [markdown]
 # # Using numerical and categorical variables together
 #
-# In the previous notebooks, we showed the required preprocessing to apply
-# when dealing with numerical and categorical variables. However, we decoupled
-# the process to treat each type individually. In this notebook, we will show
-# how to combine these preprocessing steps.
+# In the previous notebooks, we showed the required preprocessing to apply when
+# dealing with numerical and categorical variables. However, we decoupled the
+# process to treat each type individually. In this notebook, we show how to
+# combine these preprocessing steps.
 #
-# We will first load the entire adult census dataset.
+# We first load the entire adult census dataset.
 
 # %%
 import pandas as pd
@@ -30,10 +30,10 @@ data = adult_census.drop(columns=[target_name])
 # %% [markdown]
 # ## Selection based on data types
 #
-# We will separate categorical and numerical variables using their data
-# types to identify them, as we saw previously that `object` corresponds
-# to categorical columns (strings). We make use of `make_column_selector`
-# helper to select the corresponding columns.
+# We separate categorical and numerical variables using their data types to
+# identify them, as we saw previously that `object` corresponds to categorical
+# columns (strings). We make use of `make_column_selector` helper to select the
+# corresponding columns.
 
 # %%
 from sklearn.compose import make_column_selector as selector
@@ -62,14 +62,14 @@ categorical_columns = categorical_columns_selector(data)
 # In the previous sections, we saw that we need to treat data differently
 # depending on their nature (i.e. numerical or categorical).
 #
-# Scikit-learn provides a `ColumnTransformer` class which will send specific
+# Scikit-learn provides a `ColumnTransformer` class which sends specific
 # columns to a specific transformer, making it easy to fit a single predictive
 # model on a dataset that combines both kinds of variables together
 # (heterogeneously typed tabular data).
 #
 # We first define the columns depending on their data type:
 #
-# * **one-hot encoding** will be applied to categorical columns. Besides, we use
+# * **one-hot encoding** is applied to categorical columns. Besides, we use
 #   `handle_unknown="ignore"` to solve the potential issues due to rare
 #   categories.
 # * **numerical scaling** numerical features which will be standardized.
@@ -107,11 +107,11 @@ preprocessor = ColumnTransformer(
 # A `ColumnTransformer` does the following:
 #
 # * It **splits the columns** of the original dataset based on the column names
-#   or indices provided. We will obtain as many subsets as the number of
-#   transformers passed into the `ColumnTransformer`.
+#   or indices provided. We obtain as many subsets as the number of transformers
+#   passed into the `ColumnTransformer`.
 # * It **transforms each subsets**. A specific transformer is applied to each
-#   subset: it will internally call `fit_transform` or `transform`. The output
-#   of this step is a set of transformed datasets.
+#   subset: it internally calls `fit_transform` or `transform`. The output of
+#   this step is a set of transformed datasets.
 # * It then **concatenates the transformed datasets** into a single dataset.
 
 # The important thing is that `ColumnTransformer` is like any other scikit-learn
@@ -161,7 +161,7 @@ _ = model.fit(data_train, target_train)
 # %% [markdown]
 # Then, we can send the raw dataset straight to the pipeline. Indeed, we do not
 # need to make any manual preprocessing (calling the `transform` or
-# `fit_transform` methods) as it will be handled when calling the `predict`
+# `fit_transform` methods) as it is already handled when calling the `predict`
 # method. As an example, we predict on the five first samples from the test set.
 
 # %%
@@ -212,10 +212,10 @@ print(
 #
 # However, it is often useful to check whether more complex models such as an
 # ensemble of decision trees can lead to higher predictive performance. In this
-# section we will use such a model called **gradient-boosting trees** and
-# evaluate its generalization performance. More precisely, the scikit-learn
-# model we will use is called `HistGradientBoostingClassifier`. Note that
-# boosting models will be covered in more detail in a future module.
+# section we use such a model called **gradient-boosting trees** and evaluate
+# its generalization performance. More precisely, the scikit-learn model we use
+# is called `HistGradientBoostingClassifier`. Note that boosting models will be
+# covered in more detail in a future module.
 #
 # For tree-based models, the handling of numerical and categorical variables is
 # simpler than for linear models:

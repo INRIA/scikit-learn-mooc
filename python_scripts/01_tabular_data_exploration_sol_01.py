@@ -78,7 +78,7 @@ pairplot_figure = seaborn.pairplot(penguins, hue="Species")
 pairplot_figure = seaborn.pairplot(penguins, hue="Species", height=4)
 
 # %% [markdown]
-# Looking at these distributions, how hard do you think it will be to classify
+# Looking at these distributions, how hard do you think it would be to classify
 # the penguins only using `"culmen depth"` and `"culmen length"`?
 
 # %% [markdown] tags=["solution"]

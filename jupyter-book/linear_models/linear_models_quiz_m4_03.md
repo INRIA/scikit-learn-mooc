@@ -80,6 +80,18 @@ _Select all answers that apply_
 +++
 
 ```{admonition} Question
+By default, a [`LogisticRegression`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) in scikit-learn applies:
+
+- a) no penalty
+- b) a penalty that shrinks the magnitude of the weights towards zero (also called "l2 penalty")
+- c) a penalty that ensures all weights are equal
+
+_Select a single answer_
+```
+
++++
+
+```{admonition} Question
 The parameter `C` in a logistic regression is:
 
 - a) similar to the parameter `alpha` in a ridge regressor

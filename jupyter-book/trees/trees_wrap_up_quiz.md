@@ -7,7 +7,10 @@ Open the dataset `ames_housing_no_missing.csv` with the following command:
 ```python
 import pandas as pd
 
-ames_housing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
+ames_housing = pd.read_csv(
+    "../datasets/ames_housing_no_missing.csv",
+    na_filter=False,  # required for pandas>2.0
+)
 target_name = "SalePrice"
 data = ames_housing.drop(columns=target_name)
 target = ames_housing[target_name]

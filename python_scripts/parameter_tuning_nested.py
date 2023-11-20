@@ -259,11 +259,11 @@ print(
 # This figure illustrates the nested cross-validation strategy using
 # `cv_inner = KFold(n_splits=4)` and `cv_outer = KFold(n_splits=5)`.
 #
-# For each inner cross-validation split (indexed on the left-hand side),
+# For each inner cross-validation split (indexed on the right-hand side),
 # the procedure trains a model on all the red samples and evaluate the quality
 # of the hyperparameters on the green samples.
 #
-# For each outer cross-validation split (indexed on the right-hand side),
+# For each outer cross-validation split (indexed on the left-hand side),
 # the best hyper-parameters are selected based on the validation scores
 # (computed on the greed samples) and a model is refitted on the concatenation
 # of the red and green samples for that outer CV iteration.

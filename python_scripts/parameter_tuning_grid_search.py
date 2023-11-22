@@ -118,9 +118,15 @@ model
 # scikit-learn class that implements a very similar logic with less repetitive
 # code.
 #
-# Let's see how to use the `GridSearchCV` estimator for doing such search. Since
-# the grid-search is costly, we only explore the combination learning-rate and
-# the maximum number of nodes.
+# The `GridSearchCV` estimator takes a `param_grid` parameter which defines all
+# hyperparameters and their associated values. The grid-search is in charge of
+# creating all possible combinations and testing them.
+#
+# The number of combinations are equal to the product of the number of values to
+# explore for each parameter. Thus, adding new parameters with their associated
+# values to be explored rapidly becomes computationally expensive. Because of
+# that, here we only explore the combination learning-rate and the maximum
+# number of nodes for a total of 4 x 3 = 12 combinations.
 
 # %%
 # %%time
@@ -134,6 +140,24 @@ model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=2, cv=2)
 model_grid_search.fit(data_train, target_train)
 
 # %% [markdown]
+# You can access the best combination of hyperparameters found by the grid
+# search with the `best_params_` attribute.
+
+# %%
+print(f"The best set of parameters is: {model_grid_search.best_params_}")
+
+# %%
+# Once the grid-search is fitted, it can be used as any other estimator, i.e. it
+# has a `predict` and `score` methods. Internally, it uses the model with the
+# best parameters found during `fit`.
+#
+# Let's get the predictions for the 5 first samples using the estimator with the
+# best parameters:
+
+# %%
+model_grid_search.predict(data_test.iloc[0:5])
+
+# %% [markdown]
 # Finally, we check the accuracy of our model using the test set.
 
 # %%
@@ -143,44 +167,33 @@ print(
 )
 
 # %% [markdown]
-# ```{warning}
-# Be aware that the evaluation should normally be performed through
-# cross-validation by providing `model_grid_search` as a model to the
-# `cross_validate` function.
+# In the code above, the selection of the best hyperparameters was done only on
+# the train set from the initial train-test split. Then, we evaluated the
+# generalization performance of our tuned model on the left out test set. This
+# can be shown schematically as follows
 #
-# Here, we used a single train-test split to to evaluate `model_grid_search`. In
-# a future notebook will go into more detail about nested cross-validation, when
-# you use cross-validation both for hyperparameter tuning and model evaluation.
+# ![Cross-validation tuning
+# diagram](../figures/cross_validation_train_test_diagram.png)
+#
+# ```{note}
+# This figure shows the particular case of **K-fold** cross-validation strategy
+# using `n_splits=5` to further split the train set coming from a train-test
+# split. For each cross-validation split, the procedure trains a model on all
+# the red samples, evaluates the score of a given set of hyperparameters on the
+# green samples. The best hyper-parameters are selected based on those
+# intermediate scores.
+#
+# Then a final model tuned with those hyper-parameters is fitted on the
+# concatenation of the red and green samples and evaluated on the blue samples.
+#
+# The green samples are sometimes called a **validation sets** to differentiate
+# them from the final test set in blue.
 # ```
-
-# %% [markdown]
-# The `GridSearchCV` estimator takes a `param_grid` parameter which defines all
-# hyperparameters and their associated values. The grid-search is in charge
-# of creating all possible combinations and test them.
 #
-# The number of combinations are equal to the product of the number of values to
-# explore for each parameter (e.g. in our example 4 x 3 combinations). Thus,
-# adding new parameters with their associated values to be explored become
-# rapidly computationally expensive.
+# In a future notebook we will introduce the notion of nested cross-validation,
+# which is when you use cross-validation both for hyperparameter tuning and
+# model evaluation.
 #
-# Once the grid-search is fitted, it can be used as any other predictor by
-# calling `predict` and `predict_proba`. Internally, it uses the model with the
-# best parameters found during `fit`.
-#
-# Get predictions for the 5 first samples using the estimator with the best
-# parameters.
-
-# %%
-model_grid_search.predict(data_test.iloc[0:5])
-
-# %% [markdown]
-# You can know about these parameters by looking at the `best_params_`
-# attribute.
-
-# %%
-print(f"The best set of parameters is: {model_grid_search.best_params_}")
-
-# %% [markdown]
 # The accuracy and the best parameters of the grid-searched pipeline are similar
 # to the ones we found in the previous exercise, where we searched the best
 # parameters "by hand" through a double for loop.

@@ -124,8 +124,8 @@ scores.set_index("loss")
 
 # %% [markdown] tags=["solution"]
 # Even if the score distributions overlap due to the presence of outliers in the
-# dataset, it is true that the average MSE is lower when `loss="squared_error`,
-# whereas the average MAE is lower when `loss="absolute_error` as expected.
+# dataset, it is true that the average MSE is lower when `loss="squared_error"`,
+# whereas the average MAE is lower when `loss="absolute_error"` as expected.
 # Indeed, the choice of a loss function is made depending on the evaluation
 # metric that we want to optimize for a given use case.
 #

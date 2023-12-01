@@ -35,7 +35,7 @@ quizzes:
 	python build_tools/generate-quizzes.py $(GITLAB_REPO_JUPYTERBOOK_DIR) $(JUPYTER_BOOK_DIR)
 
 full-index:
-	python build_tools/generate-md-index.py
+	python build_tools/generate-index.py
 
 $(JUPYTER_BOOK_DIR):
 	jupyter-book build $(JUPYTER_BOOK_DIR)

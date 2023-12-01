@@ -9,14 +9,20 @@ import jupytext
 
 from sphinx_external_toc.parsing import parse_toc_yaml
 
-from myst_parser.main import to_tokens
+from markdown_it.renderer import RendererHTML
+
+from myst_parser.config.main import MdParserConfig
+from myst_parser.parsers.mdit import create_md_parser
+
 
 # This hard-code the git repo root directory relative to this script
 root_dir = Path(__file__).parents[1]
 
 
 def get_first_title_from_md_str(md_str):
-    tokens = to_tokens(md_str)
+    parser = create_md_parser(MdParserConfig(), RendererHTML)
+    tokens = parser.parse(md_str)
+
     is_title_token = False
     for t in tokens:
         if is_title_token:

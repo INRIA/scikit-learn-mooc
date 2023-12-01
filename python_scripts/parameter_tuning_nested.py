@@ -265,7 +265,7 @@ print(
 #
 # For each outer cross-validation split (indexed on the left-hand side),
 # the best hyper-parameters are selected based on the validation scores
-# (computed on the greed samples) and a model is refitted on the concatenation
+# (computed on the green samples) and a model is refitted on the concatenation
 # of the red and green samples for that outer CV iteration.
 #
 # The generalization performance of the 5 refitted models from the outer CV

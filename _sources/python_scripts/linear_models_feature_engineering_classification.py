@@ -350,10 +350,10 @@ plot_decision_boundary(classifier, title="Polynomial Nystroem classifier")
 
 # %% [markdown]
 #
-# The polynomial kernel approach would be interesting in cases were the
+# The polynomial kernel approach would be interesting in cases where the
 # original feature space is already of high dimension: in these cases,
 # **computing the complete polynomial expansion** with `PolynomialFeatures`
-# could be **intractable**, while Nyström method can control the output
+# could be **intractable**, while the Nyström method can control the output
 # dimensionality with the `n_components` parameter.
 #
 # Let's now explore the use of a radial basis function (RBF) kernel:

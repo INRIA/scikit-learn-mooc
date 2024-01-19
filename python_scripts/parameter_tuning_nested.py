@@ -193,7 +193,26 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # In the code above, as in some previous notebooks, the selection of the best
 # hyperparameters was done only on the train set from the initial train-test
 # split. Then, we evaluated the generalization performance of our tuned model on
-# the left out test set.
+# the left out test set. This can be shown schematically as follows:
+#
+# ![Cross-validation tuning
+# diagram](../figures/cross_validation_train_test_diagram.png)
+#
+# ```{note}
+# This figure shows the particular case of **K-fold** cross-validation
+# strategy using `n_splits=5` to further split the train set coming from a
+# train-test split.
+# For each cross-validation split, the procedure trains a model on all the red
+# samples, evaluates the score of a given set of hyperparameters on the green
+# samples. The best hyper-parameters are selected based on those intermediate
+# scores.
+#
+# Then a final model tuned with those hyper-parameters is fitted on the
+# concatenation of the red and green samples and evaluated on the blue samples.
+#
+# The green samples are sometimes called a **validation sets** to differentiate
+# them from the final test set in blue.
+# ```
 #
 # However, this evaluation only provides us a single point estimate of the
 # generalization performance. As recalled at the beginning of this notebook, it

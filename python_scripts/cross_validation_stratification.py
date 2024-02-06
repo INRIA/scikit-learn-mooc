@@ -262,7 +262,7 @@ _ = plt.title("Test set")
 # metrics that depend on the proportion of the positive class, as we
 # will see in a future notebook.
 #
-# In conclusion, this is a good practice to use stratification within the
+# In conclusion, it is a good practice to use stratification within the
 # cross-validation framework when dealing with a classification problem,
 # especially for datasets with imbalanced classes or when the class distribution
 # is crucial for model evaluation. This approach provides a more realistic

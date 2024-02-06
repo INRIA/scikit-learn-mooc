@@ -36,10 +36,12 @@ from sklearn.pipeline import make_pipeline
 model = make_pipeline(StandardScaler(), LogisticRegression())
 
 # %% [markdown]
-# Once we created our model, we will use the cross-validation framework to
-# evaluate it. We will use the `KFold` cross-validation strategy. We will define
-# a dataset with nine samples and repeat the cross-validation three times (i.e.
-# `n_splits`).
+# Once the model is created, we can evaluate it using cross-validation. We start
+# by using the `KFold` strategy.
+#
+# We can quickly remind ourselves how this strategy works. For such purpose we
+# define a dataset with nine samples and repeat the cross-validation three times
+# (i.e. `n_splits=3`).
 
 # %%
 import numpy as np
@@ -51,9 +53,9 @@ for train_index, test_index in cv.split(data_random):
     print("TRAIN:", train_index, "TEST:", test_index)
 
 # %% [markdown]
-# By defining three splits, we will use three samples for testing and six for
-# training each time. `KFold` does not shuffle by default. It means that it will
-# select the three first samples for the testing set at the first split, then
+# By defining three splits, we use three samples for testing and six for
+# training each time. `KFold` does not shuffle by default. It means that the
+# three first samples are selected for the testing set at the first split, then
 # the three next three samples for the second split, and the three next for the
 # last split. In the end, all samples have been used in testing at least once
 # among the different splits.
@@ -73,8 +75,8 @@ print(
 
 # %% [markdown]
 # It is a real surprise that our model cannot correctly classify any sample in
-# any cross-validation split. We will now check our target's value to understand
-# the issue.
+# any cross-validation split. We now check our target's value to understand the
+# issue.
 
 # %%
 import matplotlib.pyplot as plt
@@ -86,18 +88,17 @@ plt.yticks(target.unique())
 _ = plt.title("Class value in target y")
 
 # %% [markdown]
-# We see that the target vector `target` is ordered. It will have some
-# unexpected consequences when using the `KFold` cross-validation. To illustrate
-# the consequences, we will show the class count in each fold of the
-# cross-validation in the train and test set.
+# We see that the target vector `target` is ordered. This has some unexpected
+# consequences when using the `KFold` cross-validation. To illustrate the
+# consequences, we show the class count in each fold of the cross-validation in
+# the train and test set.
 #
 # Let's compute the class counts for both the training and testing sets using
 # the `KFold` cross-validation, and plot these information in a bar plot.
 #
-# We will iterate given the number of split and check how many samples of each
-# are present in the training and testing set. We will store the information
-# into two distincts lists; one for the training set and one for the testing
-# set.
+# We iterate given the number of split and check how many samples of each are
+# present in the training and testing set. We then store the information into
+# two distincts lists; one for the training set and one for the testing set.
 
 # %%
 import pandas as pd
@@ -114,8 +115,8 @@ for fold_idx, (train_idx, test_idx) in enumerate(cv.split(data, target)):
     test_cv_counts.append(target_test.value_counts())
 
 # %% [markdown]
-# To plot the information on a single figure, we will concatenate the
-# information regarding the fold within the same dataset.
+# To plot the information on a single figure, we concatenate the information
+# regarding the fold within the same dataset.
 
 # %%
 train_cv_counts = pd.concat(
@@ -168,7 +169,7 @@ print(
 # 90%. Now that we solved our first issue, it would be interesting to check if
 # the class frequency in the training and testing set is equal to our original
 # set's class frequency. It would ensure that we are training and testing our
-# model with a class distribution that we will encounter in production.
+# model with a class distribution that we would encounter in production.
 
 # %%
 train_cv_counts = []
@@ -255,5 +256,14 @@ _ = plt.title("Test set")
 # train set and the test set. The difference is due to the small number of
 # samples in the iris dataset.
 #
+# In other words, `StratifiedKFold` maintains the original distribution of
+# classes in each fold, ensuring that each fold is a good representative of the
+# whole dataset. This can have a particular impact when using performance
+# metrics that depend on the proportion of the positive class, as we
+# will see in a future notebook.
+#
 # In conclusion, this is a good practice to use stratification within the
-# cross-validation framework when dealing with a classification problem.
+# cross-validation framework when dealing with a classification problem,
+# especially for datasets with imbalanced classes or when the class distribution
+# is crucial for model evaluation. This approach provides a more realistic
+# assessment of the model's ability to generalize across the entire dataset.

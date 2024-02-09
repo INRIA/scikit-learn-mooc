@@ -253,7 +253,7 @@ print(f"The encoded dataset contains {data_encoded.shape[1]} features")
 # and check the generalization performance of this machine learning pipeline using
 # cross-validation.
 #
-# Before we create the pipeline, we have to linger on the `native-country`.
+# Before we create the pipeline, we have to focus on the `native-country`.
 # Let's recall some statistics regarding this column.
 
 # %%

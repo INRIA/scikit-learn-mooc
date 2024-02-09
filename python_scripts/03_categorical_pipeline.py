@@ -329,9 +329,10 @@ scores = cv_results["test_score"]
 print(f"The accuracy is: {scores.mean():.3f} ± {scores.std():.3f}")
 
 # %% [markdown]
-# As you can see, this representation of the categorical variables is
-# slightly more predictive of the revenue than the numerical variables
-# that we used previously.
+# As you can see, this representation of the categorical variables is slightly
+# more predictive of the revenue than the numerical variables that we used
+# previously. The reason being that we have more (predictive) categorical
+# features than numerical ones.
 
 # %% [markdown]
 #

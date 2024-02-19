@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/matomo.js"></script>
     <script src="../_static/sklearn_mooc.js"></script>
+    <script src="../_static/matomo.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -723,6 +723,18 @@ categorical rather than continuous.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_5220/2402502265.py:1: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+</pre></div>
+</div>
+</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -741,7 +753,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/362d497ab8e983305948f7dcc86df648433e6333b165ebaeb6f52df564c525a8.png" src="../_images/362d497ab8e983305948f7dcc86df648433e6333b165ebaeb6f52df564c525a8.png" />
+<img alt="../_images/d7f3ed5728d2e3527b2a4ab73cbca9a3928eab2beb123f72b57e399cfb1cba3d.png" src="../_images/d7f3ed5728d2e3527b2a4ab73cbca9a3928eab2beb123f72b57e399cfb1cba3d.png" />
 </div>
 </div>
 <p>We can see that the vector <code class="docutils literal notranslate"><span class="pre">target</span></code> contains two classes corresponding to
@@ -1334,7 +1346,7 @@ following cases:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12bfdf6536c99b0b618d6b39958e53530738503d9d4bb8c30acad6bc2776c68c.png" src="../_images/12bfdf6536c99b0b618d6b39958e53530738503d9d4bb8c30acad6bc2776c68c.png" />
+<img alt="../_images/7c07bf17a83b4335cb45f529765755a09d6b9f83f5f919faab708437310c4818.png" src="../_images/7c07bf17a83b4335cb45f529765755a09d6b9f83f5f919faab708437310c4818.png" />
 </div>
 </div>
 <p>The in-diagonal numbers are related to predictions that were correct while
@@ -1356,15 +1368,13 @@ generalization performance of our classifier in a particular setting. For
 instance, we could be interested in the fraction of people who really gave
 blood when the classifier predicted so or the fraction of people predicted to
 have given blood out of the total population that actually did so.</p>
-<p>The former metric, known as the precision, is defined as TP / (TP + FP) and
+<p>The former metric, known as the precision, is defined as <code class="docutils literal notranslate"><span class="pre">TP</span> <span class="pre">/</span> <span class="pre">(TP</span> <span class="pre">+</span> <span class="pre">FP)</span></code> and
 represents how likely the person actually gave blood when the classifier
-predicted that they did. The latter, known as the recall, defined as TP / (TP</p>
-<ul class="simple">
-<li><p>FN) and assesses how well the classifier is able to correctly identify
-people who did give blood. We could, similarly to accuracy, manually compute
-these values, however scikit-learn provides functions to compute these
-statistics.</p></li>
-</ul>
+predicted that they did. The latter, known as the recall, defined as
+<code class="docutils literal notranslate"><span class="pre">TP</span> <span class="pre">/</span> <span class="pre">(TP</span> <span class="pre">+</span> <span class="pre">FN)</span></code> and assesses how well the classifier is able to correctly
+identify people who did give blood. We could, similarly to accuracy,
+manually compute these values, however scikit-learn provides functions to
+compute these statistics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
@@ -1407,7 +1417,7 @@ set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3796be13725a9814098c7f8866290c62fdbcfaeb592162fd58a032e20e641cd5.png" src="../_images/3796be13725a9814098c7f8866290c62fdbcfaeb592162fd58a032e20e641cd5.png" />
+<img alt="../_images/8e9065264f135ed61386b01e64c865e8c19c9cb1208ed8f0fdf73fe9967cf02f.png" src="../_images/8e9065264f135ed61386b01e64c865e8c19c9cb1208ed8f0fdf73fe9967cf02f.png" />
 </div>
 </div>
 <p>We observe that the positive class, <code class="docutils literal notranslate"><span class="pre">'donated'</span></code>, comprises only 24% of the
@@ -1593,7 +1603,7 @@ threshold. Let’s start by computing the precision-recall curve.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/cbac3b0d9240fb8c3b38b62c8599f6bc1206461158eafb6c299ddab07a54e1cd.png" src="../_images/cbac3b0d9240fb8c3b38b62c8599f6bc1206461158eafb6c299ddab07a54e1cd.png" />
+<img alt="../_images/53f91f8f5c00a55c56f8eb59d512b5683775ddb68aa01a36b33522ae9652aa8b.png" src="../_images/53f91f8f5c00a55c56f8eb59d512b5683775ddb68aa01a36b33522ae9652aa8b.png" />
 </div>
 </div>
 <div class="admonition tip">
@@ -1626,7 +1636,7 @@ of the positive class).</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prevalence of the class &#39;donated&#39;: 0.24
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_5238/2781295333.py:1: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_5220/2781295333.py:1: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   prevalence = target_test.value_counts()[1] / target_test.value_counts().sum()
 </pre></div>
 </div>
@@ -1667,7 +1677,7 @@ generally plotted as a curve called the Receiver Operating Characteristic
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/95915e631ad64b045e6118affa567e5e066da4f68f8d565b34bc97d7bfd4b2b9.png" src="../_images/95915e631ad64b045e6118affa567e5e066da4f68f8d565b34bc97d7bfd4b2b9.png" />
+<img alt="../_images/1507332c4910d9647986bd0d776720980488aed1350562ffe4be189ac79cddcf.png" src="../_images/1507332c4910d9647986bd0d776720980488aed1350562ffe4be189ac79cddcf.png" />
 </div>
 </div>
 <p>This curve was built using the same principle as the precision-recall curve:
@@ -1710,7 +1720,7 @@ available in the ROC and PR displays:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b6bb6801ddc54a52a2a650992b4cf511c49eab5b819f6f16886d3d0135044ab1.png" src="../_images/b6bb6801ddc54a52a2a650992b4cf511c49eab5b819f6f16886d3d0135044ab1.png" />
+<img alt="../_images/c27fadda5f3981899cffcc928ebfac40b3f373106b0212c8a5f386fda8c70fcf.png" src="../_images/c27fadda5f3981899cffcc928ebfac40b3f373106b0212c8a5f386fda8c70fcf.png" />
 </div>
 </div>
 </section>

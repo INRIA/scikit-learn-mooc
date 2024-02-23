@@ -58,8 +58,12 @@ def plot_cv_indices(cv, X, y, ax, lw=50):
             Patch(color=cmap_cv(0.5)),
             Patch(color=cmap_cv(0.02)),
         ],
-        ["Testing samples", "Training samples", "Validation samples"],
-        loc=(1.02, 0.7),
+        [
+            "Testing samples\n(reserved for\nfinal evaluation)",
+            "Training samples",
+            "Validation samples",
+        ],
+        loc=(1.02, 0.5),
     )
     return ax
 
@@ -82,7 +86,6 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, ax, lw=50):
 
     # Generate the training/testing visualizations for each CV split
     for ii, (train_outer, test_outer) in enumerate(splits_outer):
-
         splits_inner = list(cv_inner.split(train_outer))
         n_splits_inner = len(splits_inner)
 
@@ -116,7 +119,7 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, ax, lw=50):
     )
     yticklabels = list(range(n_splits_outer))
     ax.set(
-        yticks=n_splits_inner*np.arange(n_splits_outer) + 0.5,
+        yticks=n_splits_inner * np.arange(n_splits_outer) + 0.5,
         yticklabels=yticklabels,
         xlabel="Sample index",
         ylabel="CV outer iteration",
@@ -129,8 +132,12 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, ax, lw=50):
             Patch(color=cmap_cv(0.5)),
             Patch(color=cmap_cv(0.02)),
         ],
-        ["Testing samples", "Training samples", "Validation samples"],
-        loc=(1.06, .93),
+        [
+            "Testing samples\n(reserved for\nouter evaluation)",
+            "Training samples",
+            "Validation samples",
+        ],
+        loc=(1.06, 0.85),
     )
     return ax
 

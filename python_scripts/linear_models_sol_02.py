@@ -46,7 +46,7 @@ penguins_non_missing = penguins[columns + [target_name]].dropna()
 
 data = penguins_non_missing[columns]
 target = penguins_non_missing[target_name]
-data.head()
+data
 
 # %% [markdown]
 # Now it is your turn to train a linear regression model on this dataset. First,

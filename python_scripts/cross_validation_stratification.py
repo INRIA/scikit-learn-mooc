@@ -54,7 +54,7 @@ for train_index, test_index in cv.split(data_random):
 # By defining three splits, we will use three samples for testing and six for
 # training each time. `KFold` does not shuffle by default. It means that it will
 # select the three first samples for the testing set at the first split, then
-# the three next three samples for the second split, and the three next for the
+# the next three samples for the second split, and the three next for the
 # last split. In the end, all samples have been used in testing at least once
 # among the different splits.
 #

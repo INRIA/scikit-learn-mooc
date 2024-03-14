@@ -78,7 +78,7 @@ classifier.fit(data_train, target_train)
 # predictions a classifier can provide.
 #
 # For this reason, we will create a synthetic sample for a new potential donor:
-# they donated blood twice in the past (1000 c.c. each time). The last time was
+# they donated blood twice in the past (1000 cm³ each time). The last time was
 # 6 months ago, and the first time goes back to 20 months ago.
 
 # %%

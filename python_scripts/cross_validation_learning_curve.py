@@ -13,7 +13,7 @@
 # generalizing. Besides these aspects, it is also important to understand how
 # the different errors are influenced by the number of samples available.
 #
-# In this notebook, we will show this aspect by looking a the variability of
+# In this notebook, we will show this aspect by looking at the variability of
 # the different errors.
 #
 # Let's first load the data and create the same model as in the previous

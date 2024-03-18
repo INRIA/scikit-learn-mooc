@@ -97,8 +97,9 @@ regressor.score(data_test, target_test)
 # %% [markdown]
 # The $R^2$ score represents the proportion of variance of the target that is
 # explained by the independent variables in the model. The best score possible
-# is 1 but there is no lower bound. However, a model that predicts the expected
-# value of the target would get a score of 0.
+# is 1 but there is no lower bound. However, a model that predicts the [expected
+# value](https://en.wikipedia.org/wiki/Expected_value) of the target would get a
+# score of 0.
 
 # %%
 from sklearn.dummy import DummyRegressor

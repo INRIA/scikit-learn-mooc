@@ -103,3 +103,10 @@ for tree_idx, predictions in enumerate(tree_predictions):
 
 plt.plot(data_range[feature_name], forest_predictions, label="Random forest")
 _ = plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+
+# %% [markdown] tags=["solution"]
+# The random forest reduces the overfitting of the individual trees but still
+# overfits itself. In the section on "hyperparameter tuning with ensemble
+# methods" we will see how to further mitigate this effect. Still, interested
+# users may increase the number of estimators in the forest and try different
+# values of, e.g., `min_samples_split`.

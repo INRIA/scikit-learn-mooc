@@ -34,7 +34,7 @@ import pandas as pd
 adult_census = pd.read_csv("../datasets/adult-census.csv")
 # drop the duplicated column `"education-num"` as stated in the first notebook
 adult_census = adult_census.drop(columns="education-num")
-adult_census.head()
+adult_census
 
 # %% [markdown]
 # The next step separates the target from the data. We performed the same
@@ -44,7 +44,7 @@ adult_census.head()
 data, target = adult_census.drop(columns="class"), adult_census["class"]
 
 # %%
-data.head()
+data
 
 # %%
 target
@@ -95,7 +95,7 @@ data.dtypes.unique()
 # the `object` data type.
 
 # %%
-data.head()
+data
 
 # %% [markdown]
 # We see that the `object` data type corresponds to columns containing strings.
@@ -105,7 +105,7 @@ data.head()
 
 # %%
 numerical_columns = ["age", "capital-gain", "capital-loss", "hours-per-week"]
-data[numerical_columns].head()
+data[numerical_columns]
 
 # %% [markdown]
 # Now that we limited the dataset to numerical columns only, we can analyse

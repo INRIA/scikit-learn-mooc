@@ -81,7 +81,7 @@ categorical_columns
 
 # %%
 data_categorical = data[categorical_columns]
-data_categorical.head()
+data_categorical
 
 # %%
 print(f"The dataset is composed of {data_categorical.shape[1]} features")
@@ -194,7 +194,7 @@ education_encoded
 
 # %%
 print(f"The dataset is composed of {data_categorical.shape[1]} features")
-data_categorical.head()
+data_categorical
 
 # %%
 data_encoded = encoder.fit_transform(data_categorical)

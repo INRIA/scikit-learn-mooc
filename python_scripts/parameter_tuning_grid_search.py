@@ -36,7 +36,7 @@ target
 
 # %%
 data = adult_census.drop(columns=[target_name, "education-num"])
-data.head()
+data
 
 # %% [markdown]
 # Once the dataset is loaded, we split it into a training and testing sets.
@@ -193,7 +193,7 @@ print(f"The best set of parameters is: {model_grid_search.best_params_}")
 cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
     "mean_test_score", ascending=False
 )
-cv_results.head()
+cv_results
 
 # %% [markdown]
 # Let us focus on the most interesting columns and shorten the parameter names

@@ -22,7 +22,7 @@
 import pandas as pd
 
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
-penguins.head()
+penguins
 
 # %% [markdown]
 # We aim to solve the following problem: using the flipper length of a penguin,

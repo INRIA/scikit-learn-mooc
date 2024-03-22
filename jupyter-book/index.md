@@ -36,8 +36,8 @@ interpreting their predictions.
       <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
         "Machine learning in Python with scikit-learn MOOC"
       </a>,
-      is available starting on November 8th, 2023 and will last for 3 months. Enroll for
-      the full MOOC experience (quiz solutions, executable notebooks, discussion
+      is available starting on November 8th, 2023 and will remain open in self-paced mode.
+      Enroll for the full MOOC experience (quiz solutions, executable notebooks, discussion
       forum, etc ...) !
       </br>
       The MOOC is free and the platform does not use the student data for any other purpose

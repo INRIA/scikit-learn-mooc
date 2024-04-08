@@ -1,29 +1,10 @@
 # scikit-learn course
-
-📢 📢 📢 A new session of the [Machine learning in Python with scikit-learn
-MOOC](https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn),
-is available starting on November 8th, 2023 and will remain open on self-paced
-mode. Enroll for the full MOOC experience (quizz solutions, executable
-notebooks, discussion forum, etc ...) !
-
-The MOOC is free and hosted on the [FUN-MOOC](https://fun-mooc.fr/) platform
-which does not use the student data for any other purpose than improving the
-educational material.
-
-The static version of the course can be browsed online: https://inria.github.io/scikit-learn-mooc
+This is the nlesc version of the sklearn course. It is based on https://inria.github.io/scikit-learn-mooc, but adapted for teaching at the escience center.
 
 ## Course description
 
 The course description can be found here:
 https://inria.github.io/scikit-learn-mooc/index.html
-
-## Follow the course online
-
-A few different ways are available:
-- Launch an online notebook environment using [![Binder](https://mybinder.org/badge_logo.svg)](
-  https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?filepath=full-index.ipynb)
-- Browse [website](https://inria.github.io/scikit-learn-mooc) generated with
-  [Jupyter Book](https://jupyterbook.org/)
 
 ## Running the notebooks locally
 
@@ -33,7 +14,7 @@ See instructions [here](./local-install-instructions.md)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## How to cite us
+## How to cite the original authors
 
 The MOOC material is developed publicly under the [CC-BY
 license](https://github.com/INRIA/scikit-learn-mooc/blob/main/LICENSE).

@@ -1,5 +1,0 @@
-# Nested cross-validation
-
-```{tableofcontents}
-
-```

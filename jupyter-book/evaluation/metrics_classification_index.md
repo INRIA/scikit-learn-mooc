@@ -1,5 +1,0 @@
-# Classification metrics
-
-```{tableofcontents}
-
-```

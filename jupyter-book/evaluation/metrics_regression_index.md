@@ -1,5 +1,0 @@
-# Regression metrics
-
-```{tableofcontents}
-
-```

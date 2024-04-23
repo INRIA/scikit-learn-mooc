@@ -222,3 +222,7 @@ _ = plt.title("Distribution of the test scores")
 # assessing a model’s ability to generalize to new groups. Without this
 # consideration, the results may appear overly optimistic compared to the actual
 # performance.
+#
+# The interested reader can learn about other group-aware cross-validation
+# techniques in the [scikit-learn user
+# guide](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data).

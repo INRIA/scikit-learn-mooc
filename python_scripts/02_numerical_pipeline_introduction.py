@@ -59,7 +59,7 @@ data = adult_census.drop(columns=[target_name])
 data
 
 # %% [markdown]
-# We can now linger on the variables, also denominated features, that we later
+# We can now focus on the variables, also denominated features, that we later
 # use to build our predictive model. In addition, we can also check how many
 # samples are available in our dataset.
 

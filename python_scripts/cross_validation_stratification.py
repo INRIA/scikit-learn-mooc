@@ -138,13 +138,13 @@ test_cv_counts
 train_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Training set")
+_ = plt.title("Training set class counts")
 
 # %%
 test_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Test set")
+_ = plt.title("Test set class counts")
 
 # %% [markdown]
 # We can confirm that in each fold, only two of the three classes are present in
@@ -191,13 +191,13 @@ test_cv_counts.index.name = "Class label"
 train_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Training set")
+_ = plt.title("Training set class counts\n(with suffling)")
 
 # %%
 test_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Test set")
+_ = plt.title("Test set class counts\n(with suffling)")
 
 # %% [markdown]
 # We see that neither the training and testing sets have the same class
@@ -242,13 +242,13 @@ test_cv_counts.index.name = "Class label"
 train_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Training set")
+_ = plt.title("Training set class counts\n(with stratifying)")
 
 # %%
 test_cv_counts.plot.bar()
 plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 plt.ylabel("Count")
-_ = plt.title("Test set")
+_ = plt.title("Test set class counts\n(with stratifying)")
 
 # %% [markdown]
 # In this case, we observe that the class counts are very close both in the

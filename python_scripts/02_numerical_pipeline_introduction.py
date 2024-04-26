@@ -39,7 +39,7 @@ adult_census = pd.read_csv("../datasets/adult-census-numeric.csv")
 # Let's have a look at the first records of this dataframe:
 
 # %%
-adult_census.head()
+adult_census
 
 # %% [markdown]
 # We see that this CSV file contains all information: the target that we would
@@ -56,10 +56,10 @@ target
 
 # %%
 data = adult_census.drop(columns=[target_name])
-data.head()
+data
 
 # %% [markdown]
-# We can now linger on the variables, also denominated features, that we later
+# We can now focus on the variables, also denominated features, that we later
 # use to build our predictive model. In addition, we can also check how many
 # samples are available in our dataset.
 

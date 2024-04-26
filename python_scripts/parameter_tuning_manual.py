@@ -38,7 +38,7 @@ data = adult_census[numerical_columns]
 # Our data is only numerical.
 
 # %%
-data.head()
+data
 
 # %% [markdown]
 # Let's create a simple predictive model made of a scaler followed by a logistic

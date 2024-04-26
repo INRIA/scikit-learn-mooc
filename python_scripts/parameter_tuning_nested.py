@@ -215,7 +215,7 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # ```
 #
 # However, this evaluation only provides us a single point estimate of the
-# generalization performance. As recall at the beginning of this notebook, it is
+# generalization performance. As you recall from the beginning of this notebook, it is
 # beneficial to have a rough idea of the uncertainty of our estimated
 # generalization performance. Therefore, we should instead use an additional
 # cross-validation for this evaluation.

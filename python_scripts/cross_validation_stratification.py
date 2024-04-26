@@ -52,12 +52,12 @@ for train_index, test_index in cv.split(data_random):
     print("TRAIN:", train_index, "TEST:", test_index)
 
 # %% [markdown]
-# By defining three splits, we use three samples (1-fold) for testing and six (2-folds) for
-# training each time. `KFold` does not shuffle by default. It means that the
-# three first samples are selected for the testing set at the first split, then
-# the three next three samples for the second split, and the three next for the
-# last split. In the end, all samples have been used in testing at least once
-# among the different splits.
+# By defining three splits, we use three samples (1-fold) for testing and six
+# (2-folds) for training each time. `KFold` does not shuffle by default. It
+# means that the three first samples are selected for the testing set at the
+# first split, then the three next three samples for the second split, and the
+# three next for the last split. In the end, all samples have been used in
+# testing at least once among the different splits.
 #
 # Now, let's apply this strategy to check the generalization performance of our
 # model.

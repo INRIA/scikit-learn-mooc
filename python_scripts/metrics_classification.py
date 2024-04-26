@@ -78,7 +78,7 @@ classifier.fit(data_train, target_train)
 # predictions a classifier can provide.
 #
 # For this reason, we will create a synthetic sample for a new potential donor:
-# they donated blood twice in the past (1000 c.c. each time). The last time was
+# they donated blood twice in the past (1000 cm³ each time). The last time was
 # 6 months ago, and the first time goes back to 20 months ago.
 
 # %%
@@ -188,13 +188,13 @@ _ = ConfusionMatrixDisplay.from_estimator(classifier, data_test, target_test)
 # blood when the classifier predicted so or the fraction of people predicted to
 # have given blood out of the total population that actually did so.
 #
-# The former metric, known as the precision, is defined as TP / (TP + FP) and
+# The former metric, known as the precision, is defined as `TP / (TP + FP)` and
 # represents how likely the person actually gave blood when the classifier
-# predicted that they did. The latter, known as the recall, defined as TP / (TP
-# + FN) and assesses how well the classifier is able to correctly identify
-# people who did give blood. We could, similarly to accuracy, manually compute
-# these values, however scikit-learn provides functions to compute these
-# statistics.
+# predicted that they did. The latter, known as the recall, defined as
+# `TP / (TP + FN)` and assesses how well the classifier is able to correctly
+# identify people who did give blood. We could, similarly to accuracy,
+# manually compute these values, however scikit-learn provides functions to
+# compute these statistics.
 
 # %%
 from sklearn.metrics import precision_score, recall_score

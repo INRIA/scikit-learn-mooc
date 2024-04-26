@@ -44,7 +44,7 @@ target
 
 # %%
 data = adult_census.drop(columns=[target_name, "education-num"])
-data.head()
+data
 
 # %% [markdown]
 # Once the dataset is loaded, we split it into a training and testing sets.

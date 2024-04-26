@@ -45,7 +45,7 @@ https://gitlab.inria.fr/learninglab/mooc-scikit-learn/mooc-scikit-learn-coordina
 The `jupyter-book` folder has the same structure as the `jupyter-book` folder
 on the github repo, but the gitlab one contains only quizzes `.md` files. If
 you work on quizzes, you need to to do it in the gitlab repo, the github repo
-quizz files are generated from the gitlab repo (by stripping solution) with
+quiz files are generated from the gitlab repo (by stripping solution) with
 `make exercises`.
 
 Useful: to get the `.py` code from a quiz `.md`, look at
@@ -84,7 +84,7 @@ There are two ways this can be applied on the FUN side:
   duplication of logic between data-hide and sklearn_mooc.js (e.g. to remove navigation items from
   JupyterBook) but oh well 🤷‍♂️ ... the best we can do is to use the `remove-from-content-only`
   class in JupyterBook.
-  
+
 ### Notebooks
 
 Note: FUN use notebooks so if you only update the `.py` files, FUN participants
@@ -107,9 +107,9 @@ Note that some notebook changes need manual action in FUN:
   decide to use some FUN specific thing like using FUN hint when we put "Hint:"
   in the markdown. Not sure that is a great idea in itself but oh well ...
 
-### Empty wrap-up quizz notebooks and sandbox notebook
+### Empty wrap-up quiz notebooks and sandbox notebook
 
-Wrap-up quizz notebooks or sandbox notebooks are created on the FUN side. In other words, we do not have
+Wrap-up quiz notebooks or sandbox notebooks are created on the FUN side. In other words, we do not have
 an empty notebook for each wrap-up quiz in our github repo.
 
 ## Discourse forum

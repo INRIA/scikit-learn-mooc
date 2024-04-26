@@ -255,11 +255,13 @@ _ = plt.title("Test set")
 # train set and the test set. The difference is due to the small number of
 # samples in the iris dataset.
 #
-# In other words, `StratifiedKFold` maintains the original distribution of
-# classes in each fold, ensuring that each fold is has a similar distribution as the
-# whole dataset. This can have a particular impact when using performance
-# metrics that depend on the proportion of the positive class, as we
-# will see in a future notebook.
+# In other words, stratifying is more effective than just shuffling when it
+# comes to making sure that the distributions of classes in all the folds are
+# representative of the entire dataset. As training and testing folds have
+# similar class distributions, stratifying leads to a more realistic measure of
+# the model’s ability to generalize. This is specially important when the
+# performance metrics depend on the proportion of the positive class, as we will
+# see in a future notebook.
 #
 # In conclusion, it is a good practice to use stratification within the
 # cross-validation framework when dealing with a classification problem,

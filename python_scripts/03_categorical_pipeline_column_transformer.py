@@ -165,7 +165,7 @@ _ = model.fit(data_train, target_train)
 # method. As an example, we predict on the five first samples from the test set.
 
 # %%
-data_test.head()
+data_test
 
 # %%
 model.predict(data_test)[:5]

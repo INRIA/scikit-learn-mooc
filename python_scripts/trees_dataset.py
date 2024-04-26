@@ -48,7 +48,7 @@ target_column = "Species"
 # Let's check the dataset more into details.
 
 # %%
-penguins.head()
+penguins
 
 # %% [markdown]
 # Since that we have few samples, we can check a scatter plot to observe the

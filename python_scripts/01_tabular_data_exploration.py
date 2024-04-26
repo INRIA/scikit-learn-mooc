@@ -71,6 +71,15 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 adult_census.head()
 
 # %% [markdown]
+# An alternative is to omit the `head` method. This would output the intial and
+# final rows and columns, but everything in between is not shown by default. It
+# also provides the dataframe's dimensions at the bottom in the format `n_rows`
+# x `n_columns`.
+
+# %%
+adult_census
+
+# %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which we
 # want to predict). The two possible classes are `<=50K` (low-revenue) and
 # `>50K` (high-revenue). The resulting prediction problem is therefore a binary

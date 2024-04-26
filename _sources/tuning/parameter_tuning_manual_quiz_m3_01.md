@@ -1,7 +1,7 @@
 # ✅ Quiz M3.01
 
 ```{admonition} Question
-Which parameters below are hyperparameters of `HistGradientBosstingClassifier`?
+Which parameters below are hyperparameters of `HistGradientBoostingClassifier`?
 Remember we only consider hyperparameters to be those that potentially impact
 the result of the learning procedure and subsequent predictions.
 

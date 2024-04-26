@@ -745,7 +745,7 @@ duplicates the information from the <code class="docutils literal notranslate"><
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">data</span>
 </pre></div>
 </div>
 </div>
@@ -858,8 +858,99 @@ duplicates the information from the <code class="docutils literal notranslate"><
       <td>30</td>
       <td>United-States</td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>48837</th>
+      <td>27</td>
+      <td>Private</td>
+      <td>Assoc-acdm</td>
+      <td>Married-civ-spouse</td>
+      <td>Tech-support</td>
+      <td>Wife</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>38</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>48838</th>
+      <td>40</td>
+      <td>Private</td>
+      <td>HS-grad</td>
+      <td>Married-civ-spouse</td>
+      <td>Machine-op-inspct</td>
+      <td>Husband</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>48839</th>
+      <td>58</td>
+      <td>Private</td>
+      <td>HS-grad</td>
+      <td>Widowed</td>
+      <td>Adm-clerical</td>
+      <td>Unmarried</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>0</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>48840</th>
+      <td>22</td>
+      <td>Private</td>
+      <td>HS-grad</td>
+      <td>Never-married</td>
+      <td>Adm-clerical</td>
+      <td>Own-child</td>
+      <td>White</td>
+      <td>Male</td>
+      <td>0</td>
+      <td>0</td>
+      <td>20</td>
+      <td>United-States</td>
+    </tr>
+    <tr>
+      <th>48841</th>
+      <td>52</td>
+      <td>Self-emp-inc</td>
+      <td>HS-grad</td>
+      <td>Married-civ-spouse</td>
+      <td>Exec-managerial</td>
+      <td>Wife</td>
+      <td>White</td>
+      <td>Female</td>
+      <td>15024</td>
+      <td>0</td>
+      <td>40</td>
+      <td>United-States</td>
+    </tr>
   </tbody>
 </table>
+<p>48842 rows × 12 columns</p>
 </div></div></div>
 </div>
 <p>Once the dataset is loaded, we split it into a training and testing sets.</p>
@@ -1404,8 +1495,8 @@ the maximum number of nodes.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.07 s, sys: 69.5 ms, total: 1.14 s
-Wall time: 5.58 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.05 s, sys: 57.6 ms, total: 1.11 s
+Wall time: 5.44 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {
@@ -1944,7 +2035,7 @@ results.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
     <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
-<span class="n">cv_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">cv_results</span>
 </pre></div>
 </div>
 </div>
@@ -1984,10 +2075,10 @@ results.</p>
   <tbody>
     <tr>
       <th>5</th>
-      <td>0.379503</td>
-      <td>0.037274</td>
-      <td>0.188996</td>
-      <td>0.010358</td>
+      <td>0.366275</td>
+      <td>0.036173</td>
+      <td>0.187707</td>
+      <td>0.009784</td>
       <td>0.1</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -1999,10 +2090,10 @@ results.</p>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.297463</td>
-      <td>0.004903</td>
-      <td>0.166850</td>
-      <td>0.000900</td>
+      <td>0.296633</td>
+      <td>0.006706</td>
+      <td>0.160749</td>
+      <td>0.000809</td>
       <td>0.1</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2014,10 +2105,10 @@ results.</p>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.097578</td>
-      <td>0.001023</td>
-      <td>0.067673</td>
-      <td>0.004921</td>
+      <td>0.095238</td>
+      <td>0.001095</td>
+      <td>0.067687</td>
+      <td>0.005575</td>
       <td>1</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2029,10 +2120,10 @@ results.</p>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.122485</td>
-      <td>0.025753</td>
-      <td>0.074820</td>
-      <td>0.004542</td>
+      <td>0.120501</td>
+      <td>0.024672</td>
+      <td>0.073636</td>
+      <td>0.009265</td>
       <td>1</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2044,10 +2135,10 @@ results.</p>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.208518</td>
-      <td>0.003173</td>
-      <td>0.111752</td>
-      <td>0.002506</td>
+      <td>0.198931</td>
+      <td>0.000334</td>
+      <td>0.107102</td>
+      <td>0.001430</td>
       <td>0.1</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2056,6 +2147,111 @@ results.</p>
       <td>0.853266</td>
       <td>0.000515</td>
       <td>5</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.108574</td>
+      <td>0.005361</td>
+      <td>0.070387</td>
+      <td>0.002258</td>
+      <td>1</td>
+      <td>30</td>
+      <td>{'classifier__learning_rate': 1, 'classifier__...</td>
+      <td>0.853734</td>
+      <td>0.848321</td>
+      <td>0.851028</td>
+      <td>0.002707</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.466856</td>
+      <td>0.000818</td>
+      <td>0.213942</td>
+      <td>0.006940</td>
+      <td>0.01</td>
+      <td>30</td>
+      <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
+      <td>0.840413</td>
+      <td>0.846246</td>
+      <td>0.843330</td>
+      <td>0.002917</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.295306</td>
+      <td>0.002294</td>
+      <td>0.165325</td>
+      <td>0.005136</td>
+      <td>0.01</td>
+      <td>10</td>
+      <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
+      <td>0.818956</td>
+      <td>0.816708</td>
+      <td>0.817832</td>
+      <td>0.001124</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.211692</td>
+      <td>0.000369</td>
+      <td>0.110063</td>
+      <td>0.000065</td>
+      <td>0.01</td>
+      <td>3</td>
+      <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
+      <td>0.797882</td>
+      <td>0.796451</td>
+      <td>0.797166</td>
+      <td>0.000715</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.064377</td>
+      <td>0.000111</td>
+      <td>0.053130</td>
+      <td>0.004605</td>
+      <td>10</td>
+      <td>10</td>
+      <td>{'classifier__learning_rate': 10, 'classifier_...</td>
+      <td>0.742356</td>
+      <td>0.493803</td>
+      <td>0.618080</td>
+      <td>0.124277</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.064855</td>
+      <td>0.000462</td>
+      <td>0.049672</td>
+      <td>0.001151</td>
+      <td>10</td>
+      <td>30</td>
+      <td>{'classifier__learning_rate': 10, 'classifier_...</td>
+      <td>0.759937</td>
+      <td>0.338739</td>
+      <td>0.549338</td>
+      <td>0.210599</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.060889</td>
+      <td>0.000050</td>
+      <td>0.051127</td>
+      <td>0.003662</td>
+      <td>10</td>
+      <td>3</td>
+      <td>{'classifier__learning_rate': 10, 'classifier_...</td>
+      <td>0.279701</td>
+      <td>0.287251</td>
+      <td>0.283476</td>
+      <td>0.003775</td>
+      <td>12</td>
     </tr>
   </tbody>
 </table>

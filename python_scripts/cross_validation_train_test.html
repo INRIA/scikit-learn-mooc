@@ -786,7 +786,7 @@ It can be downloaded/loaded using the
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span>
 </pre></div>
 </div>
 </div>
@@ -875,8 +875,75 @@ It can be downloaded/loaded using the
       <td>37.85</td>
       <td>-122.25</td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>20635</th>
+      <td>1.5603</td>
+      <td>25.0</td>
+      <td>5.045455</td>
+      <td>1.133333</td>
+      <td>845.0</td>
+      <td>2.560606</td>
+      <td>39.48</td>
+      <td>-121.09</td>
+    </tr>
+    <tr>
+      <th>20636</th>
+      <td>2.5568</td>
+      <td>18.0</td>
+      <td>6.114035</td>
+      <td>1.315789</td>
+      <td>356.0</td>
+      <td>3.122807</td>
+      <td>39.49</td>
+      <td>-121.21</td>
+    </tr>
+    <tr>
+      <th>20637</th>
+      <td>1.7000</td>
+      <td>17.0</td>
+      <td>5.205543</td>
+      <td>1.120092</td>
+      <td>1007.0</td>
+      <td>2.325635</td>
+      <td>39.43</td>
+      <td>-121.22</td>
+    </tr>
+    <tr>
+      <th>20638</th>
+      <td>1.8672</td>
+      <td>18.0</td>
+      <td>5.329513</td>
+      <td>1.171920</td>
+      <td>741.0</td>
+      <td>2.123209</td>
+      <td>39.43</td>
+      <td>-121.32</td>
+    </tr>
+    <tr>
+      <th>20639</th>
+      <td>2.3886</td>
+      <td>16.0</td>
+      <td>5.254717</td>
+      <td>1.162264</td>
+      <td>1387.0</td>
+      <td>2.616981</td>
+      <td>39.37</td>
+      <td>-121.24</td>
+    </tr>
   </tbody>
 </table>
+<p>20640 rows × 8 columns</p>
 </div></div></div>
 </div>
 <p>To simplify future visualization, let’s transform the prices from the 100
@@ -884,17 +951,23 @@ It can be downloaded/loaded using the
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>
-<span class="n">target</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">target</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    452.6
-1    358.5
-2    352.1
-3    341.3
-4    342.2
-Name: MedHouseVal, dtype: float64
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0        452.6
+1        358.5
+2        352.1
+3        341.3
+4        342.2
+         ...  
+20635     78.1
+20636     77.1
+20637     92.3
+20638     84.7
+20639     89.4
+Name: MedHouseVal, Length: 20640, dtype: float64
 </pre></div>
 </div>
 </div>
@@ -1894,7 +1967,7 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
-<span class="n">cv_results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">cv_results</span>
 </pre></div>
 </div>
 </div>
@@ -1925,33 +1998,243 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.139716</td>
-      <td>0.002720</td>
+      <td>0.135765</td>
+      <td>0.002493</td>
       <td>-46.909797</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.140345</td>
-      <td>0.002705</td>
+      <td>0.133621</td>
+      <td>0.002356</td>
       <td>-46.421170</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.138842</td>
-      <td>0.002797</td>
+      <td>0.133298</td>
+      <td>0.002318</td>
       <td>-47.411089</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.140532</td>
-      <td>0.002750</td>
+      <td>0.132763</td>
+      <td>0.002369</td>
       <td>-44.319824</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.137840</td>
-      <td>0.002907</td>
+      <td>0.130660</td>
+      <td>0.002383</td>
       <td>-47.607875</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.134455</td>
+      <td>0.002240</td>
+      <td>-45.901300</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.133680</td>
+      <td>0.002333</td>
+      <td>-46.572767</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.136622</td>
+      <td>0.002528</td>
+      <td>-46.194585</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.138587</td>
+      <td>0.002410</td>
+      <td>-45.590236</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.134845</td>
+      <td>0.002343</td>
+      <td>-45.727998</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.133124</td>
+      <td>0.002361</td>
+      <td>-49.325285</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0.133552</td>
+      <td>0.002443</td>
+      <td>-47.433377</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.132881</td>
+      <td>0.002374</td>
+      <td>-46.899316</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.132933</td>
+      <td>0.002312</td>
+      <td>-46.413821</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.133250</td>
+      <td>0.002485</td>
+      <td>-46.727109</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.139939</td>
+      <td>0.002883</td>
+      <td>-44.254324</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.138237</td>
+      <td>0.002770</td>
+      <td>-48.042372</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0.136255</td>
+      <td>0.002710</td>
+      <td>-43.026746</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0.136369</td>
+      <td>0.002633</td>
+      <td>-46.176363</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>0.136746</td>
+      <td>0.003013</td>
+      <td>-47.662623</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>0.134218</td>
+      <td>0.002912</td>
+      <td>-44.451056</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>0.136541</td>
+      <td>0.002719</td>
+      <td>-46.173780</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>0.142001</td>
+      <td>0.002775</td>
+      <td>-45.795231</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>0.138312</td>
+      <td>0.002555</td>
+      <td>-46.166307</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>0.137223</td>
+      <td>0.002512</td>
+      <td>-46.360169</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>0.136314</td>
+      <td>0.002522</td>
+      <td>-46.968612</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>0.134341</td>
+      <td>0.002672</td>
+      <td>-46.325623</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>0.133995</td>
+      <td>0.002270</td>
+      <td>-46.522054</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>0.134949</td>
+      <td>0.002559</td>
+      <td>-47.415111</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>0.139854</td>
+      <td>0.002607</td>
+      <td>-46.050461</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0.137875</td>
+      <td>0.002507</td>
+      <td>-46.182242</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>0.137244</td>
+      <td>0.002453</td>
+      <td>-45.305162</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>0.140076</td>
+      <td>0.002603</td>
+      <td>-44.359681</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>0.138187</td>
+      <td>0.002621</td>
+      <td>-46.829014</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>0.133379</td>
+      <td>0.002759</td>
+      <td>-46.648786</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>0.134526</td>
+      <td>0.002719</td>
+      <td>-45.653002</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>0.136648</td>
+      <td>0.002647</td>
+      <td>-46.864559</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>0.133302</td>
+      <td>0.002740</td>
+      <td>-47.420250</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>0.132322</td>
+      <td>0.002967</td>
+      <td>-47.352148</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>0.136337</td>
+      <td>0.002808</td>
+      <td>-47.102818</td>
     </tr>
   </tbody>
 </table>
@@ -2014,71 +2297,71 @@ score.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.139716</td>
-      <td>0.002720</td>
+      <td>0.135765</td>
+      <td>0.002493</td>
       <td>-46.909797</td>
       <td>46.909797</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.140345</td>
-      <td>0.002705</td>
+      <td>0.133621</td>
+      <td>0.002356</td>
       <td>-46.421170</td>
       <td>46.421170</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.138842</td>
-      <td>0.002797</td>
+      <td>0.133298</td>
+      <td>0.002318</td>
       <td>-47.411089</td>
       <td>47.411089</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.140532</td>
-      <td>0.002750</td>
+      <td>0.132763</td>
+      <td>0.002369</td>
       <td>-44.319824</td>
       <td>44.319824</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.137840</td>
-      <td>0.002907</td>
+      <td>0.130660</td>
+      <td>0.002383</td>
       <td>-47.607875</td>
       <td>47.607875</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.139676</td>
-      <td>0.003097</td>
+      <td>0.134455</td>
+      <td>0.002240</td>
       <td>-45.901300</td>
       <td>45.901300</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.140465</td>
-      <td>0.003156</td>
+      <td>0.133680</td>
+      <td>0.002333</td>
       <td>-46.572767</td>
       <td>46.572767</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.140544</td>
-      <td>0.003002</td>
+      <td>0.136622</td>
+      <td>0.002528</td>
       <td>-46.194585</td>
       <td>46.194585</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.141134</td>
-      <td>0.002926</td>
+      <td>0.138587</td>
+      <td>0.002410</td>
       <td>-45.590236</td>
       <td>45.590236</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.141419</td>
-      <td>0.002745</td>
+      <td>0.134845</td>
+      <td>0.002343</td>
       <td>-45.727998</td>
       <td>45.727998</td>
     </tr>
@@ -2217,8 +2500,8 @@ passing the option <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.16606712, 0.16141486, 0.16183972, 0.16127944, 0.15610027]),
- &#39;score_time&#39;: array([0.00233054, 0.00216913, 0.00233126, 0.00212193, 0.00216627]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.1639955 , 0.15742874, 0.15386415, 0.15139842, 0.15369725]),
+ &#39;score_time&#39;: array([0.00204206, 0.00168586, 0.00169134, 0.0016768 , 0.00165772]),
  &#39;estimator&#39;: [DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),

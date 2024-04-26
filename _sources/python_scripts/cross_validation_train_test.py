@@ -41,7 +41,7 @@ data, target = housing.data, housing.target
 print(housing.DESCR)
 
 # %%
-data.head()
+data
 
 # %% [markdown]
 # To simplify future visualization, let's transform the prices from the 100
@@ -49,7 +49,7 @@ data.head()
 
 # %%
 target *= 100
-target.head()
+target
 
 # %% [markdown]
 # ```{note}
@@ -218,7 +218,7 @@ cv_results = cross_validate(
 import pandas as pd
 
 cv_results = pd.DataFrame(cv_results)
-cv_results.head()
+cv_results
 
 # %% [markdown]
 # ```{tip}

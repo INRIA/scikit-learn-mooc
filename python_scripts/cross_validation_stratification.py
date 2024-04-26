@@ -39,9 +39,8 @@ model = make_pipeline(StandardScaler(), LogisticRegression())
 # Once the model is created, we can evaluate it using cross-validation. We start
 # by using the `KFold` strategy.
 #
-# We can quickly remind ourselves how this strategy works. For such purpose we
-# define a dataset with nine samples and repeat the cross-validation three times
-# (i.e. `n_splits=3`).
+# Let's review how this strategy works. For such purpose, we define a dataset
+# with nine samples and split the dataset into three folds (i.e. `n_splits=3`).
 
 # %%
 import numpy as np
@@ -53,7 +52,7 @@ for train_index, test_index in cv.split(data_random):
     print("TRAIN:", train_index, "TEST:", test_index)
 
 # %% [markdown]
-# By defining three splits, we use three samples for testing and six for
+# By defining three splits, we use three samples (1-fold) for testing and six (2-folds) for
 # training each time. `KFold` does not shuffle by default. It means that the
 # three first samples are selected for the testing set at the first split, then
 # the three next three samples for the second split, and the three next for the
@@ -98,7 +97,7 @@ _ = plt.title("Class value in target y")
 #
 # We iterate given the number of split and check how many samples of each are
 # present in the training and testing set. We then store the information into
-# two distincts lists; one for the training set and one for the testing set.
+# two distinct lists; one for the training set and one for the testing set.
 
 # %%
 import pandas as pd
@@ -257,7 +256,7 @@ _ = plt.title("Test set")
 # samples in the iris dataset.
 #
 # In other words, `StratifiedKFold` maintains the original distribution of
-# classes in each fold, ensuring that each fold is a good representative of the
+# classes in each fold, ensuring that each fold is has a similar distribution as the
 # whole dataset. This can have a particular impact when using performance
 # metrics that depend on the proportion of the positive class, as we
 # will see in a future notebook.

@@ -263,8 +263,6 @@ _ = plt.title("Test set")
 # performance metrics depend on the proportion of the positive class, as we will
 # see in a future notebook.
 #
-# In conclusion, it is a good practice to use stratification within the
-# cross-validation framework when dealing with a classification problem,
-# especially for datasets with imbalanced classes or when the class distribution
-# is crucial for model evaluation. This approach provides a more realistic
-# assessment of the model's ability to generalize across the entire dataset.
+# The interested reader can learn about other stratified cross-validation
+# techniques in the [scikit-learn user
+# guide](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-with-stratification-based-on-class-labels).

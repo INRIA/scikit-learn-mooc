@@ -12,7 +12,7 @@
 # of predictive models. While this section could be slightly redundant, we
 # intend to go into details into the cross-validation framework.
 #
-# Before we dive in, let's linger on the reasons for always having training and
+# Before we dive in, let's focus on the reasons for always having training and
 # testing sets. Let's first look at the limitation of using a dataset without
 # keeping any samples out.
 #

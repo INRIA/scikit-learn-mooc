@@ -11,7 +11,7 @@
 # In the previous Module we tuned the hyperparameter `C` of the logistic
 # regression without mentioning that it controls the regularization strength.
 # Later, on the slides on 🎥 **Intuitions on regularized linear models** we
-# metioned that a small `C` provides a more regularized model, whereas a
+# mentioned that a small `C` provides a more regularized model, whereas a
 # non-regularized model is obtained with an infinitely large value of `C`.
 # Indeed, `C` behaves as the inverse of the `alpha` coefficient in the `Ridge`
 # model.

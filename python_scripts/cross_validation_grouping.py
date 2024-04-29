@@ -94,7 +94,7 @@ plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Distribution of the test scores")
 
 # %% [markdown]
-# Shuffling the data results in higher cross-validated test accuracy with less
+# Shuffling the data results in a higher cross-validated test accuracy with less
 # variance compared to when the data is not shuffled. It means that some
 # specific fold leads to a low score in this case.
 
@@ -104,7 +104,7 @@ print(test_score_no_shuffling)
 # %% [markdown]
 # Thus, shuffling the data breaks the underlying structure and thus makes the
 # classification task easier to our model. To get a better understanding, we can
-# read the dataset description:
+# read the dataset description in more detail:
 
 # %%
 print(digits.DESCR)
@@ -188,7 +188,7 @@ _ = plt.title("Underlying writer groups existing in the target")
 # %% [markdown]
 # Once we group the digits by writer, we can incorporate this information into
 # the cross-validation process by using group-aware variations of the strategies
-# we have explored in this course, for example, the class `GroupKFold`.
+# we have explored in this course, for example, the `GroupKFold` strategy.
 
 # %%
 from sklearn.model_selection import GroupKFold

@@ -6,13 +6,13 @@
 # ---
 
 # %% [markdown]
-# # Gradient-boosting decision tree (GBDT)
+# # Gradient-boosting decision tree
 #
-# In this notebook, we present the gradient boosting decision tree algorithm.
+# In this notebook, we present the gradient boosting decision tree (GBDT) algorithm.
 #
 # Even if AdaBoost and GBDT are both boosting algorithms, they are different in
 # nature: the former assigns weights to specific samples, whereas GBDT fits
-# succesive decision trees on the residual errors (hence the name "gradient") of
+# successive decision trees on the residual errors (hence the name "gradient") of
 # their preceding tree. Therefore, each new tree in the ensemble tries to refine
 # its predictions by specifically addressing the errors made by the previous
 # learner, instead of predicting the target directly.
@@ -87,8 +87,7 @@ target_test_predicted = tree.predict(data_test)
 
 # %%
 def plot_decision_tree_with_residuals(y_train, y_train_pred, y_test_pred):
-    # Create a plot and get the Axes object
-    fig, ax = plt.subplots()
+    _fig_, ax = plt.subplots()
     # plot the data
     sns.scatterplot(
         x=data_train["Feature"], y=y_train, color="black", alpha=0.5, ax=ax
@@ -109,6 +108,7 @@ def plot_decision_tree_with_residuals(y_train, y_train_pred, y_test_pred):
     return handles, ax
 
 
+# %%
 handles, ax = plot_decision_tree_with_residuals(
     target_train, target_train_predicted, target_test_predicted
 )
@@ -259,7 +259,7 @@ print(f"Error of the tree: {target_true - y_pred_first_and_second_tree:.3f}")
 # second tree corrects the first tree's error, while the third tree corrects the
 # second tree's error and so on).
 #
-# ## First comparison of GBDT vs random forests
+# ## First comparison of GBDT vs. random forests
 #
 # We now compare the generalization performance of random-forest and gradient
 # boosting on the California housing dataset.

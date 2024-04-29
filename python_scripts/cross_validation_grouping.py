@@ -19,6 +19,15 @@ data, target = digits.data, digits.target
 # %% [markdown]
 # We create a model consisting of a logistic regression classifier with a
 # preprocessor to scale the data.
+#
+# ```{note}
+# Here we use a `MinMaxScaler` as we know that each pixel's gray-scale is
+# strictly bounded between 0 (white) and 16 (black). This makes `MinMaxScaler`
+# more suited in this case than `StandardScaler`, as some pixels consistently
+# have low variance (pixels at the borders might almost always be zero if most
+# digits are centered in the image). Then, using `StandardScaler` can result in
+# a very high scaled value due to division by a small number.
+# ```
 
 # %%
 from sklearn.preprocessing import MinMaxScaler

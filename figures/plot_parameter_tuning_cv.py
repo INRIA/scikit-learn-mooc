@@ -54,16 +54,17 @@ def plot_cv_indices(cv, X, y, ax, lw=50):
     )
     ax.legend(
         [
-            Patch(color=cmap_cv(0.9)),
             Patch(color=cmap_cv(0.5)),
             Patch(color=cmap_cv(0.02)),
+            Patch(color=cmap_cv(0.9)),
         ],
         [
-            "Testing samples\n(reserved for\nfinal evaluation)",
             "Training samples",
-            "Validation samples",
+            "Validation samples\n(for hyperparameter\ntuning)",
+            "Testing samples\n(reserved for\nfinal evaluation)",
         ],
-        loc=(1.02, 0.5),
+        loc=(1.02, 0.04),
+        labelspacing = 1,
     )
     return ax
 
@@ -128,16 +129,17 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, ax, lw=50):
     )
     ax.legend(
         [
-            Patch(color=cmap_cv(0.9)),
             Patch(color=cmap_cv(0.5)),
             Patch(color=cmap_cv(0.02)),
+            Patch(color=cmap_cv(0.9)),
         ],
         [
-            "Testing samples\n(reserved for\nouter evaluation)",
             "Training samples",
-            "Validation samples",
+            "Validation samples\n(for hyperparameter\ntuning)",
+            "Testing samples\n(reserved for\nfinal evaluation)",
         ],
-        loc=(1.06, 0.85),
+        loc=(1.07, 0.77),
+        labelspacing = 1,
     )
     return ax
 

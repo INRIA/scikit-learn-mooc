@@ -29,16 +29,15 @@
 import pandas as pd
 import numpy as np
 
-rng = np.random.RandomState(0)  # Create a random number generator
-
 
 def generate_data(n_samples=50):
     """Generate synthetic dataset. Returns `data_train`, `data_test`,
     `target_train`."""
     x_max, x_min = 1.4, -1.4
     len_x = x_max - x_min
-    x = rng.rand(n_samples) * len_x - len_x / 2
-    noise = rng.randn(n_samples) * 0.3
+    rng = np.random.default_rng(0)  # Create a random number generator
+    x = rng.uniform(size=(n_samples,)) * len_x - len_x / 2
+    noise = rng.normal(size=(n_samples,)) * 0.3
     y = x**3 - 0.5 * x**2 + noise
 
     data_train = pd.DataFrame(x, columns=["Feature"])

@@ -86,7 +86,8 @@ target_test_predicted = tree.predict(data_test)
 
 # %%
 def plot_decision_tree_with_residuals(y_train, y_train_pred, y_test_pred):
-    # Create a plot and get the Axes object
+    """Plot the synthetic data, predictions, and residuals for a decision tree.
+    Handles are used to create custom legends for the plot."""
     fig, ax = plt.subplots()
     # plot the data
     sns.scatterplot(

@@ -23,16 +23,14 @@
 import pandas as pd
 import numpy as np
 
-# create a random number generator that will be used to set the randomness
-rng = np.random.RandomState(1)
-
 
 def generate_data(n_samples=30):
     """Generate synthetic dataset. Returns `data_train`, `data_test`,
     `target_train`."""
     x_min, x_max = -3, 3
+    rng = np.random.default_rng(1)  # Create a random number generator
     x = rng.uniform(x_min, x_max, size=n_samples)
-    noise = 4.0 * rng.randn(n_samples)
+    noise = 4.0 * rng.normal(size=(n_samples,))
     y = x**3 - 0.5 * (x + 1) ** 2 + noise
     y /= y.std()
 
@@ -100,9 +98,10 @@ _ = plt.title("Predictions by a single decision tree")
 
 
 # %%
-def bootstrap_sample(data, target):
+def bootstrap_sample(data, target, seed=0):
     # Indices corresponding to a sampling with replacement of the same sample
     # size than the original data
+    rng = np.random.default_rng(seed)
     bootstrap_indices = rng.choice(
         np.arange(target.shape[0]),
         size=target.shape[0],
@@ -127,6 +126,7 @@ for bootstrap_idx in range(n_bootstraps):
     data_bootstrap, target_bootstrap = bootstrap_sample(
         data_train,
         target_train,
+        seed=bootstrap_idx,
     )
     plt.figure()
     plt.scatter(

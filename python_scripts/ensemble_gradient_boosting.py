@@ -34,9 +34,8 @@ def generate_data(n_samples=50):
     """Generate synthetic dataset. Returns `data_train`, `data_test`,
     `target_train`."""
     x_max, x_min = 1.4, -1.4
-    len_x = x_max - x_min
     rng = np.random.default_rng(0)  # Create a random number generator
-    x = rng.uniform(size=(n_samples,)) * len_x - len_x / 2
+    x = rng.uniform(x_min, x_max, size=(n_samples,))
     noise = rng.normal(size=(n_samples,)) * 0.3
     y = x**3 - 0.5 * x**2 + noise
 

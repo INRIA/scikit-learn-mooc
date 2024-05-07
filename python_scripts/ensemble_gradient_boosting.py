@@ -163,10 +163,10 @@ _ = ax.set_title("Prediction of the initial residuals")
 # this sample in `data_train`.
 
 # %%
-sample = data_train.iloc[[-2]]
+sample = data_train.iloc[[-7]]
 x_sample = sample["Feature"].iloc[0]
-target_true = target_train.iloc[-2]
-target_true_residual = residuals.iloc[-2]
+target_true = target_train.iloc[-7]
+target_true_residual = residuals.iloc[-7]
 
 # %% [markdown]
 # Let's plot the original data, the predictions of the initial decision tree and

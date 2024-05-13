@@ -193,7 +193,7 @@ for bootstrap_idx in range(n_bootstraps):
     tree = DecisionTreeRegressor(max_depth=3, random_state=0)
 
     data_bootstrap_sample, target_bootstrap_sample = bootstrap_sample(
-        data_train, target_train
+        data_train, target_train, seed=bootstrap_idx
     )
     tree.fit(data_bootstrap_sample, target_bootstrap_sample)
     bag_of_trees.append(tree)

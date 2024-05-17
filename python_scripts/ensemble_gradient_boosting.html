@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Gradient-boosting decision tree (GBDT) &#8212; Scikit-learn course</title>
+    <title>Gradient-boosting decision tree &#8212; Scikit-learn course</title>
   
   
   
@@ -346,7 +346,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../ensemble/ensemble_boosting_index.html">Ensemble based on boosting</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../ensemble/boosting_slides.html">🎥 Intuitions on ensemble models: boosting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ensemble_adaboost.html">Adaptive Boosting (AdaBoost)</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gradient-boosting decision tree (GBDT)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gradient-boosting decision tree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ensemble_ex_03.html">📝 Exercise M6.03</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ensemble_sol_03.html">📃 Solution for Exercise M6.03</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ensemble_hist_gradient_boosting.html">Speeding-up gradient-boosting</a></li>
@@ -661,7 +661,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -672,11 +674,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Gradient-boosting decision tree (GBDT)</h1>
+    <h1>Gradient-boosting decision tree</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-comparison-of-gbdt-vs-random-forests">First comparison of GBDT vs. random forests</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -686,35 +696,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="gradient-boosting-decision-tree-gbdt">
-<h1>Gradient-boosting decision tree (GBDT)<a class="headerlink" href="#gradient-boosting-decision-tree-gbdt" title="Permalink to this heading">#</a></h1>
-<p>In this notebook, we will present the gradient boosting decision tree
-algorithm and contrast it with AdaBoost.</p>
-<p>Gradient-boosting differs from AdaBoost due to the following reason: instead
-of assigning weights to specific samples, GBDT will fit a decision tree on the
-residuals error (hence the name “gradient”) of the previous tree. Therefore,
-each new tree in the ensemble predicts the error made by the previous learner
-instead of predicting the target directly.</p>
-<p>In this section, we will provide some intuition about the way learners are
-combined to give the final prediction. In this regard, let’s go back to our
-regression problem which is more intuitive for demonstrating the underlying
+  <section class="tex2jax_ignore mathjax_ignore" id="gradient-boosting-decision-tree">
+<h1>Gradient-boosting decision tree<a class="headerlink" href="#gradient-boosting-decision-tree" title="Permalink to this heading">#</a></h1>
+<p>In this notebook, we present the gradient boosting decision tree (GBDT) algorithm.</p>
+<p>Even if AdaBoost and GBDT are both boosting algorithms, they are different in
+nature: the former assigns weights to specific samples, whereas GBDT fits
+successive decision trees on the residual errors (hence the name “gradient”) of
+their preceding tree. Therefore, each new tree in the ensemble tries to refine
+its predictions by specifically addressing the errors made by the previous
+learner, instead of predicting the target directly.</p>
+<p>In this section, we provide some intuitions on the way learners are combined
+to give the final prediction. For such purpose, we tackle a single-feature
+regression problem, which is more intuitive for demonstrating the underlying
 machinery.</p>
+<p>Later in this notebook we compare the performance of GBDT (boosting) with that
+of a Random Forest (bagging) for a particular dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="c1"># Create a random number generator that will be used to set the randomness</span>
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">generate_data</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate synthetic dataset. Returns `data_train`, `data_test`,</span>
 <span class="sd">    `target_train`.&quot;&quot;&quot;</span>
     <span class="n">x_max</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">=</span> <span class="mf">1.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span>
-    <span class="n">len_x</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="n">len_x</span> <span class="o">-</span> <span class="n">len_x</span> <span class="o">/</span> <span class="mi">2</span>
-    <span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.3</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Create a random number generator</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,))</span>
+    <span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,))</span> <span class="o">*</span> <span class="mf">0.3</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">noise</span>
 
     <span class="n">data_train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">])</span>
@@ -744,12 +753,12 @@ machinery.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f6c52720f2e27a97e21148ff8a5909daa210a5021181b3f3441b8657f562fa95.png" src="../_images/f6c52720f2e27a97e21148ff8a5909daa210a5021181b3f3441b8657f562fa95.png" />
+<img alt="../_images/3c9c69acfb69e70fc101f1f9dadb2d67d528a3939e5016af913c0722b6308ea2.png" src="../_images/3c9c69acfb69e70fc101f1f9dadb2d67d528a3939e5016af913c0722b6308ea2.png" />
 </div>
 </div>
-<p>As we previously discussed, boosting will be based on assembling a sequence of
-learners. We will start by creating a decision tree regressor. We will set the
-depth of the tree so that the resulting learner will underfit the data.</p>
+<p>As we previously discussed, boosting is based on assembling a sequence of
+learners. We start by creating a decision tree regressor. We set the depth of
+the tree to underfit the data on purpose.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
@@ -763,34 +772,53 @@ depth of the tree so that the resulting learner will underfit the data.</p>
 </div>
 </div>
 </div>
-<p>Using the term “test” here refers to data that was not used for training. It
-should not be confused with data coming from a train-test split, as it was
-generated in equally-spaced intervals for the visual evaluation of the
-predictions.</p>
+<p>Using the term “test” here refers to data not used for training. It should not
+be confused with data coming from a train-test split, as it was generated in
+equally-spaced intervals for the visual evaluation of the predictions.</p>
+<p>To avoid writing the same code in multiple places we define a helper function
+to plot the data samples as well as the decision tree predictions and
+residuals.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the data</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
-<span class="p">)</span>
-<span class="c1"># plot the predictions</span>
-<span class="n">line_predictions</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_decision_tree_with_residuals</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the synthetic data, predictions, and residuals for a decision tree.</span>
+<span class="sd">    Handles are returned to allow custom legends for the plot.&quot;&quot;&quot;</span>
+    <span class="n">_fig_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="c1"># plot the data</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span>
+    <span class="p">)</span>
+    <span class="c1"># plot the predictions</span>
+    <span class="n">line_predictions</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y_test_pred</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
-<span class="c1"># plot the residuals</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_train_predicted</span>
-<span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+    <span class="c1"># plot the residuals</span>
+    <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span>
+    <span class="p">):</span>
+        <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span>
+        <span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">line_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines_residuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Residuals&quot;</span><span class="p">]</span>
+    <span class="n">handles</span> <span class="o">=</span> <span class="p">[</span><span class="n">line_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines_residuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="n">handles</span><span class="p">,</span> <span class="n">ax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">handles</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_decision_tree_with_residuals</span><span class="p">(</span>
+    <span class="n">target_train</span><span class="p">,</span> <span class="n">target_train_predicted</span><span class="p">,</span> <span class="n">target_test_predicted</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction function together </span><span class="se">\n</span><span class="s2">with errors on the training set&quot;</span><span class="p">)</span>
+<span class="n">legend_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Initial decision tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Initial residuals&quot;</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">legend_labels</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Decision Tree together </span><span class="se">\n</span><span class="s2">with errors on the training set&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/aac9d48981d81f877762eca838f57c29e802e484992f5d25b4742d9bda91490b.png" src="../_images/aac9d48981d81f877762eca838f57c29e802e484992f5d25b4742d9bda91490b.png" />
+<img alt="../_images/c360f037c249482c406395f6cd5e0138ceb8df570d0f8ac5e17526ea41c995a1.png" src="../_images/c360f037c249482c406395f6cd5e0138ceb8df570d0f8ac5e17526ea41c995a1.png" />
 </div>
 </div>
 <div class="admonition tip">
@@ -799,14 +827,14 @@ predictions.</p>
 for all the residual lines.</p>
 </div>
 <p>Since the tree underfits the data, its accuracy is far from perfect on the
-training data. We can observe this in the figure by looking at the difference
-between the predictions and the ground-truth data. We represent these errors,
-called “Residuals”, by unbroken red lines.</p>
-<p>Indeed, our initial tree was not expressive enough to handle the complexity of
+training data. We can observe this in the figure above by looking at the
+difference between the predictions and the ground-truth data. We represent
+these errors, called “residuals”, using solid red lines.</p>
+<p>Indeed, our initial tree is not expressive enough to handle the complexity of
 the data, as shown by the residuals. In a gradient-boosting algorithm, the
-idea is to create a second tree which, given the same data <code class="docutils literal notranslate"><span class="pre">data</span></code>, will try to
-predict the residuals instead of the vector <code class="docutils literal notranslate"><span class="pre">target</span></code>. We would therefore have
-a tree that is able to predict the errors made by the initial tree.</p>
+idea is to create a second tree which, given the same <code class="docutils literal notranslate"><span class="pre">data</span></code>, tries to predict
+the residuals instead of the vector <code class="docutils literal notranslate"><span class="pre">target</span></code>, i.e. we have a second tree that
+is able to predict the errors made by the initial tree.</p>
 <p>Let’s train such a tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -823,96 +851,68 @@ a tree that is able to predict the errors made by the initial tree.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">line_predictions</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted_residuals</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">handles</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_decision_tree_with_residuals</span><span class="p">(</span>
+    <span class="n">residuals</span><span class="p">,</span>
+    <span class="n">target_train_predicted_residuals</span><span class="p">,</span>
+    <span class="n">target_test_predicted_residuals</span><span class="p">,</span>
 <span class="p">)</span>
-
-<span class="c1"># plot the residuals of the predicted residuals</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">target_train_predicted_residuals</span>
-<span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
-    <span class="p">[</span><span class="n">line_predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines_residuals</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
-    <span class="p">[</span><span class="s2">&quot;Fitted tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Residuals&quot;</span><span class="p">],</span>
-    <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span>
-    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction of the previous residuals&quot;</span><span class="p">)</span>
+<span class="n">legend_labels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Predicted residuals&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Residuals of the</span><span class="se">\n</span><span class="s2">predicted residuals&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">legend_labels</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Prediction of the initial residuals&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3c2ea6e59eaf132b453c650c1051067b20eca6ee66ace682a087eddd24d870a0.png" src="../_images/3c2ea6e59eaf132b453c650c1051067b20eca6ee66ace682a087eddd24d870a0.png" />
+<img alt="../_images/9a4ba711d76ecaef44f23bcbe9ead317497480019602e58e5f183c3a1832cf3d.png" src="../_images/9a4ba711d76ecaef44f23bcbe9ead317497480019602e58e5f183c3a1832cf3d.png" />
 </div>
 </div>
-<p>We see that this new tree only manages to fit some of the residuals. We will
-focus on a specific sample from the training set (i.e. we know that the sample
-will be well predicted using two successive trees). We will use this sample to
+<p>We see that this new tree only manages to fit some of the residuals. We now
+focus on a specific sample from the training set (as we know that the sample
+can be well predicted using two successive trees). We will use this sample to
 explain how the predictions of both trees are combined. Let’s first select
 this sample in <code class="docutils literal notranslate"><span class="pre">data_train</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">data_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="o">-</span><span class="mi">7</span><span class="p">]]</span>
 <span class="n">x_sample</span> <span class="o">=</span> <span class="n">sample</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">target_true</span> <span class="o">=</span> <span class="n">target_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">target_true_residual</span> <span class="o">=</span> <span class="n">residuals</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">target_true</span> <span class="o">=</span> <span class="n">target_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span>
+<span class="n">target_true_residual</span> <span class="o">=</span> <span class="n">residuals</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s plot the previous information and highlight our sample of interest.
-Let’s start by plotting the original data and the prediction of the first
-decision tree.</p>
+<p>Let’s plot the original data, the predictions of the initial decision tree and
+highlight our sample of interest, i.e. this is just a zoom of the plot
+displaying the initial shallow tree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the previous information:</span>
-<span class="c1">#   * the dataset</span>
-<span class="c1">#   * the predictions</span>
-<span class="c1">#   * the residuals</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">target_train</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">handles</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_decision_tree_with_residuals</span><span class="p">(</span>
+    <span class="n">target_train</span><span class="p">,</span> <span class="n">target_train_predicted</span><span class="p">,</span> <span class="n">target_test_predicted</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_train_predicted</span>
-<span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
-
-<span class="c1"># Highlight the sample of interest</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
     <span class="n">sample</span><span class="p">,</span> <span class="n">target_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sample of interest&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tree predictions&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Zoom of sample of interest</span><span class="se">\n</span><span class="s2">in the initial decision tree&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7e93b145eaf8c26ebd4aa4f7c1c9bb41acb0eda9be61656bce265d9a551c26cf.png" src="../_images/7e93b145eaf8c26ebd4aa4f7c1c9bb41acb0eda9be61656bce265d9a551c26cf.png" />
+<img alt="../_images/ac0d757b516fd7ea760869a7a1a6801acaa1212318cdf014a75dea914699e865.png" src="../_images/ac0d757b516fd7ea760869a7a1a6801acaa1212318cdf014a75dea914699e865.png" />
 </div>
 </div>
-<p>Now, let’s plot the residuals information. We will plot the residuals computed
-from the first decision tree and show the residual predictions.</p>
+<p>Similarly we plot a zoom of the plot with the prediction of the initial residuals</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the previous information:</span>
-<span class="c1">#   * the residuals committed by the first tree</span>
-<span class="c1">#   * the residual predictions</span>
-<span class="c1">#   * the residuals of the residual predictions</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">target_test_predicted_residuals</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">predicted</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-    <span class="n">data_train</span><span class="p">[</span><span class="s2">&quot;Feature&quot;</span><span class="p">],</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">target_train_predicted_residuals</span>
-<span class="p">):</span>
-    <span class="n">lines_residuals</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">],</span> <span class="p">[</span><span class="n">true</span><span class="p">,</span> <span class="n">predicted</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
-
-<span class="c1"># Highlight the sample of interest</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">handles</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_decision_tree_with_residuals</span><span class="p">(</span>
+    <span class="n">residuals</span><span class="p">,</span>
+    <span class="n">target_train_predicted_residuals</span><span class="p">,</span>
+    <span class="n">target_test_predicted_residuals</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
     <span class="n">sample</span><span class="p">,</span>
     <span class="n">target_true_residual</span><span class="p">,</span>
@@ -920,19 +920,23 @@ from the first decision tree and show the residual predictions.</p>
     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
     <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Prediction of the residuals&quot;</span><span class="p">)</span>
+<span class="n">legend_labels</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Predicted residuals&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Residuals of the</span><span class="se">\n</span><span class="s2">predicted residuals&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Zoom of sample of interest</span><span class="se">\n</span><span class="s2">in the initial residuals&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3145073eea0a2a6540f8368cd163d372c9a47e5727aa5ae1521bfb51eec5085a.png" src="../_images/3145073eea0a2a6540f8368cd163d372c9a47e5727aa5ae1521bfb51eec5085a.png" />
+<img alt="../_images/4655ebff360a8173d7e82c73cb3b9a42d5a5c08793e1f6228d5da484593c34f2.png" src="../_images/4655ebff360a8173d7e82c73cb3b9a42d5a5c08793e1f6228d5da484593c34f2.png" />
 </div>
 </div>
 <p>For our sample of interest, our initial tree is making an error (small
 residual). When fitting the second tree, the residual in this case is
-perfectly fitted and predicted. We will quantitatively check this prediction
+perfectly fitted and predicted. We can quantitatively check this prediction
 using the fitted tree. First, let’s check the prediction of the initial tree
 and compare it with the true value.</p>
 <div class="cell docutils container">
@@ -949,9 +953,9 @@ and compare it with the true value.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True value to predict for f(x=-0.517) = -0.393
-Prediction of the first decision tree for x=-0.517: y=-0.145
-Error of the tree: -0.248
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True value to predict for f(x=-0.454) = -0.417
+Prediction of the first decision tree for x=-0.454: y=-0.016
+Error of the tree: -0.401
 </pre></div>
 </div>
 </div>
@@ -968,7 +972,7 @@ tree to try to predict this residual.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the residual for x=-0.517: -0.248
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the residual for x=-0.454: -0.401
 </pre></div>
 </div>
 </div>
@@ -990,7 +994,7 @@ summing the prediction of all the trees in the ensemble.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the first and second decision trees combined for x=-0.517: y=-0.393
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction of the first and second decision trees combined for x=-0.454: y=-0.417
 Error of the tree: 0.000
 </pre></div>
 </div>
@@ -1002,7 +1006,9 @@ enough to correct the residuals of all samples. Therefore, one needs to add
 several trees to the ensemble to successfully correct the error (i.e. the
 second tree corrects the first tree’s error, while the third tree corrects the
 second tree’s error and so on).</p>
-<p>We will compare the generalization performance of random-forest and gradient
+<section id="first-comparison-of-gbdt-vs-random-forests">
+<h2>First comparison of GBDT vs. random forests<a class="headerlink" href="#first-comparison-of-gbdt-vs-random-forests" title="Permalink to this heading">#</a></h2>
+<p>We now compare the generalization performance of random-forest and gradient
 boosting on the California housing dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1048,8 +1054,8 @@ boosting on the California housing dataset.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree
-Mean absolute error via cross-validation: 46.444 ± 2.916 k$
-Average fit time: 6.990 seconds
+Mean absolute error via cross-validation: 46.441 ± 2.914 k$
+Average fit time: 7.009 seconds
 Average score time: 0.007 seconds
 </pre></div>
 </div>
@@ -1086,20 +1092,22 @@ Average score time: 0.007 seconds
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest
-Mean absolute error via cross-validation: 46.383 ± 4.425 k$
-Average fit time: 12.294 seconds
+Mean absolute error via cross-validation: 46.311 ± 4.362 k$
+Average fit time: 12.280 seconds
 Average score time: 0.088 seconds
 </pre></div>
 </div>
 </div>
 </div>
-<p>In term of computation performance, the forest can be parallelized and will
+<p>In terms of computing performance, the forest can be parallelized and then
 benefit from using multiple cores of the CPU. In terms of scoring performance,
 both algorithms lead to very close results.</p>
-<p>However, we see that the gradient boosting is a very fast algorithm to predict
-compared to random forest. This is due to the fact that gradient boosting uses
-shallow trees. We will go into details in the next notebook about the
-hyperparameters to consider when optimizing ensemble methods.</p>
+<p>However, we see that gradient boosting is overall faster than random forest.
+One of the reasons is that random forests typically rely on deep trees (that
+overfit individually) whereas boosting models build shallow trees (that
+underfit individually) which are faster to fit and predict. In the following
+exercise we will explore more in depth how these two models compare.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1157,7 +1165,20 @@ hyperparameters to consider when optimizing ensemble methods.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-comparison-of-gbdt-vs-random-forests">First comparison of GBDT vs. random forests</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

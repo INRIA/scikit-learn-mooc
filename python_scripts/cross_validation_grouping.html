@@ -688,9 +688,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="sample-grouping">
 <h1>Sample grouping<a class="headerlink" href="#sample-grouping" title="Permalink to this heading">#</a></h1>
-<p>We are going to linger into the concept of sample groups. As in the previous
-section, we will give an example to highlight some surprising results. This
-time, we will use the handwritten digits dataset.</p>
+<p>In this notebook we present the concept of <strong>sample groups</strong>. We use the
+handwritten digits dataset to highlight some surprising results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
@@ -701,8 +700,17 @@ time, we will use the handwritten digits dataset.</p>
 </div>
 </div>
 </div>
-<p>We will recreate the same model used in the previous notebook: a logistic
-regression classifier with a preprocessor to scale the data.</p>
+<p>We create a model consisting of a logistic regression classifier with a
+preprocessor to scale the data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here we use a <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code> as we know that each pixel’s gray-scale is
+strictly bounded between 0 (white) and 16 (black). This makes <code class="docutils literal notranslate"><span class="pre">MinMaxScaler</span></code>
+more suited in this case than <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, as some pixels consistently
+have low variance (pixels at the borders might almost always be zero if most
+digits are centered in the image). Then, using <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> can result in
+a very high scaled value due to division by a small number.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
@@ -714,8 +722,10 @@ regression classifier with a preprocessor to scale the data.</p>
 </div>
 </div>
 </div>
-<p>We will use the same baseline model. We will use a <code class="docutils literal notranslate"><span class="pre">KFold</span></code> cross-validation
-without shuffling the data at first.</p>
+<p>The idea is to compare the estimated generalization performance using
+different cross-validation techniques and see how such estimations are
+impacted by underlying data structures. We first use a <code class="docutils literal notranslate"><span class="pre">KFold</span></code>
+cross-validation without shuffling the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">KFold</span>
@@ -753,14 +763,14 @@ cross-validation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.966 ± 0.002
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average accuracy is 0.969 ± 0.010
 </pre></div>
 </div>
 </div>
 </div>
-<p>We observe that shuffling the data improves the mean accuracy. We could go a
-little further and plot the distribution of the testing score. We can first
-concatenate the test scores.</p>
+<p>We observe that shuffling the data improves the mean accuracy. We can go a
+little further and plot the distribution of the testing score. For such
+purpose we concatenate the test scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -773,12 +783,12 @@ concatenate the test scores.</p>
 </div>
 </div>
 </div>
-<p>Let’s plot the distribution now.</p>
+<p>Let’s now plot the score distributions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">all_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">all_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy score&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
@@ -787,12 +797,12 @@ concatenate the test scores.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/810316df41f8b2433909265c2c5a37aef75885536d8320f1b18fdb69f334a998.png" src="../_images/810316df41f8b2433909265c2c5a37aef75885536d8320f1b18fdb69f334a998.png" />
+<img alt="../_images/9943411be96f17a4d70f80b9fbf089e9966bd8a2a8d8d8c934762182642e641e.png" src="../_images/9943411be96f17a4d70f80b9fbf089e9966bd8a2a8d8d8c934762182642e641e.png" />
 </div>
 </div>
-<p>The cross-validation testing error that uses the shuffling has less variance
-than the one that does not impose any shuffling. It means that some specific
-fold leads to a low score in this case.</p>
+<p>Shuffling the data results in a higher cross-validated test accuracy with less
+variance compared to when the data is not shuffled. It means that some
+specific fold leads to a low score in this case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">test_score_no_shuffling</span><span class="p">)</span>
@@ -805,9 +815,9 @@ fold leads to a low score in this case.</p>
 </div>
 </div>
 </div>
-<p>Thus, there is an underlying structure in the data that shuffling will break
-and get better results. To get a better understanding, we should read the
-documentation shipped with the dataset.</p>
+<p>Thus, shuffling the data breaks the underlying structure and thus makes the
+classification task easier to our model. To get a better understanding, we can
+read the dataset description in more detail:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span>
@@ -947,7 +957,7 @@ group.</p>
 </div>
 </div>
 </div>
-<p>We can check the grouping by plotting the indices linked to writer ids.</p>
+<p>We can check the grouping by plotting the indices linked to writers’ ids.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
@@ -963,8 +973,9 @@ group.</p>
 <img alt="../_images/161e7b0b52ad48ce5029a97c3c76a0ac2de4ee2cead5478c2effc95fc9099b6e.png" src="../_images/161e7b0b52ad48ce5029a97c3c76a0ac2de4ee2cead5478c2effc95fc9099b6e.png" />
 </div>
 </div>
-<p>Once we group the digits by writer, we can use cross-validation to take this
-information into account: the class containing <code class="docutils literal notranslate"><span class="pre">Group</span></code> should be used.</p>
+<p>Once we group the digits by writer, we can incorporate this information into
+the cross-validation process by using group-aware variations of the strategies
+we have explored in this course, for example, the <code class="docutils literal notranslate"><span class="pre">GroupKFold</span></code> strategy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GroupKFold</span>
@@ -985,10 +996,12 @@ information into account: the class containing <code class="docutils literal not
 </div>
 </div>
 </div>
-<p>We see that this strategy is less optimistic regarding the model
-generalization performance. However, this is the most reliable if our goal is
-to make handwritten digits recognition writers independent. Besides, we can as
-well see that the standard deviation was reduced.</p>
+<p>We see that this strategy leads to a lower generalization performance than the
+other two techniques. However, this is the most reliable estimate if our goal
+is to evaluate the capabilities of the model to generalize to new unseen
+writers. In this sense, shuffling the dataset (or alternatively using the
+writers’ ids as a new feature) would lead the model to memorize the different
+writer’s particular handwriting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -1005,7 +1018,7 @@ well see that the standard deviation was reduced.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_scores</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Accuracy score&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
@@ -1014,12 +1027,16 @@ well see that the standard deviation was reduced.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/94c609b2df347c9a248d1d055e9351a2a549bbbc3731cf7cde7d4612288d895d.png" src="../_images/94c609b2df347c9a248d1d055e9351a2a549bbbc3731cf7cde7d4612288d895d.png" />
+<img alt="../_images/909a6a8a536adcd2d3dad57baf26d7d839cd07268ae0d42a4656e68fde831f60.png" src="../_images/909a6a8a536adcd2d3dad57baf26d7d839cd07268ae0d42a4656e68fde831f60.png" />
 </div>
 </div>
-<p>As a conclusion, it is really important to take any sample grouping pattern
-into account when evaluating a model. Otherwise, the results obtained will be
-over-optimistic in regards with reality.</p>
+<p>In conclusion, accounting for any sample grouping patterns is crucial when
+assessing a model’s ability to generalize to new groups. Without this
+consideration, the results may appear overly optimistic compared to the actual
+performance.</p>
+<p>The interested reader can learn about other group-aware cross-validation
+techniques in the <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data">scikit-learn user
+guide</a>.</p>
 </section>
 
     <script type="text/x-thebe-config">

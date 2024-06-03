@@ -364,5 +364,5 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 #   and evaluating your machine learning model;
 # * having redundant (or highly correlated) columns can be a problem for some
 #   machine learning algorithms;
-# * contrary to decision tree, linear models can only capture linear
-#   interactions, so be aware of non-linear relationships in your data.
+# * decision trees create rules at constant values of the features, such as
+#   vertical and horizontal lines in a 2-dimensional feature space.

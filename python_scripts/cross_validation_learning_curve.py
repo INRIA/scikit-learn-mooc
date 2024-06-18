@@ -104,7 +104,7 @@ _ = display.ax_.set(xscale="log", title="Learning curve for decision tree")
 #
 # If we achieve a plateau and adding new samples in the training set does not
 # reduce the testing error, we might have reached the Bayes error rate using the
-# available model. Using a more complex model might be the only possibility to
+# available model. Using a more expressive model might be the only possibility to
 # reduce the testing error further.
 #
 # ## Summary

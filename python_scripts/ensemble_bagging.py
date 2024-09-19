@@ -296,7 +296,7 @@ sns.scatterplot(
 bagged_trees_predictions = bagged_trees.predict(data_test)
 plt.plot(data_test["Feature"], bagged_trees_predictions)
 
-_ = plt.title("Predictions from a bagging classifier")
+_ = plt.title("Predictions from a bagging regressor")
 
 # %% [markdown]
 # Because we use 100 trees in the ensemble, the average prediction is indeed

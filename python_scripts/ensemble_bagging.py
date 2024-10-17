@@ -124,7 +124,7 @@ for bootstrap_idx in range(n_bootstraps):
     data_bootstrap, target_bootstrap = bootstrap_sample(
         data_train,
         target_train,
-        seed=bootstrap_idx,
+        seed=bootstrap_idx,  # ensure bootstrap samples are different but reproducible
     )
     plt.figure()
     plt.scatter(

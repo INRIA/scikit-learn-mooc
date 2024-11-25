@@ -106,7 +106,10 @@ _ = display.ax_.set(xscale="log", title="Learning curve for decision tree")
 # possible that the model has achieved its optimal performance. In this case,
 # using a more expressive model might help reduce the error further. Otherwise,
 # the error may have reached the Bayes error rate, the theoretical minimum error
-# due to inherent uncertainty in the data.
+# due to inherent uncertainty not resolved by the available data. This minimum error is
+# non-zero whenever some of the variation of the target variable `y` depends on
+# external factors not fully observed in the features available in `X`, which is
+# almost always the case in practice.
 #
 # ## Summary
 #

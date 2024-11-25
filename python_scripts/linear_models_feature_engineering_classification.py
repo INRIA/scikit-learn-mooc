@@ -331,7 +331,7 @@ plot_decision_boundary(classifier, title="Polynomial classifier")
 # from the previous models: its decision boundary can take a diagonal
 # direction. Furthermore, we can observe that predictions are very confident in
 # the low density regions of the feature space, even very close to the decision
-# boundary
+# boundary.
 #
 # We can obtain very similar results by using a kernel approximation technique
 # such as the Nyström method with a polynomial kernel:

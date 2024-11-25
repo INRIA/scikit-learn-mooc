@@ -347,7 +347,9 @@ _ = disp.ax_.set_title("Precision-recall curve")
 # of the positive class).
 
 # %%
-prevalence = target_test.value_counts()[1] / target_test.value_counts().sum()
+prevalence = (
+    target_test.value_counts()["donated"] / target_test.value_counts().sum()
+)
 print(f"Prevalence of the class 'donated': {prevalence:.2f}")
 
 # %% [markdown]

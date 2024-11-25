@@ -1618,17 +1618,15 @@ divided by the total number of samples (this number is called the prevalence
 of the positive class).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prevalence</span> <span class="o">=</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prevalence</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="s2">&quot;donated&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">target_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prevalence of the class &#39;donated&#39;: </span><span class="si">{</span><span class="n">prevalence</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prevalence of the class &#39;donated&#39;: 0.24
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_5088/2781295333.py:1: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
-  prevalence = target_test.value_counts()[1] / target_test.value_counts().sum()
 </pre></div>
 </div>
 </div>

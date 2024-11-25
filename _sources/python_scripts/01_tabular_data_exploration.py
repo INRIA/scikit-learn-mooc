@@ -360,9 +360,12 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 # We made important observations (which will be discussed later in more detail):
 #
 # * if your target variable is imbalanced (e.g., you have more samples from one
-#   target category than another), you may need special techniques for training
-#   and evaluating your machine learning model;
-# * having redundant (or highly correlated) columns can be a problem for some
-#   machine learning algorithms;
-# * contrary to decision tree, linear models can only capture linear
-#   interactions, so be aware of non-linear relationships in your data.
+#   target category than another), you may need to be careful when interpreting
+#   the values of performance metrics;
+# * columns can be redundant (or highly correlated), which is not necessarily a
+#   problem, but may require special treatment as we will cover in future
+#   notebooks;
+# * decision trees create prediction rules by comparing each feature to a
+#   threshold value, resulting in decision boundaries that are always parallel
+#   to the axes. In 2D, this means the boundaries are vertical or horizontal
+#   line segments at the feature threshold values.

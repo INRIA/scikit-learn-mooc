@@ -366,6 +366,6 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 #   problem, but may require special treatment as we will cover in future
 #   notebooks;
 # * decision trees create prediction rules by comparing each feature to a
-# threshold value, resulting in decision boundaries that are always parallel to
-# the axes. In 2D, this means the boundaries are vertical or horizontal line
-# segments at the feature threshold values.
+#   threshold value, resulting in decision boundaries that are always parallel
+#   to the axes. In 2D, this means the boundaries are vertical or horizontal
+#   line segments at the feature threshold values.

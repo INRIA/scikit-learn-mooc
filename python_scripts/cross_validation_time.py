@@ -220,5 +220,5 @@ print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 # %% [markdown]
 # In conclusion, it is really important to not use an out of the shelves
 # cross-validation strategy which do not respect some assumptions such as having
-# i.i.d data. It might lead to absurd results which could make think that a
-# predictive model might work.
+# i.i.d data. It might lead to absurd results. These absurd results can make you 
+# think that a predictive model might work while it is not doing so in practice.

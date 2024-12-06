@@ -148,7 +148,7 @@ print(
 # cross-validation by providing `model_grid_search` as a model to the
 # `cross_validate` function.
 #
-# Here, we used a single train-test split to to evaluate `model_grid_search`. In
+# Here, we used a single train-test split to evaluate `model_grid_search`. In
 # a future notebook will go into more detail about nested cross-validation, when
 # you use cross-validation both for hyperparameter tuning and model evaluation.
 # ```

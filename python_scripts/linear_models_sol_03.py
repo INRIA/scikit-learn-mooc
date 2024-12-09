@@ -8,8 +8,8 @@
 # %% [markdown]
 # # 📃 Solution for Exercise M4.03
 #
-# Now, we tackle a more realistic classification problem instead of making a
-# synthetic dataset. We start by loading the Adult Census dataset with the
+# Now, we tackle a (relatively) realistic classification problem instead of making
+# a synthetic dataset. We start by loading the Adult Census dataset with the
 # following snippet. For the moment we retain only the **numerical features**.
 
 # %%
@@ -27,7 +27,7 @@ data
 # Compute the generalization performance in terms of accuracy of a linear model
 # composed of a `StandardScaler` and a `LogisticRegression`. Use a 10-fold
 # cross-validation with `return_estimator=True` to be able to inspect the
-# trained estimators.
+# trained estimators. Set `scoring="balanced_accuracy"`.
 
 # %%
 # solution
@@ -38,7 +38,12 @@ from sklearn.model_selection import cross_validate
 
 model = make_pipeline(StandardScaler(), LogisticRegression())
 cv_results_lr = cross_validate(
-    model, data, target, cv=10, return_estimator=True
+    model,
+    data,
+    target,
+    cv=10,
+    return_estimator=True,
+    scoring="balanced_accuracy",
 )
 test_score_lr = cv_results_lr["test_score"]
 test_score_lr
@@ -84,11 +89,11 @@ data = adult_census.drop(columns=["class", "education-num"])
 # - The numerical data must be scaled.
 # - The categorical data must be one-hot encoded, set `min_frequency=0.01` to
 #   group categories concerning less than 1% of the total samples.
-# - The predictor is a `LogisticRegression`. You may need to increase the number
-#   of `max_iter`, which is 100 by default.
+# - The predictor is a `LogisticRegression` with default parameters, except that
+#   you may need to increase the number of `max_iter`, which is 100 by default.
 #
-# Use the same 10-fold cross-validation strategy with `return_estimator=True` as
-# above to evaluate this complex pipeline.
+# Use the same 10-fold cross-validation strategy with `return_estimator=True`
+# and `scoring="balanced_accuracy"` as above to evaluate this complex pipeline.
 
 # %%
 # solution
@@ -108,7 +113,13 @@ preprocessor = make_column_transformer(
 )
 model = make_pipeline(preprocessor, LogisticRegression(max_iter=5_000))
 cv_results_complex_lr = cross_validate(
-    model, data, target, cv=10, return_estimator=True, n_jobs=2
+    model,
+    data,
+    target,
+    cv=10,
+    return_estimator=True,
+    scoring="balanced_accuracy",
+    n_jobs=2,
 )
 test_score_complex_lr = cv_results_complex_lr["test_score"]
 test_score_complex_lr
@@ -135,7 +146,7 @@ plt.scatter(
 )
 plt.ylim((0, 1))
 plt.xlabel("Cross-validation iteration")
-plt.ylabel("Accuracy")
+plt.ylabel("Balanced accuracy")
 _ = plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 
 print(
@@ -195,9 +206,9 @@ _ = coefs.abs().plot.box(color=color, vert=False, ax=ax)
 
 # %% [markdown]
 # Now create a similar pipeline consisting of the same preprocessor as above,
-# followed by a `PolynomialFeatures` and a logistic regression with `C=0.01`.
-# Set `degree=2` and `interaction_only=True` to the feature engineering step.
-# Remember not to include a "bias" feature to avoid introducing a redundancy
+# followed by a `PolynomialFeatures` and a logistic regression with enough
+# `max_iter`. Set `interaction_only=True` to the feature engineering step; and
+# remember not to include a "bias" feature to avoid introducing a redundancy
 # with the intercept of the subsequent logistic regression.
 
 # %%
@@ -207,11 +218,16 @@ from sklearn.preprocessing import PolynomialFeatures
 model_with_interaction = make_pipeline(
     preprocessor,
     PolynomialFeatures(degree=2, include_bias=False, interaction_only=True),
-    LogisticRegression(C=0.01, max_iter=5_000),
+    LogisticRegression(max_iter=5_000),
 )
 model_with_interaction
 
 # %% [markdown]
+# Use the same 10-fold cross-validation strategy with
+# `scoring="balanced_accuracy"` as above to evaluate this complex pipeline. In
+# this case there is no need to return the estimator, as the number of features
+# is much larger to visually explore the learned coefficients.
+#
 # By comparing the cross-validation test scores of both models fold-to-fold,
 # count the number of times the model using multiplicative interactions and both
 # numerical and categorical features has a better test score than the model
@@ -224,7 +240,7 @@ cv_results_interactions = cross_validate(
     data,
     target,
     cv=10,
-    return_estimator=True,
+    scoring="balanced_accuracy",
     n_jobs=2,
 )
 test_score_interactions = cv_results_interactions["test_score"]
@@ -247,8 +263,9 @@ plt.scatter(
     color="black",
     label="all features and interactions",
 )
+plt.ylim((0, 1))
 plt.xlabel("Cross-validation iteration")
-plt.ylabel("Accuracy")
+plt.ylabel("Balanced accuracy")
 _ = plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 
 print(

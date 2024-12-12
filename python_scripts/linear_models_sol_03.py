@@ -24,10 +24,13 @@ data
 # %% [markdown]
 # We confirm that all the selected features are numerical.
 #
-# Compute the generalization performance in terms of accuracy of a linear model
-# composed of a `StandardScaler` and a `LogisticRegression`. Use a 10-fold
-# cross-validation with `return_estimator=True` to be able to inspect the
-# trained estimators. Set `scoring="balanced_accuracy"`.
+# Define a linear model composed of a `StandardScaler` followed by a
+# `LogisticRegression` with default parameters.
+#
+# Then use a 10-fold cross-validation to estimate its generalization performance
+# in terms of balanced accuracy, i.e. set `scoring="balanced_accuracy"` in the
+# `cross_validate` function. Also set `return_estimator=True` to be able to
+# inspect the trained estimators.
 
 # %%
 # solution

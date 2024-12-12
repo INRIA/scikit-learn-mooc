@@ -5,6 +5,10 @@ import sys
 from jupytext.myst import myst_to_notebook
 import jupytext
 
+
+WRITE_YOUR_CODE_COMMENT = "# Write your code here."
+
+
 def replace_simple_text(input_py_str):
     result = input_py_str.replace("📃 Solution for", "📝")
     return result
@@ -36,7 +40,24 @@ def remove_solution(input_py_str):
                        marker in c["source"]]
 
     for c in cells_to_modify:
-        c["source"] = pattern.sub("# Write your code here.", c["source"])
+        c["source"] = pattern.sub(WRITE_YOUR_CODE_COMMENT, c["source"])
+
+    previous_cell_is_write_your_code = False
+    all_cells_before_deduplication = nb.cells
+    nb.cells = []
+    for c in all_cells_before_deduplication:
+        if c["cell_type"] == "code" and c["source"] == WRITE_YOUR_CODE_COMMENT:
+            current_cell_is_write_your_code = True
+        else:
+            current_cell_is_write_your_code = False
+        if (
+            current_cell_is_write_your_code
+            and previous_cell_is_write_your_code
+        ):
+            # Drop duplicated "write your code here" cells.
+            continue
+        nb.cells.append(c)
+        previous_cell_is_write_your_code = current_cell_is_write_your_code
 
     # TODO: we could potentially try to avoid changing the input file jupytext
     # header since this info is rarely useful. Let's keep it simple for now.
@@ -45,6 +66,7 @@ def remove_solution(input_py_str):
 
 
 def write_exercise(solution_path, exercise_path):
+    print(f"Writing exercise to {exercise_path} from solution {solution_path}")
     input_str = solution_path.read_text()
 
     output_str = input_str
@@ -59,7 +81,9 @@ def write_all_exercises(python_scripts_folder):
     for solution_path in solution_paths:
         exercise_path = Path(str(solution_path).replace("_sol_", "_ex_"))
         if not exercise_path.exists():
-            print(f"{exercise_path} does not exist")
+            print(
+                f"{exercise_path} does not exist, generating it from solution."
+            )
 
         write_exercise(solution_path, exercise_path)
 

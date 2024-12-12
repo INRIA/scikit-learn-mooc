@@ -66,7 +66,7 @@ requirements = {
     "numpy": "1.16",
     "scipy": "1.2",
     "matplotlib": "3.0",
-    "sklearn": "1.3",
+    "sklearn": "1.6",
     "pandas": "1",
     "seaborn": "0.11",
     "notebook": "5.7",

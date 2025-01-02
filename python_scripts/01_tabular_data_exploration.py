@@ -7,6 +7,8 @@
 
 # %% [markdown]
 # # First look at our dataset
+# 
+# Some additional text was added here.
 #
 # In this notebook, we look at the necessary steps required before any machine
 #  learning takes place. It involves:

@@ -162,7 +162,7 @@ print(
 # Finally, we have overlooked the impact of the `learning_rate` parameter
 # until now. This parameter controls how much each tree contributes to the
 # final prediction. A smaller learning-rate means the corrections of a new
-# tree results in small adjustments to the model prediction. When the
+# tree result in small adjustments to the model prediction. When the
 # learning-rate is small, the model generally needs more trees to achieve good
 # performance. A higher learning-rate makes larger adjustments with each tree.
 # The model will need fewer trees and the model will train faster. The

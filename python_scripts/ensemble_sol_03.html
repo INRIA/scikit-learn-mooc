@@ -776,18 +776,19 @@ the performance of each model. Evaluate the list of parameters <code class="docu
 <img alt="../_images/b23c1907df9086a091b6f5fcaa8f893e5de559e7265507be985a4c99a14e59c6.png" src="../_images/b23c1907df9086a091b6f5fcaa8f893e5de559e7265507be985a4c99a14e59c6.png" />
 </div>
 </div>
-<p>Both gradient boosting and random forest models improve when increasing the
-number of trees in the ensemble. However, the scores reach a plateau where
-adding new trees just makes fitting and scoring slower.</p>
-<p>To avoid adding new unnecessary tree, unlike random-forest gradient-boosting
+<p>Random forest models improve when increasing the number of trees in the
+ensemble. However, the scores reach a plateau where adding new trees just
+makes fitting and scoring slower.</p>
+<p>Gradient boosting models overfit when the number of trees is too large. To
+avoid adding a new unnecessary tree, unlike random-forest gradient-boosting
 offers an early-stopping option. Internally, the algorithm uses an
 out-of-sample set to compute the generalization performance of the model at
 each addition of a tree. Thus, if the generalization performance is not
 improving for several iterations, it stops adding trees.</p>
 <p>Now, create a gradient-boosting model with <code class="docutils literal notranslate"><span class="pre">n_estimators=1_000</span></code>. This number
-of trees is certainly too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such
-that the gradient boosting fitting stops after adding 5 trees that do not
-improve the overall generalization performance.</p>
+of trees is certainly too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code>
+such that the gradient boosting fitting stops after adding 5 trees to avoid
+deterioration of the overall generalization performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -805,7 +806,7 @@ improve the overall generalization performance.</p>
 </div>
 <p>We see that the number of trees used is far below 1000 with the current
 dataset. Training the gradient boosting model with the entire 1000 trees would
-have been useless.</p>
+have been detrimental.</p>
 <p>Estimate the generalization performance of this model again using the
 <code class="docutils literal notranslate"><span class="pre">sklearn.metrics.mean_absolute_error</span></code> metric but this time using the test set
 that we held out at the beginning of the notebook. Compare the resulting value

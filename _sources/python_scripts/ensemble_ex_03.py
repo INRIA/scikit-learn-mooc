@@ -64,20 +64,21 @@ data_train, data_test, target_train, target_test = train_test_split(
 # Write your code here.
 
 # %% [markdown]
-# Both gradient boosting and random forest models improve when increasing the
-# number of trees in the ensemble. However, the scores reach a plateau where
-# adding new trees just makes fitting and scoring slower.
+# Random forest models improve when increasing the number of trees in the
+# ensemble. However, the scores reach a plateau where adding new trees just
+# makes fitting and scoring slower.
 #
-# To avoid adding new unnecessary tree, unlike random-forest gradient-boosting
+# Gradient boosting models overfit when the number of trees is too large. To
+# avoid adding a new unnecessary tree, unlike random-forest gradient-boosting
 # offers an early-stopping option. Internally, the algorithm uses an
 # out-of-sample set to compute the generalization performance of the model at
 # each addition of a tree. Thus, if the generalization performance is not
 # improving for several iterations, it stops adding trees.
 #
 # Now, create a gradient-boosting model with `n_estimators=1_000`. This number
-# of trees is certainly too large. Change the parameter `n_iter_no_change` such
-# that the gradient boosting fitting stops after adding 5 trees that do not
-# improve the overall generalization performance.
+# of trees is certainly too large. Change the parameter `n_iter_no_change`
+# such that the gradient boosting fitting stops after adding 5 trees to avoid
+# deterioration of the overall generalization performance.
 
 # %%
 # Write your code here.

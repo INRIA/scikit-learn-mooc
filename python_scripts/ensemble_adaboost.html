@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -698,7 +698,7 @@ boosting in general.</p>
 culmen length and depth features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
 <span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
@@ -719,8 +719,8 @@ unlikely to overfit and some of the training examples will even be
 misclassified.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
 
 <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
 
@@ -1150,7 +1150,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <p>We can predict on the same dataset and check which samples are misclassified.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">misclassified_samples_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">target</span> <span class="o">!=</span> <span class="n">target_predicted</span><span class="p">)</span>
@@ -1161,8 +1161,8 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.inspection</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
 <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
@@ -1730,7 +1730,7 @@ these sample and learner weights can be optimally calculated.</p>
 the underlying decision tree classifiers trained.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
 
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">adaboost</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
@@ -1741,7 +1741,7 @@ the underlying decision tree classifiers trained.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.20/x64/lib/python3.9/site-packages/sklearn/ensemble/_weight_boosting.py:514: FutureWarning: The parameter &#39;algorithm&#39; is deprecated in 1.6 and has no effect. It will be removed in version 1.8.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.21/x64/lib/python3.9/site-packages/sklearn/ensemble/_weight_boosting.py:519: FutureWarning: The parameter &#39;algorithm&#39; is deprecated in 1.6 and has no effect. It will be removed in version 1.8.
   warnings.warn(
 </pre></div>
 </div>

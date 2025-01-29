@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -723,7 +723,7 @@ two separated variables. In addition, we drop the column <code class="docutils l
 previously done.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
@@ -740,9 +740,9 @@ previously done.</p>
 pipeline is identical to the one we used in the previous notebook.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
 
 <span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
 <span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -762,8 +762,8 @@ pipeline is identical to the one we used in the previous notebook.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
     <span class="p">[</span>
@@ -1240,7 +1240,7 @@ generalization performance of the model. Here, we recall the necessary
 scores.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_validate</span>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
@@ -1275,32 +1275,32 @@ scores.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.419422</td>
-      <td>0.067115</td>
+      <td>0.418830</td>
+      <td>0.065133</td>
       <td>0.863241</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.414966</td>
-      <td>0.068519</td>
+      <td>0.416967</td>
+      <td>0.066978</td>
       <td>0.860784</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.421663</td>
-      <td>0.068500</td>
+      <td>0.415171</td>
+      <td>0.065835</td>
       <td>0.860360</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.419846</td>
-      <td>0.070171</td>
+      <td>0.411443</td>
+      <td>0.068172</td>
       <td>0.862408</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.420388</td>
-      <td>0.069707</td>
+      <td>0.413149</td>
+      <td>0.066249</td>
       <td>0.866912</td>
     </tr>
   </tbody>
@@ -1338,7 +1338,7 @@ grid-search strategy and reproduce the steps done in the previous notebook.</p>
 parameters and the parameter values that we want to explore.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
@@ -1350,7 +1350,7 @@ parameters and the parameter values that we want to explore.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.20/x64/lib/python3.9/site-packages/sklearn/compose/_column_transformer.py:1651: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.21/x64/lib/python3.9/site-packages/sklearn/compose/_column_transformer.py:1667: FutureWarning: 
 The format of the columns of the &#39;remainder&#39; transformer in ColumnTransformer.transformers_ will change in version 1.7 to match the format of the other transformers.
 At the moment the remainder columns are stored as indices (of type int). With the same ColumnTransformer configuration, in the future they will be stored as column names (of type str).
 To use the new behavior now and suppress this warning, use ColumnTransformer(force_int_remainder_cols=False).
@@ -1943,7 +1943,7 @@ final evaluation of the refitted model. We highlight here the process using a
 single train-test split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>

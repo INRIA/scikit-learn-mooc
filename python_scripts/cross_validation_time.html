@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -708,7 +708,7 @@ previous cross-validation strategies presented. We are going to load financial
 quotations from some energy companies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">symbols</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;TOT&quot;</span><span class="p">:</span> <span class="s2">&quot;Total&quot;</span><span class="p">,</span>
@@ -733,7 +733,7 @@ quotations from some energy companies.</p>
 <p>We can start by plotting the different financial quotations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">quotes</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Quote value&quot;</span><span class="p">)</span>
@@ -751,7 +751,7 @@ companies’ quotes. To make explanatory plots, we first use a train-test split
 and then we evaluate other cross-validation methods.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">quotes</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Chevron&quot;</span><span class="p">]),</span> <span class="n">quotes</span><span class="p">[</span><span class="s2">&quot;Chevron&quot;</span><span class="p">]</span>
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
@@ -767,7 +767,7 @@ check the generalization performance of our model.</p>
 <p>Let’s first define our model</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
 </pre></div>
@@ -777,7 +777,7 @@ check the generalization performance of our model.</p>
 <p>And now the cross-validation strategy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
@@ -787,7 +787,7 @@ check the generalization performance of our model.</p>
 <p>Finally, we perform the evaluation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
 
 <span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
     <span class="n">regressor</span><span class="p">,</span> <span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
@@ -797,7 +797,7 @@ check the generalization performance of our model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: 0.94 ± 0.07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: 0.95 ± 0.07
 </pre></div>
 </div>
 </div>
@@ -821,7 +821,7 @@ procedure with a single split and plot the prediction. We can use
 <p>Let’s check the generalization performance of our model on this split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">r2_score</span>
 
 <span class="n">test_score</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">target_predicted</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The R2 on this single split is: </span><span class="si">{</span><span class="n">test_score</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -849,7 +849,7 @@ training, testing and prediction samples.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2bacc51adf18ce5ed8b0f21bf75e15bbdf360035c7c9f5345c8b114ff86ced24.png" src="../_images/2bacc51adf18ce5ed8b0f21bf75e15bbdf360035c7c9f5345c8b114ff86ced24.png" />
+<img alt="../_images/42149671190b1f218c64be99b6407dddb6e9e4a817e815707103164dd0285ff5.png" src="../_images/42149671190b1f218c64be99b6407dddb6e9e4a817e815707103164dd0285ff5.png" />
 </div>
 </div>
 <p>So in this context, it seems that the model predictions are following the
@@ -886,7 +886,7 @@ the remaining data to test.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.09
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.21
 </pre></div>
 </div>
 </div>
@@ -907,7 +907,7 @@ check what we are predicting.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d1bc6aabfd5a1583c5c82c0ce73b35a811ad511f40f262662302df91242845cd.png" src="../_images/d1bc6aabfd5a1583c5c82c0ce73b35a811ad511f40f262662302df91242845cd.png" />
+<img alt="../_images/0ab1cb2288e3aa7f9d8768f3c4204ed4a14a80ea251b869797549ff3c82cb256.png" src="../_images/0ab1cb2288e3aa7f9d8768f3c4204ed4a14a80ea251b869797549ff3c82cb256.png" />
 </div>
 </div>
 <p>We see that our model cannot predict anything because it doesn’t have samples
@@ -919,7 +919,7 @@ and predict each group’s information by using information from the other
 groups. We can use the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> cross-validation for this purpose.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">LeaveOneGroupOut</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">LeaveOneGroupOut</span>
 
 <span class="n">groups</span> <span class="o">=</span> <span class="n">quotes</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s2">&quot;Q&quot;</span><span class="p">)</span>
 <span class="n">cv</span> <span class="o">=</span> <span class="n">LeaveOneGroupOut</span><span class="p">()</span>
@@ -931,7 +931,7 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.00 ± 1.97
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.09 ± 1.90
 </pre></div>
 </div>
 </div>
@@ -945,7 +945,7 @@ case, we can use the <code class="docutils literal notranslate"><span class="pre
 behaviour.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">TimeSeriesSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">groups</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
 <span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
@@ -956,10 +956,10 @@ behaviour.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.57 ± 2.21
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -119.18 ± 511.47
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.20/x64/lib/python3.9/site-packages/sklearn/model_selection/_split.py:1242: UserWarning: The groups parameter is ignored by TimeSeriesSplit
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.21/x64/lib/python3.9/site-packages/sklearn/model_selection/_split.py:1242: UserWarning: The groups parameter is ignored by TimeSeriesSplit
   warnings.warn(
 </pre></div>
 </div>

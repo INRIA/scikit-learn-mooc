@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -704,7 +704,7 @@ section named “Appendix - Datasets description” at the end of this MOOC.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_california_housing</span>
 
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
@@ -716,7 +716,7 @@ section named “Appendix - Datasets description” at the end of this MOOC.</p>
 with 20% of the data held on the validation side of the split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ShuffleSplit</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
@@ -728,9 +728,9 @@ which is our model of interest. Besides, we will store the testing error in a
 pandas series to make it easier to plot the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_validate</span>
 
 <span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
 <span class="n">cv_results_tree_regressor</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
@@ -746,13 +746,13 @@ pandas series to make it easier to plot the results.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    30.000000
-mean     45.790249
-std       1.185254
-min      43.734104
-25%      44.944313
-50%      45.616709
-75%      46.641564
-max      48.059977
+mean     45.703314
+std       1.206643
+min      43.239819
+25%      44.971939
+50%      45.771067
+75%      46.777220
+max      47.671119
 Name: Decision tree regressor, dtype: float64
 </pre></div>
 </div>
@@ -764,7 +764,7 @@ training target variable. Therefore, the dummy regressor does not use any
 information from the input features stored in the dataframe named <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.dummy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DummyRegressor</span>
 
 <span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyRegressor</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
 <span class="n">result_dummy</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
@@ -829,152 +829,152 @@ and the actual decision tree regressor.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>47.103023</td>
+      <td>46.811619</td>
       <td>90.713153</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>47.777665</td>
+      <td>46.814531</td>
       <td>90.539353</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>44.468550</td>
+      <td>44.226469</td>
       <td>91.941912</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>43.840569</td>
+      <td>43.690326</td>
       <td>90.213912</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>48.059977</td>
+      <td>47.661890</td>
       <td>92.015862</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>45.609973</td>
+      <td>45.198950</td>
       <td>90.542490</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>43.991365</td>
+      <td>43.861328</td>
       <td>89.757566</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>45.093406</td>
+      <td>44.979935</td>
       <td>92.477244</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>45.471576</td>
+      <td>44.773803</td>
       <td>90.947952</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>44.894615</td>
+      <td>44.996138</td>
       <td>91.991373</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>46.639749</td>
+      <td>47.290886</td>
       <td>92.023571</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>45.987687</td>
+      <td>46.450185</td>
       <td>90.556965</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>45.596090</td>
+      <td>45.686837</td>
       <td>91.539567</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>45.623446</td>
+      <td>45.274655</td>
       <td>91.185225</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>46.720702</td>
+      <td>46.873925</td>
       <td>92.298971</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>44.707673</td>
+      <td>44.480759</td>
       <td>91.084639</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>46.016303</td>
+      <td>45.925626</td>
       <td>90.984471</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>46.936449</td>
+      <td>46.674021</td>
       <td>89.981744</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>44.520171</td>
+      <td>44.969274</td>
       <td>90.547140</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>46.339382</td>
+      <td>47.095875</td>
       <td>89.820219</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>43.734104</td>
+      <td>43.239819</td>
       <td>91.768721</td>
     </tr>
     <tr>
       <th>21</th>
-      <td>45.509947</td>
+      <td>45.828263</td>
       <td>92.305556</td>
     </tr>
     <tr>
       <th>22</th>
-      <td>45.127971</td>
+      <td>45.379523</td>
       <td>90.503017</td>
     </tr>
     <tr>
       <th>23</th>
-      <td>46.873613</td>
+      <td>46.673712</td>
       <td>92.147974</td>
     </tr>
     <tr>
       <th>24</th>
-      <td>46.642169</td>
+      <td>45.870295</td>
       <td>91.386320</td>
     </tr>
     <tr>
       <th>25</th>
-      <td>46.406124</td>
+      <td>45.903388</td>
       <td>90.815660</td>
     </tr>
     <tr>
       <th>26</th>
-      <td>44.329772</td>
+      <td>44.230497</td>
       <td>92.216574</td>
     </tr>
     <tr>
       <th>27</th>
-      <td>46.588051</td>
+      <td>46.851907</td>
       <td>90.107460</td>
     </tr>
     <tr>
       <th>28</th>
-      <td>45.403624</td>
+      <td>45.713871</td>
       <td>90.620318</td>
     </tr>
     <tr>
       <th>29</th>
-      <td>47.693721</td>
+      <td>47.671119</td>
       <td>91.165331</td>
     </tr>
   </tbody>
@@ -983,8 +983,8 @@ and the actual decision tree regressor.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
 <span class="n">all_errors</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
@@ -995,7 +995,7 @@ and the actual decision tree regressor.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/41b4b83dd9bf4eba1e34473be00096225910a16d673ce788b7d22b8f673ae07f.png" src="../_images/41b4b83dd9bf4eba1e34473be00096225910a16d673ce788b7d22b8f673ae07f.png" />
+<img alt="../_images/32317e20c4cd1fb9a883118b5855eb0fe3772bdeb16daef7b29024373601d097.png" src="../_images/32317e20c4cd1fb9a883118b5855eb0fe3772bdeb16daef7b29024373601d097.png" />
 </div>
 </div>
 <p>We see that the generalization performance of our decision tree is far from

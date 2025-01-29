@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -710,7 +710,7 @@ optimize hyperparameters using a grid-search approach.</p>
 <p>Let us reload the dataset as we did previously:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
 </pre></div>
@@ -959,7 +959,7 @@ duplicates the information from the <code class="docutils literal notranslate"><
 <p>Once the dataset is loaded, we split it into a training and testing sets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
@@ -973,7 +973,7 @@ categorical features.</p>
 <p>The first step is to select all the categorical columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_column_selector</span> <span class="k">as</span> <span class="n">selector</span>
 
 <span class="n">categorical_columns_selector</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
 <span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -993,7 +993,7 @@ representations.</p></li>
 <p>We now build our <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> by passing it the known categories.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OrdinalEncoder</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
     <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
@@ -1006,7 +1006,7 @@ representations.</p></li>
 the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> to them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTransformer</span>
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
     <span class="p">[(</span><span class="s2">&quot;cat_preprocessor&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
@@ -1020,8 +1020,8 @@ the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder<
 predict whether or not a person earns more than 50 k$ a year.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
     <span class="p">[</span>
@@ -1497,7 +1497,7 @@ the maximum number of nodes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
@@ -1509,11 +1509,11 @@ the maximum number of nodes.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.04 s, sys: 65.3 ms, total: 1.11 s
-Wall time: 5.5 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.02 s, sys: 73.9 ms, total: 1.09 s
+Wall time: 5.42 s
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.20/x64/lib/python3.9/site-packages/sklearn/compose/_column_transformer.py:1651: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.21/x64/lib/python3.9/site-packages/sklearn/compose/_column_transformer.py:1667: FutureWarning: 
 The format of the columns of the &#39;remainder&#39; transformer in ColumnTransformer.transformers_ will change in version 1.7 to match the format of the other transformers.
 At the moment the remainder columns are stored as indices (of type int). With the same ColumnTransformer configuration, in the future they will be stored as column names (of type str).
 To use the new behavior now and suppress this warning, use ColumnTransformer(force_int_remainder_cols=False).
@@ -2108,10 +2108,10 @@ results.</p>
   <tbody>
     <tr>
       <th>5</th>
-      <td>0.365615</td>
-      <td>0.034733</td>
-      <td>0.189857</td>
-      <td>0.014347</td>
+      <td>0.363813</td>
+      <td>0.034220</td>
+      <td>0.184236</td>
+      <td>0.009433</td>
       <td>0.10</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2123,10 +2123,10 @@ results.</p>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.283134</td>
-      <td>0.001377</td>
-      <td>0.163551</td>
-      <td>0.002807</td>
+      <td>0.285176</td>
+      <td>0.004686</td>
+      <td>0.162668</td>
+      <td>0.001065</td>
       <td>0.10</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2138,10 +2138,10 @@ results.</p>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.094858</td>
-      <td>0.000727</td>
-      <td>0.061942</td>
-      <td>0.002832</td>
+      <td>0.099966</td>
+      <td>0.002920</td>
+      <td>0.060944</td>
+      <td>0.002012</td>
       <td>1.00</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2153,10 +2153,10 @@ results.</p>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.129522</td>
-      <td>0.032688</td>
-      <td>0.069649</td>
-      <td>0.010890</td>
+      <td>0.120683</td>
+      <td>0.025298</td>
+      <td>0.069329</td>
+      <td>0.005875</td>
       <td>1.00</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2168,10 +2168,10 @@ results.</p>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.205022</td>
-      <td>0.001352</td>
-      <td>0.107107</td>
-      <td>0.003268</td>
+      <td>0.204911</td>
+      <td>0.003140</td>
+      <td>0.104071</td>
+      <td>0.002241</td>
       <td>0.10</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2183,10 +2183,10 @@ results.</p>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.107825</td>
-      <td>0.004496</td>
-      <td>0.063744</td>
-      <td>0.000358</td>
+      <td>0.106006</td>
+      <td>0.007194</td>
+      <td>0.062166</td>
+      <td>0.001051</td>
       <td>1.00</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2198,10 +2198,10 @@ results.</p>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.455964</td>
-      <td>0.000974</td>
-      <td>0.211685</td>
-      <td>0.007924</td>
+      <td>0.458684</td>
+      <td>0.001886</td>
+      <td>0.210369</td>
+      <td>0.006498</td>
       <td>0.01</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -2213,10 +2213,10 @@ results.</p>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.294691</td>
-      <td>0.005171</td>
-      <td>0.164657</td>
-      <td>0.005412</td>
+      <td>0.294152</td>
+      <td>0.002896</td>
+      <td>0.162116</td>
+      <td>0.002975</td>
       <td>0.01</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -2228,10 +2228,10 @@ results.</p>
     </tr>
     <tr>
       <th>0</th>
-      <td>0.209612</td>
-      <td>0.000730</td>
-      <td>0.110278</td>
-      <td>0.001764</td>
+      <td>0.210558</td>
+      <td>0.001872</td>
+      <td>0.109564</td>
+      <td>0.001511</td>
       <td>0.01</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -2243,10 +2243,10 @@ results.</p>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.065292</td>
-      <td>0.000342</td>
-      <td>0.046207</td>
-      <td>0.004430</td>
+      <td>0.062459</td>
+      <td>0.000589</td>
+      <td>0.043972</td>
+      <td>0.003880</td>
       <td>10.00</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -2258,10 +2258,10 @@ results.</p>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.066628</td>
-      <td>0.000420</td>
-      <td>0.043730</td>
-      <td>0.000941</td>
+      <td>0.064135</td>
+      <td>0.000116</td>
+      <td>0.041164</td>
+      <td>0.002018</td>
       <td>10.00</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -2273,10 +2273,10 @@ results.</p>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.064171</td>
-      <td>0.003292</td>
-      <td>0.041321</td>
-      <td>0.001981</td>
+      <td>0.059174</td>
+      <td>0.000480</td>
+      <td>0.043456</td>
+      <td>0.004038</td>
       <td>10.00</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -2304,7 +2304,7 @@ to remove the <code class="docutils literal notranslate"><span class="pre">&quot
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
     <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">param_name</span>
@@ -2523,7 +2523,7 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 <p>We can use a heatmap representation to show the above dataframe visually.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
     <span class="n">pivoted_cv_results</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.9</span>

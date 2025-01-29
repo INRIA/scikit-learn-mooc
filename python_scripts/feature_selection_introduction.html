@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -700,7 +700,7 @@ generate a synthetic dataset to control the number of features that will be
 informative, redundant, repeated, and random.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_classification</span>
 
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span>
     <span class="n">n_samples</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
@@ -726,7 +726,7 @@ significant scores are selected.</p>
 <p>Let’s create the model without any feature selection:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
 
 <span class="n">model_without_selection</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
@@ -737,9 +737,9 @@ significant scores are selected.</p>
 selection processing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectKBest</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">f_classif</span>
-<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">SelectKBest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">f_classif</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
 
 
 <span class="n">model_with_selection</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
@@ -757,8 +757,8 @@ collect these results via cross-validation.</p>
 the results into a dataframe.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_validate</span>
 
 <span class="n">cv_results_without_selection</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">model_without_selection</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span>
@@ -798,7 +798,7 @@ single pandas dataframe.</p>
 <p>Let’s first analyze the train and score time for each pipeline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
 <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;fit_time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -808,7 +808,7 @@ single pandas dataframe.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d9cfc409eb5acc7fbccfd95a99daec28bf7de93df57d4154407b82a407f912c1.png" src="../_images/d9cfc409eb5acc7fbccfd95a99daec28bf7de93df57d4154407b82a407f912c1.png" />
+<img alt="../_images/8a0e2fa1173f8d6671b4027a172138e30f300c8bb9920ba31fe97fdf180bcf30.png" src="../_images/8a0e2fa1173f8d6671b4027a172138e30f300c8bb9920ba31fe97fdf180bcf30.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -820,7 +820,7 @@ single pandas dataframe.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/086f9bcaa85608e29d2a160b52e88ca10c720b29cda9ea90647684a44b012f7f.png" src="../_images/086f9bcaa85608e29d2a160b52e88ca10c720b29cda9ea90647684a44b012f7f.png" />
+<img alt="../_images/05c6b98f4110042cb75f0b1c1023f33fec5f2c54daea9fc9a380c4cc8f3bbca2.png" src="../_images/05c6b98f4110042cb75f0b1c1023f33fec5f2c54daea9fc9a380c4cc8f3bbca2.png" />
 </div>
 </div>
 <p>We can draw the same conclusions for both training and scoring elapsed time:
@@ -836,7 +836,7 @@ in terms of metrics remain the same. Let’s check the testing score.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2b2456d174b347232fe37514458c5345977035f28c11162655880d45bb2388cb.png" src="../_images/2b2456d174b347232fe37514458c5345977035f28c11162655880d45bb2388cb.png" />
+<img alt="../_images/6487a11a7e5b3a7cbad0fc20744aa7628796fc97672ad0fe6835b31f368fc8b3.png" src="../_images/6487a11a7e5b3a7cbad0fc20744aa7628796fc97672ad0fe6835b31f368fc8b3.png" />
 </div>
 </div>
 <p>We can observe that the model’s generalization performance selecting a subset
@@ -848,7 +848,7 @@ informative features.</p>
 cross-validation. We will print the indices of the two selected features.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cv_results_with_selection</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]):</span>
     <span class="nb">print</span><span class="p">(</span>

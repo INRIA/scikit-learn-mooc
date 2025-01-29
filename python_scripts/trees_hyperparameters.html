@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -709,7 +709,7 @@ regression problems we saw previously.</p>
 <p>First, we load the classification and regression datasets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
 <span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
@@ -738,13 +738,13 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 decision boundary for classification and the regression line for regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.inspection</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionBoundaryDisplay</span>
 
 
-<span class="k">def</span> <span class="nf">fit_and_plot_classification</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fit_and_plot_classification</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
     <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">]</span>
@@ -767,7 +767,7 @@ decision boundary for classification and the regression line for regression.</p>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">fit_and_plot_regression</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fit_and_plot_regression</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
     <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">])</span>
     <span class="n">data_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
         <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span>
@@ -794,7 +794,7 @@ parameter.</p>
 <p>We can first set the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter value to a very low value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="n">max_depth</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
@@ -850,7 +850,7 @@ observing the decision function.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d67d08c393bd6a394cf303e997c79da3d3ca83f4b7b5007ce892846efbfce4ea.png" src="../_images/d67d08c393bd6a394cf303e997c79da3d3ca83f4b7b5007ce892846efbfce4ea.png" />
+<img alt="../_images/5840f4189efdf89e2364171e371e60ebb6999b09ad0fad702ccf1f9ee74289e2.png" src="../_images/5840f4189efdf89e2364171e371e60ebb6999b09ad0fad702ccf1f9ee74289e2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -873,7 +873,7 @@ may overfit the training data, creating partitions which are only correct for
 one should optimize via cross-validation and grid-search.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
 <span class="n">tree_clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">)</span>
@@ -894,7 +894,7 @@ one should optimize via cross-validation and grid-search.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/49d89bd7d4cc53ac3d7059faee748528b24724e9b08b89f8e342eba53a1ddf73.png" src="../_images/49d89bd7d4cc53ac3d7059faee748528b24724e9b08b89f8e342eba53a1ddf73.png" />
+<img alt="../_images/32c148e9370a511de79a8825c037b8c179e095ba66f9ea4b83ad3223a8d4de00.png" src="../_images/32c148e9370a511de79a8825c037b8c179e095ba66f9ea4b83ad3223a8d4de00.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -930,7 +930,7 @@ implies that a decision tree needs more splits to classify properly samples
 from the second subset than from the first subset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_blobs</span>
 
 <span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">,</span> <span class="s2">&quot;Feature #1&quot;</span><span class="p">]</span>
 <span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Class&quot;</span>
@@ -992,7 +992,7 @@ the top are easily separated. However, more splits are required to better
 split the blob were both blue and red data points are mixed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">plot_tree</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_tree</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plot_tree</span><span class="p">(</span><span class="n">tree_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">)</span>
@@ -1064,7 +1064,7 @@ constraint at the leaves or nodes level. We check the effect of
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3edacd641badd320d1773fdf9a984c6cf1a5ee9773b8ae6236e1e5a1bb568b94.png" src="../_images/3edacd641badd320d1773fdf9a984c6cf1a5ee9773b8ae6236e1e5a1bb568b94.png" />
+<img alt="../_images/13e8b146dd8f6261fefd35fd4e1ad26b4f91ed9ef7e1fbe9eb5741bcf5654748.png" src="../_images/13e8b146dd8f6261fefd35fd4e1ad26b4f91ed9ef7e1fbe9eb5741bcf5654748.png" />
 </div>
 </div>
 <p>This hyperparameter allows to have leaves with a minimum number of samples and

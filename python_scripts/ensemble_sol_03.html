@@ -57,8 +57,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script src="../_static/matomo.js"></script>
+    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
@@ -701,8 +701,8 @@ the best generalization performances.</p></li>
 <p>We use the California housing dataset to conduct our experiments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_california_housing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">*=</span> <span class="mi">100</span>  <span class="c1"># rescale the target in k$</span>
@@ -723,7 +723,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
 
 <span class="n">gbdt</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
@@ -734,7 +734,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
 
 <span class="n">forest</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
@@ -747,9 +747,9 @@ the performance of each model. Evaluate the list of parameters <code class="docu
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ValidationCurveDisplay</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationCurveDisplay</span>
 
 <span class="n">param_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
 <span class="n">disp</span> <span class="o">=</span> <span class="n">ValidationCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
@@ -773,7 +773,7 @@ the performance of each model. Evaluate the list of parameters <code class="docu
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4370a27923846bbc92476619d02a519752c25a5b84dc29ba0ba5d70ac9fa78d7.png" src="../_images/4370a27923846bbc92476619d02a519752c25a5b84dc29ba0ba5d70ac9fa78d7.png" />
+<img alt="../_images/b23c1907df9086a091b6f5fcaa8f893e5de559e7265507be985a4c99a14e59c6.png" src="../_images/b23c1907df9086a091b6f5fcaa8f893e5de559e7265507be985a4c99a14e59c6.png" />
 </div>
 </div>
 <p>Both gradient boosting and random forest models improve when increasing the
@@ -798,7 +798,7 @@ improve the overall generalization performance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>320
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>278
 </pre></div>
 </div>
 </div>
@@ -813,7 +813,7 @@ with the values observed in the validation curve.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_error</span>
 
 <span class="n">error</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span> <span class="n">gbdt</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;On average, our GBDT regressor makes an error of </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> k$&quot;</span><span class="p">)</span>
@@ -821,7 +821,7 @@ with the values observed in the validation curve.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 34.11 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 34.57 k$
 </pre></div>
 </div>
 </div>

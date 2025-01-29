@@ -111,7 +111,7 @@ gbdt.n_estimators_
 # %% [markdown] tags=["solution"]
 # We see that the number of trees used is far below 1000 with the current
 # dataset. Training the gradient boosting model with the entire 1000 trees would
-# have been harmful.
+# have been detrimental.
 
 # %% [markdown]
 # Estimate the generalization performance of this model again using the

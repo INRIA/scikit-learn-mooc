@@ -160,7 +160,7 @@ print(
 # it can be beneficial to increase `max_iter` if `max_depth` is low.
 #
 # Finally, we have overlooked the impact of the `learning_rate` parameter
-# until now. This parameter controls how much each tree contributes to the
+# until now. This parameter controls how much each correction contributes to the
 # final prediction. A smaller learning-rate means the corrections of a new
 # tree result in small adjustments to the model prediction. When the
 # learning-rate is small, the model generally needs more trees to achieve good

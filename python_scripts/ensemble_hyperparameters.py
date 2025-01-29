@@ -159,15 +159,15 @@ print(
 # residuals are corrected and then less learners are required. Therefore,
 # it can be beneficial to increase `max_iter` if `max_depth` is low.
 #
-# Finally, we have overlooked the impact of the `learning_rate` parameter until
-# now. When fitting the residuals, we would like the tree to try to correct all
-# possible errors or only a fraction of them. The learning-rate allows you to
-# control this behaviour. A small learning-rate value would only correct the
-# residuals of very few samples. If a large learning-rate is set (e.g., 1), we
-# would fit the residuals of all samples. So, with a very low learning-rate, we
-# would need more estimators to correct the overall error. However, a too large
-# learning-rate tends to obtain an overfitted ensemble, similar to having very
-# deep trees.
+# Finally, we have overlooked the impact of the `learning_rate` parameter
+# until now. This parameter controls how much each correction contributes to the
+# final prediction. A smaller learning-rate means the corrections of a new
+# tree result in small adjustments to the model prediction. When the
+# learning-rate is small, the model generally needs more trees to achieve good
+# performance. A higher learning-rate makes larger adjustments with each tree,
+# which requires fewer trees and trains faster, at the risk of overfitting. The
+# learning-rate needs to be tuned by hyperparameter tuning to obtain the best
+# value that results in a model with good generalization performance.
 
 # %%
 from scipy.stats import loguniform

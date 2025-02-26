@@ -106,7 +106,7 @@ california_housing.frame[features_of_interest].describe()
 # huge difference. It confirms the intuitions that there are a couple of extreme
 # values.
 #
-# Up to know, we discarded the longitude and latitude that carry geographical
+# Up to now, we discarded the longitude and latitude that carry geographical
 # information. In short, the combination of this feature could help us to decide
 # if there are locations associated with high-valued houses. Indeed, we could
 # make a scatter plot where the x- and y-axis would be the latitude and

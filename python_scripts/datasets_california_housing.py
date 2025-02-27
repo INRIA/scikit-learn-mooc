@@ -107,8 +107,8 @@ california_housing.frame[features_of_interest].describe()
 # values.
 #
 # Up to now, we discarded the longitude and latitude that carry geographical
-# information. In short, the combination of this feature could help us to decide
-# if there are locations associated with high-valued houses. Indeed, we could
+# information. In short, the combination of these features could help us decide
+# if there are locations associated with high-value houses. Indeed, we could
 # make a scatter plot where the x- and y-axis would be the latitude and
 # longitude and the circle size and color would be linked with the house value
 # in the district.

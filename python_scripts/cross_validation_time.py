@@ -76,7 +76,6 @@ data_test.sort_index(ascending=True, inplace=True)
 target_train.sort_index(ascending=True, inplace=True)
 target_test.sort_index(ascending=True, inplace=True)
 
-
 # %% [markdown]
 # We will use a decision tree regressor that we expect to overfit and thus not
 # generalize to unseen data. We use a `ShuffleSplit` cross-validation to

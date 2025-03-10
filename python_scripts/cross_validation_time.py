@@ -153,9 +153,7 @@ _ = plt.title("Model predictions using a ShuffleSplit strategy")
 # actual values, even if it has not learned anything meaningful from the data.
 # This is a form of **data leakage**, where the model gains access to future
 # information (testing data) while training, leading to an over-optimistic
-# estimate of the generalization performance. This violates the time-series
-# dependency structure, where future data should not influence predictions made
-# at earlier time points.
+# estimate of the generalization performance.
 #
 # An easy way to verify this is to not shuffle the data during
 # the split. In this case, we will use the first 75% of the data to train and

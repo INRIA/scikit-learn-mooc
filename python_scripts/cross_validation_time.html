@@ -701,10 +701,12 @@ to generate new samples.</p>
 <p>i.i.d is the acronym of “independent and identically distributed”
 (as in “independent and identically distributed random variables”).</p>
 </div>
-<p>This assumption is usually violated when dealing with time series. A sample
-depends on past information.</p>
-<p>We will take an example to highlight such issues with non-i.i.d. data in the
-previous cross-validation strategies presented. We are going to load financial
+<p>This assumption is usually violated in time series, where each sample can be
+influenced by previous samples (both their feature and target values) in an
+inherently ordered sequence.</p>
+<p>In this notebook we demonstrate the issues that arise when using the
+cross-validation strategies we have presented so far, along with non-i.i.d.
+data. For such purpose we load financial
 quotations from some energy companies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -757,12 +759,18 @@ and then we evaluate other cross-validation methods.</p>
 <span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
 <span class="p">)</span>
+
+<span class="c1"># Shuffling breaks the index order, but we still want it to be time-ordered</span>
+<span class="n">data_train</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data_test</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target_train</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">target_test</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>We will use a decision tree regressor that we expect to overfit and thus not
-generalize to unseen data. We will use a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation to
+generalize to unseen data. We use a <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> cross-validation to
 check the generalization performance of our model.</p>
 <p>Let’s first define our model</p>
 <div class="cell docutils container">
@@ -784,7 +792,7 @@ check the generalization performance of our model.</p>
 </div>
 </div>
 </div>
-<p>Finally, we perform the evaluation.</p>
+<p>We then perform the evaluation using the <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> strategy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
@@ -797,15 +805,16 @@ check the generalization performance of our model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: 0.94 ± 0.07
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: 0.90 ± 0.10
 </pre></div>
 </div>
 </div>
 </div>
 <p>Surprisingly, we get outstanding generalization performance. We will
 investigate and find the reason for such good results with a model that is
-expected to fail. We previously mentioned that <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is an iterative
-cross-validation scheme that shuffles data and split. We will simplify this
+expected to fail. We previously mentioned that <code class="docutils literal notranslate"><span class="pre">ShuffleSplit</span></code> is a
+cross-validation method that iteratively shuffles and splits the data.</p>
+<p>We can simplify the
 procedure with a single split and plot the prediction. We can use
 <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> for this purpose.</p>
 <div class="cell docutils container">
@@ -834,7 +843,7 @@ procedure with a single split and plot the prediction. We can use
 </div>
 </div>
 </div>
-<p>Similarly, we obtain good results in terms of <span class="math notranslate nohighlight">\(R^2\)</span>. We will plot the
+<p>Similarly, we obtain good results in terms of <span class="math notranslate nohighlight">\(R^2\)</span>. We now plot the
 training, testing and prediction samples.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -849,20 +858,21 @@ training, testing and prediction samples.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f55846e19b81e2afb36c6d1c34a74e28482695cd728f9893c190decd2022ee4c.png" src="../_images/f55846e19b81e2afb36c6d1c34a74e28482695cd728f9893c190decd2022ee4c.png" />
+<img alt="../_images/dab0e9218e6546d7ba8ad616aa5b7ccacb2094546ca745df432be8aac1dcb2ae.png" src="../_images/dab0e9218e6546d7ba8ad616aa5b7ccacb2094546ca745df432be8aac1dcb2ae.png" />
 </div>
 </div>
-<p>So in this context, it seems that the model predictions are following the
-testing. But we can also see that the testing samples are next to some
-training sample. And with these time-series, we see a relationship between a
-sample at the time <code class="docutils literal notranslate"><span class="pre">t</span></code> and a sample at <code class="docutils literal notranslate"><span class="pre">t+1</span></code>. In this case, we are violating
-the i.i.d. assumption. The insight to get is the following: a model can output
-of its training set at the time <code class="docutils literal notranslate"><span class="pre">t</span></code> for a testing sample at the time <code class="docutils literal notranslate"><span class="pre">t+1</span></code>.
-This prediction would be close to the true value even if our model did not
-learn anything, but just memorized the training dataset.</p>
-<p>An easy way to verify this hypothesis is to not shuffle the data when doing
+<p>From the plot above, we can see that the training and testing samples are
+alternating. This structure effectively evaluates the model’s ability to
+interpolate between neighboring data points, rather than its true
+generalization ability. As a result, the model’s predictions are close to the
+actual values, even if it has not learned anything meaningful from the data.
+This is a form of <strong>data leakage</strong>, where the model gains access to future
+information (testing data) while training, leading to an over-optimistic
+estimate of the generalization performance.</p>
+<p>An easy way to verify this is to not shuffle the data during
 the split. In this case, we will use the first 75% of the data to train and
-the remaining data to test.</p>
+the remaining data to test. This way we preserve the time order of the data, and
+ensure training on past data and evaluating on future data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span><span class="p">,</span> <span class="n">data_test</span><span class="p">,</span> <span class="n">target_train</span><span class="p">,</span> <span class="n">target_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
@@ -886,7 +896,7 @@ the remaining data to test.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.12
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.24
 </pre></div>
 </div>
 </div>
@@ -907,7 +917,7 @@ check what we are predicting.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8ffca3b25a7b1e915f49dd712bfa37ba003f92bf702c7f9c6f65897c7ecd46a7.png" src="../_images/8ffca3b25a7b1e915f49dd712bfa37ba003f92bf702c7f9c6f65897c7ecd46a7.png" />
+<img alt="../_images/4d39493415741d815e6859e1a5fd66365c46e6ceecc78a487fd4a30a0d1e42bf.png" src="../_images/4d39493415741d815e6859e1a5fd66365c46e6ceecc78a487fd4a30a0d1e42bf.png" />
 </div>
 </div>
 <p>We see that our model cannot predict anything because it doesn’t have samples
@@ -931,7 +941,7 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.14 ± 2.28
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.16 ± 1.95
 </pre></div>
 </div>
 </div>
@@ -948,19 +958,13 @@ behaviour.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">TimeSeriesSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">groups</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
-<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span>
-    <span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
-<span class="p">)</span>
+<span class="n">test_score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The mean R2 is: </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_score</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -2.25 ± 3.45
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.21/x64/lib/python3.9/site-packages/sklearn/model_selection/_split.py:1242: UserWarning: The groups parameter is ignored by TimeSeriesSplit
-  warnings.warn(
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.62 ± 2.23
 </pre></div>
 </div>
 </div>

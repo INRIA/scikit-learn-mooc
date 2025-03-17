@@ -139,6 +139,11 @@ Let us give a few pointers on going further with machine learning.
       the solutions shared by the winners in the discussions is a
       good way to learn
 
+### Get certified
+
+- The [official scikit-learn certifications](https://certification.probabl.ai/)
+  are delivered by [probabl](https://probabl.ai/).
+
 ## Bringing value: The bigger picture beyond machine-learning
 
 We will now touch briefly how machine learning fits in wider questions,

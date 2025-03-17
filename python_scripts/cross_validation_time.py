@@ -218,7 +218,8 @@ test_score = cross_val_score(
 print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
-# In conclusion, it is really important to not use an out of the shelves
+# In conclusion, it is really important not to carelessly use a
 # cross-validation strategy which do not respect some assumptions such as having
-# i.i.d data. It might lead to absurd results. These absurd results can make you 
-# think that a predictive model might work while it is not doing so in practice.
+# i.i.d data. It might lead to misleading outcomes, creating the false
+# impression that a predictive model performs well when it may not be the case
+# in the intended real-world scenario.

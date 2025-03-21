@@ -89,6 +89,8 @@ from sklearn.compose import ColumnTransformer
 preprocessor = ColumnTransformer(
     [("cat_preprocessor", categorical_preprocessor, categorical_columns)],
     remainder="passthrough",
+    force_int_remainder_cols=False,  #  avoid warning in scikit-learn v1.6
+    # we make explicit that remainder columns are not forced to be integers
 )
 
 # %% [markdown]

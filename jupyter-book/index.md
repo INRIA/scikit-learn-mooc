@@ -32,11 +32,13 @@ interpreting their predictions.
 <div class="container">
   <div class="row">
     <div class="col-xl">
-      A new session of the
+      The latest version of the MOOC
       <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
-        "Machine learning in Python with scikit-learn MOOC"
+        here
+      "Machine learning in Python with scikit-learn"
       </a>,
-      is available starting on November 8th, 2023 and will remain open in self-paced mode.
+      is available for self-paced learning and is continuously updated to run
+      with the latest version of scikit-learn.
       Enroll for the full MOOC experience (quiz solutions, executable notebooks, discussion
       forum, etc ...) !
       </br>

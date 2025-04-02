@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Feature importance &#8212; Scikit-learn course</title>
   
@@ -29,48 +28,44 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=cf159568" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/matomo.js"></script>
-    <script src="../_static/sklearn_mooc.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_scripts/dev_features_importance';</script>
-    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/matomo.js?v=8af330ab"></script>
+    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="✅ Quiz" href="../interpretation/interpretation_quiz.html" />
@@ -171,6 +166,17 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
@@ -475,9 +481,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -502,14 +508,14 @@ const thebe_selector_output = ".output, .cell_output"
       
       <li><a href="https://mybinder.org/v2/gh/INRIA/scikit-learn-mooc/main?urlpath=tree/python_scripts/dev_features_importance.py" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onBinder"
+   title="Launch on Binder"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="../_static/images/logo_binder.svg">
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
   </span>
 <span class="btn__text-container">Binder</span>
 </a>
@@ -666,9 +672,9 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -721,7 +727,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="feature-importance">
-<h1>Feature importance<a class="headerlink" href="#feature-importance" title="Permalink to this heading">#</a></h1>
+<h1>Feature importance<a class="headerlink" href="#feature-importance" title="Link to this heading">#</a></h1>
 <p>In this notebook, we will detail methods to investigate the importance of
 features used by a given model. We will look at:</p>
 <ol class="arabic simple">
@@ -731,7 +737,7 @@ features used by a given model. We will look at:</p>
 be used for any fitted model.</p></li>
 </ol>
 <section id="presentation-of-the-dataset">
-<h2>0. Presentation of the dataset<a class="headerlink" href="#presentation-of-the-dataset" title="Permalink to this heading">#</a></h2>
+<h2>0. Presentation of the dataset<a class="headerlink" href="#presentation-of-the-dataset" title="Link to this heading">#</a></h2>
 <p>This dataset is a record of neighborhoods in California district, predicting
 the <strong>median house value</strong> (target) given some information about the
 neighborhoods, as the average number of rooms, the latitude, the longitude or
@@ -918,7 +924,7 @@ correlated to the median house price (the target).</p>
 to the average number of bedrooms <code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code>.</p>
 </section>
 <section id="linear-model-inspection">
-<h2>1. Linear model inspection<a class="headerlink" href="#linear-model-inspection" title="Permalink to this heading">#</a></h2>
+<h2>1. Linear model inspection<a class="headerlink" href="#linear-model-inspection" title="Link to this heading">#</a></h2>
 <p>In linear models, the target value is modeled as a linear combination of the
 features.</p>
 <p>Coefficients represent the relationship between the given feature <span class="math notranslate nohighlight">\(X_i\)</span> and
@@ -969,7 +975,7 @@ the coefficient learnt:</p>
 </div>
 </div>
 <section id="sign-of-coefficients">
-<h3>Sign of coefficients<a class="headerlink" href="#sign-of-coefficients" title="Permalink to this heading">#</a></h3>
+<h3>Sign of coefficients<a class="headerlink" href="#sign-of-coefficients" title="Link to this heading">#</a></h3>
 <div class="admonition-a-surprising-association admonition">
 <p class="admonition-title">A surprising association?</p>
 <p><strong>Why is the coefficient associated to <code class="docutils literal notranslate"><span class="pre">AveRooms</span></code> negative?</strong> Does the
@@ -987,7 +993,7 @@ bedrooms on average, when there are more rooms (hence non-bedroom rooms), the
 houses are worth comparatively less.</p>
 </section>
 <section id="scale-of-coefficients">
-<h3>Scale of coefficients<a class="headerlink" href="#scale-of-coefficients" title="Permalink to this heading">#</a></h3>
+<h3>Scale of coefficients<a class="headerlink" href="#scale-of-coefficients" title="Link to this heading">#</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code> have the higher coefficient. However, we can’t compare the
 magnitude of these coefficients directly, since they are not scaled. Indeed,
 <code class="docutils literal notranslate"><span class="pre">Population</span></code> is an integer which can be thousands, while <code class="docutils literal notranslate"><span class="pre">AveBedrms</span></code> is around
@@ -1071,7 +1077,7 @@ the average rooms will induce an decrease of the price when all other features
 remain constant.</p>
 </section>
 <section id="checking-the-variability-of-the-coefficients">
-<h3>Checking the variability of the coefficients<a class="headerlink" href="#checking-the-variability-of-the-coefficients" title="Permalink to this heading">#</a></h3>
+<h3>Checking the variability of the coefficients<a class="headerlink" href="#checking-the-variability-of-the-coefficients" title="Link to this heading">#</a></h3>
 <p>We can check the coefficient variability through cross-validation: it is a
 form of data perturbation.</p>
 <p>If coefficients vary significantly when changing the input dataset their
@@ -1111,7 +1117,7 @@ caution.</p>
 put almost the same weight to the same feature.</p>
 </section>
 <section id="linear-models-with-sparse-coefficients-lasso">
-<h3>Linear models with sparse coefficients (Lasso)<a class="headerlink" href="#linear-models-with-sparse-coefficients-lasso" title="Permalink to this heading">#</a></h3>
+<h3>Linear models with sparse coefficients (Lasso)<a class="headerlink" href="#linear-models-with-sparse-coefficients-lasso" title="Link to this heading">#</a></h3>
 <p>In it important to keep in mind that the associations extracted depend on the
 model. To illustrate this point we consider a Lasso model, that performs
 feature selection with a L1 penalty. Let us fit a Lasso model with a strong
@@ -1194,7 +1200,7 @@ are strongly correlated, the model can pick one or the other to predict well.
 This choice is a bit arbitrary, and must not be over-interpreted.</p>
 </section>
 <section id="lessons-learned">
-<h3>Lessons learned<a class="headerlink" href="#lessons-learned" title="Permalink to this heading">#</a></h3>
+<h3>Lessons learned<a class="headerlink" href="#lessons-learned" title="Link to this heading">#</a></h3>
 <p>Coefficients must be scaled to the same unit of measure to retrieve feature
 importance, or comparing them.</p>
 <p>Coefficients in multivariate linear models represent the dependency between a
@@ -1206,7 +1212,7 @@ idea of their stability.</p>
 </section>
 </section>
 <section id="randomforest-feature-importances">
-<h2>2. RandomForest <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code><a class="headerlink" href="#randomforest-feature-importances" title="Permalink to this heading">#</a></h2>
+<h2>2. RandomForest <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code><a class="headerlink" href="#randomforest-feature-importances" title="Link to this heading">#</a></h2>
 <p>On some algorithms, there are some feature importance methods, inherently
 built within the model. It is the case in RandomForest models. Let’s
 investigate the built-in <code class="docutils literal notranslate"><span class="pre">feature_importances_</span></code> attribute.</p>
@@ -1263,7 +1269,7 @@ feature <code class="docutils literal notranslate"><span class="pre">rnd_num</sp
 <code class="docutils literal notranslate"><span class="pre">HouseAge</span></code> (which has low cardinality).</p>
 </section>
 <section id="feature-importance-by-permutation">
-<h2>3. Feature importance by permutation<a class="headerlink" href="#feature-importance-by-permutation" title="Permalink to this heading">#</a></h2>
+<h2>3. Feature importance by permutation<a class="headerlink" href="#feature-importance-by-permutation" title="Link to this heading">#</a></h2>
 <p>We introduce here a new technique to evaluate the feature importance of any
 given fitted model. It basically shuffles a feature and sees how the model
 changes its prediction. Thus, the change in prediction will correspond to the
@@ -1299,7 +1305,7 @@ model score on testing data: 0.8462081128906224
 and y. Hence, it is reasonable to interpret what it has captured from the
 data.</p>
 <section id="id1">
-<h3>Feature importance<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<h3>Feature importance<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>Lets compute the feature importance for a given feature, say the <code class="docutils literal notranslate"><span class="pre">MedInc</span></code>
 feature.</p>
 <p>For that, we will shuffle this specific feature, keeping the other feature as
@@ -1458,7 +1464,7 @@ It is in line with the overfitting we had noticed between the train and test
 score.</p>
 </section>
 <section id="discussion">
-<h3>discussion<a class="headerlink" href="#discussion" title="Permalink to this heading">#</a></h3>
+<h3>discussion<a class="headerlink" href="#discussion" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>For correlated feature, the permutation could give non realistic sample
 (e.g. nb of bedrooms higher than the number of rooms)</p></li>
@@ -1472,7 +1478,7 @@ will be fitted.</p></li>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="take-away">
-<h1>Take Away<a class="headerlink" href="#take-away" title="Permalink to this heading">#</a></h1>
+<h1>Take Away<a class="headerlink" href="#take-away" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p>One could directly interpret the coefficient in linear model (if the feature
 have been scaled first)</p></li>

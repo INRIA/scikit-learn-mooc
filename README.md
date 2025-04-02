@@ -1,9 +1,8 @@
 # scikit-learn course
 
-📢 📢 📢 A new session of the [Machine learning in Python with scikit-learn
-MOOC](https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn),
-is available starting on November 8th, 2023 and will remain open on self-paced
-mode. Enroll for the full MOOC experience (quiz solutions, executable
+This is the source code for the [Machine learning in Python with scikit-learn
+MOOC](https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn).
+Enroll for the full MOOC experience (quiz solutions, executable
 notebooks, discussion forum, etc ...) !
 
 The MOOC is free and hosted on the [FUN-MOOC](https://fun-mooc.fr/) platform

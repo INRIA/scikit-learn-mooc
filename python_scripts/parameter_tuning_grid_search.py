@@ -89,8 +89,8 @@ from sklearn.compose import ColumnTransformer
 preprocessor = ColumnTransformer(
     [("cat_preprocessor", categorical_preprocessor, categorical_columns)],
     remainder="passthrough",
-    # Silence a deprecation warning in scikit-learn v1.6 related to how
-    # the `transformers_` attribute stores column identifiers internally.
+    # Silence a deprecation warning in scikit-learn v1.6 related to how the
+    # ColumnTransformer stores an attribute that we do not use in this notebook
     force_int_remainder_cols=False,
 )
 

@@ -32,7 +32,7 @@ interpreting their predictions.
 <div class="container">
   <div class="row">
     <div class="col-xl">
-      The MOOC is available for self-study
+      The latest version of the MOOC
       <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
         here
       "Machine learning in Python with scikit-learn"

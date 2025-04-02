@@ -67,7 +67,7 @@ Propose a quantitative evaluation of the success of this decision rule.
 
 ## Notebook module #1: exploratory analysis
 ### Learning objectives:
-    
+
 - load tabular data with pandas
 - visualize marginal distribution with histograms
 - visualize pairwise interactions with scatter plots
@@ -145,7 +145,7 @@ Feature engineering to limit underfitting
 - [ ] Reviews
 
 ## Guillaume: Evaluation of supervised learning models
-        
+
 - [x] Notebook
 - [ ] Slides
 - [ ] Reviews
@@ -156,7 +156,7 @@ Need to add regression plots.
 Logistic Regression, linear regression, classification vs regression, multi-class, linear separability. Pros and cons
         L1 and L2 penalty for linear models
         Learning curves and validation curves (video: how to read curves)
-        
+
 - [x] Notebook
 - [x] Slides
 - [ ] Reviews
@@ -166,7 +166,7 @@ Logistic Regression, linear regression, classification vs regression, multi-clas
 ## Gaël: Feature engineering to augment the expressivity of linear models:
 
 Binning / Polynomial feature extraction / Nystroem method
-        
+
 Feature selection to combat overfitting and speed-up models
 
 ## Guillaume: Univariate feature selection
@@ -183,4 +183,3 @@ Gael thinks that explaining the difference between conditional and
 marginal interpretation is important.
 
 Stability of hyperparameter during cross-validation
-

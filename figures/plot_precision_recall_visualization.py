@@ -20,11 +20,11 @@ feature_columns = ["Feature #0", "Feature #1"]
 target_column = "Class"
 
 X, y = make_blobs(
-    n_samples=100, centers=[[0, 0], [-1, -1]], random_state=0, cluster_std=0.8)
+    n_samples=100, centers=[[0, 0], [-1, -1]], random_state=0, cluster_std=0.8
+)
 
 data_clf = np.concatenate([X, y[:, np.newaxis]], axis=1)
-data_clf = pd.DataFrame(
-    data_clf, columns=feature_columns + [target_column])
+data_clf = pd.DataFrame(data_clf, columns=feature_columns + [target_column])
 data_clf[target_column] = data_clf[target_column].astype(np.int32)
 
 # Use a simple train-test split
@@ -38,23 +38,32 @@ target_train = data_clf_train[target_column]
 target_test = data_clf_test[target_column]
 
 range_features = {
-    feature_name: (data_clf[feature_name].min() - 1,
-                   data_clf[feature_name].max() + 1)
+    feature_name: (
+        data_clf[feature_name].min() - 1,
+        data_clf[feature_name].max() + 1,
+    )
     for feature_name in feature_columns
 }
 
 # Visualize full dataset
 
-sns.scatterplot(data=data_clf, x=feature_columns[0], y=feature_columns[1],
-                hue=target_column, palette=["tab:red", "tab:blue"])
+sns.scatterplot(
+    data=data_clf,
+    x=feature_columns[0],
+    y=feature_columns[1],
+    hue=target_column,
+    palette=["tab:red", "tab:blue"],
+)
 _ = plt.title("Synthetic dataset")
 
 # Create linear model
 
 logistic_regression = make_pipeline(
-    StandardScaler(), LogisticRegression(penalty="l2"))
+    StandardScaler(), LogisticRegression(penalty="l2")
+)
 
 # Define function to visualize the boundary of the decision function
+
 
 def plot_decision_function(fitted_classifier, range_features, ax=None):
     """Plot the boundary of the decision function of a classifier."""
@@ -98,10 +107,18 @@ for C in Cs:
 
     plt.figure()
     ax = sns.scatterplot(
-        data=data_clf_test, x=feature_columns[0], y=feature_columns[1],
-        hue=target_column, palette=["tab:blue", "tab:red"])
+        data=data_clf_test,
+        x=feature_columns[0],
+        y=feature_columns[1],
+        hue=target_column,
+        palette=["tab:blue", "tab:red"],
+    )
     plot_decision_function(logistic_regression, range_features, ax=ax)
     msg = "Weaker regularization" if C == 1 else "Stronger regularization"
     plt.title(msg + f" (C={C})")
     plt.tight_layout()
-    plt.savefig("evaluation_quiz_precision_recall_C" + str(C) + ".svg", facecolor="none", edgecolor="none")
+    plt.savefig(
+        "evaluation_quiz_precision_recall_C" + str(C) + ".svg",
+        facecolor="none",
+        edgecolor="none",
+    )

@@ -101,13 +101,15 @@ r2_train_score_dummy_regressor.describe()
 # %% [markdown]
 # ```{admonition} Mathematical explanation
 # :class: dropdown
-# Recall that the R² score is defined as
+# Recall that the R² score is defined as:
+#
 # $$
 # R^2 = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
 # $$
 #
 # But our model always predicts the mean, i.e. for all $i$,
-# $\hat{y}_i = \bar{y}$, so
+# $\hat{y}_i = \bar{y}$, so:
+#
 # $$
 # R^2 = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
 #     = 1 - \frac{\sum_i (y_i - \bar{y}  )^2}{\sum_i (y_i - \bar{y})^2}

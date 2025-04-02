@@ -52,8 +52,8 @@ target /= 1000
 # Write your code here.
 
 # %% [markdown]
-# Then, instead of using the $R^2$ score, use the mean absolute error. You need
-# to refer to the documentation for the `scoring` parameter.
+# Then, instead of using the $R^2$ score, use the mean absolute error (MAE). You
+# may need to refer to the documentation for the `scoring` parameter.
 
 # %%
 # Write your code here.

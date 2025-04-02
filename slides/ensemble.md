@@ -300,7 +300,7 @@ boosting.
 # Gradient Boosting and binned features
 
 - `sklearn.ensemble.GradientBoostingClassifier`
-  - Implementation of the traditional (exact) method 
+  - Implementation of the traditional (exact) method
   - Fine for small data sets
   - Too slow for `n_samples` > 10,000
 

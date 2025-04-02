@@ -15,7 +15,7 @@ Simple models, easy to understand and fast to train.
 Linear models are easy to understand and fast to train.
 They are typically good baselines.
 
-We will cover intuitions on how they work in a machine learning 
+We will cover intuitions on how they work in a machine learning
 settings.
 
 
@@ -120,7 +120,7 @@ We learn a linear function to predict `y`. Here, the price is expressed
 as a constant multiplied by the area plus an intercept.
 
 Learning this function consists in finding the straight line which is
-as close as possible as all the data points. 
+as close as possible as all the data points.
 
 The corresponding model can then be used to make predictions for any
 possible `x`, as displayed by the blue line.
@@ -197,7 +197,7 @@ build models with hundreds of variables. It is no longer possible to visualize
 the fitting with a simple figure.
 
 For some applications in biology such as Genetics for instance practitioners
-use hundreds of thousands of input variables. 
+use hundreds of thousands of input variables.
 
 ---
 class: split-30

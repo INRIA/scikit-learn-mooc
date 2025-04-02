@@ -254,7 +254,6 @@ plt.scatter(
     color="black",
     label="all features and interactions",
 )
-plt.ylim((0, 1))
 plt.xlabel("Cross-validation iteration")
 plt.ylabel("Accuracy")
 _ = plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")

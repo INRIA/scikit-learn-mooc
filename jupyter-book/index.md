@@ -35,7 +35,10 @@ interpreting their predictions.
       The MOOC is available for self-study
       <a href="https://www.fun-mooc.fr/en/courses/machine-learning-python-scikit-learn">
         here
-      </a>.
+      "Machine learning in Python with scikit-learn"
+      </a>,
+      is available for self-paced learning and is continuously updated to run
+      with the latest version of scikit-learn.
       Enroll for the full MOOC experience (quiz solutions, executable notebooks, discussion
       forum, etc ...) !
       </br>

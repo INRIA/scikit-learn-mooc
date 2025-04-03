@@ -65,6 +65,3 @@ target /= 1000
 
 # %%
 # Write your code here.
-
-# %%
-# Write your code here.

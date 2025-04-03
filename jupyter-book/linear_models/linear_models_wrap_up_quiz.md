@@ -16,8 +16,7 @@ target = ames_housing[target_name]
 `ames_housing` is a pandas dataframe. The column "SalePrice" contains the
 target variable.
 
-To simplify this exercise, we will only used the numerical features defined
-below:
+To simplify this exercise, we only use the numerical features defined below:
 
 ```python
 numerical_features = [
@@ -116,7 +115,7 @@ _Select a single answer_
 
 +++
 
-Now, we will search for the regularization strength that maximizes the
+Now, we search for the regularization strength that maximizes the
 generalization performance of our predictive model. Fit a
 [`sklearn.linear_model.RidgeCV`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html)
 instead of a `Ridge` regressor on the numerical data without the `"GarageArea"`

@@ -421,7 +421,7 @@ alphas = np.logspace(-7, 5, num=100)
 ridge = make_pipeline(
     MinMaxScaler(),
     PolynomialFeatures(degree=2, include_bias=False),
-    RidgeCV(alphas=alphas, store_cv_values=True),
+    RidgeCV(alphas=alphas, store_cv_results=True),
 )
 
 # %%
@@ -458,14 +458,14 @@ print(
 # It indicates that our model is not overfitting.
 #
 # When fitting the ridge regressor, we also requested to store the error found
-# during cross-validation (by setting the parameter `store_cv_values=True`). We
+# during cross-validation (by setting the parameter `store_cv_results=True`). We
 # can plot the mean squared error for the different `alphas` regularization
 # strengths that we tried. The error bars represent one standard deviation of the
 # average mean square error across folds for a given value of `alpha`.
 
 # %%
 mse_alphas = [
-    est[-1].cv_values_.mean(axis=0) for est in cv_results["estimator"]
+    est[-1].cv_results_.mean(axis=0) for est in cv_results["estimator"]
 ]
 cv_alphas = pd.DataFrame(mse_alphas, columns=alphas)
 cv_alphas = cv_alphas.aggregate(["mean", "std"]).T

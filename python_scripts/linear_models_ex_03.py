@@ -126,6 +126,3 @@ data = adult_census.drop(columns=["class", "education-num"])
 
 # %%
 # Write your code here.
-
-# %%
-# Write your code here.

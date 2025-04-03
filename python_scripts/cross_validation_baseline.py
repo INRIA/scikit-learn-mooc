@@ -76,7 +76,45 @@ errors_dummy_regressor = pd.Series(
 errors_dummy_regressor.describe()
 
 # %% [markdown]
-# Something interesting happens if we measure the generalization performance
+# We now plot the cross-validation testing errors for the mean target baseline
+# and the actual decision tree regressor.
+
+# %%
+all_errors = pd.concat(
+    [errors_tree_regressor, errors_dummy_regressor],
+    axis=1,
+)
+all_errors
+
+# %%
+import matplotlib.pyplot as plt
+import numpy as np
+
+bins = np.linspace(start=0, stop=100, num=80)
+all_errors.plot.hist(bins=bins, edgecolor="black")
+plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
+plt.xlabel("Mean absolute error (k$)")
+_ = plt.title("Cross-validation testing errors")
+
+# %% [markdown]
+# We see that the generalization performance of our decision tree is far from
+# being perfect: the price predictions are off by more than 45,000 US dollars on
+# average. However it is much better than the mean price baseline. So this
+# confirms that it is possible to predict the housing price much better by using
+# a model that takes into account the values of the input features (housing
+# location, size, neighborhood income...). Such a model makes more informed
+# predictions and approximately divides the error rate by a factor of 2 compared
+# to the baseline that ignores the input features.
+#
+# Note that here we used the mean price as the baseline prediction. We could
+# have used the median instead. See the online documentation of the
+# [sklearn.dummy.DummyRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyRegressor.html)
+# class for other options. For this particular example, using the mean instead
+# of the median does not make much of a difference but this could have been the
+# case for dataset with extreme outliers.
+
+# %% [markdown]
+# Finally, let us see what happens if we measure the generalization performance
 # using R² rather than mean absolute error:
 
 # %%
@@ -117,41 +155,3 @@ r2_train_score_dummy_regressor.describe()
 #     = 0.
 # $
 # ```
-
-# %% [markdown]
-# We now plot the cross-validation testing errors for the mean target baseline
-# and the actual decision tree regressor.
-
-# %%
-all_errors = pd.concat(
-    [errors_tree_regressor, errors_dummy_regressor],
-    axis=1,
-)
-all_errors
-
-# %%
-import matplotlib.pyplot as plt
-import numpy as np
-
-bins = np.linspace(start=0, stop=100, num=80)
-all_errors.plot.hist(bins=bins, edgecolor="black")
-plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
-plt.xlabel("Mean absolute error (k$)")
-_ = plt.title("Cross-validation testing errors")
-
-# %% [markdown]
-# We see that the generalization performance of our decision tree is far from
-# being perfect: the price predictions are off by more than 45,000 US dollars on
-# average. However it is much better than the mean price baseline. So this
-# confirms that it is possible to predict the housing price much better by using
-# a model that takes into account the values of the input features (housing
-# location, size, neighborhood income...). Such a model makes more informed
-# predictions and approximately divides the error rate by a factor of 2 compared
-# to the baseline that ignores the input features.
-#
-# Note that here we used the mean price as the baseline prediction. We could
-# have used the median instead. See the online documentation of the
-# [sklearn.dummy.DummyRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyRegressor.html)
-# class for other options. For this particular example, using the mean instead
-# of the median does not make much of a difference but this could have been the
-# case for dataset with extreme outliers.

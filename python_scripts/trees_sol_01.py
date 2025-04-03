@@ -147,8 +147,8 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # For example, in the plot below, the first plot on the left shows the
 # certainty of classifying a data point as belonging to the "Adelie" class. The
 # darker the color, the more certain the model is that a given point in the
-# feature space belongs to a given class the predictions. The same logic
-# applies to the other plots in the figure.
+# feature space belongs to a given class. The same logic applies to the other
+# plots in the figure.
 
 # %% tags=["solution"]
 from matplotlib import cm

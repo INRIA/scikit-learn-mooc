@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.16.7
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -29,8 +29,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# In this exercise, we progressively define the regression pipeline and
-# later tune its hyperparameters.
+# In this exercise, we progressively define the regression pipeline and later
+# tune its hyperparameters.
 #
 # Start by defining a pipeline that:
 # * uses a `StandardScaler` to normalize the numerical data;

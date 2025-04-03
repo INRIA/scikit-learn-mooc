@@ -147,7 +147,7 @@ model predicts systematically better than the other.
 Another way is to compare cross-validation test scores of both models
 fold-to-fold, i.e. counting the number of folds where one model has a better
 test score than the other. This provides some extra information: are some
-partitions of the data making the classifaction task particularly easy or hard
+partitions of the data making the classification task particularly easy or hard
 for both models?
 
 Let's visualize the second approach.

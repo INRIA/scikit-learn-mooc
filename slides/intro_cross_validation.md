@@ -123,7 +123,7 @@ through cross-validation
 ]
 .tight[
 - Cross-validation consists of repeating the split such that the training and
-testing sets are different for each evaluation. 
+testing sets are different for each evaluation.
 ]
 
 

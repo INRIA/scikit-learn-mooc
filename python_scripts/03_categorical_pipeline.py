@@ -246,6 +246,13 @@ print(f"The encoded dataset contains {data_encoded.shape[1]} features")
 # exercise** of this sequence.
 
 # %% [markdown]
+# Next to one-hot-encoding and ordinal encoding categorical features,
+# scikit-learn offers the [`TargetEncoder`](https://scikit-learn.org/stable/modules/preprocessing.html#target-encoder).
+# This encoder is well suited for nominal, categorical features with high
+# cardinality. This encoding strategy is beyond the scope of this course,
+# but the interested reader is encouraged to explore this encoder.
+
+# %% [markdown]
 # ## Evaluate our predictive pipeline
 #
 # We can now integrate this encoder inside a machine learning pipeline like we

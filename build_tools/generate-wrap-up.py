@@ -17,28 +17,20 @@ def extract_python_code_blocks(md_file_path):
     in_python_block = False
     current_block = []
 
-    try:
-        with open(md_file_path, "r", encoding="utf-8") as file:
-            for line in file:
-                line = line.rstrip("\n")
+    with open(md_file_path, "r", encoding="utf-8") as file:
+        for line in file:
+            line = line.rstrip("\n")
 
-                if line.strip() == "```python":
-                    in_python_block = True
-                    current_block = []
-                elif line.strip() == "```" and in_python_block:
-                    in_python_block = False
-                    code_blocks.append("\n".join(current_block))
-                elif in_python_block:
-                    current_block.append(line)
+            if line.strip() == "```python":
+                in_python_block = True
+                current_block = []
+            elif line.strip() == "```" and in_python_block:
+                in_python_block = False
+                code_blocks.append("\n".join(current_block))
+            elif in_python_block:
+                current_block.append(line)
 
-        return code_blocks
-
-    except FileNotFoundError:
-        print(f"Error: File '{md_file_path}' not found.")
-        return []
-    except Exception as e:
-        print(f"Error reading file: {e}")
-        return []
+    return code_blocks
 
 
 def write_jupyter_notebook_file(

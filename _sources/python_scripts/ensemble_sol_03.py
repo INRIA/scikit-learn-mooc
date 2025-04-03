@@ -69,8 +69,8 @@ from sklearn.model_selection import ValidationCurveDisplay
 param_range = np.array([1, 2, 5, 10, 20, 50, 100])
 disp = ValidationCurveDisplay.from_estimator(
     forest,
-    data,
-    target,
+    data_train,
+    target_train,
     param_name="n_estimators",
     param_range=param_range,
     scoring="neg_mean_absolute_error",

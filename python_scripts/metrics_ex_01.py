@@ -70,7 +70,7 @@ from sklearn.tree import DecisionTreeClassifier
 tree = DecisionTreeClassifier()
 try:
     scores = cross_val_score(
-        tree, data, target, cv=10, scoring="precision", error_on_score="raise"
+        tree, data, target, cv=10, scoring="precision", error_score="raise"
     )
 except ValueError as exc:
     print(exc)

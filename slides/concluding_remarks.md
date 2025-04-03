@@ -129,7 +129,7 @@ Machine learning in a nutshell, we have seen that
 # 3. Specific models
 
 * Understanding the models
-    - know when they are suited to the data 
+    - know when they are suited to the data
     - intuitions on how to debug them
 
 ???
@@ -148,13 +148,13 @@ Machine learning in a nutshell, we have seen that
 --
 
 * Tree-based: a series of binary choices (thresholds)
-    - For tabular data, columns of different nature 
+    - For tabular data, columns of different nature
     - HistGradientBoostingRegressor and Classifier are goto methods
 
 ???
 
 - Tree-based models
-  - combine a series of binary choices, such as thresholds on the values of 
+  - combine a series of binary choices, such as thresholds on the values of
     various attributes.
   - They are particularly suited to tabular data where columns are quantities of different nature (age, height, job title), a mixing of categorical and continuous
 variables, or have missing values.
@@ -205,7 +205,7 @@ Even with cross-validation, a measure of prediction accuracy is an imperfect est
 
 
 ---
-  
+
 # Machine learning is a small part of the problem most of the times
 
 - How to approach the full problem (the full value chain)
@@ -312,7 +312,7 @@ The predictions may modify how the system functions:
 
 AI systems = loans, jobs, medical treatement, law enforcement
 
-https://fairlearn.org/: intro to some problems 
+https://fairlearn.org/: intro to some problems
 
 ML can shift decision logic, power structures, operational costs
   - It induces changes in our society. Let us make it better

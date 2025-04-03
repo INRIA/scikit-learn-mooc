@@ -19,8 +19,7 @@ target = ames_housing[target_name]
 `ames_housing` is a pandas dataframe. The column "SalePrice" contains the
 target variable.
 
-To simplify this exercise, we will only used the numerical features defined
-below:
+To simplify this exercise, we only use the numerical features defined below:
 
 ```python
 numerical_features = [
@@ -35,8 +34,8 @@ data_numerical = data[numerical_features]
 ```
 
 We will compare the generalization performance of a decision tree and a linear
-regression. For this purpose, we will create two separate predictive models
-and evaluate them by 10-fold cross-validation.
+regression. For this purpose, we create two separate predictive models and
+evaluate them by 10-fold cross-validation.
 
 Thus, use `sklearn.linear_model.LinearRegression` and
 `sklearn.tree.DecisionTreeRegressor` to create the models. Use the default
@@ -62,7 +61,7 @@ _Select a single answer_
 
 +++
 
-Instead of using the default parameters for the decision tree regressor, we will
+Instead of using the default parameters for the decision tree regressor, we can
 optimize the `max_depth` of the tree. Vary the `max_depth` from 1 level up to 15
 levels. Use nested cross-validation to evaluate a grid-search
 (`sklearn.model_selection.GridSearchCV`). Set `cv=10` for both the inner and
@@ -104,11 +103,11 @@ to check that your answer is stable enough.
 
 +++
 
-Instead of using only the numerical features you will now use the entire dataset
+Instead of using only the numerical features, now use the entire dataset as
 available in the variable `data`.
 
 Create a preprocessor by dealing separately with the numerical and categorical
-columns. For the sake of simplicity, we will assume the following:
+columns. For the sake of simplicity, we assume the following:
 
 - categorical columns can be selected if they have an `object` data type;
 - use an `OrdinalEncoder` to encode the categorical columns;

@@ -112,3 +112,46 @@ _ = plt.title("Cross-validation testing errors")
 # class for other options. For this particular example, using the mean instead
 # of the median does not make much of a difference but this could have been the
 # case for dataset with extreme outliers.
+
+# %% [markdown]
+# Finally, let us see what happens if we measure the generalization performance
+# using R² rather than mean absolute error:
+
+# %%
+result_dummy = cross_validate(
+    dummy, data, target, cv=cv, scoring="r2", return_train_score=True, n_jobs=2
+)
+r2_train_score_dummy_regressor = pd.Series(
+    result_dummy["train_score"], name="Dummy regressor"
+)
+r2_train_score_dummy_regressor.describe()
+
+# %% [markdown]
+# The R² score is always 0. It can be shown that this is always the case,
+# because of the [mathematical definition of the R²
+# score](https://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination).
+# This helps put your model's R² score in perspective: if your model has
+# an R² score higher than 0 then it performs better
+# than a `DummyRegressor` with `strategy="mean"`; similarly, if the
+# R² score is lower than 0 then your model is worse than the dummy
+# regressor.
+
+# %% [markdown]
+# ```{admonition} Mathematical explanation
+# :class: dropdown
+# Recall that the R² score is defined as:
+#
+# $
+# R^2 = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
+# $
+#
+# But our model always predicts the mean, i.e. for all $i$,
+# $\hat{y}_i = \bar{y}$, so:
+#
+# $
+# R^2 = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
+#     = 1 - \frac{\sum_i (y_i - \bar{y}  )^2}{\sum_i (y_i - \bar{y})^2}
+#     = 1 - 1
+#     = 0.
+# $
+# ```

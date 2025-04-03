@@ -114,29 +114,23 @@ _ = plt.title("Cross-validation testing errors")
 # case for dataset with extreme outliers.
 
 # %% [markdown]
-# Finally, let us see what happens if we measure the generalization performance
-# using R² rather than mean absolute error:
+# Finally, let us see what happens if we measure the test score using R²
+# instead of the mean absolute error:
 
 # %%
 result_dummy = cross_validate(
     dummy, data, target, cv=cv, scoring="r2", return_train_score=True, n_jobs=2
 )
 r2_train_score_dummy_regressor = pd.Series(
-    result_dummy["train_score"], name="Dummy regressor"
+    result_dummy["train_score"], name="Dummy regressor train score"
 )
 r2_train_score_dummy_regressor.describe()
 
 # %% [markdown]
 # The R² score is always 0. It can be shown that this is always the case,
-# because of the [mathematical definition of the R²
-# score](https://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination).
-# This helps put your model's R² score in perspective: if your model has
-# an R² score higher than 0 then it performs better
-# than a `DummyRegressor` with `strategy="mean"`; similarly, if the
-# R² score is lower than 0 then your model is worse than the dummy
-# regressor.
-
-# %% [markdown]
+# because of its mathematical definition. If you are interested in the proof,
+# unfold the dropdown below.
+#
 # ```{admonition} Mathematical explanation
 # :class: dropdown
 # Recall that the R² score is defined as:
@@ -155,3 +149,21 @@ r2_train_score_dummy_regressor.describe()
 #     = 0.
 # $
 # ```
+#
+# This helps put your model's R² score in perspective: if your model has an R²
+# score higher than 0 then it performs better than a `DummyRegressor` with
+# `strategy="mean"`; similarly, if the R² score is lower than 0 then your model
+# is worse than the dummy regressor. For the test score, we observe something
+# similar, but with an additional effect coming from the dataset variations:
+
+# %%
+r2_test_score_dummy_regressor = pd.Series(
+    result_dummy["test_score"], name="Dummy regressor test score"
+)
+r2_test_score_dummy_regressor.describe()
+
+# %% [markdown]
+# In conclusion, R² establishes an implicit baseline, but while it provides
+# interpretability regarding whether the model performs better or worse than the
+# dummy regressor that always predicts the mean of the target, it sacrifices
+# interpretability in terms of the units.

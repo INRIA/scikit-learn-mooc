@@ -176,9 +176,9 @@ test_score = r2_score(target_test, target_predicted)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
-# In this case, we see that our model is not magical anymore. Indeed, it
-# performs worse than just predicting the mean of the target. We can visually
-# check what we are predicting.
+# In this case, we see that our model is not magical anymore. Remember that a
+# negative $R^2$ means that the regressor performs worse than always predicting
+# the mean of the target. We can visually check what we are predicting.
 
 # %%
 target_train.plot(label="Training")
@@ -233,7 +233,8 @@ print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 # impression that a predictive model performs well when it may not be the case
 # in the intended real-world scenario.
 #
-# scikit-learn offers useful tools for time-series analysis apart from `TimeSeriesSplit`, (see for instance the
-# [Time-related feature engineering example](https://scikit-learn.org/stable/auto_examples/applications/plot_cyclical_feature_engineering.html)
+# scikit-learn offers useful tools for time-series analysis apart from
+# `TimeSeriesSplit`, (see for instance the [Time-related feature engineering
+# example](https://scikit-learn.org/stable/auto_examples/applications/plot_cyclical_feature_engineering.html)
 # in the documentation), and scikit-learn models can yield even better results
 # when combined with other specialized libraries.

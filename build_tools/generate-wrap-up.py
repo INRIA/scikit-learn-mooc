@@ -43,24 +43,18 @@ def write_jupyter_notebook_file(
         code_blocks (list): List of code blocks to write
         output_file (str): Path to the output file
     """
-    try:
-        with open(output_file, "w", encoding="utf-8") as file:
-            file.write(
-                "# %% [markdown] \n # ## Notebook generated from Markdown"
-                " file\n\n"
-            )
+    with open(output_file, "w", encoding="utf-8") as file:
+        file.write(
+            "# %% [markdown] \n # ## Notebook generated from Markdown file\n\n"
+        )
 
-            for i, block in enumerate(code_blocks, 1):
-                file.write(
-                    f"# %% [markdown]\n# ## Cell {i}\n\n# %%\n{block}\n\n"
-                )
+        for i, block in enumerate(code_blocks, 1):
+            file.write(f"# %% [markdown]\n# ## Cell {i}\n\n# %%\n{block}\n\n")
 
-            print(
-                f"Successfully wrote {len(code_blocks)} code cells to"
-                f" {output_file}"
-            )
-    except Exception as e:
-        print(f"Error writing notebook file: {e}")
+        print(
+            f"Successfully wrote {len(code_blocks)} code cells to"
+            f" {output_file}"
+        )
 
 
 def process_quiz_files(input_path, output_dir):

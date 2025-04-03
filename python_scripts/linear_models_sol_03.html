@@ -697,8 +697,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="solution-for-exercise-m4-03">
 <h1>📃 Solution for Exercise M4.03<a class="headerlink" href="#solution-for-exercise-m4-03" title="Link to this heading">#</a></h1>
-<p>Now, we tackle a more realistic classification problem instead of making a
-synthetic dataset. We start by loading the Adult Census dataset with the
+<p>Now, we tackle a (relatively) realistic classification problem instead of making
+a synthetic dataset. We start by loading the Adult Census dataset with the
 following snippet. For the moment we retain only the <strong>numerical features</strong>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -821,10 +821,11 @@ following snippet. For the moment we retain only the <strong>numerical features<
 </div></div></div>
 </div>
 <p>We confirm that all the selected features are numerical.</p>
-<p>Compute the generalization performance in terms of accuracy of a linear model
-composed of a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> and a <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>. Use a 10-fold
-cross-validation with <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> to be able to inspect the
-trained estimators.</p>
+<p>Define a linear model composed of a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> followed by a
+<code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> with default parameters.</p>
+<p>Then use a 10-fold cross-validation to estimate its generalization performance
+in terms of accuracy. Also set <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> to be able to inspect
+the trained estimators.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -894,11 +895,12 @@ reload the Adult Census dataset with the following snippet:</p>
 <li><p>The numerical data must be scaled.</p></li>
 <li><p>The categorical data must be one-hot encoded, set <code class="docutils literal notranslate"><span class="pre">min_frequency=0.01</span></code> to
 group categories concerning less than 1% of the total samples.</p></li>
-<li><p>The predictor is a <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code>. You may need to increase the number
-of <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>, which is 100 by default.</p></li>
+<li><p>The predictor is a <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> with default parameters, except that
+you may need to increase the number of <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>, which is 100 by default.</p></li>
 </ul>
 <p>Use the same 10-fold cross-validation strategy with <code class="docutils literal notranslate"><span class="pre">return_estimator=True</span></code> as
-above to evaluate this complex pipeline.</p>
+above to evaluate the full pipeline, including the feature scaling and encoding
+preprocessing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -1091,21 +1093,22 @@ coefficients?</p>
 <p>We can visually inspect the coefficients and observe that <code class="docutils literal notranslate"><span class="pre">&quot;capital-gain&quot;</span></code> and
 <code class="docutils literal notranslate"><span class="pre">&quot;education_Doctorate&quot;</span></code> are impacting the predictions the most.</p>
 <p>Now create a similar pipeline consisting of the same preprocessor as above,
-followed by a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> and a logistic regression with <code class="docutils literal notranslate"><span class="pre">C=0.01</span></code>.
-Set <code class="docutils literal notranslate"><span class="pre">degree=2</span></code> and <code class="docutils literal notranslate"><span class="pre">interaction_only=True</span></code> to the feature engineering step.
-Remember not to include a “bias” feature to avoid introducing a redundancy
-with the intercept of the subsequent logistic regression.</p>
+followed by a <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> and a logistic regression with <code class="docutils literal notranslate"><span class="pre">C=0.01</span></code> and
+enough <code class="docutils literal notranslate"><span class="pre">max_iter</span></code>. Set <code class="docutils literal notranslate"><span class="pre">degree=2</span></code> and <code class="docutils literal notranslate"><span class="pre">interaction_only=True</span></code> to the feature
+engineering step. Remember not to include a “bias” feature to avoid
+introducing a redundancy with the intercept of the subsequent logistic
+regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialFeatures</span>
 
-<span class="n">model_with_interaction</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+<span class="n">model_with_interactions</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">preprocessor</span><span class="p">,</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">interaction_only</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">5_000</span><span class="p">),</span>
 <span class="p">)</span>
-<span class="n">model_with_interaction</span>
+<span class="n">model_with_interactions</span>
 </pre></div>
 </div>
 </div>
@@ -1569,6 +1572,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                                  [&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;,
                                   &#x27;hours-per-week&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>onehotencoder</div></div></label><div class="sk-toggleable__content "><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content "><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;, min_frequency=0.01)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>standardscaler</div></div></label><div class="sk-toggleable__content "><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content "><pre>StandardScaler()</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>PolynomialFeatures</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.PolynomialFeatures.html">?<span>Documentation for PolynomialFeatures</span></a></div></label><div class="sk-toggleable__content "><pre>PolynomialFeatures(include_bias=False, interaction_only=True)</pre></div> </div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>LogisticRegression</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LogisticRegression.html">?<span>Documentation for LogisticRegression</span></a></div></label><div class="sk-toggleable__content "><pre>LogisticRegression(C=0.01, max_iter=5000)</pre></div> </div></div></div></div></div></div></div></div>
 </div>
+<p>Use the same 10-fold cross-validation strategy as above to evaluate this
+pipeline with interactions. In this case there is no need to return the
+estimator, as the number of features generated by the <code class="docutils literal notranslate"><span class="pre">PolynomialFeatures</span></code> step
+is much too large to be able to visually explore the learned coefficients of the
+final classifier.</p>
 <p>By comparing the cross-validation test scores of both models fold-to-fold,
 count the number of times the model using multiplicative interactions and both
 numerical and categorical features has a better test score than the model
@@ -1577,11 +1585,10 @@ without interactions.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="n">cv_results_interactions</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
-    <span class="n">model_with_interaction</span><span class="p">,</span>
+    <span class="n">model_with_interactions</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">test_score_interactions</span> <span class="o">=</span> <span class="n">cv_results_interactions</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>

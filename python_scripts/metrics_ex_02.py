@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.16.7
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -62,6 +62,9 @@ target /= 1000
 # Finally, use the `cross_validate` function and compute multiple scores/errors
 # at once by passing a list of scorers to the `scoring` parameter. You can
 # compute the $R^2$ score and the mean absolute error for instance.
+
+# %%
+# Write your code here.
 
 # %%
 # Write your code here.

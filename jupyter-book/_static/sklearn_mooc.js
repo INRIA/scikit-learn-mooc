@@ -18,6 +18,20 @@
         };
     }
 
+    function adjustBinderLink() {
+        // Binder links to .py instead of .ipynb. In an ideal world, there
+        // would be a way to do it in _config.yml or you could tell Jupyter to
+        // use the Notebook interface to open the .py but ?factory=Notebook
+        // does not work on the mybinder.org URL only on the
+        // hub.2i2c.mybinder.org URL
+        var elements = document.querySelectorAll('.dropdown-launch-buttons a');
+        elements.forEach(
+            function(el) {
+                el.href = el.href.replace(/python_scripts\/(.+)\.py/, "notebooks/$1.ipynb");
+            }
+        );
+    }
+
     function displayContentOnly() {
         removeIfExists(document.querySelector('#site-navigation'));
         removeIfExists(document.querySelector('.topbar'));
@@ -46,5 +60,6 @@
         if (inIframe() || contentOnly()) {
             displayContentOnly();
         }
+        adjustBinderLink();
     });
 }());

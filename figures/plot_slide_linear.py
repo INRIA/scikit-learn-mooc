@@ -84,7 +84,9 @@ for ii, (xi, yi) in enumerate(zip(x, y)):
             label="error",
         )
     else:
-        plt.plot([xi, xi], [xi * lr.coef_ + lr.intercept_, yi], c="r", linewidth=1)
+        plt.plot(
+            [xi, xi], [xi * lr.coef_ + lr.intercept_, yi], c="r", linewidth=1
+        )
 
 plt.legend()
 plt.xlim((0, 1))
@@ -114,7 +116,9 @@ x_max = np.max(np.abs(X))
 x1 = np.arange(-x_max, x_max, 0.15)
 x2 = np.arange(-x_max, x_max, 0.15)
 x1_grid, x2_grid = np.meshgrid(x1, x2)
-Z = lr.predict(np.concatenate((x1_grid.reshape(-1, 1), x2_grid.reshape(-1, 1)), axis=1))
+Z = lr.predict(
+    np.concatenate((x1_grid.reshape(-1, 1), x2_grid.reshape(-1, 1)), axis=1)
+)
 Z = Z.reshape((len(x1), len(x1)))
 fig = plt.figure()
 
@@ -158,12 +162,13 @@ colors = plt.cm.tab10(np.arange(10))
 training_sets = []
 for i, color in zip(range(6), colors):
     X_train, _, y_train, _ = train_test_split(
-        X_all, y_all, train_size=train_size, random_state=rng)
+        X_all, y_all, train_size=train_size, random_state=rng
+    )
     training_sets.append((X_train, y_train, color))
 
 # %%
 
-for alpha in [0, 50., 500.]:
+for alpha in [0, 50.0, 500.0]:
     plt.figure(figsize=(4, 3))
     plt.axes([0.1, 0.1, 0.9, 0.9])
     style_figs.light_axis()
@@ -176,8 +181,9 @@ for alpha in [0, 50., 500.]:
         regr = linear_model.Ridge(alpha=alpha)
         regr.fit(X_train, y_train)
         plt.plot(X_test, regr.predict(X_test), linewidth=1.5, c=color)
-        plt.savefig(f"ridge_alpha_{int(alpha)}.svg",
-                    facecolor="none", edgecolor="none")
+        plt.savefig(
+            f"ridge_alpha_{int(alpha)}.svg", facecolor="none", edgecolor="none"
+        )
 
 
 # %%
@@ -256,7 +262,9 @@ ax = plt.axes([0.1, 0.1, 0.9, 0.9])
 style_figs.light_axis()
 plt.ylabel("y", size=20, weight=600)
 plt.xlabel("x", size=20, weight=600)
-plt.scatter(X_train, y_train, s=70, zorder=20, c=y, edgecolor="k", cmap=plt.cm.Paired)
+plt.scatter(
+    X_train, y_train, s=70, zorder=20, c=y, edgecolor="k", cmap=plt.cm.Paired
+)
 
 plt.xlim(-3, 5)
 plt.savefig("categorical.svg", facecolor="none", edgecolor="none")
@@ -279,7 +287,9 @@ plt.xlim(-3, 5)
 
 # pl.savefig('logistic.pdf', facecolor='k', edgecolor='k')
 
-plt.scatter(X.ravel(), y, c=y, zorder=25, s=70, edgecolor="k", cmap=plt.cm.Paired)
+plt.scatter(
+    X.ravel(), y, c=y, zorder=25, s=70, edgecolor="k", cmap=plt.cm.Paired
+)
 
 style_figs.light_axis()
 
@@ -347,8 +357,9 @@ from sklearn.datasets import make_blobs
 
 # make 3-class dataset for classification
 centers = [[-5, 0], [3, 1]]  # , [5, -1]]
-X, y = make_blobs(n_samples=1000, centers=centers, cluster_std=1.5,
-                  random_state=40)
+X, y = make_blobs(
+    n_samples=1000, centers=centers, cluster_std=1.5, random_state=40
+)
 transformation = [[0.4, 0.2], [-0.4, 1.2]]
 X = np.dot(X, transformation)
 
@@ -410,14 +421,20 @@ X = np.dot(X, transformation)
 for C in [0.001, 1]:
     multi_class = "multinomial"
     clf = linear_model.LogisticRegression(
-        C=C, solver="sag", max_iter=100, random_state=42, multi_class=multi_class
+        C=C,
+        solver="sag",
+        max_iter=100,
+        random_state=42,
+        multi_class=multi_class,
     ).fit(X, y)
 
     # create a mesh to plot in
     h = 0.02  # step size in the mesh
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+    xx, yy = np.meshgrid(
+        np.arange(x_min, x_max, h), np.arange(y_min, y_max, h)
+    )
 
     # Plot the decision boundary. For that, we will assign a color to each
     # point in the mesh [x_min, x_max]x[y_min, y_max].
@@ -434,14 +451,21 @@ for C in [0.001, 1]:
     for i, color in zip(clf.classes_, colors):
         idx = np.where(y == i)
         plt.scatter(
-            X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.Paired, edgecolor="black", s=20
+            X[idx, 0],
+            X[idx, 1],
+            c=color,
+            cmap=plt.cm.Paired,
+            edgecolor="black",
+            s=20,
         )
 
     style_figs.light_axis()
     plt.ylabel("x2", size=16, weight=600)
     plt.xlabel("x1", size=16, weight=600)
     plt.title("C=" + str(C))
-    plt.savefig("logistic_2D_C" + str(C) + ".svg", facecolor="none", edgecolor="none")
+    plt.savefig(
+        "logistic_2D_C" + str(C) + ".svg", facecolor="none", edgecolor="none"
+    )
 
 
 # %%
@@ -486,7 +510,12 @@ colors = ["C0", "C1", "C2"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
     plt.scatter(
-        X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.BrBG_r, edgecolor="black", s=20
+        X[idx, 0],
+        X[idx, 1],
+        c=color,
+        cmap=plt.cm.BrBG_r,
+        edgecolor="black",
+        s=20,
     )
 
 plt.ylabel("x2", size=16, weight=600)
@@ -510,7 +539,9 @@ def plot_linear_separation(X, y):
     h = 0.02  # step size in the mesh
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+    xx, yy = np.meshgrid(
+        np.arange(x_min, x_max, h), np.arange(y_min, y_max, h)
+    )
 
     Z = -(clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 0])
     Z = Z.reshape(xx.shape)
@@ -533,7 +564,12 @@ colors = ["C0", "C1"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
     plt.scatter(
-        X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.Paired, edgecolor="black", s=20
+        X[idx, 0],
+        X[idx, 1],
+        c=color,
+        cmap=plt.cm.Paired,
+        edgecolor="black",
+        s=20,
     )
 
 plot_linear_separation(X, y)
@@ -554,7 +590,12 @@ colors = ["C0", "C1"]
 for i, color in zip(clf.classes_, colors):
     idx = np.where(y == i)
     plt.scatter(
-        X[idx, 0], X[idx, 1], c=color, cmap=plt.cm.Paired, edgecolor="black", s=20
+        X[idx, 0],
+        X[idx, 1],
+        c=color,
+        cmap=plt.cm.Paired,
+        edgecolor="black",
+        s=20,
     )
 
 plot_linear_separation(X, y)

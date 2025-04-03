@@ -83,10 +83,12 @@ except ValueError as exc:
 
 # %% [markdown]
 # ```{tip}
-# We catch the exception with a `try`/`except` pattern to be able to print it.
-# We also set the `error_score` parameter to `raise` to raise the exception
-# as early as possible. Otherwise, this code would raise a warning in the output
-# for each cross-validation fold before raising the exception.
+# We use a `try`/`except` block to catch possible `ValueError`s and print them
+# if they occur. By setting `error_score="raise"`, we ensure that the exception
+# is raised immediately when an error is encountered. Without this setting, the
+# code would show a warning for each cross-validation split before raising the
+# exception. You can try using the default `error_score` to better understand
+# what this means.
 # ```
 # We get an exception because the default scorer has its positive label set to
 # one (`pos_label=1`), which is not our case (our positive label is "donated").

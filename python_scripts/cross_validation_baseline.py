@@ -114,7 +114,7 @@ _ = plt.title("Cross-validation testing errors")
 # case for dataset with extreme outliers.
 
 # %% [markdown]
-# Finally, let us see what happens if we measure the test score using R²
+# Finally, let us see what happens if we measure the test score using $R^2$
 # instead of the mean absolute error:
 
 # %%
@@ -127,13 +127,13 @@ r2_train_score_dummy_regressor = pd.Series(
 r2_train_score_dummy_regressor.describe()
 
 # %% [markdown]
-# The R² score is always 0. It can be shown that this is always the case,
+# The $R^2$ score is always 0. It can be shown that this is always the case,
 # because of its mathematical definition. If you are interested in the proof,
 # unfold the dropdown below.
 #
 # ```{admonition} Mathematical explanation
 # :class: dropdown
-# Recall that the R² score is defined as:
+# Recall that the $R^2$ score is defined as:
 #
 # $
 # R^2 = 1 - \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (y_i - \bar{y})^2}
@@ -150,11 +150,12 @@ r2_train_score_dummy_regressor.describe()
 # $
 # ```
 #
-# This helps put your model's R² score in perspective: if your model has an R²
-# score higher than 0 then it performs better than a `DummyRegressor` with
-# `strategy="mean"`; similarly, if the R² score is lower than 0 then your model
-# is worse than the dummy regressor. For the test score, we observe something
-# similar, but with an additional effect coming from the dataset variations:
+# This helps put your model's $R^2$ score in perspective: if your model has an
+# $R^2$ score higher than 0 then it performs better than a `DummyRegressor` with
+# `strategy="mean"`; similarly, if the $R^2$ score is lower than 0 then your
+# model is worse than the dummy regressor. For the test score, we observe
+# something similar, but with an additional effect coming from the dataset
+# variations:
 
 # %%
 r2_test_score_dummy_regressor = pd.Series(

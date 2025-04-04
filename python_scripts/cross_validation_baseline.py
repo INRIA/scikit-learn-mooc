@@ -38,9 +38,10 @@ from sklearn.model_selection import ShuffleSplit
 cv = ShuffleSplit(n_splits=30, test_size=0.2, random_state=0)
 
 # %% [markdown]
-# We start by running the cross-validation for a simple decision tree regressor
-# which is our model of interest. Besides, we will store the testing error in a
-# pandas series to make it easier to plot the results.
+# We start by running the cross-validation for a simple decision tree regressor.
+# Here we compute the testing errors in terms of the mean absolute error (MAE)
+# and then we store them in a pandas series to make it easier to plot the
+# results.
 
 # %%
 import pandas as pd

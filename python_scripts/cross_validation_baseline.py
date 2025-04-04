@@ -156,7 +156,8 @@ r2_train_score_dummy_regressor.describe()
 # `strategy="mean"`; similarly, if the $R^2$ score is lower than 0 then your
 # model is worse than the dummy regressor. For the test score, we observe
 # something similar, but with an additional effect coming from the dataset
-# variations:
+# variations: the mean target value measured on the testing set is slightly
+# different from the mean target value measured on the training set.
 
 # %%
 r2_test_score_dummy_regressor = pd.Series(
@@ -174,8 +175,9 @@ r2_test_score_dummy_regressor.describe()
 # the available input features. In practice, external factors often introduce
 # variability in the target that cannot be explained by the available features.
 # Therefore, the $R^2$ score of an optimal model is typically less than 1.0, not
-# due to a fail in the model, but because the input features alone are
-# insufficient to deterministically predict the target.
+# due to a limitation of the machine learning algorithm itself, but because
+# the chosen input features are fundamentally not informative enough to
+# deterministically predict the target.
 #
 # Overall, $R^2$ represents the proportion of the target's variability explained
 # by the model, while MAE, which retains the physical units of the target, can

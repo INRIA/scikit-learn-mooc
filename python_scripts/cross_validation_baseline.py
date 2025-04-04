@@ -163,7 +163,18 @@ r2_test_score_dummy_regressor = pd.Series(
 r2_test_score_dummy_regressor.describe()
 
 # %% [markdown]
-# In conclusion, R² establishes an implicit baseline, but while it provides
-# interpretability regarding whether the model performs better or worse than the
-# dummy regressor that always predicts the mean of the target, it sacrifices
-# interpretability in terms of the units.
+# In conclusion, $R^2$ is a normalized metric, which makes it independent of the
+# physical unit of the target variable, unlike MAE. A $R^2$ score of 0.0 is the
+# performance of a model that always predicts the mean observed value of the
+# target, while 1.0 corresponds to a model that predicts exactly the observed
+# target variable for each given input observation. Notice that it is only
+# possible to reach 1.0 if the target variable is a deterministic function of
+# the available input features. In practice, external factors often introduce
+# variability in the target that cannot be explained by the available features.
+# Therefore, the $R^2$ score of an optimal model is typically less than 1.0, not
+# due to a fail in the model, but because the input features alone are
+# insufficient to deterministically predict the target.
+#
+# Overall, $R^2$ represents the proportion of the target's variability explained
+# by the model, while MAE, which retains the physical units of the target, can
+# be helpful for reporting errors in those units.

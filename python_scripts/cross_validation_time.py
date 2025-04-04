@@ -178,7 +178,7 @@ print(f"The R2 on this single split is: {test_score:.2f}")
 # %% [markdown]
 # In this case, we see that our model is not magical anymore. Remember that a
 # negative $R^2$ means that the regressor performs worse than always predicting
-# the mean of the target. We can visually check what we are predicting.
+# the mean of the target. We can visually check what we are predicting as follows:
 
 # %%
 target_train.plot(label="Training")

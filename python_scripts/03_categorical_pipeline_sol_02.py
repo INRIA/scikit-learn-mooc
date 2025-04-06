@@ -194,7 +194,7 @@ print(
 #
 # |                  | Meaningful order              | Non-meaningful order |
 # | ---------------- | ----------------------------- | -------------------- |
-# | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder`     |
+# | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder` with reasonable depth    |
 # | Linear model     | `OrdinalEncoder` with caution | `OneHotEncoder`      |
 
 # %% [markdown] tags=["solution"]

@@ -190,14 +190,15 @@ print(
 # perfectly fine for `HistGradientBoostingClassifier` and yields fast training
 # times.
 
-# %% [markdown] tags=["solution"]
-# ```{important}
 # Which encoder should I use?
 #
 # |                  | Meaningful order              | Non-meaningful order |
 # | ---------------- | ----------------------------- | -------------------- |
 # | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder`     |
 # | Linear model     | `OrdinalEncoder` with caution | `OneHotEncoder`      |
+
+# %% [markdown] tags=["solution"]
+# ```{important}
 #
 # - `OneHotEncoder`: always does something meaningful, but can be unnecessary
 #   slow with trees.

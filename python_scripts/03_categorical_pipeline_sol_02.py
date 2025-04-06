@@ -170,7 +170,7 @@ print(
     f"with a fitting time of {elapsed_time:.3f}"
 )
 
-# %% [markdown] tags=["solution"]
+# %% [markdown]
 # ### Analysis
 #
 # From an accuracy point of view, the result is almost exactly the same. The
@@ -197,7 +197,7 @@ print(
 # | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder` with reasonable depth    |
 # | Linear model     | `OrdinalEncoder` with caution | `OneHotEncoder`      |
 
-# %% [markdown] tags=["solution"]
+# %% [markdown]
 # ```{important}
 #
 # - `OneHotEncoder`: always does something meaningful, but can be unnecessary

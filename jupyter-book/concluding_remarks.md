@@ -53,7 +53,7 @@
 ### 3. Specific models
 
 - Understanding the models
-  - Helps knowing when they are suited to the data 
+  - Helps knowing when they are suited to the data
   - Gives intuitions on how to debug them
 
 - Linear models
@@ -130,7 +130,7 @@ Let us give a few pointers on going further with machine learning.
 - [Python Data Science Handbook](https://jakevdp.github.io/PythonDataScienceHandbook/) by Jake van der Plas, a broader picture of data science,
   beyond scikit-learn
 - [An Introduction to Statistical Learning](https://www.statlearning.com/),
-  by James, Witten, Hastie, Tibshirani: statistical theory 
+  by James, Witten, Hastie, Tibshirani: statistical theory
   behind the concepts that we have explored
 - [Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/) by Aurélien Géron
 - [Kaggle](http://kaggle.com):
@@ -138,6 +138,11 @@ Let us give a few pointers on going further with machine learning.
     - Participating in challenges, teaming with others, and reading
       the solutions shared by the winners in the discussions is a
       good way to learn
+
+### Get certified
+
+- The [official scikit-learn certifications](https://certification.probabl.ai/)
+  are delivered by [probabl](https://probabl.ai/).
 
 ## Bringing value: The bigger picture beyond machine-learning
 
@@ -166,7 +171,7 @@ to increase coverage of diverse groups?
 Another way to phrase this recommendation is to try to identify
 any sampling bias in the data acquisition process.
 
-### Machine learning is a small part of the problem most of the times 
+### Machine learning is a small part of the problem most of the times
 
 - How to approach the full problem (the full value chain)
 - Acquiring more/better data is often more important than using fancy models

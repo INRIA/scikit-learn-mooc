@@ -5,16 +5,16 @@ repos:
   -   id: check-yaml
   -   id: end-of-file-fixer
       exclude: notebooks
+      exclude_types: [svg]
   -   id: trailing-whitespace
       exclude: notebooks
+      exclude_types: [svg]
 - repo: https://github.com/psf/black
   rev: 23.1.0
   hooks:
   -   id: black
-- repo: https://github.com/pycqa/flake8
-  rev: 4.0.1
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.11.2
   hooks:
-    - id: flake8
-      entry: pflake8
-      additional_dependencies: [pyproject-flake8]
-      types: [file, python]
+  -   id: ruff
+      args: ["--fix", "--output-format=full"]

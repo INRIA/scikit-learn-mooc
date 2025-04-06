@@ -42,59 +42,75 @@ regr = linear_model.LinearRegression()
 regr.fit(X_train.reshape((-1, 1)), y_train)
 
 
-plt.figure(1, figsize=(.8*4, .8*3), facecolor='none')
+plt.figure(1, figsize=(0.8 * 4, 0.8 * 3), facecolor="none")
 # Plot with test data
 plt.clf()
-ax = plt.axes([.1, .1, .9, .9])
+ax = plt.axes([0.1, 0.1, 0.9, 0.9])
 
-plt.scatter(X_train, y_train,  color='k', s=9)
+plt.scatter(X_train, y_train, color="k", s=9)
 
-plt.plot([-.08, .12], regr.predict([[-.08, ], [.12, ]]),
-        linewidth=3)
+plt.plot(
+    [-0.08, 0.12],
+    regr.predict(
+        [
+            [
+                -0.08,
+            ],
+            [
+                0.12,
+            ],
+        ]
+    ),
+    linewidth=3,
+)
 
-plt.axis('tight')
+plt.axis("tight")
 ymin, ymax = plt.ylim()
 style_figs.light_axis()
-plt.ylabel('y', size=16, weight=600)
-plt.xlabel('x', size=16, weight=600)
+plt.ylabel("y", size=16, weight=600)
+plt.xlabel("x", size=16, weight=600)
 
-plt.savefig('ols_simple.svg', facecolor='none', edgecolor='none')
+plt.savefig("ols_simple.svg", facecolor="none", edgecolor="none")
 
-plt.scatter(diabetes_X_test, diabetes_y_test,  color='C1', s=9)
+plt.scatter(diabetes_X_test, diabetes_y_test, color="C1", s=9)
 plt.ylim(ymin, ymax)
-plt.xlim(-.08, .12)
+plt.xlim(-0.08, 0.12)
 
-plt.savefig('ols_test.svg', facecolor='none', edgecolor='none')
+plt.savefig("ols_test.svg", facecolor="none", edgecolor="none")
 
 
 # Plot cubic splines
 plt.clf()
-ax = plt.axes([.1, .1, .9, .9])
+ax = plt.axes([0.1, 0.1, 0.9, 0.9])
 
 from scipy import interpolate
-f = interpolate.interp1d(X_train, y_train,
-                         kind="quadratic",
-                         bounds_error=False, fill_value="extrapolate")
-plt.scatter(X_train, y_train,  color='k', s=9, zorder=20)
-x_spline = np.linspace(-.08, .12, 600)
+
+f = interpolate.interp1d(
+    X_train,
+    y_train,
+    kind="quadratic",
+    bounds_error=False,
+    fill_value="extrapolate",
+)
+plt.scatter(X_train, y_train, color="k", s=9, zorder=20)
+x_spline = np.linspace(-0.08, 0.12, 600)
 y_spline = f(x_spline)
 plt.plot(x_spline, y_spline, linewidth=3)
 
-plt.axis('tight')
-plt.xlim(-.08, .12)
+plt.axis("tight")
+plt.xlim(-0.08, 0.12)
 plt.ylim(ymin, ymax)
 
 style_figs.light_axis()
 
-plt.ylabel('y', size=16, weight=600)
-plt.xlabel('x', size=16, weight=600)
+plt.ylabel("y", size=16, weight=600)
+plt.xlabel("x", size=16, weight=600)
 
 
-plt.savefig('splines_cubic.svg', facecolor='none', edgecolor='none')
+plt.savefig("splines_cubic.svg", facecolor="none", edgecolor="none")
 
 
-plt.scatter(diabetes_X_test, diabetes_y_test,  color='C1', s=9)
-plt.savefig('splines_test.svg', facecolor='none', edgecolor='none')
+plt.scatter(diabetes_X_test, diabetes_y_test, color="C1", s=9)
+plt.savefig("splines_test.svg", facecolor="none", edgecolor="none")
 
 plt.show()
-

@@ -207,3 +207,9 @@ print(
 #   order. Trees can deal with `OrdinalEncoder` fine as long as they are deep
 #   enough.
 # ```
+# %% [markdown]
+# Next to one-hot-encoding and ordinal encoding categorical features,
+# scikit-learn offers the [`TargetEncoder`](https://scikit-learn.org/stable/modules/preprocessing.html#target-encoder).
+# This encoder is well suited for nominal, categorical features with high
+# cardinality. This encoding strategy is beyond the scope of this course,
+# but the interested reader is encouraged to explore this encoder.

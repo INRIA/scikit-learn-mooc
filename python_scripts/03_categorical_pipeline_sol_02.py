@@ -190,7 +190,8 @@ print(
 # perfectly fine for `HistGradientBoostingClassifier` and yields fast training
 # times.
 
-# Which encoder should I use?
+# %% [markdown]
+# ## Which encoder should I use?
 #
 # |                  | Meaningful order              | Non-meaningful order |
 # | ---------------- | ----------------------------- | -------------------- |

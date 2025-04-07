@@ -179,8 +179,8 @@ print(
 # not the case for linear models).
 #
 # However from a computation point of view, the training time is much longer:
-# this is caused by the fact that `OneHotEncoder` generates approximately 10
-# times more features than `OrdinalEncoder`.
+# this is caused by the fact that `OneHotEncoder` generates more features than
+# `OrdinalEncoder`; for each unique categorical value a column is created.
 #
 # Note that the current implementation `HistGradientBoostingClassifier` is still
 # incomplete, and once sparse representation are handled correctly, training

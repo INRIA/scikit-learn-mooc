@@ -170,7 +170,7 @@ print(
     f"with a fitting time of {elapsed_time:.3f}"
 )
 
-# %% [markdown]
+# %% [markdown] tags=["solution"]
 # ### Analysis
 #
 # From an accuracy point of view, the result is almost exactly the same. The

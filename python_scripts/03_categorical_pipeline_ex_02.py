@@ -146,7 +146,8 @@ print(
 # - `OrdinalEncoder`: can be detrimental for linear models unless your category
 #   has a meaningful order and you make sure that `OrdinalEncoder` respects this
 #   order. Trees can deal with `OrdinalEncoder` fine as long as they are deep
-#   enough.
+#   enough. However, when you allow the decision tree to grow very deep, it might
+#   overfit on other features.
 # ```
 # %% [markdown]
 # Next to one-hot-encoding and ordinal encoding categorical features,

@@ -192,24 +192,24 @@ _ = disp.ax_.set(
 #
 # Since this missing/unobserved feature is randomly varying from one sample to
 # the next, it appears as if the target variable was changing because of the
-# impact of a random perturbation or noise, even if there was no significant
+# impact of a random perturbation or noise, even if there were no significant
 # errors made during the data collection process (besides not measuring the
 # unobserved input feature).
 #
 # One extreme case of this situation could be revealed by the fact that there
 # exist in the dataset duplicated samples with exactly the same input feature
-# values but different values for the target variable. In our example, two 
+# values but different values for the target variable. In our example, two
 # houses with the exact same features in our dataset may have different prices
 # because of the seller's rush.
 #
 # Apart from these extreme case, it's hard to know for sure what should qualify
-# or not as noise and which kind of "noise" as introduced above is dominating. 
+# or not as noise and which kind of "noise" as introduced above is dominating.
 # But in practice, the best ways to make our predictive models robust to noise
 # are to avoid overfitting models by:
 #
 # *   selecting models that are simple enough or with tuned hyper-parameters as
 #     explained in this module;
-# *   increasing the number of labeled samples in the training set.
+# *   collecting a larger number of labeled samples for the training set.
 #
 
 # %% [markdown]

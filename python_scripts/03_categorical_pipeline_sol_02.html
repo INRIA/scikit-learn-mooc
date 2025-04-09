@@ -702,6 +702,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Analysis</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-encoder-should-i-use">Which encoder should I use?</a></li>
 </ul>
             </nav>
         </div>
@@ -912,17 +913,18 @@ reason is that <code class="docutils literal notranslate"><span class="pre">Hist
 enough to deal with misleading ordering of integer coded categories (which was
 not the case for linear models).</p>
 <p>However from a computation point of view, the training time is much longer:
-this is caused by the fact that <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> generates approximately 10
-times more features than <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code>.</p>
+this is caused by the fact that <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> generates more features than
+<code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code>; for each unique categorical value a column is created.</p>
 <p>Note that the current implementation <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> is still
 incomplete, and once sparse representation are handled correctly, training
 time might improve with such kinds of encodings.</p>
 <p>The main take away message is that arbitrary integer coding of categories is
 perfectly fine for <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> and yields fast training
 times.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Which encoder should I use?</p>
+</section>
+</section>
+<section id="which-encoder-should-i-use">
+<h2>Which encoder should I use?<a class="headerlink" href="#which-encoder-should-i-use" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -933,7 +935,7 @@ times.</p>
 <tbody>
 <tr class="row-even"><td><p>Tree-based model</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with reasonable depth</p></td>
 </tr>
 <tr class="row-odd"><td><p>Linear model</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> with caution</p></td>
@@ -942,16 +944,23 @@ times.</p>
 </tbody>
 </table>
 </div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>: always does something meaningful, but can be unnecessary
 slow with trees.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code>: can be detrimental for linear models unless your category
 has a meaningful order and you make sure that <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> respects this
 order. Trees can deal with <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code> fine as long as they are deep
-enough.</p></li>
+enough. However, when you allow the decision tree to grow very deep, it might
+overfit on other features.</p></li>
 </ul>
 </div>
-</section>
+<p>Next to one-hot-encoding and ordinal encoding categorical features,
+scikit-learn offers the <a class="reference external" href="https://scikit-learn.org/stable/modules/preprocessing.html#target-encoder"><code class="docutils literal notranslate"><span class="pre">TargetEncoder</span></code></a>.
+This encoder is well suited for nominal, categorical features with high
+cardinality. This encoding strategy is beyond the scope of this course,
+but the interested reader is encouraged to explore this encoder.</p>
 </section>
 </section>
 
@@ -1028,6 +1037,7 @@ enough.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Analysis</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-encoder-should-i-use">Which encoder should I use?</a></li>
 </ul>
   </nav></div>
 

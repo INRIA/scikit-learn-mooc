@@ -58,7 +58,7 @@ forest = RandomForestRegressor(max_depth=None)
 # For both the gradient-boosting and random forest models, create a validation
 # curve using the training set to assess the impact of the number of trees on
 # the performance of each model. Evaluate the list of parameters `param_range =
-# np.array([1, 2, 5, 10, 20, 50, 100])` and use the mean absolute error.
+# np.array([1, 2, 5, 10, 20, 50, 100, 500])` and use the mean absolute error.
 
 # %%
 # solution
@@ -66,7 +66,7 @@ import numpy as np
 
 from sklearn.model_selection import ValidationCurveDisplay
 
-param_range = np.array([1, 2, 5, 10, 20, 50, 100])
+param_range = np.array([1, 2, 5, 10, 20, 50, 100, 200, 500])
 disp = ValidationCurveDisplay.from_estimator(
     forest,
     data_train,
@@ -89,7 +89,30 @@ _ = disp.ax_.set(
 # Random forest models improve when increasing the number of trees in the
 # ensemble. However, the scores reach a plateau where adding new trees just
 # makes fitting and scoring slower.
-#
+# Let's make do the same analysis for our gradient boosting model.
+
+# %%
+# solution
+disp = ValidationCurveDisplay.from_estimator(
+    gbdt,
+    data_train,
+    target_train,
+    param_name="n_estimators",
+    param_range=param_range,
+    scoring="neg_mean_absolute_error",
+    negate_score=True,
+    std_display_style="errorbar",
+    n_jobs=2,
+)
+
+_ = disp.ax_.set(
+    xlabel="Number of trees in the gradient boosting model",
+    ylabel="Mean absolute error (k$)",
+    title="Validation curve for gradient boosting model",
+)
+
+
+# %% [markdown]
 # Gradient boosting models overfit when the number of trees is too large. To
 # avoid adding a new unnecessary tree, unlike random-forest gradient-boosting
 # offers an early-stopping option. Internally, the algorithm uses an
@@ -98,9 +121,9 @@ _ = disp.ax_.set(
 # improving for several iterations, it stops adding trees.
 #
 # Now, create a gradient-boosting model with `n_estimators=1_000`. This number
-# of trees is certainly too large. Change the parameter `n_iter_no_change`
-# such that the gradient boosting fitting stops after adding 5 trees to avoid
-# deterioration of the overall generalization performance.
+# of trees is certainly too large as we have seen above. Change the parameter
+# `n_iter_no_change` such that the gradient boosting fitting stops after adding
+# 5 trees to avoid deterioration of the overall generalization performance.
 
 # %%
 # solution

@@ -136,6 +136,10 @@ gbdt.n_estimators_
 # dataset. Training the gradient boosting model with the entire 1000 trees would
 # have been detrimental.
 
+# Please note that one should not hyperparameter tune the number of estimators
+# for both random forest and gradient boosting models. In this exercise we only
+# show model performance with varying `n_estimators` for educational purposes.
+
 # %% [markdown]
 # Estimate the generalization performance of this model again using the
 # `sklearn.metrics.mean_absolute_error` metric but this time using the test set

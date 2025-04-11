@@ -89,7 +89,8 @@ _ = disp.ax_.set(
 # Random forest models improve when increasing the number of trees in the
 # ensemble. However, the scores reach a plateau where adding new trees just
 # makes fitting and scoring slower.
-# Let's make do the same analysis for our gradient boosting model.
+#
+# Now repeat the analysis for the gradient boosting model.
 
 # %%
 # solution

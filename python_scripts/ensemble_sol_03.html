@@ -749,7 +749,9 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <p>For both the gradient-boosting and random forest models, create a validation
 curve using the training set to assess the impact of the number of trees on
-the performance of each model. Evaluate the list of parameters <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">np.array([1,</span> <span class="pre">2,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">100])</span></code> and use the mean absolute error.</p>
+the performance of each model. Evaluate the list of parameters <code class="docutils literal notranslate"><span class="pre">param_range</span> <span class="pre">=</span> <span class="pre">np.array([1,</span> <span class="pre">2,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20,</span> <span class="pre">50,</span> <span class="pre">100,</span> <span class="pre">200])</span></code> and score it using
+<code class="docutils literal notranslate"><span class="pre">neg_mean_absolute_error</span></code>. Remember to set <code class="docutils literal notranslate"><span class="pre">negate_score=True</span></code> to recover the
+right sign of the Mean Absolute Error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -757,7 +759,7 @@ the performance of each model. Evaluate the list of parameters <code class="docu
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationCurveDisplay</span>
 
-<span class="n">param_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+<span class="n">param_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">])</span>
 <span class="n">disp</span> <span class="o">=</span> <span class="n">ValidationCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">forest</span><span class="p">,</span>
     <span class="n">data_train</span><span class="p">,</span>
@@ -779,12 +781,40 @@ the performance of each model. Evaluate the list of parameters <code class="docu
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d40f1bba7734b7b618e54b5a26e5fcc6ae5fdc171e901bc5dcb1d7b2fec8ca80.png" src="../_images/d40f1bba7734b7b618e54b5a26e5fcc6ae5fdc171e901bc5dcb1d7b2fec8ca80.png" />
+<img alt="../_images/c0d439d9824518c38aa0fbfc44afc4d92108a2665a643e98ce594f85b167ec70.png" src="../_images/c0d439d9824518c38aa0fbfc44afc4d92108a2665a643e98ce594f85b167ec70.png" />
 </div>
 </div>
 <p>Random forest models improve when increasing the number of trees in the
 ensemble. However, the scores reach a plateau where adding new trees just
 makes fitting and scoring slower.</p>
+<p>Now repeat the analysis for the gradient boosting model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">disp</span> <span class="o">=</span> <span class="n">ValidationCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+    <span class="n">gbdt</span><span class="p">,</span>
+    <span class="n">data_train</span><span class="p">,</span>
+    <span class="n">target_train</span><span class="p">,</span>
+    <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_estimators&quot;</span><span class="p">,</span>
+    <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">negate_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">std_display_style</span><span class="o">=</span><span class="s2">&quot;errorbar&quot;</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Number of trees in the gradient boosting model&quot;</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean absolute error (k$)&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Validation curve for gradient boosting model&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f19dd2a1686cf4790940f70d0d44c0799a7dd4abb822136b914c2c87dddedd71.png" src="../_images/f19dd2a1686cf4790940f70d0d44c0799a7dd4abb822136b914c2c87dddedd71.png" />
+</div>
+</div>
 <p>Gradient boosting models overfit when the number of trees is too large. To
 avoid adding a new unnecessary tree, unlike random-forest gradient-boosting
 offers an early-stopping option. Internally, the algorithm uses an
@@ -792,9 +822,9 @@ out-of-sample set to compute the generalization performance of the model at
 each addition of a tree. Thus, if the generalization performance is not
 improving for several iterations, it stops adding trees.</p>
 <p>Now, create a gradient-boosting model with <code class="docutils literal notranslate"><span class="pre">n_estimators=1_000</span></code>. This number
-of trees is certainly too large. Change the parameter <code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code>
-such that the gradient boosting fitting stops after adding 5 trees to avoid
-deterioration of the overall generalization performance.</p>
+of trees is certainly too large as we have seen above. Change the parameter
+<code class="docutils literal notranslate"><span class="pre">n_iter_no_change</span></code> such that the gradient boosting fitting stops after adding
+5 trees to avoid deterioration of the overall generalization performance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
@@ -805,7 +835,7 @@ deterioration of the overall generalization performance.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>211
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>113
 </pre></div>
 </div>
 </div>
@@ -813,6 +843,9 @@ deterioration of the overall generalization performance.</p>
 <p>We see that the number of trees used is far below 1000 with the current
 dataset. Training the gradient boosting model with the entire 1000 trees would
 have been detrimental.</p>
+<p>Please note that one should not hyperparameter tune the number of estimators
+for both random forest and gradient boosting models. In this exercise we only
+show model performance with varying <code class="docutils literal notranslate"><span class="pre">n_estimators</span></code> for educational purposes.</p>
 <p>Estimate the generalization performance of this model again using the
 <code class="docutils literal notranslate"><span class="pre">sklearn.metrics.mean_absolute_error</span></code> metric but this time using the test set
 that we held out at the beginning of the notebook. Compare the resulting value
@@ -828,7 +861,7 @@ with the values observed in the validation curve.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 34.93 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our GBDT regressor makes an error of 36.93 k$
 </pre></div>
 </div>
 </div>

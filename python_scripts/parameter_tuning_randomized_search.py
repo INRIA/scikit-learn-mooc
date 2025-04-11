@@ -73,6 +73,7 @@ categorical_preprocessor = OrdinalEncoder(
 preprocessor = ColumnTransformer(
     [("cat_preprocessor", categorical_preprocessor, categorical_columns)],
     remainder="passthrough",
+    force_int_remainder_cols=False,  # Silence a warning in scikit-learn v1.6.
 )
 
 # %%

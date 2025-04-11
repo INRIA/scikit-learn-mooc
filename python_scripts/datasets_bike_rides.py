@@ -155,7 +155,7 @@ _ = plt.title("Sensor values for different cyclist measurements")
 # smoother visualization.
 
 # %%
-data_ride.resample("60S").mean().plot()
+data_ride.resample("60s").mean().plot()
 plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 _ = plt.title("Sensor values for different cyclist measurements")
 

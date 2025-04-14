@@ -168,15 +168,15 @@ _ = disp.ax_.set(
 # %% [markdown]
 # ## What is noise?
 #
-# In this notebook, we talked about the fact that datasets can contain noise. 
+# In this notebook, we talked about the fact that datasets can contain noise.
 #
 # There can be several kinds of noises, among which we can identify:
 #
-# *   measurement imprecision from a physical sensor (e.g. temperature);
-# *   reporting errors by human collectors.
+# - measurement imprecision from a physical sensor (e.g. temperature);
+# - reporting errors by human collectors.
 #
 # Those unpredictable data acquisition errors can happen either on the input
-# features or in the target variable (in which case we often name this label 
+# features or in the target variable (in which case we often name this label
 # noise).
 #
 # In practice, the **most common source of "noise" is not necessarily a
@@ -201,18 +201,17 @@ _ = disp.ax_.set(
 # variable. That is very unlikely in real life settings, but could the case if
 # all features are categorical or if the numerical features were discretized
 # or rounded up naively. In our example, we can imagine two houses having
-# the exact same features in our dataset, but having different prices
-# because of the (unmeasured) seller's rush.
+# the exact same features in our dataset, but having different prices because
+# of the (unmeasured) seller's rush.
 #
 # Apart from these extreme case, it's hard to know for sure what should qualify
 # or not as noise and which kind of "noise" as introduced above is dominating.
 # But in practice, the best ways to make our predictive models robust to noise
 # are to avoid overfitting models by:
 #
-# *   selecting models that are simple enough or with tuned hyper-parameters as
-#     explained in this module;
-# *   collecting a larger number of labeled samples for the training set.
-#
+# - selecting models that are simple enough or with tuned hyper-parameters as
+#   explained in this module;
+# - collecting a larger number of labeled samples for the training set.
 
 # %% [markdown]
 # ## Summary:

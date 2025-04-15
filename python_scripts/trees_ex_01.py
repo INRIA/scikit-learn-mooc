@@ -59,9 +59,9 @@ data_train, data_test, target_train, target_test = train_test_split(
 #
 # ```{warning}
 # At this time, it is not possible to use `response_method="predict_proba"` for
-# multiclass problems. This is a planned feature for a future version of
-# scikit-learn. In the mean time, you can use `response_method="predict"`
-# instead.
+# multiclass problems on a single plot. This is a planned feature for a future
+# version of scikit-learn. In the mean time, you can use
+# `response_method="predict"` instead.
 # ```
 
 # %%

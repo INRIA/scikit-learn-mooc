@@ -157,7 +157,9 @@ Use `sklearn.model_selection.GridSearchCV` to study the impact of the choice of
 the preprocessor and the number of neighbors on the stratified 10-fold
 cross-validated `balanced_accuracy` metric. We want to study the `n_neighbors`
 in the range `[5, 51, 101]` and `preprocessor` in the range
-`all_preprocessors`.
+`all_preprocessors`. Although we wouldn't do this in a real setting (and
+prefer using nested cross validation), for this question, do the
+cross-validation on the entire dataset.
 
 Which of the following statements hold:
 

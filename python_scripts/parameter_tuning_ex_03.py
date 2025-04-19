@@ -50,6 +50,11 @@ data_train, data_test, target_train, target_test = train_test_split(
 # - the parameter `with_std` of the `StandardScaler` with possible values `True`
 #   or `False`.
 #
+# Use mean absolute error as model performance metric. Remember that a score
+# function should always return higher values for better performance.
+# Therefore, we should choose the negative version as the score metric:
+# `neg_mean_absolute_error`.
+#
 # Notice that in the notebook "Hyperparameter tuning by randomized-search" we
 # pass distributions to be sampled by the `RandomizedSearchCV`. In this case we
 # define a fixed grid of hyperparameters to be explored. Using a `GridSearchCV`

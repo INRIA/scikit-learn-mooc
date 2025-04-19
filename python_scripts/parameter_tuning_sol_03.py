@@ -74,8 +74,8 @@ import numpy as np
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
-    "kneighborsregressor__n_neighbors": (
-        np.logspace(0, 3, num=10).astype(np.int32)
+    "kneighborsregressor__n_neighbors": np.logspace(0, 3, num=10).astype(
+        np.int32
     ),
     "standardscaler__with_mean": [True, False],
     "standardscaler__with_std": [True, False],

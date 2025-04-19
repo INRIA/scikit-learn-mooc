@@ -84,7 +84,7 @@ param_distributions = {
 model_random_search = RandomizedSearchCV(
     model,
     param_distributions=param_distributions,
-    scoring='neg_mean_absolute_error',
+    scoring="neg_mean_absolute_error",
     n_iter=20,
     n_jobs=2,
     verbose=1,
@@ -132,9 +132,7 @@ column_name_mapping = {
 }
 
 cv_results = cv_results.rename(columns=column_name_mapping)
-cv_results = cv_results[column_name_mapping.values()].sort_values(
-    "mean test score"
-)
+cv_results = cv_results[column_name_mapping.values()].sort_values("mean test score")
 
 # %% [markdown] tags=["solution"]
 # In addition, the parallel coordinate plot from `plotly` expects all data to be

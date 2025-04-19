@@ -74,7 +74,9 @@ import numpy as np
 from sklearn.model_selection import RandomizedSearchCV
 
 param_distributions = {
-    "kneighborsregressor__n_neighbors": np.logspace(0, 3, num=10).astype(np.int32),
+    "kneighborsregressor__n_neighbors": (
+        np.logspace(0, 3, num=10).astype(np.int32)
+    ),
     "standardscaler__with_mean": [True, False],
     "standardscaler__with_std": [True, False],
 }
@@ -130,7 +132,9 @@ column_name_mapping = {
 }
 
 cv_results = cv_results.rename(columns=column_name_mapping)
-cv_results = cv_results[column_name_mapping.values()].sort_values("mean test score")
+cv_results = cv_results[column_name_mapping.values()].sort_values(
+    "mean test score"
+)
 
 # %% [markdown] tags=["solution"]
 # In addition, the parallel coordinate plot from `plotly` expects all data to be

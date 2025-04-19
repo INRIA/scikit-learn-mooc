@@ -50,6 +50,11 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 # - the parameter `with_std` of the `StandardScaler` with possible values `True`
 #   or `False`.
 #
+# Use mean absolute error as model performance metric. Remember that a score
+# function should always return higher values for better performance.
+# Therefore, we should choose the negative version as the score metric:
+# `neg_mean_absolute_error`.
+#
 # Notice that in the notebook "Hyperparameter tuning by randomized-search" we
 # pass distributions to be sampled by the `RandomizedSearchCV`. In this case we
 # define a fixed grid of hyperparameters to be explored. Using a `GridSearchCV`
@@ -79,6 +84,7 @@ param_distributions = {
 model_random_search = RandomizedSearchCV(
     model,
     param_distributions=param_distributions,
+    scoring='neg_mean_absolute_error',
     n_iter=20,
     n_jobs=2,
     verbose=1,
@@ -106,6 +112,12 @@ model_random_search.best_params_
 import pandas as pd
 
 cv_results = pd.DataFrame(model_random_search.cv_results_)
+# %% [markdown]
+# As we used `neg_mean_absolute_error` as score metric, we should multiply the
+# score results with minus 1 to get mean absolute error values:
+
+# %% tags=["solution"]
+cv_results["mean_test_score"] *= -1
 
 # %% [markdown] tags=["solution"]
 # To simplify the axis of the plot, we rename the column of the dataframe and
@@ -121,7 +133,7 @@ column_name_mapping = {
 
 cv_results = cv_results.rename(columns=column_name_mapping)
 cv_results = cv_results[column_name_mapping.values()].sort_values(
-    "mean test score", ascending=False
+    "mean test score"
 )
 
 # %% [markdown] tags=["solution"]
@@ -153,7 +165,7 @@ fig.show()
 # holding on any axis of the parallel coordinate plot. You can then slide (move)
 # the range selection and cross two selections to see the intersections.
 #
-# Selecting the best performing models (i.e. above R2 score of ~0.68), we
+# Selecting the best performing models (i.e. below MEA score of ~47), we
 # observe that **in this case**:
 #
 # - scaling the data is important. All the best performing models use scaled

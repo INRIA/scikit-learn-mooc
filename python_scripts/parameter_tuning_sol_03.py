@@ -50,10 +50,10 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 # - the parameter `with_std` of the `StandardScaler` with possible values `True`
 #   or `False`.
 #
-# Use mean absolute error as model performance metric. Remember that a score
-# function should always return higher values for better performance.
-# Therefore, we should choose the negative version as the score metric:
-# `neg_mean_absolute_error`.
+# The `scoring` function is expected to return higher values for better models,
+# since grid/random search objects **maximize** it. Because of that, error
+# metrics like `mean_absolute_error` must be negated (using the `neg_` prefix)
+# to work correctly (remember lower errors represent better models).
 #
 # Notice that in the notebook "Hyperparameter tuning by randomized-search" we
 # pass distributions to be sampled by the `RandomizedSearchCV`. In this case we

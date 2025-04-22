@@ -165,7 +165,7 @@ fig.show()
 # holding on any axis of the parallel coordinate plot. You can then slide (move)
 # the range selection and cross two selections to see the intersections.
 #
-# Selecting the best performing models (i.e. below MEA score of ~47), we
+# Selecting the best performing models (i.e. below MEA score of ~47 k$), we
 # observe that **in this case**:
 #
 # - scaling the data is important. All the best performing models use scaled

@@ -40,8 +40,9 @@ scaler = StandardScaler()
 model = make_pipeline(scaler, KNeighborsRegressor())
 
 # %% [markdown]
-# Use `RandomizedSearchCV` with `n_iter=20` to find the best set of
-# hyperparameters by tuning the following parameters of the `model`:
+# Use `RandomizedSearchCV` with `n_iter=20` and
+# `scoring="neg_mean_absolute_error"` to tune the following hyperparameters
+# of the `model`:
 #
 # - the parameter `n_neighbors` of the `KNeighborsRegressor` with values
 #   `np.logspace(0, 3, num=10).astype(np.int32)`;
@@ -49,6 +50,11 @@ model = make_pipeline(scaler, KNeighborsRegressor())
 #   `True` or `False`;
 # - the parameter `with_std` of the `StandardScaler` with possible values `True`
 #   or `False`.
+#
+# The `scoring` function is expected to return higher values for better models,
+# since grid/random search objects **maximize** it. Because of that, error
+# metrics like `mean_absolute_error` must be negated (using the `neg_` prefix)
+# to work correctly (remember lower errors represent better models).
 #
 # Notice that in the notebook "Hyperparameter tuning by randomized-search" we
 # pass distributions to be sampled by the `RandomizedSearchCV`. In this case we
@@ -79,6 +85,7 @@ param_distributions = {
 model_random_search = RandomizedSearchCV(
     model,
     param_distributions=param_distributions,
+    scoring="neg_mean_absolute_error",
     n_iter=20,
     n_jobs=2,
     verbose=1,
@@ -108,6 +115,13 @@ import pandas as pd
 cv_results = pd.DataFrame(model_random_search.cv_results_)
 
 # %% [markdown] tags=["solution"]
+# As we used `neg_mean_absolute_error` as score metric, we should multiply the
+# score results with minus 1 to get mean absolute error values:
+
+# %% tags=["solution"]
+cv_results["mean_test_score"] *= -1
+
+# %% [markdown] tags=["solution"]
 # To simplify the axis of the plot, we rename the column of the dataframe and
 # only select the mean test score and the value of the hyperparameters.
 
@@ -121,7 +135,7 @@ column_name_mapping = {
 
 cv_results = cv_results.rename(columns=column_name_mapping)
 cv_results = cv_results[column_name_mapping.values()].sort_values(
-    "mean test score", ascending=False
+    "mean test score"
 )
 
 # %% [markdown] tags=["solution"]
@@ -153,7 +167,7 @@ fig.show()
 # holding on any axis of the parallel coordinate plot. You can then slide (move)
 # the range selection and cross two selections to see the intersections.
 #
-# Selecting the best performing models (i.e. above R2 score of ~0.68), we
+# Selecting the best performing models (i.e. below MEA score of ~47 k$), we
 # observe that **in this case**:
 #
 # - scaling the data is important. All the best performing models use scaled

@@ -40,8 +40,9 @@ scaler = StandardScaler()
 model = make_pipeline(scaler, KNeighborsRegressor())
 
 # %% [markdown]
-# Use `RandomizedSearchCV` with `n_iter=20` to find the best set of
-# hyperparameters by tuning the following parameters of the `model`:
+# Use `RandomizedSearchCV` with `n_iter=20` and
+# `scoring="neg_mean_absolute_error"` to tune the following hyperparameters
+# of the `model`:
 #
 # - the parameter `n_neighbors` of the `KNeighborsRegressor` with values
 #   `np.logspace(0, 3, num=10).astype(np.int32)`;

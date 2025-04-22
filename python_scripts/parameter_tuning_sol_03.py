@@ -113,7 +113,8 @@ model_random_search.best_params_
 import pandas as pd
 
 cv_results = pd.DataFrame(model_random_search.cv_results_)
-# %% [markdown]
+
+# %% [markdown] tags=["solution"]
 # As we used `neg_mean_absolute_error` as score metric, we should multiply the
 # score results with minus 1 to get mean absolute error values:
 

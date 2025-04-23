@@ -94,9 +94,7 @@ from sklearn.preprocessing import StandardScaler
 preprocessor = make_column_transformer(
     (StandardScaler(), numerical_columns),
     (
-        OrdinalEncoder(
-            handle_unknown="use_encoded_value", unknown_value=-1
-        ),
+        OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
         categorical_columns,
     ),
 )

@@ -58,15 +58,15 @@ import time
 
 from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.ensemble import HistGradientBoostingClassifier
 
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [("categorical", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
 

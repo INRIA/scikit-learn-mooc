@@ -37,21 +37,15 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %%
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import ColumnTransformer, make_column_transformer
 from sklearn.compose import make_column_selector as selector
 from sklearn.preprocessing import OrdinalEncoder
 
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [
-        (
-            "cat_preprocessor",
-            categorical_preprocessor,
-            selector(dtype_include=object),
-        )
-    ],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, selector(dtype_include=object)),
     remainder="passthrough",
 )
 

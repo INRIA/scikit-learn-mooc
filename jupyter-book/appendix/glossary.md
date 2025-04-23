@@ -368,7 +368,7 @@ The dataset used to train the [model](#model).
 
 An [estimator](#estimator) (i.e. an object that has a `fit` method) supporting
 `transform` and/or `fit_transform`. Examples for transformers are
-`StandardScaler` or `ColumnTransformer`.
+`StandardScaler` or `OneHotEncoder`.
 
 ### underfitting
 

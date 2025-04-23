@@ -80,14 +80,14 @@ categorical_preprocessor = OrdinalEncoder(
 )
 
 # %% [markdown]
-# We then use a `ColumnTransformer` to select the categorical columns and apply
+# We then use `make_column_transformer` to select the categorical columns and apply
 # the `OrdinalEncoder` to them.
 
 # %%
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 
-preprocessor = ColumnTransformer(
-    [("cat_preprocessor", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
 

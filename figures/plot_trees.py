@@ -21,7 +21,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import style_figs
 
-dataset = pd.read_csv("../datasets/penguins.csv").dropna(subset=["Body Mass (g)"])
+dataset = pd.read_csv("../datasets/penguins.csv").dropna(
+    subset=["Body Mass (g)"]
+)
 dataset = dataset[[spe[:3] != "Chi" for spe in dataset["Species"]]]
 color = ["C0" if (x[0] == "A") else "C1" for x in dataset["Species"]]
 plt.figure(figsize=(4, 3))
@@ -63,9 +65,8 @@ plt.savefig("tree2D_3split.svg", bbox_inches="tight")
 # %% [markdown]
 # # Regression
 
-# %% 
+# %%
 # Progressive growing of regression trees with max_leaf_nodes
-import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeRegressor
 
@@ -106,6 +107,7 @@ y_2_leafs = dtr_2_leafs.predict(X_test)
 y_3_leafs = dtr_3_leafs.predict(X_test)
 y_4_leafs = dtr_4_leafs.predict(X_test)
 
+
 # Plot the results
 def update_legend(ax, bbox_to_anchor=(0.5, 0.5, 0.5, 0.5)):
     handles, labels = ax.get_legend_handles_labels()
@@ -118,8 +120,9 @@ def update_legend(ax, bbox_to_anchor=(0.5, 0.5, 0.5, 0.5)):
             return label
 
     labels, handles = zip(*sorted(zip(labels, handles), key=sort_key))
-    ax.legend(handles, labels, loc="upper right",
-              bbox_to_anchor=bbox_to_anchor)
+    ax.legend(
+        handles, labels, loc="upper right", bbox_to_anchor=bbox_to_anchor
+    )
 
 
 plt.figure(figsize=(4, 4))
@@ -132,7 +135,10 @@ style_figs.light_axis()
 plt.scatter(X, y, s=40, edgecolor="black", c="k", label="training data")
 update_legend(ax)
 plt.savefig(
-    "tree_regression1.svg", facecolor="none", edgecolor="none", bbox_inches="tight"
+    "tree_regression1.svg",
+    facecolor="none",
+    edgecolor="none",
+    bbox_inches="tight",
 )
 
 predictions = [
@@ -155,8 +161,10 @@ for n_trees in range(1, len(predictions) + 1):
         plt.plot(X_test.ravel(), preds, color=color, label=label, linewidth=4)
     update_legend(ax)
     plt.savefig(
-        f"tree_regression{n_trees + 1}.svg", facecolor="none",
-        edgecolor="none", bbox_inches="tight"
+        f"tree_regression{n_trees + 1}.svg",
+        facecolor="none",
+        edgecolor="none",
+        bbox_inches="tight",
     )
 
 # %%
@@ -175,10 +183,11 @@ X, new_X, y, new_y = train_test_split(X, y, train_size=50, random_state=0)
 X_test = np.linspace(0, 6, 500)[:, np.newaxis]
 
 for idx, col, label, max_leaf_nodes in zip(
-    [0, 1, 2], ["C0", "C1", "C2"], ["underfit", "fit", "overfit"],
-    [3, 10, None]
+    [0, 1, 2],
+    ["C0", "C1", "C2"],
+    ["underfit", "fit", "overfit"],
+    [3, 10, None],
 ):
-
     plt.figure(figsize=(4, 3))
     plt.axes([0.1, 0.1, 0.9, 0.9])
     style_figs.light_axis()
@@ -186,13 +195,17 @@ for idx, col, label, max_leaf_nodes in zip(
     plt.xlabel("x", size=22, weight=600)
 
     plt.scatter(X, y, color="k")
-    plt.scatter(new_X, new_y, color="lightgrey", alpha=0.5, s=14, edgecolor="grey")
+    plt.scatter(
+        new_X, new_y, color="lightgrey", alpha=0.5, s=14, edgecolor="grey"
+    )
 
     reg = DecisionTreeRegressor(max_leaf_nodes=max_leaf_nodes)
     reg.fit(X, y)
     y_pred = reg.predict(X_test)
     plt.plot(X_test, y_pred, color=col)
-    plt.savefig(f"../figures/dt_{label}.svg", facecolor="none", edgecolor="none")
+    plt.savefig(
+        f"../figures/dt_{label}.svg", facecolor="none", edgecolor="none"
+    )
 
 
 # %%
@@ -225,7 +238,9 @@ style_figs.light_axis()
 plt.ylabel("y", size=22, weight=600)
 plt.xlabel("x", size=22, weight=600)
 plt.scatter(X, y, color="k")
-plt.savefig("../figures/bagging_reg_data.svg", facecolor="none", edgecolor="none")
+plt.savefig(
+    "../figures/bagging_reg_data.svg", facecolor="none", edgecolor="none"
+)
 
 
 def plot_subsample_bagging(seed=0, line_col="C0", plot_reg=False):
@@ -241,7 +256,9 @@ def plot_subsample_bagging(seed=0, line_col="C0", plot_reg=False):
     reg.fit(X[indice_subsample], y[indice_subsample])
     y_pred = reg.predict(X_test)
     plt.scatter(X, y, color="white", edgecolor="k")
-    plt.scatter(X[indice_subsample], y[indice_subsample], color="black", edgecolor="k")
+    plt.scatter(
+        X[indice_subsample], y[indice_subsample], color="black", edgecolor="k"
+    )
     if plot_reg:
         plt.plot(X_test.ravel(), y_pred, color=line_col)
 
@@ -255,7 +272,9 @@ for ii in range(6):
     plot_subsample_bagging(seed=ii)
 
 
-plt.savefig("../figures/bagging_reg_grey.svg", facecolor="none", edgecolor="none")
+plt.savefig(
+    "../figures/bagging_reg_grey.svg", facecolor="none", edgecolor="none"
+)
 
 # Plot 7 grey bagging + reg line
 plt.figure(figsize=(24, 4))
@@ -266,7 +285,9 @@ for ii in range(6):
     plot_subsample_bagging(seed=ii, plot_reg=True)
 
 plt.savefig(
-    "../figures/bagging_reg_grey_fitted.svg", facecolor="none", edgecolor="none"
+    "../figures/bagging_reg_grey_fitted.svg",
+    facecolor="none",
+    edgecolor="none",
 )
 
 
@@ -284,7 +305,9 @@ reg = BaggingRegressor(max_samples=10, n_estimators=1000)
 reg.fit(X, y)
 y_pred = reg.predict(X_test)
 plt.plot(X_test.ravel(), y_pred, color="C0")
-plt.savefig("../figures/bagging_reg_blue.svg", facecolor="none", edgecolor="none")
+plt.savefig(
+    "../figures/bagging_reg_blue.svg", facecolor="none", edgecolor="none"
+)
 
 
 # %%
@@ -295,7 +318,6 @@ style_figs.light_axis()
 plt.scatter(X, y, color="k")
 
 for ii in range(7):
-
     plot_subsample_bagging(seed=ii, line_col="lightgrey")
 
 plt.ylabel("y", size=22, weight=600)
@@ -306,7 +328,9 @@ reg = BaggingRegressor(n_estimators=10)
 reg.fit(X, y)
 y_pred = reg.predict(X)
 plt.plot(X, y_pred, color="C0")
-plt.savefig("../figures/bagging_reg_blue_grey.svg", facecolor="none", edgecolor="none")
+plt.savefig(
+    "../figures/bagging_reg_blue_grey.svg", facecolor="none", edgecolor="none"
+)
 
 
 # %%
@@ -316,13 +340,13 @@ plt.savefig("../figures/bagging_reg_blue_grey.svg", facecolor="none", edgecolor=
 # %% [markdown]
 # # Bagging Classification
 
+
 # %%
 # tree drawing for bagging :
 # https://docs.google.com/drawings/d/1u5GrZTnIWHb3NCwMmuP-9iQpUfyDz0PHbhCF8X8mNlI/edit?usp=sharing
 # https://docs.google.com/drawings/d/1Aj4FqGgkwD7M-f4hh1ZRK34YCWmKtmaYbuQ7WiJ-K8I/edit?usp=sharing
 # https://docs.google.com/drawings/d/1KZHuvhQOueMXw1pVXS8rgdSKBB-wYcWblZYqtLlTts4/edit?usp=sharing
 def plot_init(col_c="C0", col_s="C1", size=90):
-
     circle = [[1, 1], [1, 3], [1.5, 2], [1.4, 4.4], [0.5, 6], [2, 5.6]]
     circle2 = [[3, 6.5], [4, 5.5], [5, 5.8]]
 
@@ -369,7 +393,11 @@ def plot_bagging(circle, square, new_point=False):
     plt.xlim((0, 7))
     plt.ylim((0, 7))
     plt.scatter(
-        [xy[0] for xy in circle], [xy[1] for xy in circle], c="C0", edgecolor="k", s=160
+        [xy[0] for xy in circle],
+        [xy[1] for xy in circle],
+        c="C0",
+        edgecolor="k",
+        s=160,
     )
     plt.scatter(
         [xy[0] for xy in square],
@@ -467,7 +495,9 @@ style_figs.light_axis()
 plt.ylabel("y", size=22, weight=600)
 plt.xlabel("x", size=22, weight=600)
 plt.scatter(X, y, color="k")
-plt.savefig("../figures/boosting_reg_data.svg", facecolor="none", edgecolor="none")
+plt.savefig(
+    "../figures/boosting_reg_data.svg", facecolor="none", edgecolor="none"
+)
 
 # %%
 # Boosting iteration
@@ -493,7 +523,9 @@ def plot_boost(pos, size=None):
 
 adaboost = []
 for i in range(1, 100):
-    adaboost.append(AdaBoostRegressor(n_estimators=i, random_state=1).fit(X, y))
+    adaboost.append(
+        AdaBoostRegressor(n_estimators=i, random_state=1).fit(X, y)
+    )
 
 plt.figure(figsize=(24, 8))
 
@@ -544,7 +576,11 @@ style_figs.light_axis()
 plt.plot([2.3, 2.3], [0, 7], col_sep, ls="--")
 circle2 = [[3, 6.5], [4, 5.5], [5, 5.8]]
 plt.scatter(
-    [xy[0] for xy in circle2], [xy[1] for xy in circle2], c="C0", edgecolor="k", s=350
+    [xy[0] for xy in circle2],
+    [xy[1] for xy in circle2],
+    c="C0",
+    edgecolor="k",
+    s=350,
 )
 plt.savefig("boosting1.svg", facecolor="none", edgecolor="none")
 

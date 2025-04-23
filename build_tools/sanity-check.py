@@ -4,8 +4,8 @@ import difflib
 
 # TODO: we could get the list from .gitignore
 IGNORE_LIST = [
-    '.ipynb_checkpoints',
-    '__pycache__',
+    ".ipynb_checkpoints",
+    "__pycache__",
 ]
 
 folder1, folder2 = sys.argv[1:3]
@@ -28,6 +28,7 @@ if basenames1 != basenames2:
     only_in_folder2 = set(basenames2) - set(basenames1)
 
     raise RuntimeError(
-        f'Inconsistency between folder {folder1} and {folder2}\n'
-        f'Only in folder {folder1}: {only_in_folder1}\n'
-        f'Only in folder {folder2}: {only_in_folder2}')
+        f"Inconsistency between folder {folder1} and {folder2}\n"
+        f"Only in folder {folder1}: {only_in_folder1}\n"
+        f"Only in folder {folder2}: {only_in_folder2}"
+    )

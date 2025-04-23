@@ -147,7 +147,7 @@ model predicts systematically better than the other.
 Another way is to compare cross-validation test scores of both models
 fold-to-fold, i.e. counting the number of folds where one model has a better
 test score than the other. This provides some extra information: are some
-partitions of the data making the classifaction task particularly easy or hard
+partitions of the data making the classification task particularly easy or hard
 for both models?
 
 Let's visualize the second approach.
@@ -166,4 +166,13 @@ model using only numerical features lies in the range:
 
 
 _Select a single answer_
+```
+
++++
+
+```{note}
+It is normal for this module to take longer than expected for people who are
+discovering Python programming, but don't get discouraged! The programming
+mechanisms will come with experience and the programming exercises in the
+following modules will seem more and more natural as time goes by.
 ```

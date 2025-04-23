@@ -240,7 +240,12 @@ pivoted_cv_results
 import seaborn as sns
 
 ax = sns.heatmap(
-    pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7, vmax=0.9
+    pivoted_cv_results,
+    annot=True,
+    cmap="YlGnBu",
+    vmin=0.7,
+    vmax=0.9,
+    cbar_kws={"label": "mean test accuracy"},
 )
 ax.invert_yaxis()
 

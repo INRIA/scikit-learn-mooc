@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.16.7
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -62,7 +62,7 @@ model = Pipeline(
 # %% [markdown]
 # Use the previously defined model (called `model`) and using two nested `for`
 # loops, make a search of the best combinations of the `learning_rate` and
-# `max_leaf_nodes` parameters. In this regard, you have to train and test the
+# `max_leaf_nodes` parameters. In this regard, you need to train and test the
 # model by setting the parameters. The evaluation of the model should be
 # performed using `cross_val_score` on the training set. Use the following
 # parameters search:

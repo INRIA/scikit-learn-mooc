@@ -65,7 +65,7 @@ def plot_cv_indices(cv, X, y, axs):
         ylim=[0.3, 0.7],
         xlim=[0, 50],
     )
-    ax2.set_ylabel("refit +\nevaluation",  labelpad=15)
+    ax2.set_ylabel("refit +\nevaluation", labelpad=15)
     ax2.legend(
         [
             Patch(color=cmap_cv(0.5)),
@@ -97,10 +97,9 @@ fig, axs = plt.subplots(
 cv = KFold(5)
 plot_cv_indices(cv, X, y, axs)
 plt.suptitle(
-            "Internal {} cross-validation in GridSearchCV".format(
-            type(cv).__name__),
-            y=0.95,
-            )
+    "Internal {} cross-validation in GridSearchCV".format(type(cv).__name__),
+    y=0.95,
+)
 plt.tight_layout()
 fig.savefig(FIGURES_FOLDER / "cross_validation_train_test_diagram.png")
 
@@ -131,7 +130,7 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, axs):
                 cmap=cmap_cv,
             )
 
-        axs[outer_index*2 + 1].scatter(
+        axs[outer_index * 2 + 1].scatter(
             range(len(indices)),
             [0.5] * len(indices),
             c=indices,
@@ -139,7 +138,7 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, axs):
             lw=25,
             cmap=cmap_eval,
         )
-        axs[outer_index*2 + 1].set(
+        axs[outer_index * 2 + 1].set(
             yticks=[0.5],
             yticklabels=["refit +\nevaluation"],
             xlabel="Sample index",
@@ -148,7 +147,7 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, axs):
             xlim=[0, 50],
         )
 
-    # Formatting
+        # Formatting
         ax_twin = axs[outer_index * 2].twinx()
         yticklabels = list(range(n_splits_inner))
         ax_twin.set(
@@ -164,7 +163,7 @@ def plot_cv_nested_indices(cv_inner, cv_outer, X, y, axs):
             yticks=n_splits_inner * np.arange(n_splits_outer) + 0.5,
             yticklabels=[outer_index] * n_splits_outer,
             xlabel="Sample index",
-            ylim=[ n_splits_inner + 0.2, 0.08],
+            ylim=[n_splits_inner + 0.2, 0.08],
             xlim=[0, 50],
         )
 
@@ -199,7 +198,9 @@ fig, axs = plt.subplots(
 cv_inner = KFold(n_splits=4, shuffle=False)
 cv_outer = KFold(n_splits=5, shuffle=False)
 plot_cv_nested_indices(cv_inner, cv_outer, X, y, axs)
-plt.suptitle("{} nested cross-validation".format(type(cv_outer).__name__), y=0.97)
+plt.suptitle(
+    "{} nested cross-validation".format(type(cv_outer).__name__), y=0.97
+)
 plt.tight_layout()
 fig.text(0.0, 0.5, "outer iteration", va="center", rotation="vertical")
 fig.savefig(FIGURES_FOLDER / "nested_cross_validation_diagram.png")

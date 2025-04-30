@@ -111,12 +111,13 @@ print(digits.DESCR)
 
 # %% [markdown]
 # If we read carefully, 13 writers wrote the digits of our dataset, accounting
-# for a total amount of 1797 samples. Thus, a writer wrote several times the
-# same numbers. Let's suppose that the writer samples are grouped. Subsequently,
-# not shuffling the data will keep all writer samples together either in the
-# training or the testing sets. Mixing the data will break this structure, and
-# therefore digits written by the same writer will be available in both the
-# training and testing sets.
+# for a total amount of 1797 samples. Indeed, `load_digits` loads only the test
+# data of original dataset. Thus, a writer wrote several times the same numbers.
+# Let's suppose that the writer samples are grouped. Subsequently, not shuffling
+# the data will keep all writer samples together either in the training or the
+# testing sets. Mixing the data will break this structure, and therefore digits
+# written by the same writer will be available in both the training and testing
+# sets.
 #
 # Besides, a writer will usually tend to write digits in the same manner. Thus,
 # our model will learn to identify a writer's pattern for each digit instead of

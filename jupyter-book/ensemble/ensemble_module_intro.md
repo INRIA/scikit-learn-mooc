@@ -35,7 +35,7 @@ The required technical skills to carry on this module are:
 The objective in the module are the following:
 
 - understanding the principles behind bootstrapping and boosting;
-- get intuitions with specific models such as random forest 
+- get intuitions with specific models such as random forest
   and gradient boosting;
 - identify the important hyperparameters of random forest and gradient boosting
   decision trees as well as their typical values.

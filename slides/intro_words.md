@@ -13,4 +13,3 @@ with tools such as scikit-learn.
 Our goal is to be didactic. If you know Python programming and basic
 numerics, you should be able to follow along. We hope that this course
 will help introduce more people to machine learning.
-

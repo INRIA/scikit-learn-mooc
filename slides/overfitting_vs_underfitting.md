@@ -10,8 +10,8 @@ Understand when and why a model does or does not generalize well on unseen data.
 
 ???
 
-This lesson covers the topics of overfitting and underfitting, 
-which are important concepts to understand why a model does or 
+This lesson covers the topics of overfitting and underfitting,
+which are important concepts to understand why a model does or
 does not generalize well to new data.
 
 
@@ -42,7 +42,7 @@ So why might we prefer the straight line?
 ???
 
 Answering this question might be hard. However, in the context of machine
-learning we aim at creating models that generalize. Hence, the good way 
+learning we aim at creating models that generalize. Hence, the good way
 of framing the question is: how will the model perform on new data?
 
 ---
@@ -205,8 +205,8 @@ though we added observational noise.
 
 In the case of the 9th-degree polynomial, the problem we face is
 that the model we're using is too complex for the data at hand. This
-problem is known as overfiting in machine learning. 
-With such a rich model, its best possible fit would approximate well the 
+problem is known as overfiting in machine learning.
+With such a rich model, its best possible fit would approximate well the
 data-generating process.
 Indeed, here we are fitting a polynomial of degree 9 on data generated
 with a polynomial of degree 9. However, due to the limited data,
@@ -281,5 +281,5 @@ capture noise, and thus do not generalize to new data.
 
 On the opposite, when models are too simple for the data at hand, they
 underfit. This means that they capture no noise, but they also don't capture
-all the structured variations of the data: their ability to generalize 
+all the structured variations of the data: their ability to generalize
 is then limited by their expressivity.

@@ -111,7 +111,7 @@ print(digits.DESCR)
 
 # %% [markdown]
 # If we read carefully, `load_digits` loads a copy of the **test set** of the
-# UCI ML hand-written digits dataset, which consists of 1797 images wrote by
+# UCI ML hand-written digits dataset, which consists of 1797 images by
 # **13 different writers**. Thus, each writer wrote several times the same
 # numbers. Let's suppose the dataset is ordered by writer. Subsequently,
 # not shuffling the data will keep all writer samples together either in the

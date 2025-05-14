@@ -250,6 +250,10 @@ ax = sns.heatmap(
 ax.invert_yaxis()
 
 # %% [markdown]
+# This heatmap shows the values of mean test accuracy of the previous table. The
+# color of each cell indicates the mean accuracy of the model for a given
+# combination of hyperparameters. The darker the color, the better the accuracy.
+#
 # The above tables highlights the following things:
 #
 # * for too high values of `learning_rate`, the generalization performance of

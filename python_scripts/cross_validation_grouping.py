@@ -110,9 +110,10 @@ print(test_score_no_shuffling)
 print(digits.DESCR)
 
 # %% [markdown]
-# If we read carefully, 13 writers wrote the digits of our dataset, accounting
-# for a total amount of 1797 samples. Thus, a writer wrote several times the
-# same numbers. Let's suppose that the writer samples are grouped. Subsequently,
+# If we read carefully, `load_digits` loads a copy of the **test set** of the
+# UCI ML hand-written digits dataset, which consists of 1797 images by
+# **13 different writers**. Thus, each writer wrote several times the same
+# numbers. Let's suppose the dataset is ordered by writer. Subsequently,
 # not shuffling the data will keep all writer samples together either in the
 # training or the testing sets. Mixing the data will break this structure, and
 # therefore digits written by the same writer will be available in both the

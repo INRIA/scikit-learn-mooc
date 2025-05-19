@@ -164,7 +164,6 @@ data_train, data_test, target_train, target_test = train_test_split(
     data,
     target,
     shuffle=False,
-    random_state=0,
 )
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_test)

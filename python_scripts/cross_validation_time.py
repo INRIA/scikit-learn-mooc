@@ -119,7 +119,7 @@ target_test.sort_index(ascending=True, inplace=True)
 
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_test)
-# We change the index of `target_predicted` to ease the plotting
+# Recover the `DatetimeIndex` from `target_test` for correct plotting
 target_predicted = pd.Series(target_predicted, index=target_test.index)
 
 # %% [markdown]

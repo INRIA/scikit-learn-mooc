@@ -63,18 +63,7 @@ _ = plt.title("Stock values over time")
 # and then we evaluate other cross-validation methods.
 
 # %%
-from sklearn.model_selection import train_test_split
-
 data, target = quotes.drop(columns=["Chevron"]), quotes["Chevron"]
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, shuffle=True, random_state=0
-)
-
-# Shuffling breaks the index order, but we still want it to be time-ordered
-data_train.sort_index(ascending=True, inplace=True)
-data_test.sort_index(ascending=True, inplace=True)
-target_train.sort_index(ascending=True, inplace=True)
-target_test.sort_index(ascending=True, inplace=True)
 
 # %% [markdown]
 # We will use a decision tree regressor that we expect to overfit and thus not
@@ -102,9 +91,7 @@ cv = ShuffleSplit(random_state=0)
 # %%
 from sklearn.model_selection import cross_val_score
 
-test_score = cross_val_score(
-    regressor, data_train, target_train, cv=cv, n_jobs=2
-)
+test_score = cross_val_score(regressor, data, target, cv=cv, n_jobs=2)
 print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
@@ -118,9 +105,21 @@ print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 # `train_test_split` for this purpose.
 
 # %%
+from sklearn.model_selection import train_test_split
+
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=True, random_state=0
+)
+
+# Shuffling breaks the index order, but we still want it to be time-ordered
+data_train.sort_index(ascending=True, inplace=True)
+data_test.sort_index(ascending=True, inplace=True)
+target_train.sort_index(ascending=True, inplace=True)
+target_test.sort_index(ascending=True, inplace=True)
+
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_test)
-# Affect the index of `target_predicted` to ease the plotting
+# Recover the `DatetimeIndex` from `target_test` for correct plotting
 target_predicted = pd.Series(target_predicted, index=target_test.index)
 
 # %% [markdown]
@@ -165,7 +164,6 @@ data_train, data_test, target_train, target_test = train_test_split(
     data,
     target,
     shuffle=False,
-    random_state=0,
 )
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_test)

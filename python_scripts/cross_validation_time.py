@@ -91,9 +91,7 @@ cv = ShuffleSplit(random_state=0)
 # %%
 from sklearn.model_selection import cross_val_score
 
-test_score = cross_val_score(
-    regressor, data, target, cv=cv, n_jobs=2
-)
+test_score = cross_val_score(regressor, data, target, cv=cv, n_jobs=2)
 print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]

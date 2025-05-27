@@ -17,67 +17,57 @@
 # - Monetary Value: How much do they spend.
 #
 # It is commonly used in marketing and has received particular attention in
-# retail and professional services industries as well.
+# retail and professional services industries as well. Here we subsample the
+# dataset to ease the calculations.
 
 # %%
 import pandas as pd
 
 data = pd.read_csv("../datasets/rfm_segmentation.csv")
+data = data.sample(n=2000, random_state=0).reset_index(drop=True)
 data
 
 # %% [markdown]
+# We can explore the data using a seborn `pairplot`.
+
+# %%
+import seaborn as sns
+
+_ = sns.pairplot(data)
+
+# %% [markdown]
 # As k-means clustering relies on computing distances between samples, in
-# general we need to scale our data before training the clustering model. That
-# was not the case in our previous notebook, as the features in the Mall
-# customers dataset already have the same scale.
+# general we need to scale our data before training the clustering model.
 #
-# Show that scaling is important or else "monetary" have a dominant impact when
-# forming clusters. You can adapt the helper function `plot_clusters` from the
-# previous notebook to make plots using `KMeans` for `n_clusters_values = [2, 4,
-# 6, 8]` without scaling.
+# Modify the color of the `pairplot` to represent the cluster labels as
+# predicted by `KMeans` without any scaling. Try different values for
+# `n_clusters`, for instance, `n_clusters_values=[2, 3, 4]`. Do all features
+# contribute equally to forming the clusters in their original scale?
 
 # %%
 # solution
 import matplotlib.pyplot as plt
-import numpy as np
 from sklearn.cluster import KMeans
 
+n_clusters_values = [2, 3, 4]
 
-def plot_clusters(model, ax):
-
-    cluster_labels = model.fit_predict(data)
-    n_clusters = len(np.unique(cluster_labels))
-
-    ax.scatter(
-        data["monetary"],
-        data["frequency"],
-        data["recency"],
-        c=cluster_labels,
-        s=50,
-        alpha=0.7,
-    )
-    ax.set_box_aspect(None, zoom=0.84)
-    ax.set_xlabel("Monetary", labelpad=15)
-    ax.set_ylabel("Frequency", labelpad=15)
-    ax.set_zlabel("Recency", labelpad=15)
-    ax.set_title(f"n_clusters={n_clusters}", y=0.99)
-    _ = plt.tight_layout()
-
-
-n_clusters_values = [2, 4, 6, 8]
-fig, axes = plt.subplots(
-    nrows=2, ncols=2, figsize=(17, 15), subplot_kw={"projection": "3d"}
-)
-
-for ax, n_clusters in zip(axes.flatten(), n_clusters_values):
+for n_clusters in n_clusters_values:
     model = KMeans(n_clusters=n_clusters, random_state=0)
-    plot_clusters(model, ax)
+    clustered_data = data.copy()
+    clustered_data["cluster label"] = model.fit_predict(data)
+    sns.pairplot(clustered_data, hue="cluster label", palette="tab10")
+    plt.title(f"n_clusters={n_clusters}")
+
+# %% [markdown] tags=["solution"]
+# Without scaling "monetary" has a dominant impact when forming clusters,
+# regardless of the number of clusters.
 
 # %%
 # Create a pipeline composed by a `StandardScaler` followed by a `KMeans` step
-# as the final predictor. Set the `random_state` for reproducibility. Then, make
-# a plot of the WCSS or inertia for `n_clusters` varying from 2 to 10. You can
-# use the following helper function for such purpose:
+# as the final predictor. Set the `random_state` of `KMeans` for
+# reproducibility. Then, make a plot of the WCSS or inertia for `n_clusters`
+# varying from 1 to 10. You can use the following helper function for such
+# purpose:
 
 # %%
 from sklearn.metrics import silhouette_score
@@ -87,7 +77,7 @@ def plot_n_clusters_scores(
     model,
     data,
     score_type="inertia",
-    n_clusters_values=range(2, 11),
+    n_clusters_values=None,
     alpha=1.0,
     title=None,
 ):
@@ -98,17 +88,21 @@ def plot_n_clusters_scores(
         model: A pipeline whose last step has a `n_clusters` hyperparameter.
         data: The input data to cluster.
         score_type: "inertia" or "silhouette" to decide which score to compute.
-        n_clusters_values: Iterable of integers representing `n_clusters` to try.
         alpha: Transparency of the plot line, useful when several plots overlap.
         title: Optional title to set; default title used if None.
     """
     scores = []
 
+    if n_clusters_values is None:
+        if score_type == "inertia":
+            n_clusters_values = range(1, 11)
+        else:
+            n_clusters_values = range(2, 11)
+
     for n_clusters in n_clusters_values:
         model[-1].set_params(n_clusters=n_clusters)
-
         if score_type == "inertia":
-            ylabel = "Inertia"
+            ylabel = "WCSS (inertia)"
             model.fit(data)
             scores.append(model[-1].inertia_)
         elif score_type == "silhouette":
@@ -143,13 +137,14 @@ plot_n_clusters_scores(model, data, score_type="inertia")
 # %% [markdown]
 # Let's check if the best choice of n_clusters remains stable when resampling
 # the dataset. For such purpose:
-# - Keep a fixed `random_state` for the `KMeans` step to isolate the
-#   effect of data resampling.
-# - Generate resamplings consisting of 90% of the data by using
-#   `train_test_split` with `train_size=0.9`
+# - Keep a fixed `random_state` for the `KMeans` step to isolate the effect of
+#   data resampling.
+# - Generate resamplings consisting of 50% of the data by using
+#   `train_test_split` with `train_size=0.5`. Changing the `random_state`
+#   to do the split leads to different resamplings.
 # - Use the `plot_n_clusters_scores` function inside a `for` loop to make
 #   multiple overlapping plots of the inertia, each time using a different
-#   resamplings.
+#   resampling. 10 resamplings should be enough to draw conclusions.
 #
 # Is the elbow (optimal number of clusters) stable across all different
 # resamplings?
@@ -160,7 +155,7 @@ from sklearn.model_selection import train_test_split
 
 for random_state in range(1, 11):
     data_subsample, _ = train_test_split(
-        data, train_size=0.9, random_state=random_state
+        data, train_size=0.5, random_state=random_state
     )
     plot_n_clusters_scores(
         model,
@@ -171,8 +166,8 @@ for random_state in range(1, 11):
     )
 
 # %% [markdown] tags=["solution"]
-# The inertia changes drastically as a function of the subsamples, it is
-# then not possible to systematically define an optimal number of clusters.
+# The inertia changes drastically as a function of the subsamples, it is then
+# not possible to systematically define an optimal number of clusters.
 
 # %% [markdown]
 # By default, `KMeans` uses a smart selection of the initial centroids called
@@ -204,14 +199,14 @@ model
 # solution
 for random_state in range(1, 11):
     data_subsample, _ = train_test_split(
-        data, train_size=0.9, random_state=random_state
+        data, train_size=0.5, random_state=random_state
     )
     plot_n_clusters_scores(
         model,
         data_subsample,
         score_type="inertia",
         alpha=0.2,
-        title="Stability of inertia with n_init=5",
+        title="Stability of inertia with\nn_init=5 and StandardScaler",
     )
 
 # %% [markdown] tags=["solution"]
@@ -220,28 +215,28 @@ for random_state in range(1, 11):
 
 # %% [markdown]
 # Repeat the experiment, but this time determine if the optimal number of
-# clusters is stable across subsamplings when using the `silhouette_score`. Be
-# aware that computing the silhouette score is more computationally costly than
-# computing the inertia.
+# clusters (with `StandarScaler` and `n_init=5`) is stable across subsamplings
+# in terms of the `silhouette_score`. Be aware that computing the silhouette
+# score is more computationally costly than computing the inertia.
 
 # %%
 # solution
 for random_state in range(1, 11):
     data_subsample, _ = train_test_split(
-        data, train_size=0.9, random_state=random_state
+        data, train_size=0.5, random_state=random_state
     )
     plot_n_clusters_scores(
         model,
         data_subsample,
         score_type="silhouette",
         alpha=0.2,
-        title="Stability of silhouette score with n_init=5",
+        title="Stability of silhouette score\nwith n_init=5 and StandardScaler",
     )
 
 # %% [markdown] tags=["solution"]
 # The silhouette score also varies as a function of the resampling, even after
 # setting `n_init=5`. It may seem that the optimal number of clusters is
-# sometimes 5, 6, or 9, depending on the sampling. We can conclude that in this
+# sometimes 2, 4, 5 or 6 depending on the sampling. We can conclude that in this
 # case, what makes challenging to find the optimal number of clusters is not
 # related to the metric, but possibly to the data itself, or to the modeling
 # pipeline.
@@ -259,7 +254,7 @@ from sklearn.preprocessing import QuantileTransformer
 model = make_pipeline(QuantileTransformer(), KMeans(n_init=5, random_state=0))
 for random_state in range(1, 11):
     data_subsample, _ = train_test_split(
-        data, train_size=0.9, random_state=random_state
+        data, train_size=0.5, random_state=random_state
     )
     plot_n_clusters_scores(
         model,
@@ -273,27 +268,47 @@ for random_state in range(1, 11):
 # The silhouette score is much more stable across resamplings. Moreover, the
 # optimal number of clusters seems to be 2, as it provides the highest score,
 # indicating that the data points are well-separated and correctly grouped with
-# good cohesion. However, 4 or 6 clusters may still make sense if the clustering
-# has specific use cases or domain relevance, but you should be cautious as the
-# relatively low silhouette score suggests that some points may be misassigned.
+# good cohesion. However 4 or 6 clusters may still make sense if the clustering
+# has specific use cases or domain relevance.
 #
-# Indeed, we can plot the transformed space and observe some samples seem to be
-# misassigned.
+# Notice that you should still be cautious as the relatively low values of the
+# silhouette scores suggest that some points may be "misassigned". To verify
+# this, we can plot the labels when setting `n_clusters=6`.
 
 # %% tags=["solution"]
+n_clusters=6
 model = make_pipeline(
-    QuantileTransformer(), KMeans(n_init=5, n_clusters=6, random_state=0)
+    QuantileTransformer(),
+    KMeans(n_init=5, n_clusters=n_clusters, random_state=0),
 )
 model
 
 # %% tags=["solution"]
+clustered_data = data.copy()
+clustered_data["cluster label"] = model.fit_predict(data)
+
+sns.pairplot(clustered_data, hue="cluster label", palette="tab10")
+plt.title(f"n_clusters={n_clusters}")
+
+# %% [markdown] tags=["solution"]
+# Indeed, "monetary" exactly equal to 0 is divided into 2 clusters (the plot in
+# the middle of the `pairplot`), whereas it would feel more reasonably to have
+# those points form a single cluster.
+#
+# Alternatively, we can plot the labels in the transformed space to better
+# observe that some data points seem to be misassigned.
+
+# %% tags=["solution"]
+from matplotlib.colors import ListedColormap
+
 cluster_labels = model.fit_predict(data)
+cmap = ListedColormap(plt.get_cmap("tab10").colors[:n_clusters])
 
 fig, ax = plt.subplots(figsize=(8, 8), subplot_kw={"projection": "3d"})
 scatter = ax.scatter(
     *model[:-1].transform(data).T,
     c=cluster_labels,
-    cmap="viridis",
+    cmap=cmap,
     s=50,
     alpha=0.7,
 )
@@ -305,18 +320,17 @@ ax.set_title("Clusters in quantile-transformed space", y=0.99)
 _ = plt.tight_layout()
 
 # %% [markdown] tags=["solution"]
-# From the plot above, it would feel more natural to cluster together all
-# samples with transformed monetary equal to 0 instead of dividing it into 2
-# different clusters. Moreover, those clusters seem to take samples with low but
-# non-zero values of monetary, that would belong more naturally to other
-# clusters.
+# Observe that the clusters at "transformed monetary" exactly equal to 0 are
+# grouped together with samples with low but non-zero values of "transformed
+# monetary", that would belong more naturally to other clusters.
 #
-# What happens here is that data points at transformed monetary equal to 0 are
+# What happens here is that data points at "transformed monetary" equal to 0 are
 # not isotropic in the 3 dimensions, i.e. they are spread on a plane of
-# transformed recency and frequency ranging from 0 to 1. Remember that k-means
-# consists of minimizing samples' euclidean distances to their assigned
-# centroid. As a consequence, k-means is more appropriate for clusters that are
-# isotropic and normally distributed.
+# "transformed recency" and "transformed frequency" ranging from 0 to 1.
+# Remember that k-means consists of minimizing each point's euclidean distance
+# to its assigned centroid. As a consequence, k-means is more appropriate for
+# clusters that are isotropic and normally distributed, in other words, that
+# group around a center.
 #
 # We will learn more about how to deal with anisotropic clusters in a future
 # notebook.

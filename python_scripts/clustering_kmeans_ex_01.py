@@ -23,33 +23,42 @@
 # - Monetary Value: How much do they spend.
 #
 # It is commonly used in marketing and has received particular attention in
-# retail and professional services industries as well.
+# retail and professional services industries as well. Here we subsample the
+# dataset to ease the calculations.
 
 # %%
 import pandas as pd
 
 data = pd.read_csv("../datasets/rfm_segmentation.csv")
+data = data.sample(n=2000, random_state=0).reset_index(drop=True)
 data
 
 # %% [markdown]
+# We can explore the data using a seborn `pairplot`.
+
+# %%
+import seaborn as sns
+
+_ = sns.pairplot(data)
+
+# %% [markdown]
 # As k-means clustering relies on computing distances between samples, in
-# general we need to scale our data before training the clustering model. That
-# was not the case in our previous notebook, as the features in the Mall
-# customers dataset already have the same scale.
+# general we need to scale our data before training the clustering model.
 #
-# Show that scaling is important or else "monetary" have a dominant impact when
-# forming clusters. You can adapt the helper function `plot_clusters` from the
-# previous notebook to make plots using `KMeans` for `n_clusters_values = [2, 4,
-# 6, 8]` without scaling.
+# Modify the color of the `pairplot` to represent the cluster labels as
+# predicted by `KMeans` without any scaling. Try different values for
+# `n_clusters`, for instance, `n_clusters_values=[2, 3, 4]`. Do all features
+# contribute equally to forming the clusters in their original scale?
 
 # %%
 # Write your code here.
 
 # %%
 # Create a pipeline composed by a `StandardScaler` followed by a `KMeans` step
-# as the final predictor. Set the `random_state` for reproducibility. Then, make
-# a plot of the WCSS or inertia for `n_clusters` varying from 2 to 10. You can
-# use the following helper function for such purpose:
+# as the final predictor. Set the `random_state` of `KMeans` for
+# reproducibility. Then, make a plot of the WCSS or inertia for `n_clusters`
+# varying from 1 to 10. You can use the following helper function for such
+# purpose:
 
 # %%
 from sklearn.metrics import silhouette_score
@@ -59,7 +68,7 @@ def plot_n_clusters_scores(
     model,
     data,
     score_type="inertia",
-    n_clusters_values=range(2, 11),
+    n_clusters_values=None,
     alpha=1.0,
     title=None,
 ):
@@ -70,17 +79,21 @@ def plot_n_clusters_scores(
         model: A pipeline whose last step has a `n_clusters` hyperparameter.
         data: The input data to cluster.
         score_type: "inertia" or "silhouette" to decide which score to compute.
-        n_clusters_values: Iterable of integers representing `n_clusters` to try.
         alpha: Transparency of the plot line, useful when several plots overlap.
         title: Optional title to set; default title used if None.
     """
     scores = []
 
+    if n_clusters_values is None:
+        if score_type == "inertia":
+            n_clusters_values = range(1, 11)
+        else:
+            n_clusters_values = range(2, 11)
+
     for n_clusters in n_clusters_values:
         model[-1].set_params(n_clusters=n_clusters)
-
         if score_type == "inertia":
-            ylabel = "Inertia"
+            ylabel = "WCSS (inertia)"
             model.fit(data)
             scores.append(model[-1].inertia_)
         elif score_type == "silhouette":
@@ -106,13 +119,14 @@ def plot_n_clusters_scores(
 # %% [markdown]
 # Let's check if the best choice of n_clusters remains stable when resampling
 # the dataset. For such purpose:
-# - Keep a fixed `random_state` for the `KMeans` step to isolate the
-#   effect of data resampling.
-# - Generate resamplings consisting of 90% of the data by using
-#   `train_test_split` with `train_size=0.9`
+# - Keep a fixed `random_state` for the `KMeans` step to isolate the effect of
+#   data resampling.
+# - Generate resamplings consisting of 50% of the data by using
+#   `train_test_split` with `train_size=0.5`. Changing the `random_state`
+#   to do the split leads to different resamplings.
 # - Use the `plot_n_clusters_scores` function inside a `for` loop to make
 #   multiple overlapping plots of the inertia, each time using a different
-#   resamplings.
+#   resampling. 10 resamplings should be enough to draw conclusions.
 #
 # Is the elbow (optimal number of clusters) stable across all different
 # resamplings?
@@ -146,9 +160,9 @@ def plot_n_clusters_scores(
 
 # %% [markdown]
 # Repeat the experiment, but this time determine if the optimal number of
-# clusters is stable across subsamplings when using the `silhouette_score`. Be
-# aware that computing the silhouette score is more computationally costly than
-# computing the inertia.
+# clusters (with `StandarScaler` and `n_init=5`) is stable across subsamplings
+# in terms of the `silhouette_score`. Be aware that computing the silhouette
+# score is more computationally costly than computing the inertia.
 
 # %%
 # Write your code here.
@@ -166,7 +180,7 @@ from sklearn.preprocessing import QuantileTransformer
 model = make_pipeline(QuantileTransformer(), KMeans(n_init=5, random_state=0))
 for random_state in range(1, 11):
     data_subsample, _ = train_test_split(
-        data, train_size=0.9, random_state=random_state
+        data, train_size=0.5, random_state=random_state
     )
     plot_n_clusters_scores(
         model,

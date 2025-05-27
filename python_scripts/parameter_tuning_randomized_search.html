@@ -996,6 +996,7 @@ duplicates the information with <code class="docutils literal notranslate"><span
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
     <span class="p">[(</span><span class="s2">&quot;cat_preprocessor&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
     <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
+    <span class="n">force_int_remainder_cols</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Silence a warning in scikit-learn v1.6.</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1437,7 +1438,8 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   background-color: var(--sklearn-color-fitted-level-3);
 }
 </style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                 ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                 ColumnTransformer(force_int_remainder_cols=False,
+                                   remainder=&#x27;passthrough&#x27;,
                                    transformers=[(&#x27;cat_preprocessor&#x27;,
                                                   OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                                  unknown_value=-1),
@@ -1449,7 +1451,8 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 (&#x27;classifier&#x27;,
                  HistGradientBoostingClassifier(max_leaf_nodes=4,
                                                 random_state=42))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content "><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                 ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                 ColumnTransformer(force_int_remainder_cols=False,
+                                   remainder=&#x27;passthrough&#x27;,
                                    transformers=[(&#x27;cat_preprocessor&#x27;,
                                                   OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                                  unknown_value=-1),
@@ -1460,7 +1463,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                                                    &#x27;native-country&#x27;])])),
                 (&#x27;classifier&#x27;,
                  HistGradientBoostingClassifier(max_leaf_nodes=4,
-                                                random_state=42))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocessor: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessor: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content "><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                                                random_state=42))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>preprocessor: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessor: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content "><pre>ColumnTransformer(force_int_remainder_cols=False, remainder=&#x27;passthrough&#x27;,
                   transformers=[(&#x27;cat_preprocessor&#x27;,
                                  OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                 unknown_value=-1),
@@ -1570,16 +1573,8 @@ processors.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 10 candidates, totalling 50 fits
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 23.9 s, sys: 611 ms, total: 24.5 s
-Wall time: 24.5 s
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.22/x64/lib/python3.9/site-packages/sklearn/compose/_column_transformer.py:1667: FutureWarning: 
-The format of the columns of the &#39;remainder&#39; transformer in ColumnTransformer.transformers_ will change in version 1.7 to match the format of the other transformers.
-At the moment the remainder columns are stored as indices (of type int). With the same ColumnTransformer configuration, in the future they will be stored as column names (of type str).
-To use the new behavior now and suppress this warning, use ColumnTransformer(force_int_remainder_cols=False).
-
-  warnings.warn(
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 29.2 s, sys: 686 ms, total: 29.9 s
+Wall time: 29.9 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {
@@ -1999,7 +1994,8 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 }
 </style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
                    estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                                              ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                                              ColumnTransformer(force_int_remainder_cols=False,
+                                                                remainder=&#x27;passthrough&#x27;,
                                                                 transformers=[(&#x27;cat_preprocessor&#x27;,
                                                                                OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                                                               unknown_value=-1),
@@ -2011,16 +2007,16 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                                                                                 &#x27;race&#x27;,
                                                                                 &#x27;sex&#x27;,
                                                                                 &#x27;native-country&#x27;])])),
-                                             (&#x27;classifier&#x27;,
-                                              HistGradientBoostingC...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f6b7dfd8700&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f6b7dfdc160&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f6b7e729f40&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f6b7dfd81f0&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f6b7dfdc460&gt;},
+                                             (&#x27;cl...
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f8674d64f70&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f86420cc3a0&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f86420cbdf0&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f86420cb940&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f86420cc6a0&gt;},
                    verbose=1)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>RandomizedSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.model_selection.RandomizedSearchCV.html">?<span>Documentation for RandomizedSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>RandomizedSearchCV(cv=5,
                    estimator=Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                                              ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                                              ColumnTransformer(force_int_remainder_cols=False,
+                                                                remainder=&#x27;passthrough&#x27;,
                                                                 transformers=[(&#x27;cat_preprocessor&#x27;,
                                                                                OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                                                               unknown_value=-1),
@@ -2032,15 +2028,15 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                                                                                 &#x27;race&#x27;,
                                                                                 &#x27;sex&#x27;,
                                                                                 &#x27;native-country&#x27;])])),
-                                             (&#x27;classifier&#x27;,
-                                              HistGradientBoostingC...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f6b7dfd8700&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f6b7dfdc160&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f6b7e729f40&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f6b7dfd81f0&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f6b7dfdc460&gt;},
+                                             (&#x27;cl...
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f8674d64f70&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7f86420cc3a0&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7f86420cbdf0&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7f86420cb940&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7f86420cc6a0&gt;},
                    verbose=1)</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>best_estimator_: Pipeline</div></div></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                 ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                 ColumnTransformer(force_int_remainder_cols=False,
+                                   remainder=&#x27;passthrough&#x27;,
                                    transformers=[(&#x27;cat_preprocessor&#x27;,
                                                   OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                                  unknown_value=-1),
@@ -2050,22 +2046,22 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                                                    &#x27;race&#x27;, &#x27;sex&#x27;,
                                                    &#x27;native-country&#x27;])])),
                 (&#x27;classifier&#x27;,
-                 HistGradientBoostingClassifier(l2_regularization=np.float64(239.05362633063046),
-                                                learning_rate=np.float64(1.5780295711101877),
-                                                max_bins=np.int64(154),
-                                                max_leaf_nodes=np.int64(12),
-                                                min_samples_leaf=np.int64(62),
-                                                random_state=42))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>preprocessor: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessor: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content fitted"><pre>ColumnTransformer(remainder=&#x27;passthrough&#x27;,
+                 HistGradientBoostingClassifier(l2_regularization=np.float64(960.8700338180504),
+                                                learning_rate=np.float64(0.08121391253190878),
+                                                max_bins=np.int64(207),
+                                                max_leaf_nodes=np.int64(86),
+                                                min_samples_leaf=np.int64(20),
+                                                random_state=42))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>preprocessor: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessor: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content fitted"><pre>ColumnTransformer(force_int_remainder_cols=False, remainder=&#x27;passthrough&#x27;,
                   transformers=[(&#x27;cat_preprocessor&#x27;,
                                  OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;,
                                                 unknown_value=-1),
                                  [&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;,
                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
-                                  &#x27;native-country&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>cat_preprocessor</div></div></label><div class="sk-toggleable__content fitted"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>OrdinalEncoder</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.OrdinalEncoder.html">?<span>Documentation for OrdinalEncoder</span></a></div></label><div class="sk-toggleable__content fitted"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>remainder</div></div></label><div class="sk-toggleable__content fitted"><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>passthrough</div></div></label><div class="sk-toggleable__content fitted"><pre>passthrough</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>HistGradientBoostingClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html">?<span>Documentation for HistGradientBoostingClassifier</span></a></div></label><div class="sk-toggleable__content fitted"><pre>HistGradientBoostingClassifier(l2_regularization=np.float64(239.05362633063046),
-                               learning_rate=np.float64(1.5780295711101877),
-                               max_bins=np.int64(154),
-                               max_leaf_nodes=np.int64(12),
-                               min_samples_leaf=np.int64(62), random_state=42)</pre></div> </div></div></div></div></div></div></div></div></div></div></div></div></div>
+                                  &#x27;native-country&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>cat_preprocessor</div></div></label><div class="sk-toggleable__content fitted"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>OrdinalEncoder</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.OrdinalEncoder.html">?<span>Documentation for OrdinalEncoder</span></a></div></label><div class="sk-toggleable__content fitted"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>remainder</div></div></label><div class="sk-toggleable__content fitted"><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>passthrough</div></div></label><div class="sk-toggleable__content fitted"><pre>passthrough</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>HistGradientBoostingClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html">?<span>Documentation for HistGradientBoostingClassifier</span></a></div></label><div class="sk-toggleable__content fitted"><pre>HistGradientBoostingClassifier(l2_regularization=np.float64(960.8700338180504),
+                               learning_rate=np.float64(0.08121391253190878),
+                               max_bins=np.int64(207),
+                               max_leaf_nodes=np.int64(86),
+                               min_samples_leaf=np.int64(20), random_state=42)</pre></div> </div></div></div></div></div></div></div></div></div></div></div></div></div>
 </div>
 <p>Then, we can compute the accuracy score on the test set.</p>
 <div class="cell docutils container">
@@ -2077,7 +2073,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the best model is 0.88
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the best model is 0.87
 </pre></div>
 </div>
 </div>
@@ -2093,11 +2089,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best parameters are:
-{&#39;classifier__l2_regularization&#39;: np.float64(239.05362633063046),
- &#39;classifier__learning_rate&#39;: np.float64(1.5780295711101877),
- &#39;classifier__max_bins&#39;: np.int64(154),
- &#39;classifier__max_leaf_nodes&#39;: np.int64(12),
- &#39;classifier__min_samples_leaf&#39;: np.int64(62)}
+{&#39;classifier__l2_regularization&#39;: np.float64(960.8700338180504),
+ &#39;classifier__learning_rate&#39;: np.float64(0.08121391253190878),
+ &#39;classifier__max_bins&#39;: np.int64(207),
+ &#39;classifier__max_leaf_nodes&#39;: np.int64(86),
+ &#39;classifier__min_samples_leaf&#39;: np.int64(20)}
 </pre></div>
 </div>
 </div>
@@ -2158,113 +2154,113 @@ previously.</p>
   </thead>
   <tbody>
     <tr>
-      <th>3</th>
-      <td>239.053626</td>
-      <td>1.578030</td>
-      <td>12</td>
-      <td>62</td>
-      <td>154</td>
-      <td>0.865251</td>
-      <td>0.001852</td>
+      <th>6</th>
+      <td>960.870034</td>
+      <td>0.081214</td>
+      <td>86</td>
+      <td>20</td>
+      <td>207</td>
+      <td>0.857416</td>
+      <td>0.002335</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>338.497193</td>
-      <td>0.077990</td>
-      <td>41</td>
-      <td>18</td>
-      <td>27</td>
-      <td>0.854167</td>
-      <td>0.003062</td>
+      <th>3</th>
+      <td>0.147591</td>
+      <td>0.062332</td>
+      <td>10</td>
+      <td>89</td>
+      <td>22</td>
+      <td>0.853212</td>
+      <td>0.001717</td>
       <td>2</td>
     </tr>
     <tr>
       <th>0</th>
-      <td>0.006490</td>
-      <td>0.031806</td>
-      <td>206</td>
-      <td>3</td>
+      <td>0.008089</td>
+      <td>0.047493</td>
       <td>50</td>
-      <td>0.852502</td>
-      <td>0.003735</td>
+      <td>6</td>
+      <td>11</td>
+      <td>0.845213</td>
+      <td>0.003198</td>
       <td>3</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.000281</td>
-      <td>0.559739</td>
-      <td>39</td>
-      <td>52</td>
-      <td>24</td>
-      <td>0.851328</td>
-      <td>0.003351</td>
+      <td>46.745953</td>
+      <td>0.055764</td>
+      <td>12</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0.806830</td>
+      <td>0.001310</td>
       <td>4</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>0.011741</td>
-      <td>0.986388</td>
-      <td>5</td>
-      <td>71</td>
-      <td>9</td>
-      <td>0.836177</td>
-      <td>0.003767</td>
+      <th>5</th>
+      <td>0.000060</td>
+      <td>0.567357</td>
+      <td>166</td>
+      <td>13</td>
+      <td>3</td>
+      <td>0.802544</td>
+      <td>0.003230</td>
       <td>5</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>0.075885</td>
-      <td>0.005886</td>
-      <td>18</td>
-      <td>41</td>
-      <td>12</td>
-      <td>0.761131</td>
-      <td>0.002688</td>
+      <th>4</th>
+      <td>0.644851</td>
+      <td>1.538058</td>
+      <td>100</td>
+      <td>1</td>
+      <td>6</td>
+      <td>0.801780</td>
+      <td>0.002354</td>
       <td>6</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>0.013480</td>
-      <td>0.004205</td>
-      <td>8</td>
-      <td>14</td>
-      <td>3</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
+      <th>2</th>
+      <td>751.522236</td>
+      <td>0.035129</td>
+      <td>28</td>
+      <td>31</td>
+      <td>2</td>
+      <td>0.788376</td>
+      <td>0.003080</td>
       <td>7</td>
     </tr>
     <tr>
+      <th>1</th>
+      <td>201.812206</td>
+      <td>0.003635</td>
+      <td>10</td>
+      <td>45</td>
+      <td>18</td>
+      <td>0.758947</td>
+      <td>0.000013</td>
+      <td>8</td>
+    </tr>
+    <tr>
       <th>9</th>
-      <td>0.000138</td>
-      <td>7.002080</td>
-      <td>58</td>
-      <td>60</td>
-      <td>3</td>
-      <td>0.654938</td>
-      <td>0.053904</td>
+      <td>0.016000</td>
+      <td>0.004281</td>
+      <td>123</td>
+      <td>5</td>
+      <td>4</td>
+      <td>0.758947</td>
+      <td>0.000013</td>
       <td>8</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.030021</td>
-      <td>3.461327</td>
-      <td>192</td>
-      <td>9</td>
-      <td>6</td>
-      <td>0.619447</td>
-      <td>0.131839</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.155111</td>
-      <td>9.721282</td>
-      <td>2</td>
-      <td>73</td>
-      <td>3</td>
-      <td>0.283476</td>
-      <td>0.005123</td>
+      <td>0.131820</td>
+      <td>8.829928</td>
+      <td>33</td>
+      <td>62</td>
+      <td>123</td>
+      <td>0.755126</td>
+      <td>0.029255</td>
       <td>10</td>
     </tr>
   </tbody>

@@ -1178,9 +1178,9 @@ the effect of increasing the depth of the tree.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>At this time, it is not possible to use <code class="docutils literal notranslate"><span class="pre">response_method=&quot;predict_proba&quot;</span></code> for
-multiclass problems. This is a planned feature for a future version of
-scikit-learn. In the mean time, you can use <code class="docutils literal notranslate"><span class="pre">response_method=&quot;predict&quot;</span></code>
-instead.</p>
+multiclass problems on a single plot. This is a planned feature for a future
+version of scikit-learn. In the mean time, you can use
+<code class="docutils literal notranslate"><span class="pre">response_method=&quot;predict&quot;</span></code> instead.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1274,77 +1274,65 @@ most probable.</p>
 except that for a K-class problem you have K probability outputs for each
 data point. Visualizing all these on a single plot can quickly become tricky
 to interpret. It is then common to instead produce K separate plots, one for
-each class, in a one-vs-rest (or one-vs-all) fashion.</p>
-<p>For example, in the plot below, the first plot on the left shows in yellow the
-certainty on classifying a data point as belonging to the “Adelie” class. In
-the same plot, the spectre from green to purple represents the certainty of
-<strong>not</strong> belonging to the “Adelie” class. The same logic applies to the other
+each class, in a one-vs-rest (or one-vs-all) fashion. This can be achieved by
+calling <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code> several times, once for each class, and
+passing the <code class="docutils literal notranslate"><span class="pre">class_of_interest</span></code> parameter to the function.</p>
+<p>For example, in the plot below, the first plot on the left shows the
+certainty of classifying a data point as belonging to the “Adelie” class. The
+darker the color, the more certain the model is that a given point in the
+feature space belongs to a given class. The same logic applies to the other
 plots in the figure.</p>
 <div class="cell tag_solution docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">)</span>
-<span class="n">Xfull</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()}</span>
-<span class="p">)</span>
-
-<span class="n">probas</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">Xfull</span><span class="p">)</span>
-<span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span>
 
 <span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Predicted probabilities for decision tree model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Predicted probabilities for decision tree model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">class_of_interest</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_classes</span><span class="p">):</span>
-    <span class="n">axs</span><span class="p">[</span><span class="n">class_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Class </span><span class="si">{</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">class_of_interest</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">class_of_interest</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="n">axs</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class </span><span class="si">{</span><span class="n">class_of_interest</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
+        <span class="n">tree</span><span class="p">,</span>
+        <span class="n">data_test</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict_proba&quot;</span><span class="p">,</span>
+        <span class="n">class_of_interest</span><span class="o">=</span><span class="n">class_of_interest</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">imshow_handle</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">class_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
-        <span class="n">probas</span><span class="p">[:,</span> <span class="n">class_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)),</span>
-        <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">23</span><span class="p">),</span>
-        <span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-        <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span>
-        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">axs</span><span class="p">[</span><span class="n">class_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">class_of_interest</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">axs</span><span class="p">[</span><span class="n">class_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">)</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">target_test</span> <span class="o">==</span> <span class="n">tree</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">class_of_interest</span><span class="p">]</span>
-    <span class="n">axs</span><span class="p">[</span><span class="n">class_of_interest</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-        <span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
-        <span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">target_test</span> <span class="o">==</span> <span class="n">class_of_interest</span><span class="p">],</span>
+        <span class="n">data_test</span><span class="p">[</span><span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">target_test</span> <span class="o">==</span> <span class="n">class_of_interest</span><span class="p">],</span>
         <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
         <span class="n">c</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
         <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">)</span>
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">([</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">imshow_handle</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">([</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.14</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">),</span> <span class="n">cax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Predicted class membership probability&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a94f76db6c61d6fec689c0c47babccf1982ef9c2bb0795c1961923dedbf9721e.png" src="../_images/a94f76db6c61d6fec689c0c47babccf1982ef9c2bb0795c1961923dedbf9721e.png" />
+<img alt="../_images/8093d6c62d5e837118e0dc5cc52e7adbe982e875adb370ab83d7232e06d26691.png" src="../_images/8093d6c62d5e837118e0dc5cc52e7adbe982e875adb370ab83d7232e06d26691.png" />
 </div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You may have noticed that we are no longer using a diverging colormap. Indeed,
-the chance level for a one-vs-rest binarization of the multi-class
-classification problem is almost never at predicted probability of 0.5. So
-using a colormap with a neutral white at 0.5 might give a false impression on
-the certainty.</p>
+<p>You may notice that we do not use a diverging colormap (2 color gradients with
+white in the middle). Indeed, in a multiclass setting, 0.5 is not a
+meaningful value, hence using white as the center of the colormap is not
+appropriate. Instead, we use a sequential colormap, where the color intensity
+indicates the certainty of the classification. The darker the color, the more
+certain the model is that a given point in the feature space belongs to a
+given class.</p>
 </div>
-<p>In future versions of scikit-learn <code class="docutils literal notranslate"><span class="pre">DecisionBoundaryDisplay</span></code> will support a
-<code class="docutils literal notranslate"><span class="pre">class_of_interest</span></code> parameter that will allow in particular for a
-visualization of <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> in multi-class settings.</p>
-<p>We also plan to make it possible to visualize the <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> values for
-the class with the maximum predicted probability (without having to pass a
-given a fixed <code class="docutils literal notranslate"><span class="pre">class_of_interest</span></code> value).</p>
 </section>
 </section>
 

@@ -695,10 +695,8 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-pipeline-no-numerical-scaling-and-integer-coded-categories">Reference pipeline (no numerical scaling and integer-coded categories)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-numerical-features">Scaling numerical features</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-of-categorical-variables">One-hot encoding of categorical variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-of-categorical-variables">One-hot encoding of categorical variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-encoder-should-i-use">Which encoder should I use?</a></li>
 </ul>
             </nav>
         </div>
@@ -829,22 +827,9 @@ workaround.</p>
 </div>
 </div>
 </div>
-<section id="analysis">
-<h3>Analysis<a class="headerlink" href="#analysis" title="Link to this heading">#</a></h3>
-<p>From an accuracy point of view, the result is almost exactly the same. The
-reason is that <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> is expressive and robust
-enough to deal with misleading ordering of integer coded categories (which was
-not the case for linear models).</p>
-<p>However from a computation point of view, the training time is much longer:
-this is caused by the fact that <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code> generates more features than
-<code class="docutils literal notranslate"><span class="pre">OrdinalEncoder</span></code>; for each unique categorical value a column is created.</p>
-<p>Note that the current implementation <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> is still
-incomplete, and once sparse representation are handled correctly, training
-time might improve with such kinds of encodings.</p>
-<p>The main take away message is that arbitrary integer coding of categories is
-perfectly fine for <code class="docutils literal notranslate"><span class="pre">HistGradientBoostingClassifier</span></code> and yields fast training
-times.</p>
-<p>Which encoder should I use?</p>
+</section>
+<section id="which-encoder-should-i-use">
+<h2>Which encoder should I use?<a class="headerlink" href="#which-encoder-should-i-use" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
@@ -881,7 +866,6 @@ scikit-learn offers the <a class="reference external" href="https://scikit-learn
 This encoder is well suited for nominal, categorical features with high
 cardinality. This encoding strategy is beyond the scope of this course,
 but the interested reader is encouraged to explore this encoder.</p>
-</section>
 </section>
 </section>
 
@@ -951,10 +935,8 @@ but the interested reader is encouraged to explore this encoder.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference-pipeline-no-numerical-scaling-and-integer-coded-categories">Reference pipeline (no numerical scaling and integer-coded categories)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-numerical-features">Scaling numerical features</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-of-categorical-variables">One-hot encoding of categorical variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-of-categorical-variables">One-hot encoding of categorical variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-encoder-should-i-use">Which encoder should I use?</a></li>
 </ul>
   </nav></div>
 

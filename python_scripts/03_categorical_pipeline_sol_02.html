@@ -769,17 +769,18 @@ reference:</p>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_validate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_column_transformer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">HistGradientBoostingClassifier</span>
 
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
     <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
 <span class="p">)</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
-    <span class="p">[(</span><span class="s2">&quot;categorical&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
     <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
 <span class="p">)</span>
+
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
 
@@ -798,7 +799,7 @@ reference:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.874 ± 0.002 with a fitting time of 4.135
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.874 ± 0.003 with a fitting time of 4.019
 </pre></div>
 </div>
 </div>
@@ -815,17 +816,12 @@ reference:</p>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
-    <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;numerical&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">numerical_columns</span><span class="p">),</span>
-        <span class="p">(</span>
-            <span class="s2">&quot;categorical&quot;</span><span class="p">,</span>
-            <span class="n">OrdinalEncoder</span><span class="p">(</span>
-                <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
-            <span class="p">),</span>
-            <span class="n">categorical_columns</span><span class="p">,</span>
-        <span class="p">),</span>
-    <span class="p">]</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">numerical_columns</span><span class="p">),</span>
+    <span class="p">(</span>
+        <span class="n">OrdinalEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">categorical_columns</span><span class="p">,</span>
+    <span class="p">),</span>
 <span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">preprocessor</span><span class="p">,</span> <span class="n">HistGradientBoostingClassifier</span><span class="p">())</span>
@@ -845,7 +841,7 @@ reference:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.874 ± 0.003 with a fitting time of 4.153
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.873 ± 0.002 with a fitting time of 4.171
 </pre></div>
 </div>
 </div>
@@ -879,8 +875,8 @@ workaround.</p>
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span>
     <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">sparse_output</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
-    <span class="p">[(</span><span class="s2">&quot;one-hot-encoder&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
     <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -901,7 +897,7 @@ workaround.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.873 ± 0.003 with a fitting time of 16.288
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean cross-validation accuracy is: 0.874 ± 0.002 with a fitting time of 16.706
 </pre></div>
 </div>
 </div>

@@ -776,9 +776,10 @@ model on a dataset that combines both kinds of variables together
 categories.</p></li>
 <li><p><strong>numerical scaling</strong> numerical features which will be standardized.</p></li>
 </ul>
-<p>Now, we create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> by specifying three values: the
-preprocessor name, the transformer, and the columns. First, let’s create the
-preprocessors for the numerical and categorical parts.</p>
+<p>Now, we create our <code class="docutils literal notranslate"><span class="pre">ColumnTransfomer</span></code> using the helper function
+<code class="docutils literal notranslate"><span class="pre">make_column_transformer</span></code>. We specify two values: the transformer, and the
+columns. First, let’s create the preprocessors for the numerical and
+categorical parts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">StandardScaler</span>
@@ -793,13 +794,11 @@ preprocessors for the numerical and categorical parts.</p>
 their respective columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_column_transformer</span>
 
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
-    <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;one-hot-encoder&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
-        <span class="p">(</span><span class="s2">&quot;standard_scaler&quot;</span><span class="p">,</span> <span class="n">numerical_preprocessor</span><span class="p">,</span> <span class="n">numerical_columns</span><span class="p">),</span>
-    <span class="p">]</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">numerical_preprocessor</span><span class="p">,</span> <span class="n">numerical_columns</span><span class="p">),</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1248,39 +1247,39 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   background-color: var(--sklearn-color-fitted-level-3);
 }
 </style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;columntransformer&#x27;,
-                 ColumnTransformer(transformers=[(&#x27;one-hot-encoder&#x27;,
+                 ColumnTransformer(transformers=[(&#x27;onehotencoder&#x27;,
                                                   OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
                                                   [&#x27;workclass&#x27;, &#x27;education&#x27;,
                                                    &#x27;marital-status&#x27;,
                                                    &#x27;occupation&#x27;, &#x27;relationship&#x27;,
                                                    &#x27;race&#x27;, &#x27;sex&#x27;,
                                                    &#x27;native-country&#x27;]),
-                                                 (&#x27;standard_scaler&#x27;,
+                                                 (&#x27;standardscaler&#x27;,
                                                   StandardScaler(),
                                                   [&#x27;age&#x27;, &#x27;capital-gain&#x27;,
                                                    &#x27;capital-loss&#x27;,
                                                    &#x27;hours-per-week&#x27;])])),
                 (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=500))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content "><pre>Pipeline(steps=[(&#x27;columntransformer&#x27;,
-                 ColumnTransformer(transformers=[(&#x27;one-hot-encoder&#x27;,
+                 ColumnTransformer(transformers=[(&#x27;onehotencoder&#x27;,
                                                   OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
                                                   [&#x27;workclass&#x27;, &#x27;education&#x27;,
                                                    &#x27;marital-status&#x27;,
                                                    &#x27;occupation&#x27;, &#x27;relationship&#x27;,
                                                    &#x27;race&#x27;, &#x27;sex&#x27;,
                                                    &#x27;native-country&#x27;]),
-                                                 (&#x27;standard_scaler&#x27;,
+                                                 (&#x27;standardscaler&#x27;,
                                                   StandardScaler(),
                                                   [&#x27;age&#x27;, &#x27;capital-gain&#x27;,
                                                    &#x27;capital-loss&#x27;,
                                                    &#x27;hours-per-week&#x27;])])),
-                (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=500))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>columntransformer: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for columntransformer: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content "><pre>ColumnTransformer(transformers=[(&#x27;one-hot-encoder&#x27;,
+                (&#x27;logisticregression&#x27;, LogisticRegression(max_iter=500))])</pre></div> </div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>columntransformer: ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for columntransformer: ColumnTransformer</span></a></div></label><div class="sk-toggleable__content "><pre>ColumnTransformer(transformers=[(&#x27;onehotencoder&#x27;,
                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
                                  [&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;,
                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
                                   &#x27;native-country&#x27;]),
-                                (&#x27;standard_scaler&#x27;, StandardScaler(),
+                                (&#x27;standardscaler&#x27;, StandardScaler(),
                                  [&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;,
-                                  &#x27;hours-per-week&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>one-hot-encoder</div></div></label><div class="sk-toggleable__content "><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content "><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>standard_scaler</div></div></label><div class="sk-toggleable__content "><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content "><pre>StandardScaler()</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>LogisticRegression</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LogisticRegression.html">?<span>Documentation for LogisticRegression</span></a></div></label><div class="sk-toggleable__content "><pre>LogisticRegression(max_iter=500)</pre></div> </div></div></div></div></div></div></div></div>
+                                  &#x27;hours-per-week&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>onehotencoder</div></div></label><div class="sk-toggleable__content "><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content "><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>standardscaler</div></div></label><div class="sk-toggleable__content "><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content "><pre>StandardScaler()</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>LogisticRegression</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LogisticRegression.html">?<span>Documentation for LogisticRegression</span></a></div></label><div class="sk-toggleable__content "><pre>LogisticRegression(max_iter=500)</pre></div> </div></div></div></div></div></div></div></div>
 </div>
 <p>The final model is more complex than the previous models but still follows the
 same API (the same set of methods that can be called by the user):</p>
@@ -1591,8 +1590,8 @@ scikit-learn as any other predictors:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.25604391, 0.25279975, 0.21907997, 0.24244666, 0.26651216]),
- &#39;score_time&#39;: array([0.02501416, 0.02436566, 0.0249877 , 0.02517557, 0.02521801]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.25475955, 0.25277162, 0.22503042, 0.24263334, 0.26280904]),
+ &#39;score_time&#39;: array([0.02536631, 0.02444434, 0.02484584, 0.02653408, 0.02492023]),
  &#39;test_score&#39;: array([0.85116184, 0.84993346, 0.8482801 , 0.85257985, 0.85544636])}
 </pre></div>
 </div>
@@ -1645,8 +1644,8 @@ slightly simpler than the one we saw earlier for the <code class="docutils liter
     <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
 <span class="p">)</span>
 
-<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
-    <span class="p">[(</span><span class="s2">&quot;categorical&quot;</span><span class="p">,</span> <span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">)],</span>
+<span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
     <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -1664,8 +1663,8 @@ slightly simpler than the one we saw earlier for the <code class="docutils liter
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 648 ms, sys: 8.02 ms, total: 656 ms
-Wall time: 656 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 547 ms, sys: 12 ms, total: 559 ms
+Wall time: 559 ms
 </pre></div>
 </div>
 </div>
@@ -1677,7 +1676,7 @@ Wall time: 656 ms
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8801080992547703
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8800262058799443
 </pre></div>
 </div>
 </div>

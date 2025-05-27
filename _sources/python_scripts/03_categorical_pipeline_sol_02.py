@@ -52,17 +52,18 @@ import time
 
 from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.ensemble import HistGradientBoostingClassifier
 
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [("categorical", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
+
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
@@ -90,17 +91,12 @@ import time
 
 from sklearn.preprocessing import StandardScaler
 
-preprocessor = ColumnTransformer(
-    [
-        ("numerical", StandardScaler(), numerical_columns),
-        (
-            "categorical",
-            OrdinalEncoder(
-                handle_unknown="use_encoded_value", unknown_value=-1
-            ),
-            categorical_columns,
-        ),
-    ]
+preprocessor = make_column_transformer(
+    (StandardScaler(), numerical_columns),
+    (
+        OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
+        categorical_columns,
+    ),
 )
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
@@ -151,8 +147,8 @@ from sklearn.preprocessing import OneHotEncoder
 categorical_preprocessor = OneHotEncoder(
     handle_unknown="ignore", sparse_output=False
 )
-preprocessor = ColumnTransformer(
-    [("one-hot-encoder", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
 

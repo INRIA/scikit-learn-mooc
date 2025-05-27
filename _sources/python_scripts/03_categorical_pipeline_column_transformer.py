@@ -74,9 +74,10 @@ categorical_columns = categorical_columns_selector(data)
 #   categories.
 # * **numerical scaling** numerical features which will be standardized.
 #
-# Now, we create our `ColumnTransfomer` by specifying three values: the
-# preprocessor name, the transformer, and the columns. First, let's create the
-# preprocessors for the numerical and categorical parts.
+# Now, we create our `ColumnTransfomer` using the helper function
+# `make_column_transformer`. We specify two values: the transformer, and the
+# columns. First, let's create the preprocessors for the numerical and
+# categorical parts.
 
 # %%
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
@@ -89,13 +90,11 @@ numerical_preprocessor = StandardScaler()
 # their respective columns.
 
 # %%
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 
-preprocessor = ColumnTransformer(
-    [
-        ("one-hot-encoder", categorical_preprocessor, categorical_columns),
-        ("standard_scaler", numerical_preprocessor, numerical_columns),
-    ]
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
+    (numerical_preprocessor, numerical_columns),
 )
 
 # %% [markdown]
@@ -234,8 +233,8 @@ categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
 
-preprocessor = ColumnTransformer(
-    [("categorical", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
 

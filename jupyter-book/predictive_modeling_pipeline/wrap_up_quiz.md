@@ -167,3 +167,12 @@ model using only numerical features lies in the range:
 
 _Select a single answer_
 ```
+
++++
+
+```{note}
+It is normal for this module to take longer than expected for people who are
+discovering Python programming, but don't get discouraged! The programming
+mechanisms will come with experience and the programming exercises in the
+following modules will seem more and more natural as time goes by.
+```

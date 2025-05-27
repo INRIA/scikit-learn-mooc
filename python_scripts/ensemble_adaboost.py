@@ -190,7 +190,7 @@ from sklearn.ensemble import AdaBoostClassifier
 
 estimator = DecisionTreeClassifier(max_depth=3, random_state=0)
 adaboost = AdaBoostClassifier(
-    estimator=estimator, n_estimators=3, algorithm="SAMME", random_state=0
+    estimator=estimator, n_estimators=3, random_state=0
 )
 adaboost.fit(data, target)
 

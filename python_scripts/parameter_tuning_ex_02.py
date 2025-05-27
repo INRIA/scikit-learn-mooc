@@ -37,7 +37,7 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %%
-from sklearn.compose import ColumnTransformer, make_column_transformer
+from sklearn.compose import make_column_transformer
 from sklearn.compose import make_column_selector as selector
 from sklearn.preprocessing import OrdinalEncoder
 
@@ -82,3 +82,5 @@ model = Pipeline(
 
 # %%
 # Write your code here.
+
+# %%

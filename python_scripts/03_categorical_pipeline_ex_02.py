@@ -70,6 +70,7 @@ preprocessor = make_column_transformer(
     remainder="passthrough",
 )
 
+
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
 start = time.time()

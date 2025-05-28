@@ -97,17 +97,16 @@ kmeans_labels_cd_vs_bm
 # The `fit_predict` method returns the cluster labels for each data point coded
 # with an arbitrary integer between 0 and `n_clusters - 1`.
 #
-# Let's add consolidate these labels in the original dataframe and visualize the
+# Let's consolidate these labels in the original dataframe and visualize the
 # clusters:
 
 # %%
 clustered_female_peng = female_penguins.copy()
-clustered_female_peng["K-means label"] = kmeans_labels_cd_vs_bm
 ax = sns.scatterplot(
-    data=clustered_female_peng,
+    data=female_penguins.assign(kmeans_labels=kmeans_labels_cd_vs_bm),
     x="Culmen Length (mm)",
     y="Body Mass (g)",
-    hue="K-means label",
+    hue="kmeans_labels",
     palette="deep",
     alpha=0.7,
 )
@@ -115,8 +114,8 @@ sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 
 # %% [markdown]
 #
-# The result is disappointing: the 3 clusters found by k-means  do not match
-# what would have naively expected from the scatter plot.
+# The result is disappointing: the 3 clusters found by k-means do not match
+# what we would have naively expected from the scatter plot.
 #
 # What could explain this?
 #
@@ -189,10 +188,12 @@ sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 
 # %% [markdown]
 #
-# Now the results of the k-means cluster better match our visual intuition on this pair of features.
+# Now the results of the k-means cluster better match our visual intuition on
+# this pair of features.
 #
-# Let's do a similar analysis on the second pair of features, namely
-# "Culmen Depth (mm)" and "Body Mass (g)". To do so we refactor the code above in a utility function:
+# Let's do a similar analysis on the second pair of features, namely "Culmen
+# Depth (mm)" and "Body Mass (g)". To do so, let's refactor the code above as a
+# utility function:
 
 
 # %%
@@ -205,13 +206,11 @@ def plot_kmeans_clusters_on_2d_data(
     labels = clustering_model.fit_predict(
         data[[first_feature_name, second_feature_name]]
     )
-    clustered_data = data.copy()
-    clustered_data["K-means label"] = labels
     ax = sns.scatterplot(
-        data=clustered_data,
+        data=data.assign(kmeans_labels=labels),
         x=first_feature_name,
         y=second_feature_name,
-        hue="K-means label",
+        hue="kmeans_labels",
         palette="deep",
         alpha=0.7,
     )
@@ -253,7 +252,7 @@ plot_kmeans_clusters_on_2d_data(
 # build as many groups as requested even if the resulting groups are not well
 # separated.
 #
-# Let's now see we can use this intuition on cluster separation to identify
+# Let's now see if can use this intuition on cluster separation to identify
 # suitable values for the number of clusters based on heuristic methods
 # introduced earlier in the course.
 #
@@ -400,14 +399,15 @@ _ = sns.pairplot(
 # %% [markdown]
 #
 # Since this is high-dimensional data (5D), the pairplot (computed only for the
-# 4 numerical features) only offers a limited perspective on the clusters. But
-# they do seem meaningful, and in particular we can notice that they could
-# potentially correspond to the 3 species of penguins present in the dataset
-# (Adelie, Chinstrap, and Gentoo) further splitted by Sex (2 clusters for each
-# species, one for males and one for females).
+# 4 numerical features) only offers a limited perspective on the clusters.
+# Despite this limitation, the clusters do appear meaningful, and in particular
+# we can notice that they could potentially correspond to the 3 species of
+# penguins present in the dataset (Adelie, Chinstrap, and Gentoo) further
+# splitted by Sex (2 clusters for each species, one for males and one for
+# females).
 #
-# Let's try to confirm this hypothesis by looking at the original
-# "Species" labels combined with the "Sex":
+# Let's try to confirm this hypothesis by looking at the original "Species"
+# labels combined with the "Sex":
 
 # %%
 species_and_sex_labels = species + " " + penguins["Sex"]

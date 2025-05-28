@@ -100,6 +100,7 @@ kmeans_labels_cd_vs_bm
 # Let's add consolidate these labels in the original dataframe and visualize the
 # clusters:
 
+# %%
 clustered_female_peng = female_penguins.copy()
 clustered_female_peng["K-means label"] = kmeans_labels_cd_vs_bm
 ax = sns.scatterplot(
@@ -132,6 +133,8 @@ sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 # We can visualize this by plotting the data by disabling the automated visual
 # scaling of the axes by manually setting the same numerical limits for both
 # axes:
+
+# %%
 min_numerical_value = 0
 max_numerical_value = clustered_female_peng["Body Mass (g)"].max() * 1.1
 ax = sns.scatterplot(
@@ -251,7 +254,7 @@ plot_kmeans_clusters_on_2d_data(
 # separated.
 #
 # Let's now see we can use this intuition on cluster separation to identify
-# suitable valuers for the number of clusters based on heuristic methods
+# suitable values for the number of clusters based on heuristic methods
 # introduced earlier in the course.
 #
 # Let's start by plotting the evolution of the WCSS (Within-Cluster Sum of

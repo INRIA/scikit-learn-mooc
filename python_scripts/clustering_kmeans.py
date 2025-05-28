@@ -192,6 +192,7 @@ sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 # "Culmen Depth (mm)" and "Body Mass (g)". To do so we refactor the code above in a utility function:
 
 
+# %%
 def plot_kmeans_clusters_on_2d_data(
     clustering_model,
     data,
@@ -232,6 +233,7 @@ plot_kmeans_clusters_on_2d_data(
 # We can also try to apply the k-means algorithm with a larger value for
 # `n_clusters`:
 
+# %%
 plot_kmeans_clusters_on_2d_data(
     make_pipeline(
         StandardScaler(),
@@ -355,6 +357,7 @@ plot_silhouette_scores(
 # We also include the `Sex` feature in the clustering model to see whether
 # it can help the algorithm to find better clusters.
 
+# %%
 from sklearn.compose import make_column_transformer, make_column_selector
 from sklearn.preprocessing import OneHotEncoder
 

@@ -137,10 +137,10 @@ sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 min_numerical_value = 0
 max_numerical_value = clustered_female_peng["Body Mass (g)"].max() * 1.1
 ax = sns.scatterplot(
-    data=clustered_female_peng,
+    data=clustered_female_peng.assign(kmeans_labels=kmeans_labels_cd_vs_bm),
     x="Culmen Length (mm)",
     y="Body Mass (g)",
-    hue="K-means label",
+    hue="kmeans_labels",
     palette="deep",
     alpha=0.7,
 )

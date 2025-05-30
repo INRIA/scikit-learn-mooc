@@ -14,58 +14,59 @@
 #
 # In this notebook we explore the k-means algorithm, which seeks to group data
 # based on the pairwise distances between data points. To illustrate the
-# different concepts, we will extract some numerical features from the penguins
-# dataset.
+# different concepts, we retain some of the features from the penguins dataset.
 
 # %%
 import pandas as pd
 
 columns_to_keep = [
-    "Species",
     "Culmen Length (mm)",
     "Culmen Depth (mm)",
     "Flipper Length (mm)",
     "Body Mass (g)",
     "Sex",
+    "Species",
 ]
 penguins = pd.read_csv("../datasets/penguins.csv")[columns_to_keep].dropna()
+# penguins = penguins[penguins["Sex"] != "."].reset_index(drop=True)
+penguins["Species"] = penguins["Species"].str.split(" ").str[0]
 penguins
 
 # %% [markdown]
 # We know that this datasets contains data about 3 different species of
-# penguins, but we will not explicitly rely on this information and instead
-# treat the problem as an unsupervised data analysis task. The goal is to
-# assess whether K-means can help us discover meaningful clusters in the data.
+# penguins, but let's not rely on such information for the moment. Instead we
+# can addresse the task using clustering. This could be the case, for example,
+# when analyzing newly collected penguin data in the wild where species haven't
+# yet been identified, or when the goal is to detect natural groupings such as
+# subpopulations, hybrids, or other variations. It’s also useful as a data
+# exploration tool: before committing to a classifier, clustering can help
+# assess whether the chosen features separate the data well.
 #
-# Let's hide this column for now. We will only use it at the end of the notebook:
+# Let's hide this column for now. We will only use it at the end of this
+# notebook:
+
+# %%
 species = penguins["Species"]
 penguins = penguins.drop(columns=["Species"])
 
 # %% [markdown]
 #
-# Let's take a first look at the structure of the numerical features using a
-# pairplot:
+# Let's take a first look at the structure of the available features using a
+# `pairplot`:
 
 # %%
 import seaborn as sns
 
-_ = sns.pairplot(penguins, height=4)
-
-# %% [markdown]
-#
-# On these plots, we more or less easily visually recognize 2 to 3 clusters
-# depending on the feature pairs.
-#
-# We suspect that the clusters overlap because female penguins are generally
-# smaller than male penguins:
-
-# %%
 _ = sns.pairplot(penguins, hue="Sex", height=4)
 
 # %% [markdown]
 #
-# Let us focus on female individuals to visually assess if the clusters are
-# better separated:
+# On these plots, we visually recognize 2 to 3 clusters depending on the feature
+# pairs. We can also notice that female penguins are generally smaller than male
+# penguins.
+#
+# Let us focus on female individuals to visually assess if that subset of data
+# leads to better separated clusters:
 
 # %%
 female_penguins = penguins.query("Sex == 'FEMALE'")
@@ -73,37 +74,42 @@ _ = sns.pairplot(female_penguins, height=4)
 
 # %% [markdown]
 #
-# As we can see, the clusters look better separated on this subset of the
-# dataset.
+# Intuitively, a good cluster should be compact (with points close to each
+# other), and well-separated from other clusters, which is indeed the case for
+# this subset of the data.
 #
 # In particular we can see that if we only consider:
 # - **Culmen Length** and **Body Mass**, we can distinguish 3 clusters;
 # - **Culmen Depth** and **Body Mass**, we can distinguish 2 clusters.
 #
 # Let's try to apply the k-means algorithm on the first pairs of columns to see
-# whether we can find the clusters that we visually identified.
+# whether we can find the clusters that we visually identified. The
+# hyperparameter `n_clusters` sets the numbers of clusters and the
+# `random_state` controls the centroid initialization.
 
 # %%
 from sklearn.cluster import KMeans
 
-kmeans_cl_vs_bm = KMeans(n_clusters=3, random_state=0)
-kmeans_labels_cd_vs_bm = kmeans_cl_vs_bm.fit_predict(
+kmeans = KMeans(n_clusters=3, random_state=0)
+labels_cl_vs_bm = kmeans.fit_predict(
     female_penguins[["Culmen Length (mm)", "Body Mass (g)"]]
 )
-kmeans_labels_cd_vs_bm
+labels_cl_vs_bm
 
 # %% [markdown]
-#
-# The `fit_predict` method returns the cluster labels for each data point coded
-# with an arbitrary integer between 0 and `n_clusters - 1`.
+# ```{tip}
+# Here we used the `fit_predict` method, which does both steps at once: it
+# learns from the data just as using `fit`, and immediately returns cluster
+# labels for each data point using `predict`. Cluster labels are coded with an
+# arbitrary integer between 0 and `n_clusters - 1`.
+# ```
 #
 # Let's consolidate these labels in the original dataframe and visualize the
 # clusters:
 
 # %%
-clustered_female_peng = female_penguins.copy()
 ax = sns.scatterplot(
-    data=female_penguins.assign(kmeans_labels=kmeans_labels_cd_vs_bm),
+    data=female_penguins.assign(kmeans_labels=labels_cl_vs_bm),
     x="Culmen Length (mm)",
     y="Body Mass (g)",
     hue="kmeans_labels",
@@ -124,20 +130,13 @@ sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 # cluster centroid. But as we can see on the axis of the scatter plot, the
 # values of "Culmen Length (mm)" and "Body Mass (g)" are not on the same scale.
 #
-# If we use the original units, the distances between data points are almost
-# entirely dominated by the "Body Mass (g)" feature,  which has numerical
-# values expressed on a scale that is much larger than the "Culmen Length (mm)"
-# feature.
-#
-# We can visualize this by plotting the data by disabling the automated visual
-# scaling of the axes by manually setting the same numerical limits for both
-# axes:
+# We can visualize this by manually setting the same scale to both axes:
 
 # %%
-min_numerical_value = 0
-max_numerical_value = clustered_female_peng["Body Mass (g)"].max() * 1.1
+min_value = 0
+max_value = female_penguins["Body Mass (g)"].max() * 1.1
 ax = sns.scatterplot(
-    data=clustered_female_peng.assign(kmeans_labels=kmeans_labels_cd_vs_bm),
+    data=female_penguins.assign(kmeans_labels=labels_cl_vs_bm),
     x="Culmen Length (mm)",
     y="Body Mass (g)",
     hue="kmeans_labels",
@@ -145,55 +144,33 @@ ax = sns.scatterplot(
     alpha=0.7,
 )
 ax.set(
-    xlim=(min_numerical_value, max_numerical_value),
-    ylim=(min_numerical_value, max_numerical_value),
+    xlim=(min_value, max_value),
+    ylim=(min_value, max_value),
     aspect="equal",
 )
 sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 
 # %% [markdown]
 #
-# Under this new perspective, the k-means clustering results make more sense:
-# the "Culmen Length" is not taken into account because the numerical values
-# expressed in mm are much smaller than the "Body Mass" values expressed in
-# grams.
+# We confirm then than, in the original units, the distances between data points
+# are almost entirely dominated by the "Body Mass (g)" feature, which has much
+# larger numerical values than the "Culmen Length (mm)" feature.
 #
-# To mitigate this problem, we can instead define a pipeline to use always
-# standardize the values of the numerical features before applying the
-# clustering algorithm. This way, all features will have the same scale and
-# contribute more or less equally to the distance calculations.
+# To mitigate this problem, we can instead define a pipeline to scale the
+# numerical features before clustering. This way, all features contribute
+# equally to the distance calculations.
 
 # %%
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-scaled_kmeans_cl_vs_bm = make_pipeline(
-    StandardScaler(),
-    KMeans(n_clusters=3, random_state=0),
+scaled_kmeans = make_pipeline(
+    StandardScaler(), KMeans(n_clusters=3, random_state=0)
 )
-scaled_kmeans_labels_cd_vs_bm = scaled_kmeans_cl_vs_bm.fit_predict(
-    female_penguins[["Culmen Length (mm)", "Body Mass (g)"]]
-)
-clustered_female_peng = female_penguins.copy()
-clustered_female_peng["K-means label"] = scaled_kmeans_labels_cd_vs_bm
-ax = sns.scatterplot(
-    data=clustered_female_peng,
-    x="Culmen Length (mm)",
-    y="Body Mass (g)",
-    hue="K-means label",
-    palette="deep",
-    alpha=0.7,
-)
-sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 
 # %% [markdown]
-#
-# Now the results of the k-means cluster better match our visual intuition on
-# this pair of features.
-#
-# Let's do a similar analysis on the second pair of features, namely "Culmen
-# Depth (mm)" and "Body Mass (g)". To do so, let's refactor the code above as a
-# utility function:
+# To avoid repeating the code for plotting, we can define a helper
+# function as follows:
 
 
 # %%
@@ -218,13 +195,25 @@ def plot_kmeans_clusters_on_2d_data(
 
 
 plot_kmeans_clusters_on_2d_data(
-    make_pipeline(
-        StandardScaler(),
-        KMeans(n_clusters=2, random_state=0),
-    ),
-    female_penguins,
-    "Culmen Depth (mm)",
-    "Body Mass (g)",
+    scaled_kmeans, female_penguins, "Culmen Length (mm)", "Body Mass (g)"
+)
+
+# %% [markdown]
+#
+# Now the results of the k-means cluster better match our visual intuition on
+# this pair of features.
+#
+# Let's do a similar analysis on the second pair of features, namely "Culmen
+# Depth (mm)" and "Body Mass (g)". To do so, let's refactor the code above as a
+# utility function:
+
+# %%
+scaled_kmeans = make_pipeline(
+    StandardScaler(), KMeans(n_clusters=2, random_state=0)
+)
+
+plot_kmeans_clusters_on_2d_data(
+    scaled_kmeans, female_penguins, "Culmen Depth (mm)", "Body Mass (g)"
 )
 
 # %% [markdown]
@@ -236,28 +225,24 @@ plot_kmeans_clusters_on_2d_data(
 # `n_clusters`:
 
 # %%
+scaled_kmeans = make_pipeline(
+    StandardScaler(), KMeans(n_clusters=6, random_state=0)
+)
+
 plot_kmeans_clusters_on_2d_data(
-    make_pipeline(
-        StandardScaler(),
-        KMeans(n_clusters=6, random_state=0),
-    ),
-    female_penguins,
-    "Culmen Length (mm)",
-    "Body Mass (g)",
+    scaled_kmeans, female_penguins, "Culmen Length (mm)", "Body Mass (g)"
 )
 
 # %% [markdown]
 #
-# When we select a large value of `n_clusters`, we observe that k-means will
-# build as many groups as requested even if the resulting groups are not well
+# When we select a large value of `n_clusters`, we observe that k-means builds
+# as many groups as requested even if the resulting clusters are not well
 # separated.
 #
-# Let's now see if can use this intuition on cluster separation to identify
-# suitable values for the number of clusters based on heuristic methods
-# introduced earlier in the course.
-#
-# Let's start by plotting the evolution of the WCSS (Within-Cluster Sum of
-# Squares) metric as a function of the number of clusters.
+# Let's now see if we can identify suitable values for the number of clusters
+# based on some heuristics. We start by plotting the evolution of the WCSS
+# (Within-Cluster Sum of Squares) metric as a function of the number of
+# clusters.
 
 # %%
 import matplotlib.pyplot as plt
@@ -282,15 +267,14 @@ _ = plt.title("Elbow method using WCSS")
 
 # %% [markdown]
 #
-# As expected the WCSS value decreases as the number of clusters increases and
-# we can observe a so-called "elbow" in the curve (the point with maximum
-# curvature) around `n_clusters=3`. This matches the number of cluster found by
-# our visual intuition when looking at this 2D scatter plots.
+# We can observe the so-called "elbow" in the curve (the point with maximum
+# curvature) around `n_clusters=3`. This matches our visual intuition coming
+# from the "Culmen Length" vs "Body Mass" scatter plot.
 #
-# However, the elbow method is not always easy to read.
-#
-# Let's try to use the silhouette score instead. Note that this method requires
-# access to the preprocessed features:
+# However, the WCSS value decreases monotonically as the number of clusters
+# increases, and then we may be overlooking important information. Let's now
+# plot the silhouette score instead. Notice that this method requires access to
+# the preprocessed features:
 
 # %%
 from sklearn.metrics import silhouette_score
@@ -301,6 +285,7 @@ def plot_silhouette_scores(
     clustering_model=None,
     preprocessor=None,
     n_clusters_values=range(2, 11),
+    title_details="all features",
 ):
     if clustering_model is None:
         clustering_model = KMeans(random_state=0)
@@ -320,44 +305,42 @@ def plot_silhouette_scores(
     plt.plot(n_clusters_values, silhouette_scores, marker="o")
     plt.xlabel("Number of clusters (n_clusters)")
     plt.ylabel("Silhouette score")
-    _ = plt.title("Silhouette scores for different n_clusters")
+    _ = plt.title("Silhouette scores using\n" + title_details)
 
 
 plot_silhouette_scores(
     female_penguins[["Culmen Length (mm)", "Body Mass (g)"]],
+    title_details="Culmen Length and Body Mass",
 )
 
 # %% [markdown]
 #
-# The silhouette score reaches a maximum when `n_clusters=3`, which confirms
-# our visual intuition on this 2D dataset.
+# The silhouette score reaches a maximum when `n_clusters=3`, which confirms our
+# visual intuition on this 2D dataset.
 #
-# We can also notice that the silhouette score is also very high for
-# `n_clusters=2` and has an intermediate value for `n_clusters=4`. It's
+# We can also notice that the silhouette score is similarly high for
+# `n_clusters=2`, and has an intermediate value for `n_clusters=4`. It is
 # possible that those two values would also yield qualitatively meaningful
-# clusters, but this probably not the case for `n_clusters=5` or larger.
+# clusters, but that is less the case for `n_clusters=5` or more.
 #
 # Let's compare this to the results obtained on the second pair of features:
 
 # %%
 plot_silhouette_scores(
     female_penguins[["Culmen Depth (mm)", "Body Mass (g)"]],
+    title_details="Culmen Depth and Body Mass",
 )
 
 # %% [markdown]
 #
-# For this feature set, the plot clearly shows that the silhouette score
-# reaches a maximum when `n_clusters=2`, which matches our visual intuition
-# from the scatter plot of this 2D feature set.
+# The plot reaches a clear maximum silhouette score when `n_clusters=2`, which
+# matches our intuition for those two features.
 
 # %% [markdown]
 #
-# We can now try to apply the k-means algorithm on the full dataset, i.e. on
-# all numerical features and all the rows, to see whether k-means can discover
-# meaningful clusters in the data automatically.
-#
-# We also include the `Sex` feature in the clustering model to see whether
-# it can help the algorithm to find better clusters.
+# We can now try to apply the k-means algorithm on the full dataset, i.e. on all
+# numerical features and all rows, regardless of the "Sex" feature, to see
+# whether k-means can discover meaningful clusters in the whole data.
 
 # %%
 from sklearn.compose import make_column_transformer, make_column_selector
@@ -401,10 +384,9 @@ _ = sns.pairplot(
 # Since this is high-dimensional data (5D), the pairplot (computed only for the
 # 4 numerical features) only offers a limited perspective on the clusters.
 # Despite this limitation, the clusters do appear meaningful, and in particular
-# we can notice that they could potentially correspond to the 3 species of
-# penguins present in the dataset (Adelie, Chinstrap, and Gentoo) further
-# splitted by Sex (2 clusters for each species, one for males and one for
-# females).
+# we can notice that they potentially correspond to the 3 species of penguins
+# present in the dataset (Adelie, Chinstrap, and Gentoo) further splitted by Sex
+# (2 clusters for each species, one for males and one for females).
 #
 # Let's try to confirm this hypothesis by looking at the original "Species"
 # labels combined with the "Sex":
@@ -424,59 +406,21 @@ _ = sns.pairplot(
 # %% [markdown]
 #
 # This plot seems to be very similar to the pairplot we obtained with the 6
-# clusters found by k-means on our preprocessed data. Note that the colors are
-# different, because the ordering of the labels is arbitrary (both for the
-# k-means cluster and the manually assigned labels). But the way of grouping
-# the data points look similar.
-#
-# Let's quantify the agreement between the clusters found by k-means and the
-# combination of the "Species" and "Sex" labels using the [Normalized Mutual
-# Information](https://scikit-learn.org/stable/modules/clustering.html#mutual-info-score)
-# (NMI) score.
-
-# %%
-from sklearn.metrics.cluster import normalized_mutual_info_score
-
-nmi = normalized_mutual_info_score(
-    species_and_sex_labels,
-    cluster_labels,
-)
-print(f"Normalized Mutual Information (NMI): {nmi:.3f}")
-
-# %% [markdown]
-#
-# This value is very close to 1.0, which indicates a very strong agreement.
+# clusters found by k-means on our preprocessed data, i.e. in both cases plots
+# that display 3 clusters can be further divided into a group of proportionally
+# smaller penguins. Only the colors may differ, as the ordering of the labels is
+# arbitrary (both for the k-means cluster and the manually assigned labels).
 #
 # The conclusion is that we relate the clusters found by running k-means on
 # those preprocessed features to a meaningful (human) way to partition the
-# penguins records.
-#
-# Note however that this is not always the case. For **k-means to yield
-# meaningful results, the data must be have an approximately balanced, convex
-# and isotropic cluster structure** after preprocessing. That is, the clusters
-# must have a spherical shape in the feature space and approximately the same
-# size.
+# penguins records. Notice however that this may not always be the case.
 #
 # We cannot stress enough that the choice of the features and preprocessing
 # steps are crucial: if we had not standardized the numerical data, or we had
-# not included the "Sex" feature or if we had scaled its one-hot encoding by a
+# not included the "Sex" feature, or if we had scaled its one-hot encoding by a
 # factor of 10, we would probably not have been able to discover interpretable
 # clusters.
 #
 # Furthermore, **many natural datasets would not satisfy the k-means
-# assumptions** even after non-trivial preprocessing. In those cases, we can
-# either try alternatives to k-means that favor different cluster shapes (for
-# instance HDBSCAN or Gaussian Mixture Models) or we can try to isolate
-# row-wise or column-wise subsets of the data that are more likely to exhibit a
-# cluster structure. Or sometimes, we can decide to partition the data with
-# k-means with a large number of clusters, even if they are not interpretable
-# and use the distance to centroids as preprocessing for another task. It all
-# depends on the specific application domain and the downstream use of the
-# resulting clusters.
-#
-# Finally, notice that we used extra supervised information to quantitatively
-# assess the quality of the match between the clusters found by k-means and our
-# interpretation. In practice, this is often impossible, as we do not have
-# access to human assigned labels for each row in the data. Or, if we have, we
-# might want to use them to train the clustering model, but instead we would
-# rather use them as the target variable to train a supervised classifier.
+# assumptions** even after non-trivial preprocessing. We will see how to deal
+# with more general cases later in this module.

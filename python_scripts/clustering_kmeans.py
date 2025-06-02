@@ -34,7 +34,7 @@ penguins
 # %% [markdown]
 # We know that this datasets contains data about 3 different species of
 # penguins, but let's not rely on such information for the moment. Instead we
-# can addresse the task using clustering. This could be the case, for example,
+# can address the task using clustering. This could be the case, for example,
 # when analyzing newly collected penguin data in the wild where species haven't
 # yet been identified, or when the goal is to detect natural groupings such as
 # subpopulations, hybrids, or other variations. It’s also useful as a data
@@ -151,13 +151,13 @@ sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 
 # %% [markdown]
 #
-# We confirm then than, in the original units, the distances between data points
-# are almost entirely dominated by the "Body Mass (g)" feature, which has much
-# larger numerical values than the "Culmen Length (mm)" feature.
+# We thus confirm that, when using in the original units, the distances between
+# data points are almost entirely dominated by the "Body Mass (g)" feature,
+# which has much larger numerical values than the "Culmen Length (mm)" feature.
 #
 # To mitigate this problem, we can instead define a pipeline to scale the
 # numerical features before clustering. This way, all features contribute
-# equally to the distance calculations.
+# similarly to the distance calculations.
 
 # %%
 from sklearn.pipeline import make_pipeline
@@ -168,6 +168,16 @@ scaled_kmeans = make_pipeline(
 )
 
 # %% [markdown]
+#
+# Note that scaling features by their standard deviation as done by
+# `StandardScaler` is just one way to achieve this. We could alternatively use
+# `RobustScaler`, `MinMaxScaler or `MaxAbsScaler` instead. None of those
+# is the best a priori. They all have a similar effect but there can be 
+# subtle differences and side-effects. We encourage the reader to refer to the
+# section dedicated to [preprocessing data](
+# https://scikit-learn.org/stable/modules/preprocessing.html) in the 
+# scikit-learn user guide for more details.
+#
 # To avoid repeating the code for plotting, we can define a helper
 # function as follows:
 

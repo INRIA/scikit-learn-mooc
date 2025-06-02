@@ -187,5 +187,8 @@ for random_state in range(1, 11):
         data_subsample,
         score_type="silhouette",
         alpha=0.2,
-        title="Stability of silhouette score\nwith n_init=5 and QuantileTransformer",
+        title=(
+            "Stability of silhouette score\nwith n_init=5 and"
+            " QuantileTransformer"
+        ),
     )

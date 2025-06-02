@@ -230,7 +230,9 @@ for random_state in range(1, 11):
         data_subsample,
         score_type="silhouette",
         alpha=0.2,
-        title="Stability of silhouette score\nwith n_init=5 and StandardScaler",
+        title=(
+            "Stability of silhouette score\nwith n_init=5 and StandardScaler"
+        ),
     )
 
 # %% [markdown] tags=["solution"]
@@ -261,7 +263,10 @@ for random_state in range(1, 11):
         data_subsample,
         score_type="silhouette",
         alpha=0.2,
-        title="Stability of silhouette score\nwith n_init=5 and QuantileTransformer",
+        title=(
+            "Stability of silhouette score\nwith n_init=5 and"
+            " QuantileTransformer"
+        ),
     )
 
 # %% [markdown] tags=["solution"]
@@ -276,7 +281,7 @@ for random_state in range(1, 11):
 # this, we can plot the labels when setting `n_clusters=6`.
 
 # %% tags=["solution"]
-n_clusters=6
+n_clusters = 6
 model = make_pipeline(
     QuantileTransformer(),
     KMeans(n_init=5, n_clusters=n_clusters, random_state=0),
@@ -320,17 +325,29 @@ ax.set_title("Clusters in quantile-transformed space", y=0.99)
 _ = plt.tight_layout()
 
 # %% [markdown] tags=["solution"]
-# Observe that the clusters at "transformed monetary" exactly equal to 0 are
-# grouped together with samples with low but non-zero values of "transformed
-# monetary", that would belong more naturally to other clusters.
+# Observe that the clusters at "transformed monetary" exactly equals zero are
+# grouped together with data points with non-zero "transformed monetary" that
+# would more naturally belong to other clusters. What happens here is that data
+# points at "transformed monetary" equals zero lie on a flat region. i.e. they
+# vary only in "transformed recency" and "transformed frequency".
 #
-# What happens here is that data points at "transformed monetary" equal to 0 are
-# not isotropic in the 3 dimensions, i.e. they are spread on a plane of
-# "transformed recency" and "transformed frequency" ranging from 0 to 1.
-# Remember that k-means consists of minimizing each point's euclidean distance
-# to its assigned centroid. As a consequence, k-means is more appropriate for
-# clusters that are isotropic and normally distributed, in other words, that
-# group around a center.
+# Remember that k-means consists of minimizing the squared distance from each
+# point to its assigned centroid. This makes it more suited to data where
+# clusters are roughly spherical and evenly distributed in all directions of the
+# feature space.
+
+# When the data doesn't have this kind of structure.k-means may not perform
+# well. In such cases, we can consider:
 #
-# We will learn more about how to deal with anisotropic clusters in a future
-# notebook.
+# - using other clustering algorithms that handle more complex shapes, such as
+#   HDBSCAN (which we will cover in a future notebook) or Gaussian Mixture
+#   Models (GMMs);
+# - focusing on a subset of features where the cluster structure is clearer, as
+#   we did by separating penguins into 6 groups (3 species × 2 sexes) in a
+#   previous notebook;
+# - Or even applying k-means with a larger number of clusters, even if they are
+#   not interpretable, and use the distance to centroids as preprocessing for
+#   another task.
+#
+# It all depends on the specific application domain and the downstream use of
+# the resulting clusters.

@@ -28,7 +28,6 @@ columns_to_keep = [
     "Species",
 ]
 penguins = pd.read_csv("../datasets/penguins.csv")[columns_to_keep].dropna()
-# penguins = penguins[penguins["Sex"] != "."].reset_index(drop=True)
 penguins["Species"] = penguins["Species"].str.split(" ").str[0]
 penguins
 

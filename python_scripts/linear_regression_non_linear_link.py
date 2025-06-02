@@ -78,6 +78,7 @@ data.shape
 # %%
 from sklearn.metrics import mean_squared_error
 
+
 def fit_score_plot_regression(model, title=None):
     model.fit(data, target)
     target_predicted = model.predict(data)

@@ -24,7 +24,7 @@
 # disease. This would depend on the patient's Body Mass Index which is defined
 # as `weight / height ** 2`.
 #
-# We load the dataset penguins dataset. We first use a set of 3 numerical
+# We load the penguins dataset. We first use a set of 3 numerical
 # features to predict the target, i.e. the body mass of the penguin.
 
 # %% [markdown]

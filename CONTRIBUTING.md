@@ -39,7 +39,7 @@ $ make notebooks/02_numerical_pipeline_scaling.ipynb
 - when saving the notebook inside Jupyter it will actually write to the `.py` file
 
 In our experience, this workflow is less convenient (Visual Studio Code is a
-nicer developping environment) and also it tends to add some not very important
+nicer developing environment) and also it tends to add some not very important
 (and different on everyone's machine) metadata changes in the `.py` file, for
 example about jupytext version, Jupyter kernel, Python version, etc ...
 
@@ -101,7 +101,7 @@ make full-index
 ## JupyterBook
 
 JupyterBook is the tool we use to generate our .github.io website from our
-`.py` and `.md` files (note than `.ipynb` files are not used in our JupyterBook
+`.py` and `.md` files (note that `.ipynb` files are not used in our JupyterBook
 setup).
 
 ```

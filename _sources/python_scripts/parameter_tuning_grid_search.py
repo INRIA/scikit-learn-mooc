@@ -276,5 +276,5 @@ ax.invert_yaxis()
 # In this notebook we have seen:
 #
 # * how to optimize the hyperparameters of a predictive model via a grid-search;
-# * that searching for more than two hyperparamters is too costly;
+# * that searching for more than two hyperparameters is too costly;
 # * that a grid-search does not necessarily find an optimal solution.

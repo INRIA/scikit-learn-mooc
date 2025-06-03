@@ -34,7 +34,7 @@ data = data.sample(n=2000, random_state=0).reset_index(drop=True)
 data
 
 # %% [markdown]
-# We can explore the data using a seborn `pairplot`.
+# We can explore the data using a seaborn `pairplot`.
 
 # %%
 import seaborn as sns
@@ -61,6 +61,7 @@ _ = sns.pairplot(data)
 # purpose:
 
 # %%
+import matplotlib.pyplot as plt
 from sklearn.metrics import silhouette_score
 
 
@@ -117,26 +118,28 @@ def plot_n_clusters_scores(
 # Write your code here.
 
 # %% [markdown]
-# Let's check if the best choice of n_clusters remains stable when resampling
-# the dataset. For such purpose:
-# - Keep a fixed `random_state` for the `KMeans` step to isolate the effect of
-#   data resampling.
-# - Generate resamplings consisting of 50% of the data by using
-#   `train_test_split` with `train_size=0.5`. Changing the `random_state`
-#   to do the split leads to different resamplings.
+# Let's see if we can find one or more stable candidates for `n_clusters` using
+# the elbow method when resampling the dataset. For such purpose:
+# - Generate randomly resampled data consisting of 50% of the data by using
+#   `train_test_split` with `train_size=0.5`. Changing the `random_state` to do
+#   the split leads to different samples.
 # - Use the `plot_n_clusters_scores` function inside a `for` loop to make
 #   multiple overlapping plots of the inertia, each time using a different
-#   resampling. 10 resamplings should be enough to draw conclusions.
+#   resampling. 10 resampling iterations should be enough to draw conclusions.
+# - You can choose to set the `random_state` value of the `KMeans` step, but be
+#   aware that even if we fix `random_state=0` in all resampling iterations,
+#   k-means will still choose different initial centroids for different data
+#   samples, so fixing it or not should not change the conclusions w.r.t. to
+#   stability to resampling.
 #
-# Is the elbow (optimal number of clusters) stable across all different
-# resamplings?
+# Is the elbow (optimal number of clusters) stable when resampling?
 
 # %%
 # Write your code here.
 
 # %% [markdown]
 # By default, `KMeans` uses a smart selection of the initial centroids called
-# "k-means++". Instead of picking points completly at random, it tries several
+# "k-means++". Instead of picking points completely at random, it tries several
 # candidate centroids at each step and picks the best ones based on an
 # estimation of how much they would help reduce the overall inertia. This method
 # improves the chances of finding better cluster centroids and speeds up
@@ -150,9 +153,9 @@ def plot_n_clusters_scores(
 # data is unevenly distributed) where increasing `n_init` may help ensuring a
 # global minimal inertia.
 #
-# Repeat the previous example but setting `n_init=5`. Remeber to fix the
+# Repeat the previous example but setting `n_init=5`. Remember to fix the
 # `random_state` for the `KMeans` initialization to only estimate the
-# variability related to resamplings of the data. Are the resulting inertia
+# variability related to the resampling of the data. Are the resulting inertia
 # curves more stable?
 
 # %%
@@ -168,27 +171,19 @@ def plot_n_clusters_scores(
 # Write your code here.
 
 # %% [markdown]
+#
 # Once again repeat the experiment to determine the stability of the optimal
 # number of clusters. This time, instead of using a `StandardScaler`, use a
-# `QuantileTransformer` with default parameters as the preprocessing step in the
-# pipeline. For the `KMeans` step, keep `n_init=5` and a fixed `random_state`.
-# What happens in terms of silhouette score?
+# `QuantileTransformer` with default parameters as the preprocessing step in
+# the pipeline. Contrary to `StandardScaler`, `QuantileTransformer` is a
+# nonlinear transformation that maps the features with a long tail
+# distributions to a uniform distribution, which is the case for the
+# "frequency" and "monetary" features in the RFM dataset.
+#
+# For the `KMeans` step, keep `n_init=5`.
+#
+# What happens in terms of silhouette score? Does this make it possible to
+# identify stable and qualitatively interesting clusters in this data?
 
 # %%
-from sklearn.preprocessing import QuantileTransformer
-
-model = make_pipeline(QuantileTransformer(), KMeans(n_init=5, random_state=0))
-for random_state in range(1, 11):
-    data_subsample, _ = train_test_split(
-        data, train_size=0.5, random_state=random_state
-    )
-    plot_n_clusters_scores(
-        model,
-        data_subsample,
-        score_type="silhouette",
-        alpha=0.2,
-        title=(
-            "Stability of silhouette score\nwith n_init=5 and"
-            " QuantileTransformer"
-        ),
-    )
+# Write your code here.

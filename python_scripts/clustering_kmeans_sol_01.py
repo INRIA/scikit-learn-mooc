@@ -46,7 +46,6 @@ _ = sns.pairplot(data)
 
 # %%
 # solution
-import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 
 n_clusters_values = [2, 3, 4]
@@ -55,8 +54,8 @@ for n_clusters in n_clusters_values:
     model = KMeans(n_clusters=n_clusters)
     clustered_data = data.copy()
     clustered_data["cluster label"] = model.fit_predict(data)
-    sns.pairplot(clustered_data, hue="cluster label", palette="tab10")
-    plt.title(f"n_clusters={n_clusters}")
+    grid = sns.pairplot(clustered_data, hue="cluster label", palette="tab10")
+    grid.figure.suptitle(f"n_clusters={n_clusters}", y=1.08)
 
 # %% [markdown] tags=["solution"]
 # Without scaling "monetary" has a dominant impact when forming clusters,
@@ -70,6 +69,7 @@ for n_clusters in n_clusters_values:
 # purpose:
 
 # %%
+import matplotlib.pyplot as plt
 from sklearn.metrics import silhouette_score
 
 
@@ -140,11 +140,11 @@ plot_n_clusters_scores(model, data, score_type="inertia")
 # initialization of the centroids in k-means.
 
 # %% [markdown]
-# Let's if we can find one or more stable candidates for `n_clusters` using the
-# elbow method when resampling the dataset. For such purpose:
+# Let's see if we can find one or more stable candidates for `n_clusters` using
+# the elbow method when resampling the dataset. For such purpose:
 # - Generate randomly resampled data consisting of 50% of the data by using
-#   `train_test_split` with `train_size=0.5`. Changing the `random_state`
-#   to do the split leads to different samples.
+#   `train_test_split` with `train_size=0.5`. Changing the `random_state` to do
+#   the split leads to different samples.
 # - Use the `plot_n_clusters_scores` function inside a `for` loop to make
 #   multiple overlapping plots of the inertia, each time using a different
 #   resampling. 10 resampling iterations should be enough to draw conclusions.
@@ -178,7 +178,7 @@ for random_state in range(1, 11):
 
 # %% [markdown]
 # By default, `KMeans` uses a smart selection of the initial centroids called
-# "k-means++". Instead of picking points completly at random, it tries several
+# "k-means++". Instead of picking points completely at random, it tries several
 # candidate centroids at each step and picks the best ones based on an
 # estimation of how much they would help reduce the overall inertia. This method
 # improves the chances of finding better cluster centroids and speeds up
@@ -266,6 +266,7 @@ for random_state in range(1, 11):
 # identify stable and qualitatively interesting clusters in this data?
 
 # %%
+# solution
 from sklearn.preprocessing import QuantileTransformer
 
 model = make_pipeline(QuantileTransformer(), KMeans(n_init=5, random_state=0))

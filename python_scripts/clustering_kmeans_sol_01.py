@@ -28,7 +28,7 @@ data = data.sample(n=2000, random_state=0).reset_index(drop=True)
 data
 
 # %% [markdown]
-# We can explore the data using a seborn `pairplot`.
+# We can explore the data using a seaborn `pairplot`.
 
 # %%
 import seaborn as sns
@@ -52,7 +52,7 @@ from sklearn.cluster import KMeans
 n_clusters_values = [2, 3, 4]
 
 for n_clusters in n_clusters_values:
-    model = KMeans(n_clusters=n_clusters, random_state=0)
+    model = KMeans(n_clusters=n_clusters)
     clustered_data = data.copy()
     clustered_data["cluster label"] = model.fit_predict(data)
     sns.pairplot(clustered_data, hue="cluster label", palette="tab10")
@@ -127,27 +127,34 @@ def plot_n_clusters_scores(
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-model = make_pipeline(StandardScaler(), KMeans(random_state=0))
+model = make_pipeline(StandardScaler(), KMeans())
 model
 
 # %%
 # solution
 plot_n_clusters_scores(model, data, score_type="inertia")
 
+# %% [markdown] tags=["solution"]
+#
+# The WCSS plot no strong elbow but it might depend of the random
+# initialization of the centroids in k-means.
+
 # %% [markdown]
-# Let's check if the best choice of n_clusters remains stable when resampling
-# the dataset. For such purpose:
-# - Keep a fixed `random_state` for the `KMeans` step to isolate the effect of
-#   data resampling.
-# - Generate resamplings consisting of 50% of the data by using
+# Let's if we can find one or more stable candidates for `n_clusters` using the
+# elbow method when resampling the dataset. For such purpose:
+# - Generate randomly resampled data consisting of 50% of the data by using
 #   `train_test_split` with `train_size=0.5`. Changing the `random_state`
-#   to do the split leads to different resamplings.
+#   to do the split leads to different samples.
 # - Use the `plot_n_clusters_scores` function inside a `for` loop to make
 #   multiple overlapping plots of the inertia, each time using a different
-#   resampling. 10 resamplings should be enough to draw conclusions.
+#   resampling. 10 resampling iterations should be enough to draw conclusions.
+# - You can choose to set the `random_state` value of the `KMeans` step, but be
+#   aware that even if we fix `random_state=0` in all resampling iterations,
+#   k-means will still choose different initial centroids for different data
+#   samples, so fixing it or not should not change the conclusions w.r.t. to
+#   stability to resampling.
 #
-# Is the elbow (optimal number of clusters) stable across all different
-# resamplings?
+# Is the elbow (optimal number of clusters) stable when resampling?
 
 # %%
 # solution
@@ -185,9 +192,9 @@ for random_state in range(1, 11):
 # data is unevenly distributed) where increasing `n_init` may help ensuring a
 # global minimal inertia.
 #
-# Repeat the previous example but setting `n_init=5`. Remeber to fix the
+# Repeat the previous example but setting `n_init=5`. Remember to fix the
 # `random_state` for the `KMeans` initialization to only estimate the
-# variability related to resamplings of the data. Are the resulting inertia
+# variability related to the resampling of the data. Are the resulting inertia
 # curves more stable?
 
 # %%
@@ -244,11 +251,19 @@ for random_state in range(1, 11):
 # pipeline.
 
 # %% [markdown]
+#
 # Once again repeat the experiment to determine the stability of the optimal
 # number of clusters. This time, instead of using a `StandardScaler`, use a
-# `QuantileTransformer` with default parameters as the preprocessing step in the
-# pipeline. For the `KMeans` step, keep `n_init=5` and a fixed `random_state`.
-# What happens in terms of silhouette score?
+# `QuantileTransformer` with default parameters as the preprocessing step in
+# the pipeline. Contrary to `StandardScaler`, `QuantileTransformer` is a
+# nonlinear transformation that maps the features with a long tail
+# distributions to a uniform distribution, which is the case for the
+# "frequency" and "monetary" features in the RFM dataset.
+#
+# For the `KMeans` step, keep `n_init=5`.
+#
+# What happens in terms of silhouette score? Does this make it possible to
+# identify stable and qualitatively interesting clusters in this data?
 
 # %%
 from sklearn.preprocessing import QuantileTransformer
@@ -270,84 +285,78 @@ for random_state in range(1, 11):
     )
 
 # %% [markdown] tags=["solution"]
-# The silhouette score is much more stable across resamplings. Moreover, the
-# optimal number of clusters seems to be 2, as it provides the highest score,
-# indicating that the data points are well-separated and correctly grouped with
-# good cohesion. However 4 or 6 clusters may still make sense if the clustering
-# has specific use cases or domain relevance.
+#
+# The silhouette score is a bit more stable under resampling. Moreover, the
+# optimal number of clusters seems to be 2, as it provides the highest score.
+# However 4 or 6 clusters may still make sense if the clustering has specific
+# use cases or domain relevance.
 #
 # Notice that you should still be cautious as the relatively low values of the
-# silhouette scores suggest that some points may be "misassigned". To verify
-# this, we can plot the labels when setting `n_clusters=6`.
+# silhouette scores suggest that clusters are not well separated or not dense
+# enough. To verify this, we can plot the labels when setting `n_clusters=6`.
 
 # %% tags=["solution"]
 n_clusters = 6
 model = make_pipeline(
     QuantileTransformer(),
     KMeans(n_init=5, n_clusters=n_clusters, random_state=0),
-)
+).set_output(transform="pandas")
 model
 
 # %% tags=["solution"]
-clustered_data = data.copy()
-clustered_data["cluster label"] = model.fit_predict(data)
+cluster_labels = model.fit_predict(data)
 
-sns.pairplot(clustered_data, hue="cluster label", palette="tab10")
-plt.title(f"n_clusters={n_clusters}")
+_ = sns.pairplot(
+    model[:-1].transform(data).assign(cluster_labels=cluster_labels),
+    hue="cluster_labels",
+    palette="tab10",
+)
 
 # %% [markdown] tags=["solution"]
-# Indeed, "monetary" exactly equal to 0 is divided into 2 clusters (the plot in
-# the middle of the `pairplot`), whereas it would feel more reasonably to have
-# those points form a single cluster.
 #
-# Alternatively, we can plot the labels in the transformed space to better
-# observe that some data points seem to be misassigned.
+# Since we have 3 dimensions, we can try to visualize the cluster labels using
+# a 3D projection directly:
 
 # %% tags=["solution"]
 from matplotlib.colors import ListedColormap
 
-cluster_labels = model.fit_predict(data)
-cmap = ListedColormap(plt.get_cmap("tab10").colors[:n_clusters])
-
 fig, ax = plt.subplots(figsize=(8, 8), subplot_kw={"projection": "3d"})
+ax.view_init(azim=80)
+
+cmap = ListedColormap(plt.get_cmap("tab10").colors[:n_clusters])
 scatter = ax.scatter(
-    *model[:-1].transform(data).T,
+    *model[:-1].transform(data).values.T,
     c=cluster_labels,
     cmap=cmap,
     s=50,
     alpha=0.7,
 )
 ax.set_box_aspect(None, zoom=0.84)
-ax.set_xlabel("Transformed Monetary", labelpad=15)
-ax.set_ylabel("Transformed Frequency", labelpad=15)
-ax.set_zlabel("Transformed Recency", labelpad=15)
+ax.set_xlabel(f"Transformed {data.columns[0]}", labelpad=15)
+ax.set_ylabel(f"Transformed {data.columns[1]}", labelpad=15)
+ax.set_zlabel(f"Transformed {data.columns[2]}", labelpad=15)
 ax.set_title("Clusters in quantile-transformed space", y=0.99)
 _ = plt.tight_layout()
 
 # %% [markdown] tags=["solution"]
-# Observe that the clusters at "transformed monetary" exactly equals zero are
-# grouped together with data points with non-zero "transformed monetary" that
-# would more naturally belong to other clusters. What happens here is that data
-# points at "transformed monetary" equals zero lie on a flat region. i.e. they
-# vary only in "transformed recency" and "transformed frequency".
 #
-# Remember that k-means consists of minimizing the squared distance from each
-# point to its assigned centroid. This makes it more suited to data where
-# clusters are roughly spherical and evenly distributed in all directions of the
-# feature space.
-
-# When the data doesn't have this kind of structure.k-means may not perform
-# well. In such cases, we can consider:
+# The general impression from this study is that k-means fails to find
+# well-separated clusters in this dataset regardless of the preprocessing
+# method used.
 #
-# - using other clustering algorithms that handle more complex shapes, such as
-#   HDBSCAN (which we will cover in a future notebook) or Gaussian Mixture
-#   Models (GMMs);
-# - focusing on a subset of features where the cluster structure is clearer, as
-#   we did by separating penguins into 6 groups (3 species × 2 sexes) in a
-#   previous notebook;
-# - Or even applying k-means with a larger number of clusters, even if they are
-#   not interpretable, and use the distance to centroids as preprocessing for
-#   another task.
+# We can observe that the quantile-transformed data has a structure of layered
+# planes because of the discrete integer levels for the lowest values of the
+# "Frequency" feature which are overrepresented in the dataset.
 #
-# It all depends on the specific application domain and the downstream use of
-# the resulting clusters.
+# One could try more advanced kinds of preprocessing, or even, clustering
+# algorithms that favor different kinds of shapes, however, by looking at the
+# pairplot above we can draw the following conclusions:
+# - The discrete layers visible for the lowest values of the "frequency"
+#   feature are not that interesting to treat as clusters by themselves because
+#   they do not relate to visible structure involving the other two features;
+# - If we ignore the "frequency" feature, we can observe no significant cluster
+#   structure in the "recency" and "monetary" 2D space.
+#
+# In conclusion, the data does not have a clear cluster structure, and this
+# explains why we could not find strong and stable values for the silhouette
+# score under resampling.

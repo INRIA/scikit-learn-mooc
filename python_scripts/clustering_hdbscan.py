@@ -16,8 +16,8 @@
 # Clustering of Applications with Noise".
 #
 # Let's explain each of those tearms. HDBSCAN is hierarchical, which means it
-# handles data with clusters nested within each other. The user can decide at
-# what level of the hierarchy want to cut off the clusters.
+# handles data with clusters nested within each other. The user controls the
+# level in the hierarchy at which clusters are formed.
 #
 # It is density-based (and therefore non-parametric, contrary to K-means)
 # because it does not assume a specific shape or number of clusters. Instead, it

@@ -169,14 +169,13 @@ scaled_kmeans = make_pipeline(
 
 # %% [markdown]
 #
-# Note that scaling features by their standard deviation as done by
-# `StandardScaler` is just one way to achieve this. We could alternatively use
-# `RobustScaler`, `MinMaxScaler or `MaxAbsScaler` instead. None of those
-# is the best a priori. They all have a similar effect but there can be 
-# subtle differences and side-effects. We encourage the reader to refer to the
-# section dedicated to [preprocessing data](
-# https://scikit-learn.org/stable/modules/preprocessing.html) in the 
-# scikit-learn user guide for more details.
+# Notice that scaling features by their standard deviation using
+# `StandardScaler` is just one way to achieve this. Other options include
+# `RobustScaler`, `MinMaxScaler`, and several others, which work similarly but
+# may behave differently depending on the data. For more details, refer to the
+# [preprocessing data](
+# https://scikit-learn.org/stable/modules/preprocessing.html) section in the
+# scikit-learn user guide.
 #
 # To avoid repeating the code for plotting, we can define a helper
 # function as follows:

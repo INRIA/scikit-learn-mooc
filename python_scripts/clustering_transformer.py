@@ -35,19 +35,14 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 
 data_train, data_test, target_train, target_test = train_test_split(
     data, target, test_size=0.2, random_state=0
 )
 geo_columns = ["Latitude", "Longitude"]
 model_drop_geo = make_pipeline(
-    ColumnTransformer(
-        [
-            ("geo", "drop", geo_columns),
-        ],
-        remainder="passthrough",
-    ),
+    make_column_transformer(("drop", geo_columns), remainder="passthrough"),
     StandardScaler(),
     Ridge(alpha=1e-12),
 )
@@ -129,10 +124,8 @@ from sklearn.linear_model import Ridge
 from sklearn.pipeline import make_pipeline
 
 model_cluster_geo = make_pipeline(
-    ColumnTransformer(
-        [
-            ("geo", KMeans(n_clusters=100), geo_columns),
-        ],
+    make_column_transformer(
+        (KMeans(n_clusters=100), geo_columns),
         remainder="passthrough",
     ),
     StandardScaler(),
@@ -158,7 +151,7 @@ print(
 # %%
 from sklearn.model_selection import GridSearchCV
 
-param_name = "columntransformer__geo__n_clusters"
+param_name = "columntransformer__kmeans__n_clusters"
 param_grid = {param_name: [10, 30, 100, 300, 1_000, 3_000]}
 grid_search = GridSearchCV(
     model_cluster_geo, param_grid=param_grid, scoring="neg_mean_absolute_error"

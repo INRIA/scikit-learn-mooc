@@ -133,6 +133,7 @@ _ = plt.scatter(X_all[:, 0], X_all[:, 1], c=cluster_labels, alpha=0.6)
 from sklearn.datasets import fetch_california_housing
 
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 
 # %% [markdown]
 # We can use plotly to first visualize the housing prices across the state of
@@ -143,13 +144,14 @@ import plotly.express as px
 
 
 def plot_map(df, color_feature):
-    fig = px.scatter_mapbox(
+    fig = px.scatter_map(
         df,
         lat="Latitude",
         lon="Longitude",
         color=color_feature,
         zoom=5,
         height=600,
+        labels={"color": "price (k$)"},
     )
     fig.update_layout(
         mapbox_style="open-street-map",

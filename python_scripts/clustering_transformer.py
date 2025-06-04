@@ -70,7 +70,7 @@ print(
 # %%
 import plotly.express as px
 
-fig = px.scatter_mapbox(
+fig = px.scatter_map(
     data,
     lat="Latitude",
     lon="Longitude",
@@ -220,9 +220,7 @@ fig
 # it can generalize.
 
 # %%
-best_n_clusters = grid_search.best_params_[
-    "columntransformer__geo__n_clusters"
-]
+best_n_clusters = grid_search.best_params_[param_name]
 print(
     f"The test MAE with {best_n_clusters} clusters is: "
     f"{-grid_search.score(data_test, target_test):.3f} k$"

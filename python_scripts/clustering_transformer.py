@@ -23,6 +23,7 @@
 from sklearn.datasets import fetch_california_housing
 
 data, target = fetch_california_housing(return_X_y=True, as_frame=True)
+target *= 100  # rescale the target in k$
 
 # %% [markdown]
 # We can first design a predictive pipeline that completly ignores the
@@ -30,7 +31,7 @@ data, target = fetch_california_housing(return_X_y=True, as_frame=True)
 
 # %%
 import pandas as pd
-from sklearn.model_selection import train_test_split, cross_validate
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge
@@ -50,14 +51,17 @@ model_drop_geo = make_pipeline(
     StandardScaler(),
     Ridge(alpha=1e-12),
 )
-cv_results_drop_geo = cross_validate(
-    model_drop_geo, data_train, target_train, scoring="r2"
+test_error_drop_geo = -cross_val_score(
+    model_drop_geo, data_train, target_train, scoring="neg_mean_absolute_error"
 )
-pd.DataFrame(cv_results_drop_geo).describe()
+print(
+    "The test MAE without geographical features is: "
+    f"{test_error_drop_geo.mean():.2f} ± {test_error_drop_geo.std():.2f} k$"
+)
 
 # %% [markdown]
-# We observe a score of approximately 54% of the variance is explained by the
-# non-geographical features.
+# We observe a Mean Absolute Error of approximately 57k$ when dropping the
+# geographical features.
 #
 # As seen in the previous notebook, we suspect that the price information may be
 # linked to the distance to the nearest urban center, and proximity to the
@@ -66,28 +70,23 @@ pd.DataFrame(cv_results_drop_geo).describe()
 # %%
 import plotly.express as px
 
-
-def plot_map(df, color_feature):
-    fig = px.scatter_mapbox(
-        df,
-        lat="Latitude",
-        lon="Longitude",
-        color=color_feature,
-        zoom=5,
-        height=600,
-    )
-    fig.update_layout(
-        mapbox_style="open-street-map",
-        mapbox_center={
-            "lat": df["Latitude"].mean(),
-            "lon": df["Longitude"].mean(),
-        },
-        margin={"r": 0, "t": 0, "l": 0, "b": 0},
-    )
-    return fig
-
-
-fig = plot_map(data, target)
+fig = px.scatter_mapbox(
+    data,
+    lat="Latitude",
+    lon="Longitude",
+    color=target,
+    zoom=5,
+    height=600,
+    labels={"color": "price (k$)"},
+)
+fig.update_layout(
+    mapbox_style="open-street-map",
+    mapbox_center={
+        "lat": data["Latitude"].mean(),
+        "lon": data["Longitude"].mean(),
+    },
+    margin={"r": 0, "t": 0, "l": 0, "b": 0},
+)
 fig
 
 # %% [markdown]
@@ -96,10 +95,16 @@ fig
 
 # %%
 model_naive_geo = make_pipeline(StandardScaler(), Ridge(alpha=1e-12))
-cv_results_naive_geo = cross_validate(
-    model_naive_geo, data_train, target_train, scoring="r2"
+test_error_naive_geo = -cross_val_score(
+    model_naive_geo,
+    data_train,
+    target_train,
+    scoring="neg_mean_absolute_error",
 )
-pd.DataFrame(cv_results_naive_geo).describe()
+print(
+    "The test MAE with raw geographical features is: "
+    f"{test_error_naive_geo.mean():.2f} ± {test_error_naive_geo.std():.2f} k$"
+)
 
 # %% [markdown]
 # Including the geospatial data naively improves the performance a bit, however,
@@ -108,11 +113,10 @@ pd.DataFrame(cv_results_naive_geo).describe()
 #
 # We could look for a dataset containing all the coordinates of the city
 # centers, the coast line and other points of interest in California, then
-# manually engineer such features. However this would require a non-tricial
-# amount of code. Instead we can rely on the K-means class to achieve something
-# similar implicitly: we will configure K-means to find a large number of
-# centroids from our housing data directly and consider each centroid a
-# potential point of interest.
+# manually engineer such features. However this would require a non-trivial
+# amount of code. Instead we can rely on K-means to achieve something similar
+# implicitly: we use it to find a large number of centroids from the housing
+# data directly and consider each centroid a potential point of interest.
 #
 # The `KMeans` class implements a `transform` method that, given a set of data
 # points as an argument, computes the distance to the nearest centroid for each
@@ -134,14 +138,22 @@ model_cluster_geo = make_pipeline(
     StandardScaler(),
     Ridge(alpha=1e-12),
 )
-cv_results_cluster_geo = cross_validate(
-    model_cluster_geo, data_train, target_train, scoring="r2"
+test_error_cluster_geo = -cross_val_score(
+    model_cluster_geo,
+    data_train,
+    target_train,
+    scoring="neg_mean_absolute_error",
 )
-pd.DataFrame(cv_results_cluster_geo).describe()
+print(
+    "The test MAE with clustered geographical features is:"
+    f" {test_error_cluster_geo.mean():.2f} ±"
+    f" {test_error_cluster_geo.std():.2f} k$"
+)
 
 # %% [markdown]
-# We can use a grid-search to tune `n_clusters` in this supervised
-# pipeline.
+# The resulting mean test error is much lower. Furthermore, `KMeans` is now part
+# of a supervised pipeline, which means we can use a grid-search to tune
+# `n_clusters` as we have learned in previous modules of this course.
 
 # %%
 from sklearn.model_selection import GridSearchCV
@@ -149,7 +161,7 @@ from sklearn.model_selection import GridSearchCV
 param_name = "columntransformer__geo__n_clusters"
 param_grid = {param_name: [10, 30, 100, 300, 1_000, 3_000]}
 grid_search = GridSearchCV(
-    model_cluster_geo, param_grid=param_grid, scoring="r2"
+    model_cluster_geo, param_grid=param_grid, scoring="neg_mean_absolute_error"
 )
 grid_search.fit(data_train, target_train)
 
@@ -164,10 +176,15 @@ results_columns = [
     "param_" + param_name,
 ]
 grid_search_results = pd.DataFrame(grid_search.cv_results_)[results_columns]
-grid_search_results = grid_search_results.rename(
-    columns={"param_" + param_name: "n_clusters"}
-).round(3)
-grid_search_results.sort_values("mean_test_score", ascending=False)
+grid_search_results["mean_test_error"] = -grid_search_results[
+    "mean_test_score"
+]
+grid_search_results = (
+    grid_search_results.drop(columns=["mean_test_score"])
+    .rename(columns={"param_" + param_name: "n_clusters"})
+    .round(3)
+)
+grid_search_results.sort_values("mean_test_error", ascending=False)
 
 # %% [markdown]
 # Larger number of clusters increases the predictive performance at the cost
@@ -176,12 +193,12 @@ grid_search_results.sort_values("mean_test_score", ascending=False)
 # %%
 labels = {
     "mean_fit_time": "CV fit time (s)",
-    "mean_test_score": "CV score (R2)",
+    "mean_test_error": "CV score (MAE)",
 }
 fig = px.scatter(
     grid_search_results,
     x="mean_fit_time",
-    y="mean_test_score",
+    y="mean_test_error",
     error_x="std_fit_time",
     error_y="std_test_score",
     hover_data=grid_search_results.columns,
@@ -203,8 +220,12 @@ fig
 # it can generalize.
 
 # %%
+best_n_clusters = grid_search.best_params_[
+    "columntransformer__geo__n_clusters"
+]
 print(
-    f"Final model test R2 score: {grid_search.score(data_test, target_test):.3f}"
+    f"The test MAE with {best_n_clusters} clusters is: "
+    f"{-grid_search.score(data_test, target_test):.3f} k$"
 )
 
 # %% [markdown]

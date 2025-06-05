@@ -116,9 +116,9 @@ pd.Series(cluster_labels).value_counts()
 # ARI means that articles from the same category are grouped together, and
 # articles from different categories are separated. ARI ranges from -1 (worse
 # than random clustering) to 1 (perfect clustering), with 0 indicating a model
-# that assigns cluster labels at random. A high ARI value shows good alignment
-# between the predicted clusters and the human-assigned labels, while a low ARI
-# suggests poor clustering performance.
+# that assigns cluster labels at random.
+#
+# In other words, both V-measure and ARI follow a "higher is better" convention.
 #
 # Read more in the User Guide for
 # [V-measure](https://scikit-learn.org/stable/modules/clustering.html#homogeneity-completeness-and-v-measure)

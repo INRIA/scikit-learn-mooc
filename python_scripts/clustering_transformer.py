@@ -82,7 +82,7 @@ fig.update_layout(
     },
     margin={"r": 0, "t": 0, "l": 0, "b": 0},
 )
-fig
+fig.show(renderer="notebook")
 
 # %% [markdown]
 # We first feed the coordinates directly to the linear model without

@@ -143,7 +143,7 @@ target *= 100  # rescale the target in k$
 import plotly.express as px
 
 
-def plot_map(df, color_feature):
+def plot_map(df, color_feature, colorbar_label="cluster label"):
     fig = px.scatter_map(
         df,
         lat="Latitude",
@@ -151,7 +151,7 @@ def plot_map(df, color_feature):
         color=color_feature,
         zoom=5,
         height=600,
-        labels={"color": "price (k$)"},
+        labels={"color": colorbar_label},
     )
     fig.update_layout(
         mapbox_style="open-street-map",
@@ -161,11 +161,10 @@ def plot_map(df, color_feature):
         },
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
     )
-    return fig
+    return fig.show(renderer="notebook")
 
 
-fig = plot_map(data, target)
-fig
+fig = plot_map(data, target, colorbar_label="price (k$)")
 
 # %% [markdown]
 # We can first use K-means to group data points into different spatial regions.
@@ -187,7 +186,6 @@ cluster_labels
 
 # %%
 fig = plot_map(data, cluster_labels.astype("str"))
-fig
 
 # %% [markdown]
 # We can observe that results are really influenced by the K-means that favors
@@ -197,14 +195,13 @@ fig
 # %%
 from sklearn.cluster import HDBSCAN
 
-hdbscan_pipeline = make_pipeline(HDBSCAN(min_cluster_size=100))
+hdbscan = HDBSCAN(min_cluster_size=100)  # no need for scaling
 
-cluster_labels = hdbscan_pipeline.fit_predict(geo_data)
+cluster_labels = hdbscan.fit_predict(geo_data)
 cluster_labels
 
 # %%
 fig = plot_map(data, cluster_labels.astype("str"))
-fig
 
 # %% [markdown]
 # HDBSCAN automatically detect highly populated areas that match urban centers,
@@ -216,16 +213,29 @@ fig
 # `min_cluster_size`:
 
 # %%
-len(np.unique(cluster_labels))
+print(f"Number of clusters: {len(np.unique(cluster_labels))}")
 
 # %% [markdown]
-# Decreasing `min_cluster_size` will increase the number of clusters:
+# Decreasing `min_cluster_size` increases the number of clusters:
 
 # %%
-hdbscan_pipeline = make_pipeline(HDBSCAN(min_cluster_size=30))
-cluster_labels = hdbscan_pipeline.fit_predict(geo_data)
+hdbscan = HDBSCAN(min_cluster_size=30)
+cluster_labels = hdbscan.fit_predict(geo_data)
 fig = plot_map(data, cluster_labels.astype("str"))
-fig
 
 # %%
-len(np.unique(cluster_labels))
+print(f"Number of clusters: {len(np.unique(cluster_labels))}")
+
+# %% [markdown]
+# We previously mentioned that the user can control the level in the hierarchy
+# at which clusters are formed. This can be done without retraining the model by
+# using the `dbscan_clustering` method, and is an indirect way to control the
+# number of clusters:
+
+# %%
+for cut_distance in [0.1, 0.3, 0.5]:
+    labels = hdbscan.dbscan_clustering(
+        cut_distance=cut_distance, min_cluster_size=30
+    )
+    plot_map(data, labels.astype("str"))
+    print(f"Number of clusters: {len(np.unique(cluster_labels))}")

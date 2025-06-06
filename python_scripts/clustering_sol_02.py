@@ -131,6 +131,9 @@ print(f"Adjusted Mutual Information (AMI): {ami:.3f}")
 
 # %% [markdown] tags=["solution"]
 # This value is very close to 1.0, which indicates a very strong agreement.
+# This confirms our visual intuition that the 6 clusters found by k-means
+# nearly exactly correspond to the species crossed with the sex of the
+# penguins.
 
 # %% [markdown]
 # Now use a `sklearn.preprocessing.LabelEncoder` to `fit_transform` the "true"

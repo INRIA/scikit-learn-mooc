@@ -130,7 +130,9 @@ pd.Series(cluster_labels).value_counts()
 # and the [Rand
 # index](https://scikit-learn.org/stable/modules/clustering.html#rand-index).
 #
-# Let's
+# Let's use these metrics to evaluate the clustering labels found by k-means
+# with different values of `n_clusters` by plotting the validation curves
+# for both of them:
 
 # %%
 import matplotlib.pyplot as plt
@@ -208,7 +210,14 @@ for random_state in range(1, 11):
     plt.ylabel("Silhouette score")
 
 all_scores = np.array(all_scores)
-plt.plot(n_clusters_values, all_scores.mean(axis=0), color="black", alpha=1)
+plt.plot(
+    n_clusters_values,
+    all_scores.mean(axis=0),
+    color="black",
+    alpha=1,
+    label="Mean silhouette score",
+)
+plt.legend()
 _ = plt.title("Silhouette score for varying n_clusters", y=1.01)
 
 # %% [markdown]
@@ -223,7 +232,8 @@ _ = plt.title("Silhouette score for varying n_clusters", y=1.01)
 # to select a number of clusters that is smaller than the number of clusters
 # that maximizes the silhouette score.
 #
-# We can also, observe that the maximum silhouette score is not very high, which
+# We can also, observe that the silhouette curves are not very stable under
+# resampling and that the maximum silhouette score is not very high, which
 # indicates that the clusters are not very well separated from each other: this
 # could be explained by the fact that some documents could meaningfully belong
 # to more than one topical category: for instance, a news article about a tech

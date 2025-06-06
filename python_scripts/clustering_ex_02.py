@@ -85,14 +85,7 @@ penguins
 # if we tried to use it to measure the agreement between both sets of labels?
 
 # %%
-from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import accuracy_score
-
-true_labels = LabelEncoder().fit_transform(species_and_sex_labels)
-
-cluster_labels = model.fit_predict(penguins)
-acc = accuracy_score(true_labels, cluster_labels)
-print(f"Accuracy: {acc:.3f}")
+# Write your code here.
 
 # %% [markdown]
 # Permute the cluster labels using `np.random.permutation`, then compute both

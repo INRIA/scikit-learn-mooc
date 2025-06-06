@@ -138,6 +138,7 @@ print(f"Adjusted Mutual Information (AMI): {ami:.3f}")
 # if we tried to use it to measure the agreement between both sets of labels?
 
 # %%
+# solution
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
 

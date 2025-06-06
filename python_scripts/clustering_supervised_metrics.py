@@ -10,10 +10,9 @@
 #
 # In this notebook we briefly introduce how to deal with text data. Then we
 # introduce the use of performance metrics to evaluate a clustering model when
-# we have access to labeled data. The reason is that clustering gives us a way
-# to explore whether the structure in the data supports the labels we've been
-# given, or even to question how well-defined those labels are in the first
-# place.
+# we have access to labeled data. Our goal is to evaluate whether the cluster
+# structure favored by k-means on the preprocessed text aligns with the
+# editorial categories assigned by BBC News editors.
 #
 # ## Feature engineering for text data
 #
@@ -44,8 +43,8 @@ pd.DataFrame(
 # %% [markdown]
 # Observe in particular that the words "the" and "phrase" are counted twice in
 # the last document (the third row in the dataframe). This preprocessor creates
-# as many features as unique words ocurring in the data, therefore the dimension
-# of the feature space can become very large.
+# as many features as unique words occurring in the data, therefore the
+# dimension of the feature space can become very large.
 #
 # Readers interested can visit the [scikit-learn example on comparing
 # vectorization

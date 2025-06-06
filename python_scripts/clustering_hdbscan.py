@@ -11,27 +11,39 @@
 # We have previously mentioned that k-means consists of minimizing the samples
 # euclidean distances to their assigned centroid. As a consequence, k-means is
 # more appropriate for clusters that are isotropic and normally distributed
-# (look like blobs). In this notebook we introduce another clustering technique
-# named HDBSCAN, an acronym which stands for "Hierarchical Density-Based Spatial
-# Clustering of Applications with Noise".
+# (look like spherical blobs). When this assumption is not met, k-means can
+# lead to unstable clustering results that do not qualitatively match the
+# cluster we seek. On possible way is to use a more general variant of k-means
+# named Gaussian Mixture Models (GMM), which allows for elongated clusters with
+# strong correlation between features as explained in [this tutorial of the
+# scikit-learn
+# documentation](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html).
+# However, GMM still assumes that clusters are convex, which is not always the
+# case in practice.
 #
-# Let's explain each of those tearms. HDBSCAN is hierarchical, which means it
+# In this notebook we introduce another clustering technique named HDBSCAN, an
+# acronym which stands for "Hierarchical Density-Based Spatial Clustering of
+# Applications with Noise" which further allows for non-convex clusters.
+#
+# Let's explain each of those terms. HDBSCAN is hierarchical, which means it
 # handles data with clusters nested within each other. The user controls the
 # level in the hierarchy at which clusters are formed.
 #
-# It is density-based (and therefore non-parametric, contrary to K-means)
-# because it does not assume a specific shape or number of clusters. Instead, it
-# automatically finds the clusters based on areas where data points are densely
-# packed together. In other words, it looks for regions of high density (many
-# data points close to each other) and forms clusters around them. This allows
-# it to find clusters of varying shapes and sizes.
+# It is non-parametric, density-based method that does not assume a specific
+# shape or number of clusters. Instead, it automatically finds the clusters
+# based on areas where data points are densely packed together. In other words,
+# it looks for regions of high density (many data points close to each other)
+# and forms clusters around them. This allows it to find clusters of varying
+# shapes and sizes.
 #
-# HDBSCAN assigns a label of -1 to points that do not have enough neighbors (low
-# density) to be considered part of a cluster or are too far from any dense
-# region (too isolated from core points). They are usually considered to be
-# noise.
+# HDBSCAN assigns a label of -1 to points that do not have enough neighbors
+# (low density) to be considered part of a cluster or are too far from any
+# dense region (too isolated from core points). They are usually considered to
+# be noise.
 #
-# Let's first illustrate those concepts with a toy dataset.
+# Let's first illustrate those concepts with a toy dataset generated using the
+# code below. You do not need to understand the details of the data generation
+# process, and instead pay attention to the resulting scatter plot.
 
 # %%
 import numpy as np
@@ -91,6 +103,13 @@ plt.scatter(X_all[:, 0], X_all[:, 1], alpha=0.6)
 _ = plt.title("Synthetic dataset")
 
 # %% [markdown]
+#
+# You can observe that the dataset contains:
+# - four Gaussian blobs with different sizes and densities, some of which
+#   are elongated and other more spherical;
+# - two non-convex clusters with wavy shapes;
+# - a background noise of points uniformly distributed in the feature space.
+#
 # Let's first try to find a cluster structure using K-means with 6 clusters to
 # match our data generating process.
 
@@ -109,10 +128,11 @@ cluster_labels = KMeans(n_clusters=10, random_state=0).fit_predict(X_all)
 _ = plt.scatter(X_all[:, 0], X_all[:, 1], c=cluster_labels, alpha=0.6)
 
 # %% [markdown]
-# However, we can observe that too many cluster divides the high density region
-# too much, while it continues grouping unrelated points together. Therefore,
-# adjusting the number of clusters is not enough to get good results in this
-# kind of data.
+# However, we can observe this cluster assignment divides the high density regions
+# while also grouping unrelated points together. Furthermore, the background
+# noise data points are always assigned to the nearest centroids and thus
+# treated as cluster members. Therefore, adjusting the number of clusters is
+# not enough to get good results in this kind of data.
 #
 # Let's now repeat the experiment using HDBSCAN instead. For this clustering
 # technique, the most important hyperparameter is `min_cluster_size`, which
@@ -167,35 +187,36 @@ def plot_map(df, color_feature, colorbar_label="cluster label"):
 fig = plot_map(data, target, colorbar_label="price (k$)")
 
 # %% [markdown]
-# We can first use K-means to group data points into different spatial regions.
+#
+# We can try to use K-means to group data points into different spatial regions
+# (irrespective of the housing prices) and visualize the results on a map.
+#
+# Note that the Geospatial columns are `Latitude` and `Longitude` are already
+# on the same scale so there is no need to standardize them before clustering.
 
 # %%
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 
 geo_columns = ["Latitude", "Longitude"]
 geo_data = data[geo_columns]
 
-kmeans_pipeline = make_pipeline(
-    StandardScaler(), KMeans(n_clusters=20, random_state=0)
-)
+kmeans = KMeans(n_clusters=20, random_state=0)
 
-cluster_labels = kmeans_pipeline.fit_predict(geo_data)
+cluster_labels = kmeans.fit_predict(geo_data)
 cluster_labels
 
 # %%
 fig = plot_map(data, cluster_labels.astype("str"))
 
 # %% [markdown]
-# We can observe that results are really influenced by the K-means that favors
-# "blobby"-shaped clusters. Let's try again with HDBSCAN which should not suffer
+# We can observe that results are really influenced by the fact that K-means favors
+# spherical-shaped clusters. Let's try again with HDBSCAN which should not suffer
 # from the same bias.
 
 # %%
 from sklearn.cluster import HDBSCAN
 
-hdbscan = HDBSCAN(min_cluster_size=100)  # no need for scaling
+hdbscan = HDBSCAN(min_cluster_size=100)
 
 cluster_labels = hdbscan.fit_predict(geo_data)
 cluster_labels
@@ -204,7 +225,7 @@ cluster_labels
 fig = plot_map(data, cluster_labels.astype("str"))
 
 # %% [markdown]
-# HDBSCAN automatically detect highly populated areas that match urban centers,
+# HDBSCAN automatically detects highly populated areas that match urban centers,
 # potentially increasing the housing prices. In addition we observe that points
 # lying in low density regions are labeled `-1` instead of being forced into a
 # cluster.
@@ -234,8 +255,19 @@ print(f"Number of clusters: {len(np.unique(cluster_labels))}")
 
 # %%
 for cut_distance in [0.1, 0.3, 0.5]:
-    labels = hdbscan.dbscan_clustering(
+    cluster_labels = hdbscan.dbscan_clustering(
         cut_distance=cut_distance, min_cluster_size=30
     )
-    plot_map(data, labels.astype("str"))
+    plot_map(data, cluster_labels.astype("str"))
     print(f"Number of clusters: {len(np.unique(cluster_labels))}")
+
+# %% [markdown]
+# ## Concluding remarks
+#
+# In this notebook we have introduced HDBSCAN, a clustering technique that
+# allows for non-convex clusters and does not require the user to specify the
+# number of clusters.
+#
+# Keep in mind however, that despite its flexibility, even HDBSCAN can still
+# fail to find relevant clusters in some datasets: sometimes there is no
+# meaningful cluster structure in the data.

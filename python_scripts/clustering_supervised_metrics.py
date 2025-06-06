@@ -66,10 +66,12 @@ data
 data["category"].value_counts()
 
 # %% [markdown]
-# We start by preprocessing the text data using `StringEncoder`, which is an
-# alternative to `CountVectorizer` that encodes text while keeping the dimension
-# of the feature space reasonably small, even if the number of unique words is
-# very large. This encoder is well suited to cluster text using `KMeans`.
+# We start by preprocessing the text data using `StringEncoder`, that encodes
+# text similarly to `CountVectorizer` and then reduces the dimension of the
+# feature space while trying to preserve the relative distance between pairs of
+# documents.
+#
+# This encoder is well suited to cluster text using `KMeans`.
 
 # %%
 from skrub import StringEncoder
@@ -83,46 +85,52 @@ pd.Series(cluster_labels).value_counts()
 # %% [markdown]
 # Our pipeline has grouped the documents into 3 clusters, even though the
 # dataset contains 5 categories assigned by BBC editors. We chose this on
-# purpose, to show that k-means is able to cluster data even if
-# those clusters do not match the predefined categories.
+# purpose, to show that k-means always produces a number of clusters that
+# matches the `n_clusters` parameter, regardless of what's in the data.
 #
 # ## Supervised metrics for clustering evaluation
 #
 # Even though clustering is an unsupervised learning method, we have access to
 # labels for the categories that were assigned by the BBC editors, allowing us
-# to evaluate how well the clusters found using our models match those labels.
+# to evaluate how well the cluster labels found by k-means match those human
+# assigned labels.
 #
-# We could try to use classification metrics such as the accuracy. However,
-# clustering labels are arbitrary and their number does not need to match the
-# number of predefined categories (we just saw in the example above). More
-# importantly, we don't assume a predefined mapping between cluster labels and
-# editorial categories, and we don't need one to quantify their agreement. This
-# is where supervised clustering metrics come in.
+# We could try to use classification metrics such as the accuracy. However, the
+# integer identifiers of the clustering labels are arbitrarily ordered and
+# `n_clusters` does not need to match the number of predefined categories (as
+# we just did in the code above). More importantly, we don't assume a
+# predefined mapping between cluster labels and editorial categories, and we
+# don't need one to quantify their agreement. This is where supervised
+# clustering metrics come in.
 #
 # In this notebook, we'll use two metrics: V-measure and Adjusted Rand Index
-# (ARI). The V-measure addresses overlaps by evaluating two properties:
-# - homogeneity: each cluster contains only members of a single class;
-# - completeness: all members of a given class are assigned to the same cluster.
+# (ARI). The V-measure quantifies alignment of the clustering assignment with
+# the BBC category assignment used as reference by evaluating two properties:
+# - homogeneity: each cluster contains only members of a single category;
+# - completeness: all members of a given category are assigned to the same
+#   cluster.
 #
 # V-measure ranges from 0 to 1, where 1 indicates perfect match between the
-# clustering labels and the human labels, both in terms of homogeneity and
+# clustering labels and the reference labels, both in terms of homogeneity and
 # completeness.
 #
 # The Adjusted Rand Index (ARI) also measures the similarity between the
-# predicted clusters and human-assigned labels, adjusting for random labeling.
-# For the BBC News dataset, it compares pairs of articles to see whether if they
-# are in the same cluster in both the predicted and human-assigned labels. High
-# ARI means that articles from the same category are grouped together, and
-# articles from different categories are separated. ARI ranges from -1 (worse
-# than random clustering) to 1 (perfect clustering), with 0 indicating a model
-# that assigns cluster labels at random.
+# predicted clusters and editor-assigned labels: it compares pairs of articles
+# to see whether if they are in the same cluster in both the predicted and
+# editor-assigned labels. High ARI means that articles from the same category
+# are grouped together, and articles from different categories are separated.
+# ARI ranges from -1 (worse than random clustering) to 1 (perfect clustering),
+# with 0 indicating a model that assigns cluster labels at random: this metric
+# is therefore "adjusted for chance", which is not the case for V-measure.
 #
-# In other words, both V-measure and ARI follow a "higher is better" convention.
+# Both V-measure and ARI follow a "higher is better" convention.
 #
 # Read more in the User Guide for
 # [V-measure](https://scikit-learn.org/stable/modules/clustering.html#homogeneity-completeness-and-v-measure)
 # and the [Rand
 # index](https://scikit-learn.org/stable/modules/clustering.html#rand-index).
+#
+# Let's
 
 # %%
 import matplotlib.pyplot as plt
@@ -136,77 +144,95 @@ scoring_names = {
     "V-measure": "v_measure_score",
     "ARI": "adjusted_rand_score",
 }
-fig, ax = plt.subplots(figsize=(6, 4))
-for scoring in scoring_names.values():
+fig, axes = plt.subplots(
+    nrows=2, figsize=(6, 8), sharex=True, constrained_layout=True
+)
+for (scoring_name, scoring), ax in zip(scoring_names.items(), axes):
     ValidationCurveDisplay.from_estimator(
         KMeans(n_init=5, random_state=0),
         data_encoded,
         data["category"],
         param_name="n_clusters",
         param_range=n_clusters_values,
-        score_type="train",
         scoring=scoring,
         std_display_style="errorbar",
         cv=cv,
         ax=ax,
     )
-ax.set(
-    ylim=(-0.1, 1.1),
-    xlabel="Number of components",
-    ylabel="Score",
-    title="Validation curves for\nStringEncoder + KMeans",
-)
-handles, _ = ax.get_legend_handles_labels()
-_ = ax.legend(handles=handles, labels=scoring_names.keys())
+    ax.set(
+        ylim=(-0.1, 1.1),
+        ylabel=scoring_name,
+    )
+ax.set_xlabel("Number of clusters (n_clusters)")
+plt.suptitle("Supervised evaluation of clusters for varying n_clusters")
 
 # %% [markdown]
 # We observe that both V-measure and ARI are much better than chance. Even more
 # they reach their maximum value when `n_clusters=5`. This is not surprising
-# because this is the number of human-assigned categories in the dataset. The
-# alignment reflects both good editorial labels (as the categories are
-# well-defined and internally consistent) as well as a clustering pipeline that
-# can reasonably extract the structure in the data that matches the human
-# intuition.
+# because this is the number of human-assigned categories in the dataset and
+# both metrics quantify alignment with those labels.
+#
+# The relatively good metrics values observed for `n_clusters=5` reflects both
+# good editorial labels (as the categories are well-defined and internally
+# consistent) as well as a clustering pipeline that can reasonably extract the
+# structure in the data that matches the human intuition.
+#
+# Note that the metrics measured on training or validation data are very
+# similar, meaning that k-means with small number of clusters is unlikely to
+# overfit noise from the training data.
 #
 # But the question may arise, if we didn't have access to labels at all, would
 # the silhouette score also lead us to chose `n_clusters=5`?
 
 # %%
+import numpy as np
 from sklearn.metrics import silhouette_score
 from sklearn.model_selection import train_test_split
 
-n_clusters_values = range(2, 16)
+n_clusters_values = list(range(2, 11)) + [20, 30, 40, 50, 60, 70]
+all_scores = []
 for random_state in range(1, 11):
-    data_subsample, _ = train_test_split(
-        data_encoded, train_size=0.75, random_state=random_state
+    data_train, data_test = train_test_split(
+        data_encoded, train_size=0.5, random_state=random_state
     )
     scores = []
     for n_clusters in n_clusters_values:
         model = KMeans(n_clusters=n_clusters, n_init=5, random_state=0)
-        cluster_labels = model.fit_predict(data_subsample)
-        score = silhouette_score(data_subsample, cluster_labels)
+        cluster_labels = model.fit(data_train).predict(data_test)
+        score = silhouette_score(data_test, cluster_labels)
         scores.append(score)
 
+    all_scores.append(scores)
     plt.plot(n_clusters_values, scores, color="tab:blue", alpha=0.2)
     plt.xlabel("Number of clusters (n_clusters)")
     plt.ylabel("Silhouette score")
-    _ = plt.title("Silhouette score for varying n_clusters", y=1.01)
+
+all_scores = np.array(all_scores)
+plt.plot(n_clusters_values, all_scores.mean(axis=0), color="black", alpha=1)
+_ = plt.title("Silhouette score for varying n_clusters", y=1.01)
 
 # %% [markdown]
-# The fact that the silhouette score favors larger values for `n_clusters` than
-# the supervised metrics we saw before suggests that, in terms of cluster
-# tightness and separation, having more clusters leads to better-defined
-# clusters. This could be a case where the data contains subclusters or finer
-# distinctions within the categories that the algorithm can capture with more
-# clusters. Essentially, while there may be 5 high-level categories, the
-# subcategories within those 5 groups (such as articles that are very niche
-# within "tech" or "politics") could benefit from additional clusters. But this
-# is probably not what the editors want in practice. Having too fine-grained
-# topics would make the navigation on their website too confusing.
 #
-# Finally, notice that we used extra supervised information to quantitatively
-# assess the quality of the match between the clusters found by k-means and our
-# interpretation. In practice, this is often impossible, as we do not have
+# The silhouette score analysis favors larger values for `n_clusters` (between
+# 20 and 40) than the 5 categories chosen by the BBC editors.
+#
+# The finer-grained clusters found by k-means for `n_clusters=30` could
+# potentially match sub-clusters of the 5 BBC categories. However, categorizing
+# news articles in too fine-grained topics would make the navigation on their
+# website too confusing. Therefore for this application, it can be meaningful
+# to select a number of clusters that is smaller than the number of clusters
+# that maximizes the silhouette score.
+#
+# We can also, observe that the maximum silhouette score is not very high, which
+# indicates that the clusters are not very well separated from each other: this
+# could be explained by the fact that some documents could meaningfully belong
+# to more than one topical category: for instance, a news article about a tech
+# company being acquired by another could belong to both "tech" and "business"
+# categories.
+#
+# Finally, notice that we used supervised information to quantitatively assess
+# the quality of the match between the clusters found by k-means and our
+# categorization. In practice, this is often impossible, as we do not have
 # access to human assigned labels for each row in the data. Or, if we have, we
-# might want to use them to train the clustering model, but instead we would
-# rather use them as the target variable to train a supervised classifier.
+# might want to use them as the target variable to train a supervised
+# classifier instead of training an unsupervised clustering model.

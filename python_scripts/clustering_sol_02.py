@@ -178,10 +178,11 @@ print(f"Accuracy (permuted): {permuted_acc:.3f}")
 
 # %% [markdown] tags=["solution"]
 # AMI stays the same because the cluster structure has not changed, only the
-# labels' names.
-# 
-# The accuracy changes because some labels may no longer match the ground truth
-# numerically, and some may match just by chance.
+# labels' names: AMI is invariant to a random permutation of the labels.
+#
+# The accuracy changes because it is only meaningful when the ordering of the
+# clustering labels have been mapped correctly to ordering the human labels
+# which has very little chance of happening when randomly permuting the labels.
 
 # %% [markdown]
 # AMI is designed to return a value near zero (it can be negative) when the
@@ -194,14 +195,14 @@ print(f"Accuracy (permuted): {permuted_acc:.3f}")
 
 # %%
 # solution
-random_labels = rng.randint(0, len(unique_labels), size=len(species))
-ami_random = adjusted_mutual_info_score(true_labels, random_labels)
-
-print(f"AMI (random labels): {ami_random:.3f}")
+for _ in range(10):
+    random_labels = rng.randint(0, len(unique_labels), size=len(species))
+    ami_random = adjusted_mutual_info_score(true_labels, random_labels)
+    print(f"AMI (random labels): {ami_random:.3f}")
 
 # %% [markdown] tags=["solution"]
-# We observe a value close to zero. Changing the `RandomState` can lead
-# to positive or negative values of AMI.
+# We observe either positive or negative values but always very close to zero
+# depending the particular random labels generated.
 
 # %% [markdown]
 #

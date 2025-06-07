@@ -78,7 +78,7 @@ plt.legend()
 _ = plt.title("Predictions by a single decision tree")
 
 # %% [markdown]
-# Let's see how we can use bootstraping to learn several trees.
+# Let's see how we can use bootstrapping to learn several trees.
 #
 # ## Bootstrap resampling
 #

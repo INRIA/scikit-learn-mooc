@@ -439,7 +439,7 @@ plot_decision_boundary(classifier, title="Spline + RBF Nystroem classifier")
 # - Transformers such as `KBinsDiscretizer` and `SplineTransformer` can be used
 #   to engineer non-linear features independently for each original feature.
 # - As a result, these transformers cannot capture interactions between the
-#   orignal features (and then would fail on the XOR classification task).
+#   original features (and then would fail on the XOR classification task).
 # - Despite this limitation they already augment the expressivity of the
 #   pipeline, which can be sufficient for some datasets.
 # - They also favor axis-aligned decision boundaries, in particular in the low

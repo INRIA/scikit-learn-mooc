@@ -1,6 +1,7 @@
 PYTHON_SCRIPTS_DIR = python_scripts
 NOTEBOOKS_DIR = notebooks
 JUPYTER_BOOK_DIR = jupyter-book
+WRAP_UP_DIR = wrap-up
 JUPYTER_KERNEL := python3
 MINIMAL_NOTEBOOK_FILES = $(shell ls $(PYTHON_SCRIPTS_DIR)/*.py | perl -pe "s@$(PYTHON_SCRIPTS_DIR)@$(NOTEBOOKS_DIR)@" | perl -pe "s@\.py@.ipynb@")
 
@@ -36,6 +37,10 @@ quizzes:
 
 full-index:
 	python build_tools/generate-index.py
+
+run-code-in-wrap-up-quizzes:
+	python build_tools/generate-wrap-up.py $(GITLAB_REPO_JUPYTERBOOK_DIR) $(WRAP_UP_DIR)
+	jupytext --execute --to notebook $(WRAP_UP_DIR)/*.py
 
 $(JUPYTER_BOOK_DIR):
 	jupyter-book build $(JUPYTER_BOOK_DIR)

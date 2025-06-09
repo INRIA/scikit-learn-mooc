@@ -11,7 +11,7 @@
 # In this notebook we illustrate decision trees in a multiclass classification
 # problem by using the penguins dataset with 2 features and 3 classes.
 #
-# For the sake of simplicity, we focus the discussion on the hyperparamter
+# For the sake of simplicity, we focus the discussion on the hyperparameter
 # `max_depth`, which controls the maximal depth of the decision tree.
 
 # %% [markdown]

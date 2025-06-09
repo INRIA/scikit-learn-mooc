@@ -41,7 +41,7 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 # pipeline is identical to the one we used in the previous notebook.
 
 # %%
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.compose import make_column_selector as selector
 
@@ -51,11 +51,10 @@ categorical_columns = categorical_columns_selector(data)
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [
-        ("cat_preprocessor", categorical_preprocessor, categorical_columns),
-    ],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
+    force_int_remainder_cols=False,  # Silence a warning in scikit-learn v1.6.
 )
 
 # %%

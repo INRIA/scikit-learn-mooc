@@ -54,7 +54,7 @@ Features and samples
 A few words about the style and scope of this course: it is centered
 around code, though we strive to keep it simple
 
-## Quizz:
+## Quiz:
 Given a case study (e.g. pricing apartments based on a real estate website database) and sample toy dataset: say whether it’s an application of supervised vs unsupervised, classification vs regression, what are the features, what is the target variable, what is a record.
 
 Propose a hand engineer decision rule that can be used as a baseline
@@ -92,7 +92,7 @@ Simple exploratory data analysis with pandas and matplotlib
 
 ### Content
 
-Prepare a train  / test split
+Prepare a train / test split
 
 Basic model on numerical features only
 
@@ -113,7 +113,7 @@ Model fitting and performance evaluation with cross-validation
 ## Notebook module #3: basic parameter tuning and final test score evaluation
 
 ### Learning objectives:
-- Learn to no trust blindly the default parameters of scikit-learn estimators
+- Learn not to trust blindly the default parameters of scikit-learn estimators
 
 ### Content
 Parameter tuning with Grid and Random hyperparameter search

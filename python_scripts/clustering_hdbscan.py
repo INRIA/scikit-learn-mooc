@@ -134,18 +134,46 @@ _ = plt.scatter(X_all[:, 0], X_all[:, 1], c=cluster_labels, alpha=0.6)
 # treated as cluster members. Therefore, adjusting the number of clusters is
 # not enough to get good results in this kind of data.
 #
+# We can compute the silhouette score for this number of clusters and keep it
+# in mind for the moment.
+
+# %%
+from sklearn.metrics import silhouette_score
+
+kmeans_score = silhouette_score(X_all, cluster_labels)
+print(f"Silhouette score for k-means clusters: {kmeans_score:.3f}")
+
+# %% [markdown]
 # Let's now repeat the experiment using HDBSCAN instead. For this clustering
 # technique, the most important hyperparameter is `min_cluster_size`, which
 # controls the minimum number of samples for a group to be considered a cluster;
-# groupings smaller than this size will be left as noise.
+# groupings smaller than this size are considered as noise.
 
 # %%
 from sklearn.cluster import HDBSCAN
 
-cluster_labels = HDBSCAN(min_cluster_size=10).fit_predict(X_all)
+cluster_labels = HDBSCAN(min_cluster_size=5).fit_predict(X_all)
 _ = plt.scatter(X_all[:, 0], X_all[:, 1], c=cluster_labels, alpha=0.6)
 
 # %% [markdown]
+# The clusters found using HDBSCAN better match our intuition of how data points
+# should be grouped. We can compute the corresponding silhouette score:
+
+# %%
+hdbscan_score = silhouette_score(X_all, cluster_labels)
+print(f"Silhouette score for HDBSCAN clusters: {hdbscan_score:.3f}")
+
+# %% [markdown]
+# Notice that this score is lower than the score using k-means, even if HDBSCAN
+# seems to do a better job when grouping the data points. The reason is that
+# HDBSCAN does not optimize intra- or inter-cluster distances, which are the
+# basis of the silhouette score. It is then more appropriate to use the
+# silhouette score when clusters are compact and roughly convex. Otherwise, if
+# the clusters are elongated, wavy, or even wrap around other clusters,
+# comparing average distances become less meaningful.
+#
+# ## Clustering of geospatial data
+#
 # Let's now apply HDBSCAN to a more realistic use-case: the geospatial columns
 # of the California Housing Dataset.
 

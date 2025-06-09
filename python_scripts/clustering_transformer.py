@@ -127,6 +127,7 @@ model_cluster_geo = make_pipeline(
     make_column_transformer(
         (KMeans(n_clusters=100), geo_columns),
         remainder="passthrough",
+        force_int_remainder_cols=False,  # Silence a warning in scikit-learn v1.6
     ),
     StandardScaler(),
     Ridge(alpha=1e-12),
@@ -206,7 +207,7 @@ fig.update_layout(
         "yanchor": "top",
     }
 )
-fig
+fig.show(renderer="notebook")
 
 # %% [markdown]
 # We can finally evaluate the best model found by our analysis and see how well

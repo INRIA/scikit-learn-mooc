@@ -61,7 +61,7 @@ for n_clusters in n_clusters_values:
 # Without scaling "monetary" has a dominant impact when forming clusters,
 # regardless of the number of clusters.
 
-# %%
+# %% [markdown]
 # Create a pipeline composed by a `StandardScaler` followed by a `KMeans` step
 # as the final predictor. Set the `random_state` of `KMeans` for
 # reproducibility. Then, make a plot of the WCSS or inertia for `n_clusters`

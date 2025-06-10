@@ -163,10 +163,13 @@ for (scoring_name, scoring), ax in zip(scoring_names.items(), axes):
     )
     ax.set(
         ylim=(-0.1, 1.1),
+        xlabel=None,
         ylabel=scoring_name,
     )
 ax.set_xlabel("Number of clusters (n_clusters)")
-plt.suptitle("Supervised evaluation of clusters for varying n_clusters")
+_ = plt.suptitle(
+    "Supervised evaluation of clusters\nfor varying n_clusters", y=1.08
+)
 
 # %% [markdown]
 # We observe that both V-measure and ARI are much better than chance. Even more

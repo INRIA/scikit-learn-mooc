@@ -80,9 +80,11 @@ penguins
 # Write your code here.
 
 # %% [markdown]
-# Now use a `sklearn.preprocessing.LabelEncoder` to `fit_transform` the "true"
-# labels (coming from combinations of species and sex). What would be the accuracy
-# if we tried to use it to measure the agreement between both sets of labels?
+# Now use a
+# [`sklearn.preprocessing.LabelEncoder`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html)
+# to `fit_transform` the "true" labels (coming from combinations of species and
+# sex). What would be the accuracy if we tried to use it to measure the
+# agreement between both sets of labels?
 
 # %%
 # Write your code here.

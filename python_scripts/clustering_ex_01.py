@@ -53,7 +53,7 @@ _ = sns.pairplot(data)
 # %%
 # Write your code here.
 
-# %%
+# %% [markdown]
 # Create a pipeline composed by a `StandardScaler` followed by a `KMeans` step
 # as the final predictor. Set the `random_state` of `KMeans` for
 # reproducibility. Then, make a plot of the WCSS or inertia for `n_clusters`

@@ -152,7 +152,7 @@ print(f"Silhouette score for k-means clusters: {kmeans_score:.3f}")
 # %%
 from sklearn.cluster import HDBSCAN
 
-cluster_labels = HDBSCAN(min_cluster_size=5).fit_predict(X_all)
+cluster_labels = HDBSCAN(min_cluster_size=10).fit_predict(X_all)
 _ = plt.scatter(X_all[:, 0], X_all[:, 1], c=cluster_labels, alpha=0.6)
 
 # %% [markdown]
@@ -165,12 +165,29 @@ print(f"Silhouette score for HDBSCAN clusters: {hdbscan_score:.3f}")
 
 # %% [markdown]
 # Notice that this score is lower than the score using k-means, even if HDBSCAN
-# seems to do a better job when grouping the data points. The reason is that
-# HDBSCAN does not optimize intra- or inter-cluster distances, which are the
-# basis of the silhouette score. It is then more appropriate to use the
-# silhouette score when clusters are compact and roughly convex. Otherwise, if
-# the clusters are elongated, wavy, or even wrap around other clusters,
-# comparing average distances become less meaningful.
+# seems to do a better job when grouping the data points. The reason here is
+# that points considered as noise (labeled with `-1` by HDBSCAN) do not follow a
+# cluster-like structure. We can test that hypothesis as follows:
+
+# %%
+mask = cluster_labels != -1  # mask is TRUE for entries that are NOT -1
+cluster_labels_filtered = cluster_labels[mask]
+X_all_filtered = X_all[mask]
+
+hdbscan_score = silhouette_score(X_all_filtered, cluster_labels_filtered)
+print(
+    f"Silhouette score for HDBSCAN clusters without noise: {hdbscan_score:.3f}"
+)
+
+# %% [markdown]
+# In this case we do obtain a better silhouette score, but in general we **do
+# not** suggest dropping samples labeled as noise.
+#
+# Also, keep in mind that HDBSCAN does not optimize intra- or inter-cluster
+# distances, which are the basis of the silhouette score. It is then more
+# appropriate to use the silhouette score when clusters are compact and roughly
+# convex. Otherwise, if the clusters are elongated, wavy, or even wrap around
+# other clusters, comparing average distances becomes less meaningful.
 #
 # ## Clustering of geospatial data
 #

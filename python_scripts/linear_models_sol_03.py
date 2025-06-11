@@ -66,7 +66,7 @@ _ = coefs.abs().plot.box(color=color, vert=False, ax=ax)
 # Since we scaled the features, the coefficients of the linear model can be
 # meaningful compared directly. `"capital-gain"` is the most impacting feature.
 # Just be aware not to draw conclusions on the causal effect provided the impact
-# of a feature. Interested readers are refered to the [example on Common
+# of a feature. Interested readers are referred to the [example on Common
 # pitfalls in the interpretation of coefficients of linear
 # models](https://scikit-learn.org/stable/auto_examples/inspection/plot_linear_model_coefficient_interpretation.html)
 # or the [example on Failure of Machine Learning to infer causal

@@ -71,7 +71,7 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 adult_census.head()
 
 # %% [markdown]
-# An alternative is to omit the `head` method. This would output the intial and
+# An alternative is to omit the `head` method. This would output the initial and
 # final rows and columns, but everything in between is not shown by default. It
 # also provides the dataframe's dimensions at the bottom in the format `n_rows`
 # x `n_columns`.

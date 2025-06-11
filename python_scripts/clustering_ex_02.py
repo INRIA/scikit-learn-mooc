@@ -46,10 +46,11 @@ penguins
 # dataset (Adelie, Chinstrap, and Gentoo) further splitted by Sex (2 clusters
 # for each species).
 #
-# Repeat the same pipeline consisting of a `OneHotEncoder` for the "Sex" column,
-# a `StandardScaler` for the other columns. The final estimator should be
-# `KMeans` with `n_clusters=6`. You can set the `random_state` for
-# reproducibility, but that should not change the interpretation of the results.
+# Repeat the same pipeline consisting of a `OneHotEncoder` with
+# `drop="if_binary"` for the "Sex" column, a `StandardScaler` for the other
+# columns. The final estimator should be `KMeans` with `n_clusters=6`. You can
+# set the `random_state` for reproducibility, but that should not change the
+# interpretation of the results.
 
 # %%
 # Write your code here.

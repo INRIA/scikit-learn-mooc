@@ -136,8 +136,8 @@ plot_n_clusters_scores(model, data, score_type="inertia")
 
 # %% [markdown] tags=["solution"]
 #
-# The WCSS plot no strong elbow but it might depend of the random
-# initialization of the centroids in k-means.
+# The WCSS plot may or may not present a well-defined elbow, depending of the
+# random initialization of the centroids in k-means.
 
 # %% [markdown]
 # Let's see if we can find one or more stable candidates for `n_clusters` using

@@ -122,7 +122,6 @@ pd.Series(cluster_labels).value_counts()
 # ARI ranges from -1 (worse than random clustering) to 1 (perfect clustering),
 # with 0 indicating a model that assigns cluster labels at random: this metric
 # is therefore "adjusted for chance", which is not the case for V-measure.
-#
 # Both V-measure and ARI follow a "higher is better" convention.
 #
 # Read more in the User Guide for

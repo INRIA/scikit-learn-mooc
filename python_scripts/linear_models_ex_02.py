@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.7
+#       jupytext_version: 1.17.1
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -30,7 +30,7 @@
 # disease. This would depend on the patient's Body Mass Index which is defined
 # as `weight / height ** 2`.
 #
-# We load the dataset penguins dataset. We first use a set of 3 numerical
+# We load the penguins dataset. We first use a set of 3 numerical
 # features to predict the target, i.e. the body mass of the penguin.
 
 # %% [markdown]

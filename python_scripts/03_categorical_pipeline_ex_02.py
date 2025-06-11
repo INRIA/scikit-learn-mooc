@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.16.7
+#       jupytext_version: 1.17.1
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -58,17 +58,18 @@ import time
 
 from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.ensemble import HistGradientBoostingClassifier
 
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [("categorical", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
+
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
@@ -112,26 +113,7 @@ print(
 # Write your code here.
 
 # %% [markdown]
-# ### Analysis
-#
-# From an accuracy point of view, the result is almost exactly the same. The
-# reason is that `HistGradientBoostingClassifier` is expressive and robust
-# enough to deal with misleading ordering of integer coded categories (which was
-# not the case for linear models).
-#
-# However from a computation point of view, the training time is much longer:
-# this is caused by the fact that `OneHotEncoder` generates more features than
-# `OrdinalEncoder`; for each unique categorical value a column is created.
-#
-# Note that the current implementation `HistGradientBoostingClassifier` is still
-# incomplete, and once sparse representation are handled correctly, training
-# time might improve with such kinds of encodings.
-#
-# The main take away message is that arbitrary integer coding of categories is
-# perfectly fine for `HistGradientBoostingClassifier` and yields fast training
-# times.
-
-# Which encoder should I use?
+# ## Which encoder should I use?
 #
 # |                  | Meaningful order              | Non-meaningful order |
 # | ---------------- | ----------------------------- | -------------------- |

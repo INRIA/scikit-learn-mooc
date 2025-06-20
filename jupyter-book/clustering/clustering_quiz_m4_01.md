@@ -1,4 +1,4 @@
-# ✅ Quiz M6.01
+# ✅ Quiz M4.01
 
 ```{admonition} Question
 Imagine you work for a music streaming platform that hosts a vast library of
@@ -28,8 +28,8 @@ _Select all answers that apply_
 The plots below show the cluster labels as found by K-means with 3 clusters, only
 differing in the scaling step. Based on this, which conclusions can be obtained?
 
-![K-means not scaled](../../figures/clustering_quiz_kmeans_not_scaled.svg)
-![K-means scaled](../../figures/clustering_quiz_kmeans_scaled.svg)
+![K-means not scaled](../../figures/evaluation_quiz_kmeans_not_scaled.svg)
+![K-means scaled](../../figures/evaluation_quiz_kmeans_scaled.svg)
 
 - a) without scaling, cluster assignment is dominated by the feature in the vertical axis
 - b) without scaling, cluster assignment is dominated by the feature in the horizontal axis

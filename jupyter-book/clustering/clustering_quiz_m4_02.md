@@ -4,10 +4,10 @@
 If we increase `min_cluster_size` in HDBSCAN, what happens to the number of
 points labeled as noise?
 
-- a) it decreases
-- b) it increases
-- c) it stays the same
-- d) HDBSCAN fails to converge
+- a) It decreases.
+- b) It increases.
+- c) It stays the same.
+- d) HDBSCAN fails to converge.
 
 _Select a single answer_
 
@@ -18,10 +18,10 @@ _Select a single answer_
 ```{admonition} Question
 What happens to k-means centroids in the presence of outliers?
 
-- a) they move towards the outliers
-- b) they are not sensitive to outliers
-- c) if a centroid is initialized on an outlier, it may remain isolated in
-  subsequent iterations
+- a) They move towards the outliers assigned to their cluster.
+- b) They are not sensitive to outliers.
+- c) If a centroid is initialized on an outlier, it may remain isolated in
+  subsequent iterations.
 
 _Select all answers that apply_
 

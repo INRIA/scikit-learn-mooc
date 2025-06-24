@@ -108,7 +108,7 @@ model.fit(data, target)
 # %% [markdown]
 # Notice that the diagram changes color once the estimator is fit.
 #
-# So far we used `Pipeline` and `ColumnTransformer`, which aloows us to custom
+# So far we used `Pipeline` and `ColumnTransformer`, which allows us to custom
 # the names of the steps in the pipeline. An alternative is to use
 # `make_column_transformer` and `make_pipeline`, they do not require, and do not
 # permit, naming the estimators. Instead, their names are set to the lowercase

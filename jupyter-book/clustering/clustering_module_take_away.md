@@ -5,14 +5,14 @@
 <!-- Quick wrap-up for the module -->
 
 In this module, we presented the framework used in unsupervised learning with
-clustering, focusing on KMeans and how to evaluate its results using both
-internal and supervised metrics.
+clustering, focusing on k-means and how to evaluate its results using both
+unsupervised and supervised metrics.
 
 We explored the concept of cluster stability, addressed the limitations of
-KMeans when clusters are not convex, and introduced HDBSCAN as an alternative.
+k-means when clusters are not convex, and introduced HDBSCAN as an alternative.
 
 Finally, we showed how clustering can be integrated into supervised pipelines
-through feature engineering.
+to perform unsupervised feature engineering.
 
 ## To go further
 

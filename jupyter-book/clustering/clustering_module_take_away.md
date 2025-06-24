@@ -12,7 +12,7 @@ We explored the concept of cluster stability, addressed the limitations of
 k-means when clusters are not convex, and introduced HDBSCAN as an alternative.
 
 Finally, we showed how clustering can be integrated into supervised pipelines
-through feature engineering.
+to perform unsupervised feature engineering.
 
 ## To go further
 

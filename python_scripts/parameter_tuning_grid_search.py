@@ -220,8 +220,9 @@ cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
 # %% [markdown]
-# With only 2 parameters, we might want to visualize the grid-search as a
-# heatmap. We need to transform our `cv_results` into a dataframe where:
+# Given that we are tuning only 2 parameters, we can visualize the results as a
+# heatmap. To do so, we first need to reshape the `cv_results` into a dataframe
+# where:
 #
 # - the rows correspond to the learning-rate values;
 # - the columns correspond to the maximum number of leaf;
@@ -237,7 +238,8 @@ pivoted_cv_results = cv_results.pivot_table(
 pivoted_cv_results
 
 # %% [markdown]
-# We can use a heatmap representation to show the above dataframe visually.
+# Now that we have the data in the right format, we can create the heatmap as
+# follows:
 
 # %%
 import seaborn as sns
@@ -253,9 +255,13 @@ ax = sns.heatmap(
 ax.invert_yaxis()
 
 # %% [markdown]
-# This heatmap shows the values of mean test accuracy of the previous table. The
-# color of each cell indicates the mean accuracy of the model for a given
-# combination of hyperparameters. The darker the color, the better the accuracy.
+# The heatmap above shows the mean test accuracy (i.e., the average over
+# cross-validation splits) for each combination of hyperparameters, where darker
+# colors indicate better performance. However, notice that using colors only
+# allows us to visually compare the mean test score, but does not carry any
+# information on the standard deviation over splits, making it difficult to say
+# if different scores coming from different combinations lead to a significantly
+# better model or not.
 #
 # The above tables highlights the following things:
 #

@@ -124,9 +124,13 @@ model
 # Let's see how to use the `GridSearchCV` estimator for doing such search. Since
 # the grid-search is costly, we only explore the combination learning-rate and
 # the maximum number of nodes.
+### Cross-Validation Visualization
+![Grid Search CV](../figures/cross_validation_train_test_diagram.png)
 
-# %%
+#This diagram illustrates how GridSearchCV uses cross-validation to split the dataset during hyperparameter tuning.
+
 # %%time
+
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {

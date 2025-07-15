@@ -93,6 +93,7 @@ _Select a single answer_
 
 +++
 
+```{admonition} Question
 How many signals are identified as noise?
 
 - a) 3
@@ -101,18 +102,6 @@ How many signals are identified as noise?
 - d) 9
 
 _Select a single answer_
-```
-
-+++ {"tags": ["solution"]}
-
-solution: c)
-
-The code to count them is the following:
-
-```python
-hdbscan_noise_indices = np.where(hdbscan_labels == -1)[0]
-n_noise = len(hdbscan_noise_indices)
-print(f"{n_noise} signals are labeled as noise.")
 ```
 
 +++

@@ -97,15 +97,41 @@ model = Pipeline(
         ("classifier", LogisticRegression()),
     ]
 )
-
-# %% [markdown]
-# Let's visualize it!
-
-# %%
 model
 
 # %% [markdown]
-# ## Finally we score the model
+# Let's fit it!
+
+# %%
+model.fit(data, target)
+
+# %% [markdown]
+# Notice that the diagram changes color once the estimator is fit.
+#
+# So far we used `Pipeline` and `ColumnTransformer`, which allows us to custom
+# the names of the steps in the pipeline. An alternative is to use
+# `make_column_transformer` and `make_pipeline`, they do not require, and do not
+# permit, naming the estimators. Instead, their names are set to the lowercase
+# of their types automatically.
+
+# %%
+from sklearn.compose import make_column_transformer
+from sklearn.pipeline import make_pipeline
+
+numeric_transformer = make_pipeline(
+    SimpleImputer(strategy="median"), StandardScaler()
+)
+categorical_transformer = OneHotEncoder(handle_unknown="ignore")
+
+preprocessor = make_column_transformer(
+    (numeric_transformer, numeric_features),
+    (categorical_transformer, categorical_features),
+)
+model = make_pipeline(preprocessor, LogisticRegression())
+model.fit(data, target)
+
+# %% [markdown]
+# ## Finally we can score the model using cross-validation:
 
 # %%
 from sklearn.model_selection import cross_validate

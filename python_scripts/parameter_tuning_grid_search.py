@@ -116,25 +116,53 @@ model
 # %% [markdown]
 # ## Tuning using a grid-search
 #
-# In the previous exercise we used one `for` loop for each hyperparameter to
-# find the best combination over a fixed grid of values. `GridSearchCV` is a
-# scikit-learn class that implements a very similar logic with less repetitive
-# code.
+# In the previous exercise (M3.01) we used two nested `for` loops (one for each
+# hyperparameter) to test different combinations over a fixed grid of
+# hyperparameter values. In each iteration of the loop, we used
+# `cross_val_score` to compute the mean score (as averaged across
+# cross-validation splits), and compared those mean scores to select the best
+# combination. `GridSearchCV` is a scikit-learn class that implements a very
+# similar logic with less repetitive code. The suffix `CV` refers to the
+# cross-validation it runs internally (instead of the `cross_val_score` we
+# "hard" coded).
 #
-# Let's see how to use the `GridSearchCV` estimator for doing such search. Since
-# the grid-search is costly, we only explore the combination learning-rate and
-# the maximum number of nodes.
+# The `GridSearchCV` estimator takes a `param_grid` parameter which defines all
+# hyperparameters and their associated values. The grid-search is in charge of
+# creating all possible combinations and testing them.
+#
+# The number of combinations is equal to the product of the number of values to
+# explore for each parameter. Thus, adding new parameters with their associated
+# values to be explored rapidly becomes computationally expensive. Because of
+# that, here we only explore the combination learning-rate and the maximum
+# number of nodes for a total of 4 x 3 = 12 combinations.
 
-# %%
 # %%time
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {
-    "classifier__learning_rate": (0.01, 0.1, 1, 10),
-    "classifier__max_leaf_nodes": (3, 10, 30),
-}
+    "classifier__learning_rate": (0.01, 0.1, 1, 10),  # 4 possible values
+    "classifier__max_leaf_nodes": (3, 10, 30),  # 3 possible values
+}  # 12 unique combinations
 model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=2, cv=2)
 model_grid_search.fit(data_train, target_train)
+
+# %% [markdown]
+# You can access the best combination of hyperparameters found by the grid
+# search using the `best_params_` attribute.
+
+# %%
+print(f"The best set of parameters is: {model_grid_search.best_params_}")
+
+# %% [markdown]
+# Once the grid-search is fitted, it can be used as any other estimator, i.e. it
+# has `predict` and `score` methods. Internally, it uses the model with the
+# best parameters found during `fit`.
+#
+# Let's get the predictions for the 5 first samples using the estimator with the
+# best parameters:
+
+# %%
+model_grid_search.predict(data_test.iloc[0:5])
 
 # %% [markdown]
 # Finally, we check the accuracy of our model using the test set.
@@ -142,51 +170,38 @@ model_grid_search.fit(data_train, target_train)
 # %%
 accuracy = model_grid_search.score(data_test, target_test)
 print(
-    f"The test accuracy score of the grid-searched pipeline is: {accuracy:.2f}"
+    f"The test accuracy score of the grid-search pipeline is: {accuracy:.2f}"
 )
 
 # %% [markdown]
-# ```{warning}
-# Be aware that the evaluation should normally be performed through
-# cross-validation by providing `model_grid_search` as a model to the
-# `cross_validate` function.
-#
-# Here, we used a single train-test split to evaluate `model_grid_search`. In
-# a future notebook will go into more detail about nested cross-validation, when
-# you use cross-validation both for hyperparameter tuning and model evaluation.
-# ```
-
-# %% [markdown]
-# The `GridSearchCV` estimator takes a `param_grid` parameter which defines all
-# hyperparameters and their associated values. The grid-search is in charge
-# of creating all possible combinations and test them.
-#
-# The number of combinations are equal to the product of the number of values to
-# explore for each parameter (e.g. in our example 4 x 3 combinations). Thus,
-# adding new parameters with their associated values to be explored become
-# rapidly computationally expensive.
-#
-# Once the grid-search is fitted, it can be used as any other predictor by
-# calling `predict` and `predict_proba`. Internally, it uses the model with the
-# best parameters found during `fit`.
-#
-# Get predictions for the 5 first samples using the estimator with the best
-# parameters.
-
-# %%
-model_grid_search.predict(data_test.iloc[0:5])
-
-# %% [markdown]
-# You can know about these parameters by looking at the `best_params_`
-# attribute.
-
-# %%
-print(f"The best set of parameters is: {model_grid_search.best_params_}")
-
-# %% [markdown]
-# The accuracy and the best parameters of the grid-searched pipeline are similar
+# The accuracy and the best parameters of the grid-search pipeline are similar
 # to the ones we found in the previous exercise, where we searched the best
-# parameters "by hand" through a double for loop.
+# parameters "by hand" through a double `for` loop.
+#
+# ## The need for a validation set
+#
+# In the previous section, the selection of the best hyperparameters was done
+# using the train set, coming from the initial train-test split. Then, we
+# evaluated the generalization performance of our tuned model on the left out
+# test set. This can be shown schematically as follows:
+#
+# ![Cross-validation tuning
+# diagram](../figures/cross_validation_train_test_diagram.png)
+#
+# ```{note}
+# This figure shows the particular case of **K-fold** cross-validation strategy
+# using `n_splits=5` to further split the train set coming from a train-test
+# split. For each cross-validation split, the procedure trains a model on all
+# the red samples, evaluates the score of a given set of hyperparameters on the
+# green samples. The best combination of hyperparameters `best_params` is selected
+# based on those intermediate scores.
+#
+# Then a final model is refitted using `best_params` on the concatenation of the
+# red and green samples and evaluated on the blue samples.
+#
+# The green samples are sometimes referred as the **validation set** to
+# differentiate them from the final test set in blue.
+# ```
 #
 # In addition, we can inspect all results which are stored in the attribute
 # `cv_results_` of the grid-search. We filter some specific columns from these

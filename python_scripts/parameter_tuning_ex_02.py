@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.17.1
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -37,21 +37,15 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %%
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 from sklearn.compose import make_column_selector as selector
 from sklearn.preprocessing import OrdinalEncoder
 
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [
-        (
-            "cat_preprocessor",
-            categorical_preprocessor,
-            selector(dtype_include=object),
-        )
-    ],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, selector(dtype_include=object)),
     remainder="passthrough",
 )
 
@@ -68,7 +62,7 @@ model = Pipeline(
 # %% [markdown]
 # Use the previously defined model (called `model`) and using two nested `for`
 # loops, make a search of the best combinations of the `learning_rate` and
-# `max_leaf_nodes` parameters. In this regard, you have to train and test the
+# `max_leaf_nodes` parameters. In this regard, you need to train and test the
 # model by setting the parameters. The evaluation of the model should be
 # performed using `cross_val_score` on the training set. Use the following
 # parameters search:
@@ -88,3 +82,5 @@ model = Pipeline(
 
 # %%
 # Write your code here.
+
+# %%

@@ -9,14 +9,20 @@ import jupytext
 
 from sphinx_external_toc.parsing import parse_toc_yaml
 
-from myst_parser.main import to_tokens
+from markdown_it.renderer import RendererHTML
+
+from myst_parser.config.main import MdParserConfig
+from myst_parser.parsers.mdit import create_md_parser
+
 
 # This hard-code the git repo root directory relative to this script
 root_dir = Path(__file__).parents[1]
 
 
 def get_first_title_from_md_str(md_str):
-    tokens = to_tokens(md_str)
+    parser = create_md_parser(MdParserConfig(), RendererHTML)
+    tokens = parser.parse(md_str)
+
     is_title_token = False
     for t in tokens:
         if is_title_token:
@@ -35,7 +41,7 @@ def get_first_title(path):
     elif path.suffix == ".md":
         md_str = path.read_text()
     else:
-        raise ValueError(f"{filename} is not a .py or a .md file")
+        raise ValueError(f"{path} is not a .py or a .md file")
 
     return get_first_title_from_md_str(md_str)
 
@@ -90,7 +96,9 @@ def get_single_file_markdown(docname):
         # This is simpler to point to inria.github.io generated HTML otherwise
         # there are quirks (MyST in quizzes not supported, slides not working,
         # etc ...)
-        relative_url = str(target).replace("jupyter-book/", "").replace(".md", ".html")
+        relative_url = (
+            str(target).replace("jupyter-book/", "").replace(".md", ".html")
+        )
         target = f"https://inria.github.io/scikit-learn-mooc/{relative_url}"
 
     return f"[{title}]({target})"
@@ -134,7 +142,9 @@ def test_get_lesson_markdown():
     documents = json_info["documents"]
     print(
         get_lesson_markdown(
-            documents["predictive_modeling_pipeline/01_tabular_data_exploration_index"]
+            documents[
+                "predictive_modeling_pipeline/01_tabular_data_exploration_index"
+            ]
         )
     )
 
@@ -150,7 +160,8 @@ def get_module_markdown(module_dict, documents):
     module_title = module_dict["caption"]
     heading = f"# {module_title}"
     content = "\n\n".join(
-        get_lesson_markdown(documents[docname]) for docname in module_dict["items"]
+        get_lesson_markdown(documents[docname])
+        for docname in module_dict["items"]
     )
     return f"{heading}\n\n{content}"
 
@@ -213,7 +224,9 @@ def get_full_index_ipynb(toc_path):
     md_str = get_full_index_markdown(toc_path)
     nb = jupytext.reads(md_str, format=".md")
 
-    nb = nbformat.v4.new_notebook(cells=[nbformat.v4.new_markdown_cell(md_str)])
+    nb = nbformat.v4.new_notebook(
+        cells=[nbformat.v4.new_markdown_cell(md_str)]
+    )
 
     # nb_content = jupytext.writes(nb, fmt=".ipynb")
     # nb = json.loads(nb_content)

@@ -13,7 +13,7 @@
 # generalizing. Besides these aspects, it is also important to understand how
 # the different errors are influenced by the number of samples available.
 #
-# In this notebook, we will show this aspect by looking a the variability of
+# In this notebook, we will show this aspect by looking at the variability of
 # the different errors.
 #
 # Let's first load the data and create the same model as in the previous
@@ -102,10 +102,14 @@ _ = display.ax_.set(xscale="log", title="Learning curve for decision tree")
 # benefit to adding samples anymore or assessing the potential gain of adding
 # more samples into the training set.
 #
-# If we achieve a plateau and adding new samples in the training set does not
-# reduce the testing error, we might have reached the Bayes error rate using the
-# available model. Using a more complex model might be the only possibility to
-# reduce the testing error further.
+# If the testing error plateaus despite adding more training samples, it's
+# possible that the model has achieved its optimal performance. In this case,
+# using a more expressive model might help reduce the error further. Otherwise,
+# the error may have reached the Bayes error rate, the theoretical minimum error
+# due to inherent uncertainty not resolved by the available data. This minimum error is
+# non-zero whenever some of the variation of the target variable `y` depends on
+# external factors not fully observed in the features available in `X`, which is
+# almost always the case in practice.
 #
 # ## Summary
 #

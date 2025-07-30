@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.15.2
+#       jupytext_version: 1.17.1
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -17,7 +17,7 @@
 # In the previous Module we tuned the hyperparameter `C` of the logistic
 # regression without mentioning that it controls the regularization strength.
 # Later, on the slides on 🎥 **Intuitions on regularized linear models** we
-# metioned that a small `C` provides a more regularized model, whereas a
+# mentioned that a small `C` provides a more regularized model, whereas a
 # non-regularized model is obtained with an infinitely large value of `C`.
 # Indeed, `C` behaves as the inverse of the `alpha` coefficient in the `Ridge`
 # model.

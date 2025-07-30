@@ -12,7 +12,7 @@
 # of predictive models. While this section could be slightly redundant, we
 # intend to go into details into the cross-validation framework.
 #
-# Before we dive in, let's linger on the reasons for always having training and
+# Before we dive in, let's focus on the reasons for always having training and
 # testing sets. Let's first look at the limitation of using a dataset without
 # keeping any samples out.
 #
@@ -34,14 +34,14 @@ data, target = housing.data, housing.target
 # notebook. The target to be predicted is a continuous variable and not anymore
 # discrete. This task is called regression.
 #
-# This, we will use a predictive model specific to regression and not to
+# Thus, we will use a predictive model specific to regression and not to
 # classification.
 
 # %%
 print(housing.DESCR)
 
 # %%
-data.head()
+data
 
 # %% [markdown]
 # To simplify future visualization, let's transform the prices from the 100
@@ -49,7 +49,7 @@ data.head()
 
 # %%
 target *= 100
-target.head()
+target
 
 # %% [markdown]
 # ```{note}
@@ -218,7 +218,7 @@ cv_results = cross_validate(
 import pandas as pd
 
 cv_results = pd.DataFrame(cv_results)
-cv_results.head()
+cv_results
 
 # %% [markdown]
 # ```{tip}

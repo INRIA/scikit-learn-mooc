@@ -151,7 +151,7 @@ weights
 # by name or position. In the code above `logistic_regression[-1]` means the
 # last step of the pipeline. Then you can access the attributes of that step such
 # as `coef_`. Notice also that the `coef_` attribute is an array of shape (1,
-# `n_features`) an then we access it via its first entry. Alternatively one
+# `n_features`) and then we access it via its first entry. Alternatively one
 # could use `coef_.ravel()`.
 #
 # We are now ready to visualize the weight values as a barplot:
@@ -266,7 +266,7 @@ _ = plt.title("Predicted probability of the trained\n LogisticRegression")
 # function](https://en.wikipedia.org/wiki/Softmax_function) to make predictions.
 # Giving more details on that scenario is beyond the scope of this MOOC.
 #
-# In any case, interested users are refered to the [scikit-learn user guide](
+# In any case, interested users are referred to the [scikit-learn user guide](
 # https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)
 # for a more mathematical description of the `predict_proba` method of the
 # `LogisticRegression` and the respective normalization functions.

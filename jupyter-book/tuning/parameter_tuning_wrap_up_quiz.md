@@ -111,13 +111,13 @@ Remember that one way to compare two models is comparing the cross-validation te
 i.e. counting the number of folds where one model has a better test score than the other
 
 - a) Looking at the individual cross-validation scores, using a model with `n_neighbors=5` is
-  substantially better (at least 7 of the cross-validations scores are better) than a model with
+  substantially better (at least 7 of the cross-validations scores are strictly better) than a model with
   `n_neighbors=51`
 - b) Looking at the individual cross-validation scores, using a model with `n_neighbors=5` is
-  substantially better (at least 7 of the cross-validations scores are better) than a model with
+  substantially better (at least 7 of the cross-validations scores are strictly better) than a model with
   `n_neighbors=101`
 - c) Looking at the individual cross-validation scores, a 5 nearest neighbors using a `StandardScaler`
-  is substantially better (at least 7 of the cross-validations scores are better) than a 5 nearest
+  is substantially better (at least 7 of the cross-validations scores are strictly better) than a 5 nearest
   neighbors using the raw features (without scaling).
 
 _Select all answers that apply_
@@ -157,20 +157,22 @@ Use `sklearn.model_selection.GridSearchCV` to study the impact of the choice of
 the preprocessor and the number of neighbors on the stratified 10-fold
 cross-validated `balanced_accuracy` metric. We want to study the `n_neighbors`
 in the range `[5, 51, 101]` and `preprocessor` in the range
-`all_preprocessors`.
+`all_preprocessors`. Although we wouldn't do this in a real setting (and
+prefer using nested cross validation), for this question, do the
+cross-validation on the entire dataset.
 
 Which of the following statements hold:
 
 - a) Looking at the individual cross-validation scores, the best ranked model using a
-  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
+  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are strictly better)
   than using any other preprocessor
 - b) Using any of the preprocessors has always a better ranking than using no preprocessor, irrespective
   of the value `of n_neighbors`
 - c) Looking at the individual cross-validation scores, the model with `n_neighbors=5` and
-  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
+  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are strictly better)
   than the model with `n_neighbors=51` and `StandardScaler`
 - d) Looking at the individual cross-validation scores, the model with `n_neighbors=51` and
-  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are better)
+  `StandardScaler` is substantially better (at least 7 of the cross-validations scores are strictly better)
   than the model with `n_neighbors=101` and `StandardScaler`
 
 _Select all answers that apply_

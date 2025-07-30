@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.17.1
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -45,7 +45,7 @@ target = blood_transfusion["Class"]
 # exercise.
 #
 # Also, this classifier can become more flexible/expressive by using a so-called
-# kernel that makes the model become non-linear. Again, no requirement regarding
+# kernel that makes the model become non-linear. Again, no understanding regarding
 # the mathematics is required to accomplish this exercise.
 #
 # We will use an RBF kernel where a parameter `gamma` allows to tune the

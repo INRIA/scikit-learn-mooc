@@ -52,17 +52,18 @@ import time
 
 from sklearn.model_selection import cross_validate
 from sklearn.pipeline import make_pipeline
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.ensemble import HistGradientBoostingClassifier
 
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [("categorical", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
+
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
@@ -90,17 +91,12 @@ import time
 
 from sklearn.preprocessing import StandardScaler
 
-preprocessor = ColumnTransformer(
-    [
-        ("numerical", StandardScaler(), numerical_columns),
-        (
-            "categorical",
-            OrdinalEncoder(
-                handle_unknown="use_encoded_value", unknown_value=-1
-            ),
-            categorical_columns,
-        ),
-    ]
+preprocessor = make_column_transformer(
+    (StandardScaler(), numerical_columns),
+    (
+        OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1),
+        categorical_columns,
+    ),
 )
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
@@ -151,8 +147,8 @@ from sklearn.preprocessing import OneHotEncoder
 categorical_preprocessor = OneHotEncoder(
     handle_unknown="ignore", sparse_output=False
 )
-preprocessor = ColumnTransformer(
-    [("one-hot-encoder", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
 )
 
@@ -179,8 +175,8 @@ print(
 # not the case for linear models).
 #
 # However from a computation point of view, the training time is much longer:
-# this is caused by the fact that `OneHotEncoder` generates approximately 10
-# times more features than `OrdinalEncoder`.
+# this is caused by the fact that `OneHotEncoder` generates more features than
+# `OrdinalEncoder`; for each unique categorical value a column is created.
 #
 # Note that the current implementation `HistGradientBoostingClassifier` is still
 # incomplete, and once sparse representation are handled correctly, training
@@ -190,19 +186,28 @@ print(
 # perfectly fine for `HistGradientBoostingClassifier` and yields fast training
 # times.
 
-# %% [markdown] tags=["solution"]
-# ```{important}
-# Which encoder should I use?
+# %% [markdown]
+# ## Which encoder should I use?
 #
 # |                  | Meaningful order              | Non-meaningful order |
 # | ---------------- | ----------------------------- | -------------------- |
-# | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder`     |
+# | Tree-based model | `OrdinalEncoder`              | `OrdinalEncoder` with reasonable depth    |
 # | Linear model     | `OrdinalEncoder` with caution | `OneHotEncoder`      |
+
+# %% [markdown]
+# ```{important}
 #
 # - `OneHotEncoder`: always does something meaningful, but can be unnecessary
 #   slow with trees.
 # - `OrdinalEncoder`: can be detrimental for linear models unless your category
 #   has a meaningful order and you make sure that `OrdinalEncoder` respects this
 #   order. Trees can deal with `OrdinalEncoder` fine as long as they are deep
-#   enough.
+#   enough. However, when you allow the decision tree to grow very deep, it might
+#   overfit on other features.
 # ```
+# %% [markdown]
+# Next to one-hot-encoding and ordinal encoding categorical features,
+# scikit-learn offers the [`TargetEncoder`](https://scikit-learn.org/stable/modules/preprocessing.html#target-encoder).
+# This encoder is well suited for nominal, categorical features with high
+# cardinality. This encoding strategy is beyond the scope of this course,
+# but the interested reader is encouraged to explore this encoder.

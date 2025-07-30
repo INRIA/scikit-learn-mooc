@@ -17,11 +17,13 @@
 # (as in "independent and identically distributed random variables").
 # ```
 #
-# This assumption is usually violated when dealing with time series. A sample
-# depends on past information.
+# This assumption is usually violated in time series, where each sample can be
+# influenced by previous samples (both their feature and target values) in an
+# inherently ordered sequence.
 #
-# We will take an example to highlight such issues with non-i.i.d. data in the
-# previous cross-validation strategies presented. We are going to load financial
+# In this notebook we demonstrate the issues that arise when using the
+# cross-validation strategies we have presented so far, along with non-i.i.d.
+# data. For such purpose we load financial
 # quotations from some energy companies.
 
 # %%
@@ -61,16 +63,11 @@ _ = plt.title("Stock values over time")
 # and then we evaluate other cross-validation methods.
 
 # %%
-from sklearn.model_selection import train_test_split
-
 data, target = quotes.drop(columns=["Chevron"]), quotes["Chevron"]
-data_train, data_test, target_train, target_test = train_test_split(
-    data, target, shuffle=True, random_state=0
-)
 
 # %% [markdown]
 # We will use a decision tree regressor that we expect to overfit and thus not
-# generalize to unseen data. We will use a `ShuffleSplit` cross-validation to
+# generalize to unseen data. We use a `ShuffleSplit` cross-validation to
 # check the generalization performance of our model.
 #
 # Let's first define our model
@@ -89,28 +86,40 @@ from sklearn.model_selection import ShuffleSplit
 cv = ShuffleSplit(random_state=0)
 
 # %% [markdown]
-# Finally, we perform the evaluation.
+# We then perform the evaluation using the `ShuffleSplit` strategy.
 
 # %%
 from sklearn.model_selection import cross_val_score
 
-test_score = cross_val_score(
-    regressor, data_train, target_train, cv=cv, n_jobs=2
-)
+test_score = cross_val_score(regressor, data, target, cv=cv, n_jobs=2)
 print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
 # Surprisingly, we get outstanding generalization performance. We will
 # investigate and find the reason for such good results with a model that is
-# expected to fail. We previously mentioned that `ShuffleSplit` is an iterative
-# cross-validation scheme that shuffles data and split. We will simplify this
+# expected to fail. We previously mentioned that `ShuffleSplit` is a
+# cross-validation method that iteratively shuffles and splits the data.
+#
+# We can simplify the
 # procedure with a single split and plot the prediction. We can use
 # `train_test_split` for this purpose.
 
 # %%
+from sklearn.model_selection import train_test_split
+
+data_train, data_test, target_train, target_test = train_test_split(
+    data, target, shuffle=True, random_state=0
+)
+
+# Shuffling breaks the index order, but we still want it to be time-ordered
+data_train.sort_index(ascending=True, inplace=True)
+data_test.sort_index(ascending=True, inplace=True)
+target_train.sort_index(ascending=True, inplace=True)
+target_test.sort_index(ascending=True, inplace=True)
+
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_test)
-# Affect the index of `target_predicted` to ease the plotting
+# Recover the `DatetimeIndex` from `target_test` for correct plotting
 target_predicted = pd.Series(target_predicted, index=target_test.index)
 
 # %% [markdown]
@@ -123,7 +132,7 @@ test_score = r2_score(target_test, target_predicted)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
-# Similarly, we obtain good results in terms of $R^2$. We will plot the
+# Similarly, we obtain good results in terms of $R^2$. We now plot the
 # training, testing and prediction samples.
 
 # %%
@@ -136,25 +145,25 @@ plt.legend(bbox_to_anchor=(1.05, 0.8), loc="upper left")
 _ = plt.title("Model predictions using a ShuffleSplit strategy")
 
 # %% [markdown]
-# So in this context, it seems that the model predictions are following the
-# testing. But we can also see that the testing samples are next to some
-# training sample. And with these time-series, we see a relationship between a
-# sample at the time `t` and a sample at `t+1`. In this case, we are violating
-# the i.i.d. assumption. The insight to get is the following: a model can output
-# of its training set at the time `t` for a testing sample at the time `t+1`.
-# This prediction would be close to the true value even if our model did not
-# learn anything, but just memorized the training dataset.
+# From the plot above, we can see that the training and testing samples are
+# alternating. This structure effectively evaluates the model’s ability to
+# interpolate between neighboring data points, rather than its true
+# generalization ability. As a result, the model’s predictions are close to the
+# actual values, even if it has not learned anything meaningful from the data.
+# This is a form of **data leakage**, where the model gains access to future
+# information (testing data) while training, leading to an over-optimistic
+# estimate of the generalization performance.
 #
-# An easy way to verify this hypothesis is to not shuffle the data when doing
+# An easy way to verify this is to not shuffle the data during
 # the split. In this case, we will use the first 75% of the data to train and
-# the remaining data to test.
+# the remaining data to test. This way we preserve the time order of the data, and
+# ensure training on past data and evaluating on future data.
 
 # %%
 data_train, data_test, target_train, target_test = train_test_split(
     data,
     target,
     shuffle=False,
-    random_state=0,
 )
 regressor.fit(data_train, target_train)
 target_predicted = regressor.predict(data_test)
@@ -165,9 +174,9 @@ test_score = r2_score(target_test, target_predicted)
 print(f"The R2 on this single split is: {test_score:.2f}")
 
 # %% [markdown]
-# In this case, we see that our model is not magical anymore. Indeed, it
-# performs worse than just predicting the mean of the target. We can visually
-# check what we are predicting.
+# In this case, we see that our model is not magical anymore. Remember that a
+# negative $R^2$ means that the regressor performs worse than always predicting
+# the mean of the target. We can visually check what we are predicting as follows:
 
 # %%
 target_train.plot(label="Training")
@@ -212,13 +221,18 @@ print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 from sklearn.model_selection import TimeSeriesSplit
 
 cv = TimeSeriesSplit(n_splits=groups.nunique())
-test_score = cross_val_score(
-    regressor, data, target, cv=cv, groups=groups, n_jobs=2
-)
+test_score = cross_val_score(regressor, data, target, cv=cv, n_jobs=2)
 print(f"The mean R2 is: {test_score.mean():.2f} ± {test_score.std():.2f}")
 
 # %% [markdown]
-# In conclusion, it is really important to not use an out of the shelves
+# In conclusion, it is really important not to carelessly use a
 # cross-validation strategy which do not respect some assumptions such as having
-# i.i.d data. It might lead to absurd results which could make think that a
-# predictive model might work.
+# i.i.d data. It might lead to misleading outcomes, creating the false
+# impression that a predictive model performs well when it may not be the case
+# in the intended real-world scenario.
+#
+# scikit-learn offers useful tools for time-series analysis apart from
+# `TimeSeriesSplit`, (see for instance the [Time-related feature engineering
+# example](https://scikit-learn.org/stable/auto_examples/applications/plot_cyclical_feature_engineering.html)
+# in the documentation), and scikit-learn models can yield even better results
+# when combined with other specialized libraries.

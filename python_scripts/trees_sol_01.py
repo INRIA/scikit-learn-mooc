@@ -57,9 +57,9 @@ tree.fit(data_train, target_train)
 #
 # ```{warning}
 # At this time, it is not possible to use `response_method="predict_proba"` for
-# multiclass problems. This is a planned feature for a future version of
-# scikit-learn. In the mean time, you can use `response_method="predict"`
-# instead.
+# multiclass problems on a single plot. This is a planned feature for a future
+# version of scikit-learn. In the mean time, you can use
+# `response_method="predict"` instead.
 # ```
 
 # %%
@@ -140,71 +140,58 @@ print(f"Accuracy of the DecisionTreeClassifier: {test_score:.2f}")
 # except that for a K-class problem you have K probability outputs for each
 # data point. Visualizing all these on a single plot can quickly become tricky
 # to interpret. It is then common to instead produce K separate plots, one for
-# each class, in a one-vs-rest (or one-vs-all) fashion.
+# each class, in a one-vs-rest (or one-vs-all) fashion. This can be achieved by
+# calling `DecisionBoundaryDisplay` several times, once for each class, and
+# passing the `class_of_interest` parameter to the function.
 #
-# For example, in the plot below, the first plot on the left shows in yellow the
-# certainty on classifying a data point as belonging to the "Adelie" class. In
-# the same plot, the spectre from green to purple represents the certainty of
-# **not** belonging to the "Adelie" class. The same logic applies to the other
+# For example, in the plot below, the first plot on the left shows the
+# certainty of classifying a data point as belonging to the "Adelie" class. The
+# darker the color, the more certain the model is that a given point in the
+# feature space belongs to a given class. The same logic applies to the other
 # plots in the figure.
 
 # %% tags=["solution"]
-import numpy as np
-
-xx = np.linspace(30, 60, 100)
-yy = np.linspace(10, 23, 100)
-xx, yy = np.meshgrid(xx, yy)
-Xfull = pd.DataFrame(
-    {"Culmen Length (mm)": xx.ravel(), "Culmen Depth (mm)": yy.ravel()}
-)
-
-probas = tree.predict_proba(Xfull)
-n_classes = len(np.unique(tree.classes_))
+from matplotlib import cm
 
 _, axs = plt.subplots(ncols=3, nrows=1, sharey=True, figsize=(12, 5))
-plt.suptitle("Predicted probabilities for decision tree model", y=0.8)
+plt.suptitle("Predicted probabilities for decision tree model", y=1.05)
+plt.subplots_adjust(bottom=0.45)
 
-for class_of_interest in range(n_classes):
-    axs[class_of_interest].set_title(
-        f"Class {tree.classes_[class_of_interest]}"
+for idx, (class_of_interest, ax) in enumerate(zip(tree.classes_, axs)):
+    ax.set_title(f"Class {class_of_interest}")
+    DecisionBoundaryDisplay.from_estimator(
+        tree,
+        data_test,
+        response_method="predict_proba",
+        class_of_interest=class_of_interest,
+        ax=ax,
+        vmin=0,
+        vmax=1,
+        cmap="Blues",
     )
-    imshow_handle = axs[class_of_interest].imshow(
-        probas[:, class_of_interest].reshape((100, 100)),
-        extent=(30, 60, 10, 23),
-        vmin=0.0,
-        vmax=1.0,
-        origin="lower",
-        cmap="viridis",
-    )
-    axs[class_of_interest].set_xlabel("Culmen Length (mm)")
-    if class_of_interest == 0:
-        axs[class_of_interest].set_ylabel("Culmen Depth (mm)")
-    idx = target_test == tree.classes_[class_of_interest]
-    axs[class_of_interest].scatter(
-        data_test["Culmen Length (mm)"].loc[idx],
-        data_test["Culmen Depth (mm)"].loc[idx],
+    ax.scatter(
+        data_test["Culmen Length (mm)"].loc[target_test == class_of_interest],
+        data_test["Culmen Depth (mm)"].loc[target_test == class_of_interest],
         marker="o",
         c="w",
         edgecolor="k",
     )
+    ax.set_xlabel("Culmen Length (mm)")
+    if idx == 0:
+        ax.set_ylabel("Culmen Depth (mm)")
 
-ax = plt.axes([0.15, 0.04, 0.7, 0.05])
-plt.colorbar(imshow_handle, cax=ax, orientation="horizontal")
-_ = plt.title("Probability")
+ax = plt.axes([0.15, 0.14, 0.7, 0.05])
+plt.colorbar(cm.ScalarMappable(cmap="Blues"), cax=ax, orientation="horizontal")
+_ = ax.set_title("Predicted class membership probability")
 
 # %% [markdown] tags=["solution"]
+#
 # ```{note}
-# You may have noticed that we are no longer using a diverging colormap. Indeed,
-# the chance level for a one-vs-rest binarization of the multi-class
-# classification problem is almost never at predicted probability of 0.5. So
-# using a colormap with a neutral white at 0.5 might give a false impression on
-# the certainty.
+# You may notice that we do not use a diverging colormap (2 color gradients with
+# white in the middle). Indeed, in a multiclass setting, 0.5 is not a
+# meaningful value, hence using white as the center of the colormap is not
+# appropriate. Instead, we use a sequential colormap, where the color intensity
+# indicates the certainty of the classification. The darker the color, the more
+# certain the model is that a given point in the feature space belongs to a
+# given class.
 # ```
-#
-# In future versions of scikit-learn `DecisionBoundaryDisplay` will support a
-# `class_of_interest` parameter that will allow in particular for a
-# visualization of `predict_proba` in multi-class settings.
-#
-# We also plan to make it possible to visualize the `predict_proba` values for
-# the class with the maximum predicted probability (without having to pass a
-# given a fixed `class_of_interest` value).

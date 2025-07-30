@@ -166,6 +166,54 @@ _ = disp.ax_.set(
 # are quite clear. This is not necessarily always the case.
 
 # %% [markdown]
+# ## What is noise?
+#
+# In this notebook, we talked about the fact that datasets can contain noise.
+#
+# There can be several kinds of noises, among which we can identify:
+#
+# - measurement imprecision from a physical sensor (e.g. temperature);
+# - reporting errors by human collectors.
+#
+# Those unpredictable data acquisition errors can happen either on the input
+# features or in the target variable (in which case we often name this label
+# noise).
+#
+# In practice, the **most common source of "noise" is not necessarily a
+# real noise**, but rather **the absence of the measurement of a relevant
+# feature**.
+#
+# Consider the following example: when predicting the price of a house, the
+# surface area will surely impact the price. However, the price will also be
+# influenced by whether the seller is in a rush and decides to sell the house
+# below the market price. A model will be able to make predictions based on the
+# former but not the latter, so "seller's rush" is a source of noise since it
+# won't be present in the features.
+#
+# Since this missing/unobserved feature is randomly varying from one sample to
+# the next, it appears as if the target variable was changing because of the
+# impact of a random perturbation or noise, even if there were no significant
+# errors made during the data collection process (besides not measuring the
+# unobserved input feature).
+#
+# One extreme case could happen if there where samples in the dataset with
+# exactly the same input feature values but different values for the target
+# variable. That is very unlikely in real life settings, but could the case if
+# all features are categorical or if the numerical features were discretized
+# or rounded up naively. In our example, we can imagine two houses having
+# the exact same features in our dataset, but having different prices because
+# of the (unmeasured) seller's rush.
+#
+# Apart from these extreme case, it's hard to know for sure what should qualify
+# or not as noise and which kind of "noise" as introduced above is dominating.
+# But in practice, the best ways to make our predictive models robust to noise
+# are to avoid overfitting models by:
+#
+# - selecting models that are simple enough or with tuned hyper-parameters as
+#   explained in this module;
+# - collecting a larger number of labeled samples for the training set.
+
+# %% [markdown]
 # ## Summary:
 #
 # In this notebook, we saw:

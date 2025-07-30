@@ -12,9 +12,9 @@
 # However, we did not present a proper framework to evaluate the tuned models.
 # Instead, we focused on the mechanism used to find the best set of parameters.
 #
-# In this notebook, we reuse some knowledge presented in the module "Selecting
-# the best model" to show how to evaluate models where hyperparameters need to
-# be tuned.
+# In this notebook, we build on concepts from the "Selecting the Best Model"
+# module to demonstrate how to estimate the uncertainty of generalization
+# performance when tuning hyperparameters.
 #
 # Thus, we first load the dataset and create the predictive model that we want
 # to optimize and later on, evaluate.
@@ -41,7 +41,7 @@ data = adult_census.drop(columns=[target_name, "education-num"])
 # pipeline is identical to the one we used in the previous notebook.
 
 # %%
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.compose import make_column_selector as selector
 
@@ -51,11 +51,10 @@ categorical_columns = categorical_columns_selector(data)
 categorical_preprocessor = OrdinalEncoder(
     handle_unknown="use_encoded_value", unknown_value=-1
 )
-preprocessor = ColumnTransformer(
-    [
-        ("cat_preprocessor", categorical_preprocessor, categorical_columns),
-    ],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
+    force_int_remainder_cols=False,  # Silence a warning in scikit-learn v1.6.
 )
 
 # %%
@@ -190,14 +189,18 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # of the grid-search procedure. This is often the case that models trained on a
 # larger number of samples tend to generalize better.
 #
-# In the code above, as in some previous notebooks, the selection of the best
-# hyperparameters was done only on the train set from the initial train-test
-# split. Then, we evaluated the generalization performance of our tuned model on
-# the left out test set.
+# In the code above, as well as in some previous notebooks, the selection of the
+# best hyperparameters was done only on the train set resulting from the initial
+# train-test split. Then, we evaluated the generalization performance of our
+# tuned model on the left out test set. Remember that such process can be shown
+# schematically as follows:
+#
+# ![Cross-validation tuning
+# diagram](../figures/cross_validation_train_test_diagram.png)
 #
 # However, this evaluation only provides us a single point estimate of the
-# generalization performance. As recalled at the beginning of this notebook, it
-# is beneficial to have a rough idea of the uncertainty of our estimated
+# generalization performance. As you recall from the beginning of this notebook, it is
+# beneficial to have a rough idea of the uncertainty of our estimated
 # generalization performance. Therefore, we should instead use an additional
 # cross-validation for this evaluation.
 #
@@ -246,7 +249,7 @@ print(
 #
 # For each outer cross-validation split (indexed on the left-hand side),
 # the best hyper-parameters are selected based on the validation scores
-# (computed on the greed samples) and a model is refitted on the concatenation
+# (computed on the green samples) and a model is refitted on the concatenation
 # of the red and green samples for that outer CV iteration.
 #
 # The generalization performance of the 5 refitted models from the outer CV

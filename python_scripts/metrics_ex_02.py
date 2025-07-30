@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.17.1
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -52,8 +52,8 @@ target /= 1000
 # Write your code here.
 
 # %% [markdown]
-# Then, instead of using the $R^2$ score, use the mean absolute error. You need
-# to refer to the documentation for the `scoring` parameter.
+# Then, instead of using the $R^2$ score, use the mean absolute error (MAE). You
+# may need to refer to the documentation for the `scoring` parameter.
 
 # %%
 # Write your code here.

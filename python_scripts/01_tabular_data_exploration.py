@@ -71,6 +71,15 @@ adult_census = pd.read_csv("../datasets/adult-census.csv")
 adult_census.head()
 
 # %% [markdown]
+# An alternative is to omit the `head` method. This would output the initial and
+# final rows and columns, but everything in between is not shown by default. It
+# also provides the dataframe's dimensions at the bottom in the format `n_rows`
+# x `n_columns`.
+
+# %%
+adult_census
+
+# %% [markdown]
 # The column named **class** is our target variable (i.e., the variable which we
 # want to predict). The two possible classes are `<=50K` (low-revenue) and
 # `>50K` (high-revenue). The resulting prediction problem is therefore a binary
@@ -351,9 +360,12 @@ _ = plt.annotate("???", (45, 60), fontsize=35)
 # We made important observations (which will be discussed later in more detail):
 #
 # * if your target variable is imbalanced (e.g., you have more samples from one
-#   target category than another), you may need special techniques for training
-#   and evaluating your machine learning model;
-# * having redundant (or highly correlated) columns can be a problem for some
-#   machine learning algorithms;
-# * contrary to decision tree, linear models can only capture linear
-#   interactions, so be aware of non-linear relationships in your data.
+#   target category than another), you may need to be careful when interpreting
+#   the values of performance metrics;
+# * columns can be redundant (or highly correlated), which is not necessarily a
+#   problem, but may require special treatment as we will cover in future
+#   notebooks;
+# * decision trees create prediction rules by comparing each feature to a
+#   threshold value, resulting in decision boundaries that are always parallel
+#   to the axes. In 2D, this means the boundaries are vertical or horizontal
+#   line segments at the feature threshold values.

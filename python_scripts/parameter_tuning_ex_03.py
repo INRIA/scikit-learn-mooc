@@ -5,7 +5,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.5
+#       jupytext_version: 1.17.1
 #   kernelspec:
 #     display_name: Python 3
 #     name: python3
@@ -29,8 +29,8 @@ data_train, data_test, target_train, target_test = train_test_split(
 )
 
 # %% [markdown]
-# In this exercise, we progressively define the regression pipeline and
-# later tune its hyperparameters.
+# In this exercise, we progressively define the regression pipeline and later
+# tune its hyperparameters.
 #
 # Start by defining a pipeline that:
 # * uses a `StandardScaler` to normalize the numerical data;
@@ -40,8 +40,9 @@ data_train, data_test, target_train, target_test = train_test_split(
 # Write your code here.
 
 # %% [markdown]
-# Use `RandomizedSearchCV` with `n_iter=20` to find the best set of
-# hyperparameters by tuning the following parameters of the `model`:
+# Use `RandomizedSearchCV` with `n_iter=20` and
+# `scoring="neg_mean_absolute_error"` to tune the following hyperparameters
+# of the `model`:
 #
 # - the parameter `n_neighbors` of the `KNeighborsRegressor` with values
 #   `np.logspace(0, 3, num=10).astype(np.int32)`;
@@ -49,6 +50,11 @@ data_train, data_test, target_train, target_test = train_test_split(
 #   `True` or `False`;
 # - the parameter `with_std` of the `StandardScaler` with possible values `True`
 #   or `False`.
+#
+# The `scoring` function is expected to return higher values for better models,
+# since grid/random search objects **maximize** it. Because of that, error
+# metrics like `mean_absolute_error` must be negated (using the `neg_` prefix)
+# to work correctly (remember lower errors represent better models).
 #
 # Notice that in the notebook "Hyperparameter tuning by randomized-search" we
 # pass distributions to be sampled by the `RandomizedSearchCV`. In this case we

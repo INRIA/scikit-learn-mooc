@@ -24,7 +24,7 @@
 
 ## Manual tuning
 
-- [Set and get hyperparameters in scikit-learn](./notebooks/parameter_tuning_manual.ipynb) 
+- [Set and get hyperparameters in scikit-learn](./notebooks/parameter_tuning_manual.ipynb)
 - [Exercise 01](./notebooks/parameter_tuning_ex_02.ipynb)
 
 ## Automated tuning

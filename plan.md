@@ -54,7 +54,7 @@ Features and samples
 A few words about the style and scope of this course: it is centered
 around code, though we strive to keep it simple
 
-## Quizz:
+## Quiz:
 Given a case study (e.g. pricing apartments based on a real estate website database) and sample toy dataset: say whether it’s an application of supervised vs unsupervised, classification vs regression, what are the features, what is the target variable, what is a record.
 
 Propose a hand engineer decision rule that can be used as a baseline
@@ -67,7 +67,7 @@ Propose a quantitative evaluation of the success of this decision rule.
 
 ## Notebook module #1: exploratory analysis
 ### Learning objectives:
-    
+
 - load tabular data with pandas
 - visualize marginal distribution with histograms
 - visualize pairwise interactions with scatter plots
@@ -92,7 +92,7 @@ Simple exploratory data analysis with pandas and matplotlib
 
 ### Content
 
-Prepare a train  / test split
+Prepare a train / test split
 
 Basic model on numerical features only
 
@@ -113,7 +113,7 @@ Model fitting and performance evaluation with cross-validation
 ## Notebook module #3: basic parameter tuning and final test score evaluation
 
 ### Learning objectives:
-- Learn to no trust blindly the default parameters of scikit-learn estimators
+- Learn not to trust blindly the default parameters of scikit-learn estimators
 
 ### Content
 Parameter tuning with Grid and Random hyperparameter search
@@ -145,7 +145,7 @@ Feature engineering to limit underfitting
 - [ ] Reviews
 
 ## Guillaume: Evaluation of supervised learning models
-        
+
 - [x] Notebook
 - [ ] Slides
 - [ ] Reviews
@@ -156,7 +156,7 @@ Need to add regression plots.
 Logistic Regression, linear regression, classification vs regression, multi-class, linear separability. Pros and cons
         L1 and L2 penalty for linear models
         Learning curves and validation curves (video: how to read curves)
-        
+
 - [x] Notebook
 - [x] Slides
 - [ ] Reviews
@@ -166,7 +166,7 @@ Logistic Regression, linear regression, classification vs regression, multi-clas
 ## Gaël: Feature engineering to augment the expressivity of linear models:
 
 Binning / Polynomial feature extraction / Nystroem method
-        
+
 Feature selection to combat overfitting and speed-up models
 
 ## Guillaume: Univariate feature selection
@@ -183,4 +183,3 @@ Gael thinks that explaining the difference between conditional and
 marginal interpretation is important.
 
 Stability of hyperparameter during cross-validation
-

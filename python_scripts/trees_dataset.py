@@ -23,7 +23,7 @@
 # species:
 #
 # ![Image of
-# penguins](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/lter_penguins.png)
+# penguins](https://github.com/allisonhorst/palmerpenguins/raw/main/man/figures/lter_penguins.png)
 #
 # This problem is a classification problem since the target is categorical. We
 # limit our input data to a subset of the original features to simplify our
@@ -32,7 +32,7 @@
 # penguins' culmen with the illustration below:
 #
 # ![Image of
-# culmen](https://github.com/allisonhorst/palmerpenguins/raw/master/man/figures/culmen_depth.png)
+# culmen](https://github.com/allisonhorst/palmerpenguins/raw/main/man/figures/culmen_depth.png)
 #
 # We start by loading this subset of the dataset.
 
@@ -48,7 +48,7 @@ target_column = "Species"
 # Let's check the dataset more into details.
 
 # %%
-penguins.head()
+penguins
 
 # %% [markdown]
 # Since that we have few samples, we can check a scatter plot to observe the

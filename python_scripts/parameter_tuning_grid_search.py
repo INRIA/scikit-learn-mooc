@@ -36,7 +36,7 @@ target
 
 # %%
 data = adult_census.drop(columns=[target_name, "education-num"])
-data.head()
+data
 
 # %% [markdown]
 # Once the dataset is loaded, we split it into a training and testing sets.
@@ -80,15 +80,18 @@ categorical_preprocessor = OrdinalEncoder(
 )
 
 # %% [markdown]
-# We then use a `ColumnTransformer` to select the categorical columns and apply
+# We then use `make_column_transformer` to select the categorical columns and apply
 # the `OrdinalEncoder` to them.
 
 # %%
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 
-preprocessor = ColumnTransformer(
-    [("cat_preprocessor", categorical_preprocessor, categorical_columns)],
+preprocessor = make_column_transformer(
+    (categorical_preprocessor, categorical_columns),
     remainder="passthrough",
+    # Silence a deprecation warning in scikit-learn v1.6 related to how the
+    # ColumnTransformer stores an attribute that we do not use in this notebook
+    force_int_remainder_cols=False,
 )
 
 # %% [markdown]
@@ -113,42 +116,46 @@ model
 # %% [markdown]
 # ## Tuning using a grid-search
 #
-# In the previous exercise we used one `for` loop for each hyperparameter to
-# find the best combination over a fixed grid of values. `GridSearchCV` is a
-# scikit-learn class that implements a very similar logic with less repetitive
-# code.
+# In the previous exercise (M3.01) we used two nested `for` loops (one for each
+# hyperparameter) to test different combinations over a fixed grid of
+# hyperparameter values. In each iteration of the loop, we used
+# `cross_val_score` to compute the mean score (as averaged across
+# cross-validation splits), and compared those mean scores to select the best
+# combination. `GridSearchCV` is a scikit-learn class that implements a very
+# similar logic with less repetitive code. The suffix `CV` refers to the
+# cross-validation it runs internally (instead of the `cross_val_score` we
+# "hard" coded).
 #
 # The `GridSearchCV` estimator takes a `param_grid` parameter which defines all
 # hyperparameters and their associated values. The grid-search is in charge of
 # creating all possible combinations and testing them.
 #
-# The number of combinations are equal to the product of the number of values to
+# The number of combinations is equal to the product of the number of values to
 # explore for each parameter. Thus, adding new parameters with their associated
 # values to be explored rapidly becomes computationally expensive. Because of
 # that, here we only explore the combination learning-rate and the maximum
 # number of nodes for a total of 4 x 3 = 12 combinations.
 
-# %%
 # %%time
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {
-    "classifier__learning_rate": (0.01, 0.1, 1, 10),
-    "classifier__max_leaf_nodes": (3, 10, 30),
-}
+    "classifier__learning_rate": (0.01, 0.1, 1, 10),  # 4 possible values
+    "classifier__max_leaf_nodes": (3, 10, 30),  # 3 possible values
+}  # 12 unique combinations
 model_grid_search = GridSearchCV(model, param_grid=param_grid, n_jobs=2, cv=2)
 model_grid_search.fit(data_train, target_train)
 
 # %% [markdown]
 # You can access the best combination of hyperparameters found by the grid
-# search with the `best_params_` attribute.
+# search using the `best_params_` attribute.
 
 # %%
 print(f"The best set of parameters is: {model_grid_search.best_params_}")
 
-# %%
+# %% [markdown]
 # Once the grid-search is fitted, it can be used as any other estimator, i.e. it
-# has a `predict` and `score` methods. Internally, it uses the model with the
+# has `predict` and `score` methods. Internally, it uses the model with the
 # best parameters found during `fit`.
 #
 # Let's get the predictions for the 5 first samples using the estimator with the
@@ -163,14 +170,20 @@ model_grid_search.predict(data_test.iloc[0:5])
 # %%
 accuracy = model_grid_search.score(data_test, target_test)
 print(
-    f"The test accuracy score of the grid-searched pipeline is: {accuracy:.2f}"
+    f"The test accuracy score of the grid-search pipeline is: {accuracy:.2f}"
 )
 
 # %% [markdown]
-# In the code above, the selection of the best hyperparameters was done only on
-# the train set from the initial train-test split. Then, we evaluated the
-# generalization performance of our tuned model on the left out test set. This
-# can be shown schematically as follows
+# The accuracy and the best parameters of the grid-search pipeline are similar
+# to the ones we found in the previous exercise, where we searched the best
+# parameters "by hand" through a double `for` loop.
+#
+# ## The need for a validation set
+#
+# In the previous section, the selection of the best hyperparameters was done
+# using the train set, coming from the initial train-test split. Then, we
+# evaluated the generalization performance of our tuned model on the left out
+# test set. This can be shown schematically as follows:
 #
 # ![Cross-validation tuning
 # diagram](../figures/cross_validation_train_test_diagram.png)
@@ -180,23 +193,15 @@ print(
 # using `n_splits=5` to further split the train set coming from a train-test
 # split. For each cross-validation split, the procedure trains a model on all
 # the red samples, evaluates the score of a given set of hyperparameters on the
-# green samples. The best hyper-parameters are selected based on those
-# intermediate scores.
+# green samples. The best combination of hyperparameters `best_params` is selected
+# based on those intermediate scores.
 #
-# Then a final model tuned with those hyper-parameters is fitted on the
-# concatenation of the red and green samples and evaluated on the blue samples.
+# Then a final model is refitted using `best_params` on the concatenation of the
+# red and green samples and evaluated on the blue samples.
 #
-# The green samples are sometimes called a **validation sets** to differentiate
-# them from the final test set in blue.
+# The green samples are sometimes referred as the **validation set** to
+# differentiate them from the final test set in blue.
 # ```
-#
-# In a future notebook we will introduce the notion of nested cross-validation,
-# which is when you use cross-validation both for hyperparameter tuning and
-# model evaluation.
-#
-# The accuracy and the best parameters of the grid-searched pipeline are similar
-# to the ones we found in the previous exercise, where we searched the best
-# parameters "by hand" through a double for loop.
 #
 # In addition, we can inspect all results which are stored in the attribute
 # `cv_results_` of the grid-search. We filter some specific columns from these
@@ -206,7 +211,7 @@ print(
 cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
     "mean_test_score", ascending=False
 )
-cv_results.head()
+cv_results
 
 # %% [markdown]
 # Let us focus on the most interesting columns and shorten the parameter names
@@ -230,8 +235,9 @@ cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
 # %% [markdown]
-# With only 2 parameters, we might want to visualize the grid-search as a
-# heatmap. We need to transform our `cv_results` into a dataframe where:
+# Given that we are tuning only 2 parameters, we can visualize the results as a
+# heatmap. To do so, we first need to reshape the `cv_results` into a dataframe
+# where:
 #
 # - the rows correspond to the learning-rate values;
 # - the columns correspond to the maximum number of leaf;
@@ -247,17 +253,31 @@ pivoted_cv_results = cv_results.pivot_table(
 pivoted_cv_results
 
 # %% [markdown]
-# We can use a heatmap representation to show the above dataframe visually.
+# Now that we have the data in the right format, we can create the heatmap as
+# follows:
 
 # %%
 import seaborn as sns
 
 ax = sns.heatmap(
-    pivoted_cv_results, annot=True, cmap="YlGnBu", vmin=0.7, vmax=0.9
+    pivoted_cv_results,
+    annot=True,
+    cmap="YlGnBu",
+    vmin=0.7,
+    vmax=0.9,
+    cbar_kws={"label": "mean test accuracy"},
 )
 ax.invert_yaxis()
 
 # %% [markdown]
+# The heatmap above shows the mean test accuracy (i.e., the average over
+# cross-validation splits) for each combination of hyperparameters, where darker
+# colors indicate better performance. However, notice that using colors only
+# allows us to visually compare the mean test score, but does not carry any
+# information on the standard deviation over splits, making it difficult to say
+# if different scores coming from different combinations lead to a significantly
+# better model or not.
+#
 # The above tables highlights the following things:
 #
 # * for too high values of `learning_rate`, the generalization performance of
@@ -281,5 +301,5 @@ ax.invert_yaxis()
 # In this notebook we have seen:
 #
 # * how to optimize the hyperparameters of a predictive model via a grid-search;
-# * that searching for more than two hyperparamters is too costly;
+# * that searching for more than two hyperparameters is too costly;
 # * that a grid-search does not necessarily find an optimal solution.

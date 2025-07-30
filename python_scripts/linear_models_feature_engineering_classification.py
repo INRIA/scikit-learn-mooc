@@ -331,7 +331,7 @@ plot_decision_boundary(classifier, title="Polynomial classifier")
 # from the previous models: its decision boundary can take a diagonal
 # direction. Furthermore, we can observe that predictions are very confident in
 # the low density regions of the feature space, even very close to the decision
-# boundary
+# boundary.
 #
 # We can obtain very similar results by using a kernel approximation technique
 # such as the Nyström method with a polynomial kernel:
@@ -350,10 +350,10 @@ plot_decision_boundary(classifier, title="Polynomial Nystroem classifier")
 
 # %% [markdown]
 #
-# The polynomial kernel approach would be interesting in cases were the
+# The polynomial kernel approach would be interesting in cases where the
 # original feature space is already of high dimension: in these cases,
 # **computing the complete polynomial expansion** with `PolynomialFeatures`
-# could be **intractable**, while Nyström method can control the output
+# could be **intractable**, while the Nyström method can control the output
 # dimensionality with the `n_components` parameter.
 #
 # Let's now explore the use of a radial basis function (RBF) kernel:
@@ -439,7 +439,7 @@ plot_decision_boundary(classifier, title="Spline + RBF Nystroem classifier")
 # - Transformers such as `KBinsDiscretizer` and `SplineTransformer` can be used
 #   to engineer non-linear features independently for each original feature.
 # - As a result, these transformers cannot capture interactions between the
-#   orignal features (and then would fail on the XOR classification task).
+#   original features (and then would fail on the XOR classification task).
 # - Despite this limitation they already augment the expressivity of the
 #   pipeline, which can be sufficient for some datasets.
 # - They also favor axis-aligned decision boundaries, in particular in the low

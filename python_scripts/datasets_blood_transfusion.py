@@ -46,7 +46,7 @@ data.head()
 # * `Recency`: the time in months since the last time a person intended to give
 #   blood;
 # * `Frequency`: the number of time a person intended to give blood in the past;
-# * `Monetary`: the amount of blood given in the past (in c.c.);
+# * `Monetary`: the amount of blood given in the past (in cm³);
 # * `Time`: the time in months since the first time a person intended to give
 #   blood.
 #

@@ -103,7 +103,7 @@ scaler.fit(data_train)
 
 # %% [markdown]
 # The `fit` method for transformers is similar to the `fit` method for
-# predictors. The main difference is that the former has a single argument (the
+# estimators. The main difference is that the former has a single argument (the
 # data matrix), whereas the latter has two arguments (the data matrix and the
 # target).
 #

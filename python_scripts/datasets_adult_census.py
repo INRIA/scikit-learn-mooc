@@ -91,7 +91,7 @@ fig = go.Figure(
         dimensions=plot_list,
     )
 )
-fig.show()
+fig.show(renderer="notebook")
 
 # %% [markdown]
 # The `Parcoords` plot is quite similar to the parallel coordinates plot that we

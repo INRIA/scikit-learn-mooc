@@ -28,8 +28,8 @@ _Select all answers that apply_
 The plots below show the cluster labels as found by k-means with 3 clusters, only
 differing in the scaling step. Based on this, which conclusions can be obtained?
 
-![K-means on original features](../../figures/evaluation_quiz_kmeans_not_scaled.svg)
-![K-means on scaled features](../../figures/evaluation_quiz_kmeans_scaled.svg)
+![K-means on original features](../../figures/clustering_quiz_kmeans_not_scaled.svg)
+![K-means on scaled features](../../figures/clustering_quiz_kmeans_scaled.svg)
 
 - a) without scaling, cluster assignment is dominated by the feature in the vertical axis
 - b) without scaling, cluster assignment is dominated by the feature in the horizontal axis

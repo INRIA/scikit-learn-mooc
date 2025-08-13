@@ -213,10 +213,10 @@ Generic term that refers to something that can [learn](#train-learn-fit)
 ### model state
 
 Set of numerical values that an [estimator](#estimator) learns during training.
-These are the specific numbers (like slope and intercept for a linear
-regression, or standard deviation for a standard scaler) that encapsulates the
-patterns the [estimator](#estimator) has learned and that are saved for later
-predictions or transformations.
+They summarize patterns in the data (limited to what the [estimator](#estimator)
+can represent), and are stored for later predictions or transformations.
+Examples include the slope and intercept in a linear regression; or the
+per-feature mean and standard deviation in a standard scaler.
 
 ### overfitting
 

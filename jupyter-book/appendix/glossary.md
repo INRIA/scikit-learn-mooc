@@ -210,6 +210,14 @@ In scikit-learn jargon: an [estimator](#estimator) that takes another
 Generic term that refers to something that can [learn](#train-learn-fit)
 [prediction](#predict-prediction) rules from the data.
 
+### model state
+
+Set of numerical values that an [estimator](#estimator) learns during training.
+These are the specific numbers (like slope and intercept for a linear
+regression, or standard deviation for a standard scaler) that encapsulates the
+patterns the [estimator](#estimator) has learned and that are saved for later
+predictions or transformations.
+
 ### overfitting
 
 Overfitting occurs when your [model](#model) stick too closely to the [training
@@ -357,8 +365,8 @@ In a more abstract manner, we can represent fitting with the following diagram:
 
 ![img](https://inria.github.io/scikit-learn-mooc/_images/api_diagram-predictor.fit.svg)
 
-The model state are indeed the parameters and the jockey wheels are referring to
-an optimization algorithm to find the best parameters.
+The [model state](#model-state) are indeed the parameters and the jockey wheels
+are referring to an optimization algorithm to find the best parameters.
 
 ### train set
 

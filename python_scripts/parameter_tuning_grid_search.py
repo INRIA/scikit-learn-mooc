@@ -136,6 +136,7 @@ model
 # that, here we only explore the combination learning-rate and the maximum
 # number of nodes for a total of 4 x 3 = 12 combinations.
 
+# %%
 # %%time
 from sklearn.model_selection import GridSearchCV
 

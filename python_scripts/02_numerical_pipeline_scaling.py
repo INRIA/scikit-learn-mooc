@@ -88,6 +88,7 @@ data_train.describe()
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer shifts and scales each feature
 # individually so that they all have a 0-mean and a unit standard deviation.
+# We recall that transformers are estimators that have a `transform` method.
 #
 # We now investigate different steps used in scikit-learn to achieve such a
 # transformation of the data.

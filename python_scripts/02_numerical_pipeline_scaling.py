@@ -77,9 +77,8 @@ data_train.describe()
 #
 # * Many models such as logistic regression use a numerical solver (based on
 #   gradient descent) to find their optimal parameters. This solver converges
-#   faster when the features are scaled. Since the numerical solver converges
-#   step by step (called **iterations**) to the optimal solution, the total
-#   number of such iterations is reduced.
+#   faster when the features are scaled, as it requires less steps (called
+#   **iterations**) to reach the optimal solution.
 # ```
 #
 # Whether or not a machine learning model requires scaling the features depends

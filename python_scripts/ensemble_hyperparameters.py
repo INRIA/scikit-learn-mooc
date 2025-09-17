@@ -96,7 +96,7 @@ search_cv = RandomizedSearchCV(
     scoring="neg_mean_absolute_error",
     n_iter=10,
     random_state=0,
-    n_jobs=2,
+    # n_jobs=2,  # Uncomment this line if you run locally
 )
 search_cv.fit(data_train, target_train)
 
@@ -184,7 +184,7 @@ search_cv = RandomizedSearchCV(
     scoring="neg_mean_absolute_error",
     n_iter=20,
     random_state=0,
-    n_jobs=2,
+    # n_jobs=2, # Uncomment this line if you run locally
 )
 search_cv.fit(data_train, target_train)
 

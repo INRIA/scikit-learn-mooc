@@ -70,7 +70,12 @@ from sklearn.model_selection import KFold
 
 cv = KFold(n_splits=5, shuffle=True, random_state=0)
 results = cross_validate(
-    search, data, target, cv=cv, return_estimator=True, n_jobs=2
+    search,
+    data,
+    target,
+    cv=cv,
+    return_estimator=True,
+    # n_jobs=2  # Uncomment this if you run locally
 )
 
 # %% [markdown]

@@ -82,7 +82,7 @@ scores = cv_results["test_score"]
 print(
     "The mean cross-validation accuracy is: "
     f"{scores.mean():.3f} ± {scores.std():.3f} "
-    f"with a fitting time of {elapsed_time:.3f}"
+    f"with a fitting time of {elapsed_time:.3f} seconds"
 )
 
 # %% [markdown]

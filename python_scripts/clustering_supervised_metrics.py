@@ -12,7 +12,7 @@
 # introduce the use of performance metrics to evaluate a clustering model when
 # we have access to labeled data. Our goal is to evaluate whether the cluster
 # structure favored by k-means on the preprocessed text aligns with the
-# editorial categories assigned by BBC News editors.
+# editorial categories assigned by Wikinews editors.
 #
 # ## Feature engineering for text data
 #
@@ -51,11 +51,11 @@ pd.DataFrame(
 # strategies](https://scikit-learn.org/stable/auto_examples/text/plot_hashing_vs_dict_vectorizer.html)
 # for more information.
 #
-# Now let us use the BBC News dataset to show how text documents can be cluster
+# Now let us use the Wikinews dataset to show how text documents can be cluster
 # by topic.
 
 # %%
-data = pd.read_csv("../datasets/bbc_news.csv")
+data = pd.read_csv("../datasets/wiki_news.csv")
 data
 
 # %% [markdown]
@@ -84,15 +84,15 @@ pd.Series(cluster_labels).value_counts()
 
 # %% [markdown]
 # Our pipeline has grouped the documents into 3 clusters, even though the
-# dataset contains 5 categories assigned by BBC editors. We chose this on
+# dataset contains 5 categories assigned by Wikinews editors. We chose this on
 # purpose, to show that k-means always produces a number of clusters that
 # matches the `n_clusters` parameter, regardless of what's in the data.
 #
 # ## Supervised metrics for clustering evaluation
 #
 # Even though clustering is an unsupervised learning method, we have access to
-# labels for the categories that were assigned by the BBC editors, allowing us
-# to evaluate how well the cluster labels found by k-means match those human
+# labels for the categories that were assigned by the Wikinews editors, allowing
+# us to evaluate how well the cluster labels found by k-means match those human
 # assigned labels.
 #
 # We could try to use classification metrics such as the accuracy. However, the
@@ -105,7 +105,7 @@ pd.Series(cluster_labels).value_counts()
 #
 # In this notebook, we'll use two metrics: V-measure and Adjusted Rand Index
 # (ARI). The V-measure quantifies alignment of the clustering assignment with
-# the BBC category assignment used as reference by evaluating two properties:
+# the Wiki category assignment used as reference by evaluating two properties:
 # - homogeneity: each cluster contains only members of a single category;
 # - completeness: all members of a given category are assigned to the same
 #   cluster.
@@ -139,8 +139,8 @@ from sklearn.model_selection import ValidationCurveDisplay
 from sklearn.model_selection import ShuffleSplit
 
 cv = ShuffleSplit(n_splits=5, train_size=0.75, random_state=0)
-data_encoded = StringEncoder().fit_transform(data["text"])
-n_clusters_values = range(2, 11)
+data_encoded = StringEncoder(random_state=0).fit_transform(data["text"])
+n_clusters_values = list(range(2, 11))
 scoring_names = {
     "V-measure": "v_measure_score",
     "ARI": "adjusted_rand_score",
@@ -161,7 +161,7 @@ for (scoring_name, scoring), ax in zip(scoring_names.items(), axes):
         ax=ax,
     )
     ax.set(
-        ylim=(-0.1, 1.1),
+        ylim=(0.0, 1.0),
         xlabel=None,
         ylabel=scoring_name,
     )
@@ -171,10 +171,11 @@ _ = plt.suptitle(
 )
 
 # %% [markdown]
-# We observe that both V-measure and ARI are much better than chance. Even more
-# they reach their maximum value when `n_clusters=5`. This is not surprising
-# because this is the number of human-assigned categories in the dataset and
-# both metrics quantify alignment with those labels.
+# We observe that both V-measure and ARI reach their maximum value when
+# `n_clusters=7`. It does not match the number of human-assigned categories in
+# the dataset but is relatively close to it, possibly indicating the presence of
+# well-defined sub-clusters that still share information with those labels, for
+# example "tech - space" and "tech - internet".
 #
 # The relatively good metrics values observed for `n_clusters=5` reflects both
 # good editorial labels (as the categories are well-defined and internally
@@ -224,23 +225,24 @@ _ = plt.title("Silhouette score for varying n_clusters", y=1.01)
 
 # %% [markdown]
 #
-# The silhouette score analysis favors larger values for `n_clusters` (between
-# 20 and 40) than the 5 categories chosen by the BBC editors.
+# The silhouette analysis favors larger values for `n_clusters` (around
+# 30) than the 5 categories chosen by the Wikinews editors, or than the 7
+# categories suggested by our supervised metrics. This also hints to the
+# existance of sub-clusters inside the 5 Wiki categories. The silhouette peak at
+# `n_clusters=30` means that splitting the data into about 30 smaller categories
+# maximizes how compact each cluster is, and how well-separated it is from the
+# others.
 #
-# The finer-grained clusters found by k-means for `n_clusters=30` could
-# potentially match sub-clusters of the 5 BBC categories. However, categorizing
-# news articles in too fine-grained topics would make the navigation on their
-# website too confusing. Therefore for this application, it can be meaningful
-# to select a number of clusters that is smaller than the number of clusters
-# that maximizes the silhouette score.
+# However, categorizing news articles in too fine-grained topics would make the
+# navigation on a news website too confusing. Therefore for this application, it
+# can be meaningful to select a number of clusters that is smaller than the
+# number of clusters which maximizes the silhouette score.
 #
-# We can also, observe that the silhouette curves are not very stable under
-# resampling and that the maximum silhouette score is not very high, which
-# indicates that the clusters are not very well separated from each other: this
-# could be explained by the fact that some documents could meaningfully belong
-# to more than one topical category: for instance, a news article about a tech
-# company being acquired by another could belong to both "tech" and "business"
-# categories.
+# Nevertheless, the maximum silhouette score is not really high, which indicates
+# that even with 30 categories, the clusters are not well-separated from each
+# other. Some documents could meaningfully belong to more than one category, for
+# instance, a news article about a tech company being acquired by another could
+# belong to both "tech" and "business" categories.
 #
 # Finally, notice that we used supervised information to quantitatively assess
 # the quality of the match between the clusters found by k-means and our

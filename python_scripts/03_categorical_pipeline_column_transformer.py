@@ -117,7 +117,7 @@ vectorizer = TableVectorizer(
 #
 # ![columntransformer diagram](../figures/api_diagram-columntransformer.svg)
 #
-# A `TableVectorizer` does the following:
+# `TableVectorizer` does the following:
 #
 # * It **splits the columns** of the original dataset based on the data type and
 #   cardinality of unique values.
@@ -125,7 +125,7 @@ vectorizer = TableVectorizer(
 #   subset: it internally calls `fit_transform` or `transform`. The output of
 #   this step is a set of transformed datasets.
 # * It then **concatenates the transformed datasets** into a single dataset.
-
+#
 # The important thing is that `TableVectorizer` is like any other scikit-learn
 # transformer. In particular it can be combined with a classifier in a
 # `Pipeline`:

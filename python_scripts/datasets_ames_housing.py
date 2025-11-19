@@ -119,7 +119,9 @@ TableReport(string_data, max_plot_columns=45)
 # ```
 
 # %%
-ames_housing_no_missing = pd.read_csv("../datasets/ames_housing_no_missing.csv")
+ames_housing_no_missing = pd.read_csv(
+    "../datasets/ames_housing_no_missing.csv"
+)
 ames_housing_no_missing.head()
 
 # %% [markdown]
@@ -176,5 +178,7 @@ ames_housing_preprocessed = pd.DataFrame(
     columns=categorical_features.tolist() + numerical_features,
 )
 ames_housing_preprocessed = ames_housing_preprocessed[ames_housing.columns]
-ames_housing_preprocessed = ames_housing_preprocessed.astype(ames_housing.dtypes)
+ames_housing_preprocessed = ames_housing_preprocessed.astype(
+    ames_housing.dtypes
+)
 (ames_housing_no_missing == ames_housing_preprocessed).all()

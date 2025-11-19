@@ -67,7 +67,7 @@ california_housing.frame.info()
 # * all features are numerical features encoded as floating number;
 # * there is no missing values.
 #
-# Let's have a quick look at the distribution of these features with the 
+# Let's have a quick look at the distribution of these features with the
 # TableReport from the skrub package.
 
 # %%

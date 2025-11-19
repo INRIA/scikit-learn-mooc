@@ -97,7 +97,9 @@ categorical_columns = categorical_columns_selector(data)
 # %%
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-categorical_preprocessor = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+categorical_preprocessor = OneHotEncoder(
+    handle_unknown="ignore", sparse_output=False
+)
 numerical_preprocessor = StandardScaler()
 
 # %% [markdown]

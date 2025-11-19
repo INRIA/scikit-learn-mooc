@@ -18,7 +18,7 @@ from sklearn.datasets import fetch_california_housing
 california_housing = fetch_california_housing(as_frame=True)
 
 # %% [markdown]
-# We can have a first look at the available description
+# We can have a first look at the available description.
 
 # %%
 print(california_housing.DESCR)
@@ -75,7 +75,6 @@ from skrub import TableReport
 
 TableReport(california_housing.frame)
 
-
 # %% [markdown]
 # We can first focus on features for which their distributions would be more or
 # less expected.
@@ -97,9 +96,9 @@ TableReport(california_housing.frame)
 # statistics for these features by clicking on the corresponding columns in the
 # table.
 #
-# For each of these features, comparing the `max` and `Median ± IQR` values, we can see a
-# huge difference. It confirms the intuitions that there are a couple of extreme
-# values.
+# For each of these features, comparing the `max` and `Median ± IQR` values, we
+# can see a huge difference. It confirms the intuitions that there are a couple
+# of extreme values.
 #
 # Up to now, we discarded the longitude and latitude that carry geographical
 # information. In short, the combination of these features could help us decide

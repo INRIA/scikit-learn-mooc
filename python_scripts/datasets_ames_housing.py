@@ -84,7 +84,7 @@ TableReport(numerical_data, max_plot_columns=40)
 # %% [markdown]
 # We see that the data are mainly represented with integer number. Let's have a
 # look at the histogram for all these features in the "Distributions" tab.
-
+#
 # We see that some features have high picks for 0. It could be linked that this
 # value was assigned when the criterion did not apply, for instance the area of
 # the swimming pool when no swimming pools are available.

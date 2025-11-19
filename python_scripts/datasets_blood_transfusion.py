@@ -55,6 +55,7 @@ data.head()
 
 # %%
 from skrub import TableReport
+
 TableReport(data)
 
 # %% [markdown]

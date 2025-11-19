@@ -107,7 +107,9 @@ numerical_preprocessor = StandardScaler()
 # %%
 from skrub import TableVectorizer
 
-vectorizer = TableVectorizer(low_cardinality = categorical_preprocessor, numeric = numerical_preprocessor)
+vectorizer = TableVectorizer(
+    low_cardinality=categorical_preprocessor, numeric=numerical_preprocessor
+)
 
 # %% [markdown]
 # We can take a minute to represent graphically the structure of a

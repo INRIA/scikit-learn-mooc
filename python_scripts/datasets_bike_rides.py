@@ -95,6 +95,7 @@ data, target = cycling.drop(columns=target_name), cycling[target_name]
 
 # %%
 from skrub import TableReport
+
 TableReport(target)
 
 # %% [markdown]

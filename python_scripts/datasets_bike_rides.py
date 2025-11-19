@@ -94,10 +94,8 @@ data, target = cycling.drop(columns=target_name), cycling[target_name]
 # We can have a first look at the target distribution.
 
 # %%
-import matplotlib.pyplot as plt
-
-target.plot.hist(bins=50, edgecolor="black")
-plt.xlabel("Power (W)")
+from skrub import TableReport
+TableReport(target)
 
 # %% [markdown]
 # We see a pick at 0 Watts, it corresponds to whenever our cyclist does not
@@ -144,6 +142,8 @@ cycling_ride = cycling.loc[date_first_ride]
 data_ride, target_ride = data.loc[date_first_ride], target.loc[date_first_ride]
 
 # %%
+import matplotlib.pyplot as plt
+
 data_ride.plot()
 plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 _ = plt.title("Sensor values for different cyclist measurements")
@@ -163,18 +163,7 @@ _ = plt.title("Sensor values for different cyclist measurements")
 # We can check the range of the different features:
 
 # %%
-axs = data_ride.hist(figsize=(10, 12), bins=50, edgecolor="black", grid=False)
-# add the units to the plots
-units = [
-    "beats per minute",
-    "rotations per minute",
-    "meters per second",
-    "meters per second squared",
-    "%",
-]
-for unit, ax in zip(units, axs.ravel()):
-    ax.set_xlabel(unit)
-plt.subplots_adjust(hspace=0.6)
+TableReport(data_ride)
 
 # %% [markdown]
 # From these plots, we can see some interesting information: a cyclist is

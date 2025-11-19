@@ -62,27 +62,42 @@ categorical_columns = categorical_columns_selector(data)
 # In the previous sections, we saw that we need to treat data differently
 # depending on their nature (i.e. numerical or categorical).
 #
-# Scikit-learn provides a `ColumnTransformer` class which sends specific
-# columns to a specific transformer, making it easy to fit a single predictive
-# model on a dataset that combines both kinds of variables together
-# (heterogeneously typed tabular data).
+# Skrub is a data preprocessing library built to work seamlessly with
+# scikit-learn. It provides a convenient transformer called `TableVectorizer`
+# that can handle both numerical and categorical variables in a single
+# transformer. It makes the column selection automatically by using a column's
+# `dtype`.
 #
-# We first define the columns depending on their data type:
+# It separates the columns into four groups:
+# * **low cardinality categorical columns** (categorical columns with a limited
+#   number of unique values, one hot encoded by default);
+# * **high cardinality categorical columns** (categorical columns with a large
+#   number of unique values, string encoded by default);
+# * **numerical columns** (untouched by default).
+# * **time columns** (columns that encode time information, as present in time
+#   series for instance, converted to numerical features that can be used by
+#   learners; for more information, see the
+#   [documentation](https://skrub-data.org/stable/reference/generated/skrub.DatetimeEncoder.html)).
 #
-# * **one-hot encoding** is applied to categorical columns. Besides, we use
-#   `handle_unknown="ignore"` to solve the potential issues due to rare
-#   categories.
+# The threshold to determine whether a categorical column is of low or high
+# cardinality can be set using the `cardinality_threshold` parameter. We will see
+# its impact later on.
+#
+# We apply the following transformations:
+#
+# * **one-hot encoding** is applied to the low cardinality categorical columns.
+#   Besides, we use `handle_unknown="ignore"` to solve the potential issues due
+#   to rare categories.
 # * **numerical scaling** numerical features which will be standardized.
 #
-# Now, we create our `ColumnTransfomer` using the helper function
-# `make_column_transformer`. We specify two values: the transformer, and the
-# columns. First, let's create the preprocessors for the numerical and
-# categorical parts.
+# Now, we create our transformer using the helper function `TableVectorizer`. We
+# specify the transformers. First, let's create the preprocessors for the
+# numerical and low cardinality categorical parts.
 
 # %%
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-categorical_preprocessor = OneHotEncoder(handle_unknown="ignore")
+categorical_preprocessor = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
 numerical_preprocessor = StandardScaler()
 
 # %% [markdown]
@@ -90,30 +105,26 @@ numerical_preprocessor = StandardScaler()
 # their respective columns.
 
 # %%
-from sklearn.compose import make_column_transformer
+from skrub import TableVectorizer
 
-preprocessor = make_column_transformer(
-    (categorical_preprocessor, categorical_columns),
-    (numerical_preprocessor, numerical_columns),
-)
+vectorizer = TableVectorizer(low_cardinality = categorical_preprocessor, numeric = numerical_preprocessor)
 
 # %% [markdown]
 # We can take a minute to represent graphically the structure of a
-# `ColumnTransformer`:
+# `TableVectorizer`:
 #
 # ![columntransformer diagram](../figures/api_diagram-columntransformer.svg)
 #
-# A `ColumnTransformer` does the following:
+# A `TableVectorizer` does the following:
 #
-# * It **splits the columns** of the original dataset based on the column names
-#   or indices provided. We obtain as many subsets as the number of transformers
-#   passed into the `ColumnTransformer`.
+# * It **splits the columns** of the original dataset based on the data type and
+#   cardinality of unique values.
 # * It **transforms each subsets**. A specific transformer is applied to each
 #   subset: it internally calls `fit_transform` or `transform`. The output of
 #   this step is a set of transformed datasets.
 # * It then **concatenates the transformed datasets** into a single dataset.
 
-# The important thing is that `ColumnTransformer` is like any other scikit-learn
+# The important thing is that `TableVectorizer` is like any other scikit-learn
 # transformer. In particular it can be combined with a classifier in a
 # `Pipeline`:
 
@@ -121,7 +132,7 @@ preprocessor = make_column_transformer(
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-model = make_pipeline(preprocessor, LogisticRegression(max_iter=500))
+model = make_pipeline(vectorizer, LogisticRegression(max_iter=500))
 model
 
 # %% [markdown]
@@ -227,16 +238,11 @@ print(
 
 # %%
 from sklearn.ensemble import HistGradientBoostingClassifier
-from sklearn.preprocessing import OrdinalEncoder
+from skrub import ToCategorical
 
-categorical_preprocessor = OrdinalEncoder(
-    handle_unknown="use_encoded_value", unknown_value=-1
-)
+categorical_preprocessor = ToCategorical()
 
-preprocessor = make_column_transformer(
-    (categorical_preprocessor, categorical_columns),
-    remainder="passthrough",
-)
+preprocessor = TableVectorizer(low_cardinality=categorical_preprocessor)
 
 model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 
@@ -262,8 +268,10 @@ model.score(data_test, target_test)
 # %% [markdown]
 # In this notebook we:
 #
-# * used a `ColumnTransformer` to apply different preprocessing for categorical
+# * used a `TableVectorizer` to apply different preprocessing for categorical
 #   and numerical variables;
-# * used a pipeline to chain the `ColumnTransformer` preprocessing and logistic
+# * used a pipeline to chain the `TableVectorizer` preprocessing and logistic
 #   regression fitting;
 # * saw that **gradient boosting methods** can outperform **linear models**.
+
+# %%

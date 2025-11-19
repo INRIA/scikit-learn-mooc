@@ -251,7 +251,6 @@ model = make_pipeline(preprocessor, HistGradientBoostingClassifier())
 # %% [markdown]
 # Now that we created our model, we can check its generalization performance.
 
-# %%
 # %%time
 _ = model.fit(data_train, target_train)
 

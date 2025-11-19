@@ -275,5 +275,3 @@ model.score(data_test, target_test)
 # * used a pipeline to chain the `TableVectorizer` preprocessing and logistic
 #   regression fitting;
 # * saw that **gradient boosting methods** can outperform **linear models**.
-
-# %%

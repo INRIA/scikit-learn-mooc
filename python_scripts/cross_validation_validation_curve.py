@@ -206,7 +206,7 @@ _ = disp.ax_.set(
 #
 # Apart from this extreme case, it's hard to know for sure what should qualify
 # or not as noise and which kind of "noise" as introduced above is dominating.
-# But in practice, the best ways to make our predictive models robust to noise
+# But in practice, the best way to make our predictive models robust to noise
 # is to avoid overfitting models by:
 #
 # - selecting models that are simple enough or with tuned hyper-parameters as

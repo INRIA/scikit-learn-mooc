@@ -28,23 +28,19 @@ target = adult_census[target_name]
 data = adult_census.drop(columns=[target_name])
 
 # %% [markdown]
-# ## Selection based on data types
+# ## Dispatch columns to a specific processor
 #
-# We separate categorical and numerical variables using their data types to
-# identify them, as we saw previously that `object` corresponds to categorical
-# columns (strings). We make use of `make_column_selector` helper to select the
-# corresponding columns.
-
-# %%
-from sklearn.compose import make_column_selector as selector
-
-numerical_columns_selector = selector(dtype_exclude=object)
-categorical_columns_selector = selector(dtype_include=object)
-
-numerical_columns = numerical_columns_selector(data)
-categorical_columns = categorical_columns_selector(data)
-
-# %% [markdown]
+# In the previous sections, we saw that we need to treat data differently
+# depending on their nature (i.e. numerical or categorical).
+#
+# Skrub is a data preprocessing library built to work seamlessly with
+# scikit-learn. It provides a convenient transformer called `TableVectorizer`
+# that can handle both numerical and categorical variables in a single
+# transformer. It makes the column selection automatically by using a column's
+# `dtype`. This is equivalent to using a
+# [`sklearn.compose.make_column_selector`](https://scikit-learn.org/stable/modules/generated/sklearn.compose.make_column_selector.html)
+# and selecting or excluding `object` dtypes.
+#
 # ```{caution}
 # Here, we know that `object` data type is used to represent strings and thus
 # categorical features. Be aware that this is not always the case. Sometimes
@@ -55,20 +51,8 @@ categorical_columns = categorical_columns_selector(data)
 # In a more general scenario you should manually introspect the content of your
 # dataframe not to wrongly use `make_column_selector`.
 # ```
-
-# %% [markdown]
-# ## Dispatch columns to a specific processor
 #
-# In the previous sections, we saw that we need to treat data differently
-# depending on their nature (i.e. numerical or categorical).
-#
-# Skrub is a data preprocessing library built to work seamlessly with
-# scikit-learn. It provides a convenient transformer called `TableVectorizer`
-# that can handle both numerical and categorical variables in a single
-# transformer. It makes the column selection automatically by using a column's
-# `dtype`.
-#
-# It separates the columns into four groups:
+# `TableVectorizer` separates the columns into four groups:
 # * **low cardinality categorical columns** (categorical columns with a limited
 #   number of unique values, one hot encoded by default);
 # * **high cardinality categorical columns** (categorical columns with a large
@@ -80,10 +64,57 @@ categorical_columns = categorical_columns_selector(data)
 #   [documentation](https://skrub-data.org/stable/reference/generated/skrub.DatetimeEncoder.html)).
 #
 # The threshold to determine whether a categorical column is of low or high
-# cardinality can be set using the `cardinality_threshold` parameter. We will see
-# its impact later on.
+# cardinality can be set using the `cardinality_threshold` parameter.
+
+# %% [markdown]
+# ## Effect of the cardinality threshold
 #
-# We apply the following transformations:
+# As previously stated, `TableVectorizer` separates categorical columns into two
+# groups: low cardinality and high cardinality. By default, the threshold is set
+# to 40 unique values. However, this value can be changed using the `cardinality_threshold`
+# parameter of `TableVectorizer`.
+# Let's vizualize its effect on the `"native-country"` column of the dataset. This column
+# corresponds to the country of origin of each individual. Let's check how many unique 
+# values it contains.
+
+# %%
+data["native-country"].nunique()
+
+#%% [markdown]
+# In the setup we used so far, this column is considered as a high cardinality categorical column.
+# Let us compare both encodings.
+
+# %%
+from skrub import TableVectorizer
+
+native_country_data = data[["native-country"]]
+
+high_thresh_vectorizer = TableVectorizer(cardinality_threshold=50)
+high_card_encoded = high_thresh_vectorizer.fit_transform(native_country_data)
+
+high_thresh_vectorizer
+
+# %%
+low_thresh_vectorizer = TableVectorizer()
+low_card_encoded = low_thresh_vectorizer.fit_transform(native_country_data)
+
+
+low_thresh_vectorizer
+
+# %% [markdown]
+# On the encoder or pipeline HTML diagrams, we can see that the "native-country"
+# column has been passed as a high cardinality categorical column in the first
+# case, and as a low cardinality categorical column in the second case by
+# clicking the on the `low_cardinality` and `high_cardinality` boxes.
+#
+# We set the `cardinality_threshold` parameter to ensure that all the categorical columns
+# are considered as low cardinality. This way, all categorical columns are encoded in the same
+# manner.
+
+# %% [markdown]
+# ## Preprocessing and modeling pipeline
+#
+# For the rest of the notebook we apply the following transformations to the whole dataset:
 #
 # * **one-hot encoding** is applied to the low cardinality categorical columns.
 #   Besides, we use `handle_unknown="ignore"` to solve the potential issues due
@@ -107,10 +138,8 @@ numerical_preprocessor = StandardScaler()
 # their respective columns.
 
 # %%
-from skrub import TableVectorizer
-
 vectorizer = TableVectorizer(
-    low_cardinality=categorical_preprocessor, numeric=numerical_preprocessor
+    low_cardinality=categorical_preprocessor, numeric=numerical_preprocessor, cardinality_threshold=50
 )
 
 # %% [markdown]
@@ -193,6 +222,51 @@ target_test[:5]
 
 # %%
 model.score(data_test, target_test)
+
+# %% [markdown]
+# ## Effect of the cardinality threshold
+#
+# As previously stated, `TableVectorizer` separates categorical columns into two
+# groups: low cardinality and high cardinality. By default, the threshold is set
+# to 40 unique values. However, this value can be changed using the `cardinality_threshold`
+# parameter of `TableVectorizer`.
+# Let's vizualize its effect on the `"native-country"` column of the dataset. This column
+# corresponds to the country of origin of each individual. Let's check how many unique 
+# values it contains.
+
+# %%
+data["native-country"].nunique()
+
+#%% [markdown]
+# In the setup we used so far, this column is considered as a high cardinality categorical column.
+# Let us compare both encodings.
+
+# %%
+native_country_data = data[["native-country"]]
+
+high_thresh_vectorizer = TableVectorizer(
+    low_cardinality=OneHotEncoder(sparse_output=False), cardinality_threshold=50)
+high_card_encoded = high_thresh_vectorizer.fit_transform(native_country_data)
+
+high_thresh_vectorizer
+
+# %%
+low_thresh_vectorizer = TableVectorizer(
+    low_cardinality=OneHotEncoder(sparse_output=False))
+low_card_encoded = low_thresh_vectorizer.fit_transform(native_country_data)
+
+
+low_thresh_vectorizer
+
+# %% [markdown]
+# On the encoder or pipeline HTML diagrams, we can see that the "native-country"
+# column has been passed as a high cardinality categorical column in the first
+# case, and as a low cardinality categorical column in the second case by
+# clicking the on the `low_cardinality` and `high_cardinality` boxes.
+#
+# We set the `cardinality_threshold` parameter to ensure that all the categorical columns
+# are considered as low cardinality. This way, all categorical columns are encoded in the same
+# manner.
 
 # %% [markdown]
 # ## Evaluation of the model with cross-validation

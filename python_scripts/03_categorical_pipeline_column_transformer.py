@@ -100,11 +100,11 @@ low_card_encoded = low_thresh_vectorizer.fit_transform(native_country_data)
 
 low_thresh_vectorizer
 
-# %% [markdown]
-# On the encoder or pipeline HTML diagrams, we can see that the "native-country"
-# column has been passed as a high cardinality categorical column in the first
-# case, and as a low cardinality categorical column in the second case by
-# clicking the on the `low_cardinality` and `high_cardinality` boxes.
+# %% [markdown] On the encoder or pipeline HTML diagrams, we can see that the
+# "native-country" column has been passed as a high cardinality categorical
+# column in the first case, and as a low cardinality categorical column in the
+# second case by clicking the on the `low_cardinality` and `high_cardinality`
+# boxes.
 #
 # We set the `cardinality_threshold` parameter to ensure that all the
 # categorical columns are considered as low cardinality. This way, all

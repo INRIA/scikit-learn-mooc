@@ -71,18 +71,18 @@ data = adult_census.drop(columns=[target_name])
 #
 # As previously stated, `TableVectorizer` separates categorical columns into two
 # groups: low cardinality and high cardinality. By default, the threshold is set
-# to 40 unique values. However, this value can be changed using the `cardinality_threshold`
-# parameter of `TableVectorizer`.
-# Let's vizualize its effect on the `"native-country"` column of the dataset. This column
-# corresponds to the country of origin of each individual. Let's check how many unique 
-# values it contains.
+# to 40 unique values. However, this value can be changed using the
+# `cardinality_threshold` parameter of `TableVectorizer`. Let's vizualize its
+# effect on the `"native-country"` column of the dataset. This column
+# corresponds to the country of origin of each individual. Let's check how many
+# unique values it contains.
 
 # %%
 data["native-country"].nunique()
 
 #%% [markdown]
-# In the setup we used so far, this column is considered as a high cardinality categorical column.
-# Let us compare both encodings.
+# In the setup we used so far, this column is considered as a high cardinality
+# categorical column. Let us compare both encodings.
 
 # %%
 from skrub import TableVectorizer
@@ -98,7 +98,6 @@ high_thresh_vectorizer
 low_thresh_vectorizer = TableVectorizer()
 low_card_encoded = low_thresh_vectorizer.fit_transform(native_country_data)
 
-
 low_thresh_vectorizer
 
 # %% [markdown]
@@ -107,14 +106,15 @@ low_thresh_vectorizer
 # case, and as a low cardinality categorical column in the second case by
 # clicking the on the `low_cardinality` and `high_cardinality` boxes.
 #
-# We set the `cardinality_threshold` parameter to ensure that all the categorical columns
-# are considered as low cardinality. This way, all categorical columns are encoded in the same
-# manner.
+# We set the `cardinality_threshold` parameter to ensure that all the
+# categorical columns are considered as low cardinality. This way, all
+# categorical columns are encoded in the same manner.
 
 # %% [markdown]
 # ## Preprocessing and modeling pipeline
 #
-# For the rest of the notebook we apply the following transformations to the whole dataset:
+# For the rest of the notebook we apply the following transformations to the
+# whole dataset:
 #
 # * **one-hot encoding** is applied to the low cardinality categorical columns.
 #   Besides, we use `handle_unknown="ignore"` to solve the potential issues due
@@ -228,18 +228,18 @@ model.score(data_test, target_test)
 #
 # As previously stated, `TableVectorizer` separates categorical columns into two
 # groups: low cardinality and high cardinality. By default, the threshold is set
-# to 40 unique values. However, this value can be changed using the `cardinality_threshold`
-# parameter of `TableVectorizer`.
-# Let's vizualize its effect on the `"native-country"` column of the dataset. This column
-# corresponds to the country of origin of each individual. Let's check how many unique 
-# values it contains.
+# to 40 unique values. However, this value can be changed using the
+# `cardinality_threshold` parameter of `TableVectorizer`. Let's vizualize its
+# effect on the `"native-country"` column of the dataset. This column
+# corresponds to the country of origin of each individual. Let's check how many
+# unique values it contains.
 
 # %%
 data["native-country"].nunique()
 
 #%% [markdown]
-# In the setup we used so far, this column is considered as a high cardinality categorical column.
-# Let us compare both encodings.
+# In the setup we used so far, this column is considered as a high cardinality
+# categorical column. Let us compare both encodings.
 
 # %%
 native_country_data = data[["native-country"]]
@@ -264,9 +264,9 @@ low_thresh_vectorizer
 # case, and as a low cardinality categorical column in the second case by
 # clicking the on the `low_cardinality` and `high_cardinality` boxes.
 #
-# We set the `cardinality_threshold` parameter to ensure that all the categorical columns
-# are considered as low cardinality. This way, all categorical columns are encoded in the same
-# manner.
+# We set the `cardinality_threshold` parameter to ensure that all the
+# categorical columns are considered as low cardinality. This way, all
+# categorical columns are encoded in the same manner.
 
 # %% [markdown]
 # ## Evaluation of the model with cross-validation

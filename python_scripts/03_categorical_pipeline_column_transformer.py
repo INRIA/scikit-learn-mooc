@@ -139,7 +139,9 @@ numerical_preprocessor = StandardScaler()
 
 # %%
 vectorizer = TableVectorizer(
-    low_cardinality=categorical_preprocessor, numeric=numerical_preprocessor, cardinality_threshold=50
+    low_cardinality=categorical_preprocessor,
+    numeric=numerical_preprocessor,
+    cardinality_threshold=50
 )
 
 # %% [markdown]
@@ -245,7 +247,9 @@ data["native-country"].nunique()
 native_country_data = data[["native-country"]]
 
 high_thresh_vectorizer = TableVectorizer(
-    low_cardinality=OneHotEncoder(sparse_output=False), cardinality_threshold=50)
+    low_cardinality=OneHotEncoder(sparse_output=False),
+    cardinality_threshold=50
+)
 high_card_encoded = high_thresh_vectorizer.fit_transform(native_country_data)
 
 high_thresh_vectorizer
@@ -254,7 +258,6 @@ high_thresh_vectorizer
 low_thresh_vectorizer = TableVectorizer(
     low_cardinality=OneHotEncoder(sparse_output=False))
 low_card_encoded = low_thresh_vectorizer.fit_transform(native_country_data)
-
 
 low_thresh_vectorizer
 

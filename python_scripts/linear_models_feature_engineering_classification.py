@@ -84,7 +84,6 @@ data_xor = xor[feature_names]
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
-
 _, axs = plt.subplots(ncols=3, figsize=(14, 4), constrained_layout=True)
 
 common_scatter_plot_params = dict(

@@ -18,11 +18,11 @@ print(sys.version)
 pyversion_str = f"{sys.version_info.major}.{sys.version_info.minor}"
 pyversion = Version(pyversion_str)
 
-if pyversion < Version("3.8"):
+if pyversion < Version("3.11"):
     print(
         FAIL,
         (
-            "Python version 3.8 or above is required,"
+            "Python version 3.11 or above is required,"
             f" but {pyversion_str} is installed."
         ),
     )

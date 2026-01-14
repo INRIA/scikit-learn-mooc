@@ -34,7 +34,7 @@ import pandas as pd
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
 feature_name = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-data, target = penguins[[feature_name]], penguins[target_name]
+data, target = penguins[[feature_name]], penguins[[target_name]]
 
 # %% [markdown]
 # ### Model definition
@@ -106,7 +106,7 @@ _ = ax.legend(loc="center left", bbox_to_anchor=(-0.25, 1.25), ncol=1)
 def goodness_fit_measure(true_values, predictions):
     # we compute the error between the true values and the predictions of our
     # model
-    errors = np.ravel(true_values) - np.ravel(predictions)
+    errors = true_values - predictions
     # We have several possible strategies to reduce all errors to a single value.
     # Computing the mean error (sum divided by the number of element) might seem
     # like a good solution. However, we have negative errors that will misleadingly

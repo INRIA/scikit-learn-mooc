@@ -355,7 +355,6 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import make_pipeline
 
-
 polynomial_regressor = make_pipeline(
     MinMaxScaler(),
     PolynomialFeatures(degree=4, include_bias=False),

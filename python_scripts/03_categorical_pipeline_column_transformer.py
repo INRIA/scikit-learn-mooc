@@ -80,7 +80,7 @@ data = adult_census.drop(columns=[target_name])
 # %%
 data["native-country"].nunique()
 
-#%% [markdown]
+# %% [markdown]
 # In the setup we used so far, this column is considered as a high cardinality
 # categorical column. Let us compare both encodings.
 
@@ -141,7 +141,7 @@ numerical_preprocessor = StandardScaler()
 vectorizer = TableVectorizer(
     low_cardinality=categorical_preprocessor,
     numeric=numerical_preprocessor,
-    cardinality_threshold=50
+    cardinality_threshold=50,
 )
 
 # %% [markdown]
@@ -239,7 +239,7 @@ model.score(data_test, target_test)
 # %%
 data["native-country"].nunique()
 
-#%% [markdown]
+# %% [markdown]
 # In the setup we used so far, this column is considered as a high cardinality
 # categorical column. Let us compare both encodings.
 
@@ -248,7 +248,7 @@ native_country_data = data[["native-country"]]
 
 high_thresh_vectorizer = TableVectorizer(
     low_cardinality=OneHotEncoder(sparse_output=False),
-    cardinality_threshold=50
+    cardinality_threshold=50,
 )
 high_card_encoded = high_thresh_vectorizer.fit_transform(native_country_data)
 
@@ -256,7 +256,8 @@ high_thresh_vectorizer
 
 # %%
 low_thresh_vectorizer = TableVectorizer(
-    low_cardinality=OneHotEncoder(sparse_output=False))
+    low_cardinality=OneHotEncoder(sparse_output=False)
+)
 low_card_encoded = low_thresh_vectorizer.fit_transform(native_country_data)
 
 low_thresh_vectorizer

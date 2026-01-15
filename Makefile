@@ -43,12 +43,12 @@ run-code-in-wrap-up-quizzes:
 	jupytext --execute --to notebook $(WRAP_UP_DIR)/*.py
 
 $(JUPYTER_BOOK_DIR):
-	jupyter-book build $(JUPYTER_BOOK_DIR)
+	jupyter-book build ./$(JUPYTER_BOOK_DIR)
 	rm -rf $(JUPYTER_BOOK_DIR)/_build/html/{slides,figures} && cp -r slides figures $(JUPYTER_BOOK_DIR)/_build/html
 
 $(JUPYTER_BOOK_DIR)-clean:
 	# keep jupyter-cache cache folder
-	jupyter-book clean $(JUPYTER_BOOK_DIR)
+	cd $(JUPYTER_BOOK_DIR) && jupyter-book clean .
 
 $(JUPYTER_BOOK_DIR)-full-clean:
 	# deletes jupyter-cache cache folder

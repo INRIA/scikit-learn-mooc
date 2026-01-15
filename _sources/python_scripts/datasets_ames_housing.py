@@ -169,7 +169,6 @@ from sklearn.compose import make_column_transformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline
 
-
 numerical_features = [
     "LotFrontage",
     "LotArea",

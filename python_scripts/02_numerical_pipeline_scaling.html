@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
@@ -870,7 +870,8 @@ k-nearest neighbors, should be trained on normalized features to make each
 feature contribute approximately equally to the distance computations.</p></li>
 <li><p>Many models such as logistic regression use a numerical solver (based on
 gradient descent) to find their optimal parameters. This solver converges
-faster when the features are scaled.</p></li>
+faster when the features are scaled, as it requires less steps (called
+<strong>iterations</strong>) to reach the optimal solution.</p></li>
 </ul>
 </div>
 <p>Whether or not a machine learning model requires scaling the features depends
@@ -879,7 +880,8 @@ benefit from scaling the features while other models such as decision trees do
 not need such preprocessing (but would not suffer from it).</p>
 <p>We show how to apply such normalization using a scikit-learn transformer
 called <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>. This transformer shifts and scales each feature
-individually so that they all have a 0-mean and a unit standard deviation.</p>
+individually so that they all have a 0-mean and a unit standard deviation.
+We recall that transformers are estimators that have a <code class="docutils literal notranslate"><span class="pre">transform</span></code> method.</p>
 <p>We now investigate different steps used in scikit-learn to achieve such a
 transformation of the data.</p>
 <p>First, one needs to call the method <code class="docutils literal notranslate"><span class="pre">fit</span></code> in order to learn the scaling from
@@ -2068,7 +2070,7 @@ generalization performance of such a predictive pipeline.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.054 seconds in 9 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a Pipeline is 0.807 with a fitting time of 0.052 seconds in 9 iterations
 </pre></div>
 </div>
 </div>
@@ -2098,7 +2100,7 @@ previous notebook which did not scale features.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.121 seconds in 60 iterations
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The accuracy using a LogisticRegression is 0.807 with a fitting time of 0.120 seconds in 60 iterations
 </pre></div>
 </div>
 </div>

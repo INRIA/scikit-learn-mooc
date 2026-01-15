@@ -198,16 +198,16 @@ _ = disp.ax_.set(
 #
 # One extreme case could happen if there where samples in the dataset with
 # exactly the same input feature values but different values for the target
-# variable. That is very unlikely in real life settings, but could the case if
-# all features are categorical or if the numerical features were discretized
-# or rounded up naively. In our example, we can imagine two houses having
-# the exact same features in our dataset, but having different prices because
-# of the (unmeasured) seller's rush.
+# variable. That is very unlikely in real life settings, but could be the case
+# if all features are categorical or if the numerical features were discretized
+# or rounded up naively. In our example, we can imagine two houses having the
+# exact same features in our dataset, but having different prices because of the
+# (unmeasured) seller's rush.
 #
-# Apart from these extreme case, it's hard to know for sure what should qualify
+# Apart from this extreme case, it's hard to know for sure what should qualify
 # or not as noise and which kind of "noise" as introduced above is dominating.
-# But in practice, the best ways to make our predictive models robust to noise
-# are to avoid overfitting models by:
+# But in practice, the best way to make our predictive models robust to noise
+# is to avoid overfitting models by:
 #
 # - selecting models that are simple enough or with tuned hyper-parameters as
 #   explained in this module;

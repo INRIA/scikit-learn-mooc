@@ -55,13 +55,13 @@ This model is closer to what we saw previously: it is a linear model trained on
 a non-linear feature transformation. We will build, train and evaluate such a
 model as part of this exercise. Thus, you need to:
 
-- create a new data matrix containing the cube of the speed, the speed, the
-  speed multiplied by the sine of the angle of the slope, and the speed
-  multiplied by the acceleration. To compute the angle of the slope, you need to
-  take the arc tangent of the slope (`alpha = np.arctan(slope)`). In addition,
-  we can limit ourself to positive acceleration only by clipping to 0 the
-  negative acceleration values (they would correspond to some power created by
-  the braking that we are not modeling here).
+- create a new data matrix `data_linear_model` containing the cube of the speed,
+  the speed, the speed multiplied by the sine of the angle of the slope, and the
+  speed multiplied by the acceleration. To compute the angle of the slope, you
+  need to take the arc tangent of the slope (`alpha = np.arctan(slope)`). In
+  addition, we can limit ourself to positive acceleration only by clipping to 0
+  the negative acceleration values (they would correspond to some power created
+  by the braking that we are not modeling here).
 - using the new data matrix, create a linear predictive model based on a
   [`sklearn.preprocessing.StandardScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html)
   and a
@@ -298,7 +298,9 @@ _Select a single answer_
 
 Now, we will go more into details by picking a single ride for the testing and
 analyse the predictions of the models for this test ride. To do so, we can reuse
-the `LeaveOneGroupOut` cross-validation object in the following manner:
+the `LeaveOneGroupOut` cross-validation object in the following manner, where
+`data_linear_model` is the matrix defined in question 1 with the augmented data
+features:
 
 ```python
 cv = LeaveOneGroupOut()
@@ -349,7 +351,7 @@ data_test_subset = data_test[time_slice]
 target_test_subset = target_test[time_slice]
 ```
 
-It allows to select data from 5.00 pm until 5.05 pm. Used the previous fitted
+It allows to select data from 5.00 pm until 5.05 pm. Use the previous fitted
 models (linear and gradient-boosting regressor) to predict on this portion of
 the test data. Draw on the same plot the true targets and the predictions of
 each model.

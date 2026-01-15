@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
@@ -714,13 +714,13 @@ would look like the following.</p>
 a non-linear feature transformation. We will build, train and evaluate such a
 model as part of this exercise. Thus, you need to:</p>
 <ul class="simple">
-<li><p>create a new data matrix containing the cube of the speed, the speed, the
-speed multiplied by the sine of the angle of the slope, and the speed
-multiplied by the acceleration. To compute the angle of the slope, you need to
-take the arc tangent of the slope (<code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">=</span> <span class="pre">np.arctan(slope)</span></code>). In addition,
-we can limit ourself to positive acceleration only by clipping to 0 the
-negative acceleration values (they would correspond to some power created by
-the braking that we are not modeling here).</p></li>
+<li><p>create a new data matrix <code class="docutils literal notranslate"><span class="pre">data_linear_model</span></code> containing the cube of the speed,
+the speed, the speed multiplied by the sine of the angle of the slope, and the
+speed multiplied by the acceleration. To compute the angle of the slope, you
+need to take the arc tangent of the slope (<code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">=</span> <span class="pre">np.arctan(slope)</span></code>). In
+addition, we can limit ourself to positive acceleration only by clipping to 0
+the negative acceleration values (they would correspond to some power created
+by the braking that we are not modeling here).</p></li>
 <li><p>using the new data matrix, create a linear predictive model based on a
 <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html"><code class="docutils literal notranslate"><span class="pre">sklearn.preprocessing.StandardScaler</span></code></a>
 and a
@@ -927,7 +927,9 @@ using the <code class="docutils literal notranslate"><span class="pre">LeaveOneG
 </div>
 <p>Now, we will go more into details by picking a single ride for the testing and
 analyse the predictions of the models for this test ride. To do so, we can reuse
-the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> cross-validation object in the following manner:</p>
+the <code class="docutils literal notranslate"><span class="pre">LeaveOneGroupOut</span></code> cross-validation object in the following manner, where
+<code class="docutils literal notranslate"><span class="pre">data_linear_model</span></code> is the matrix defined in question 1 with the augmented data
+features:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">LeaveOneGroupOut</span><span class="p">()</span>
 <span class="n">train_indices</span><span class="p">,</span> <span class="n">test_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -971,7 +973,7 @@ with power close to zero</p></li>
 <span class="n">target_test_subset</span> <span class="o">=</span> <span class="n">target_test</span><span class="p">[</span><span class="n">time_slice</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>It allows to select data from 5.00 pm until 5.05 pm. Used the previous fitted
+<p>It allows to select data from 5.00 pm until 5.05 pm. Use the previous fitted
 models (linear and gradient-boosting regressor) to predict on this portion of
 the test data. Draw on the same plot the true targets and the predictions of
 each model.</p>

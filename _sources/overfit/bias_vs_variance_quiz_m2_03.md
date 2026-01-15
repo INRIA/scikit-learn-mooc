@@ -1,11 +1,12 @@
 # ✅ Quiz M2.03
 
 ```{admonition} Question
-Fitting a model with a high bias:
+A model with a high bias:
 
-- a) causes an underfitted model?
-- b) causes an overfitted model?
-- c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
+- a) is a characteristic of an underfitted model?
+- b) is a characteristic of an overfitted model?
+- c) when trained, exhibits greater sensivity to random resampling of the training
+data?
 - d) causes the learned prediction function to make systematic errors?
 
 _Select all answers that apply_
@@ -14,11 +15,12 @@ _Select all answers that apply_
 +++
 
 ```{admonition} Question
-Fitting a high variance model:
+A model with high variance:
 
-- a) causes an underfitted model?
-- b) causes an overfitted model?
-- c) increases the sensitivity of the learned prediction function to a random resampling of the training set observations?
+- a) is a characteristic of an underfitted model?
+- b) is a characteristic of an overfitted model?
+- c) when trained, exhibits greater sensivity to random resampling of the training
+data?
 - d) causes the learned prediction function to make systematic errors?
 
 _Select all answers that apply_

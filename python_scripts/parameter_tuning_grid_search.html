@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
@@ -695,6 +695,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-predictive-model">Our predictive model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuning-using-a-grid-search">Tuning using a grid-search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-need-for-a-validation-set">The need for a validation set</a></li>
 </ul>
             </nav>
         </div>
@@ -1498,30 +1499,40 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="tuning-using-a-grid-search">
 <h2>Tuning using a grid-search<a class="headerlink" href="#tuning-using-a-grid-search" title="Link to this heading">#</a></h2>
-<p>In the previous exercise we used one <code class="docutils literal notranslate"><span class="pre">for</span></code> loop for each hyperparameter to
-find the best combination over a fixed grid of values. <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> is a
-scikit-learn class that implements a very similar logic with less repetitive
-code.</p>
-<p>Let’s see how to use the <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator for doing such search. Since
-the grid-search is costly, we only explore the combination learning-rate and
-the maximum number of nodes.</p>
+<p>In the previous exercise (M3.01) we used two nested <code class="docutils literal notranslate"><span class="pre">for</span></code> loops (one for each
+hyperparameter) to test different combinations over a fixed grid of
+hyperparameter values. In each iteration of the loop, we used
+<code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> to compute the mean score (as averaged across
+cross-validation splits), and compared those mean scores to select the best
+combination. <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> is a scikit-learn class that implements a very
+similar logic with less repetitive code. The suffix <code class="docutils literal notranslate"><span class="pre">CV</span></code> refers to the
+cross-validation it runs internally (instead of the <code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code> we
+“hard” coded).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator takes a <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> parameter which defines all
+hyperparameters and their associated values. The grid-search is in charge of
+creating all possible combinations and testing them.</p>
+<p>The number of combinations is equal to the product of the number of values to
+explore for each parameter. Thus, adding new parameters with their associated
+values to be explored rapidly becomes computationally expensive. Because of
+that, here we only explore the combination learning-rate and the maximum
+number of nodes for a total of 4 x 3 = 12 combinations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="s2">&quot;classifier__max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
-<span class="p">}</span>
+    <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># 4 possible values</span>
+    <span class="s2">&quot;classifier__max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>  <span class="c1"># 3 possible values</span>
+<span class="p">}</span>  <span class="c1"># 12 unique combinations</span>
 <span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.09 s, sys: 81.5 ms, total: 1.17 s
-Wall time: 5.6 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 1.03 s, sys: 68.3 ms, total: 1.09 s
+Wall time: 5.52 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {
@@ -2000,57 +2011,8 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                                   &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;,
                                   &#x27;native-country&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>ordinalencoder</div></div></label><div class="sk-toggleable__content fitted"><pre>[&#x27;workclass&#x27;, &#x27;education&#x27;, &#x27;marital-status&#x27;, &#x27;occupation&#x27;, &#x27;relationship&#x27;, &#x27;race&#x27;, &#x27;sex&#x27;, &#x27;native-country&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>OrdinalEncoder</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.preprocessing.OrdinalEncoder.html">?<span>Documentation for OrdinalEncoder</span></a></div></label><div class="sk-toggleable__content fitted"><pre>OrdinalEncoder(handle_unknown=&#x27;use_encoded_value&#x27;, unknown_value=-1)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>remainder</div></div></label><div class="sk-toggleable__content fitted"><pre>[&#x27;age&#x27;, &#x27;capital-gain&#x27;, &#x27;capital-loss&#x27;, &#x27;hours-per-week&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>passthrough</div></div></label><div class="sk-toggleable__content fitted"><pre>passthrough</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>HistGradientBoostingClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html">?<span>Documentation for HistGradientBoostingClassifier</span></a></div></label><div class="sk-toggleable__content fitted"><pre>HistGradientBoostingClassifier(max_leaf_nodes=30, random_state=42)</pre></div> </div></div></div></div></div></div></div></div></div></div></div></div></div>
 </div>
-<p>Finally, we check the accuracy of our model using the test set.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The test accuracy score of the grid-searched pipeline is: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the grid-searched pipeline is: 0.88
-</pre></div>
-</div>
-</div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Be aware that the evaluation should normally be performed through
-cross-validation by providing <code class="docutils literal notranslate"><span class="pre">model_grid_search</span></code> as a model to the
-<code class="docutils literal notranslate"><span class="pre">cross_validate</span></code> function.</p>
-<p>Here, we used a single train-test split to evaluate <code class="docutils literal notranslate"><span class="pre">model_grid_search</span></code>. In
-a future notebook will go into more detail about nested cross-validation, when
-you use cross-validation both for hyperparameter tuning and model evaluation.</p>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> estimator takes a <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> parameter which defines all
-hyperparameters and their associated values. The grid-search is in charge
-of creating all possible combinations and test them.</p>
-<p>The number of combinations are equal to the product of the number of values to
-explore for each parameter (e.g. in our example 4 x 3 combinations). Thus,
-adding new parameters with their associated values to be explored become
-rapidly computationally expensive.</p>
-<p>Once the grid-search is fitted, it can be used as any other predictor by
-calling <code class="docutils literal notranslate"><span class="pre">predict</span></code> and <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code>. Internally, it uses the model with the
-best parameters found during <code class="docutils literal notranslate"><span class="pre">fit</span></code>.</p>
-<p>Get predictions for the 5 first samples using the estimator with the best
-parameters.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;], dtype=object)
-</pre></div>
-</div>
-</div>
-</div>
-<p>You can know about these parameters by looking at the <code class="docutils literal notranslate"><span class="pre">best_params_</span></code>
-attribute.</p>
+<p>You can access the best combination of hyperparameters found by the grid
+search using the <code class="docutils literal notranslate"><span class="pre">best_params_</span></code> attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best set of parameters is: </span><span class="si">{</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -2063,9 +2025,63 @@ attribute.</p>
 </div>
 </div>
 </div>
-<p>The accuracy and the best parameters of the grid-searched pipeline are similar
+<p>Once the grid-search is fitted, it can be used as any other estimator, i.e. it
+has <code class="docutils literal notranslate"><span class="pre">predict</span></code> and <code class="docutils literal notranslate"><span class="pre">score</span></code> methods. Internally, it uses the model with the
+best parameters found during <code class="docutils literal notranslate"><span class="pre">fit</span></code>.</p>
+<p>Let’s get the predictions for the 5 first samples using the estimator with the
+best parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we check the accuracy of our model using the test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;The test accuracy score of the grid-search pipeline is: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The test accuracy score of the grid-search pipeline is: 0.88
+</pre></div>
+</div>
+</div>
+</div>
+<p>The accuracy and the best parameters of the grid-search pipeline are similar
 to the ones we found in the previous exercise, where we searched the best
-parameters “by hand” through a double for loop.</p>
+parameters “by hand” through a double <code class="docutils literal notranslate"><span class="pre">for</span></code> loop.</p>
+</section>
+<section id="the-need-for-a-validation-set">
+<h2>The need for a validation set<a class="headerlink" href="#the-need-for-a-validation-set" title="Link to this heading">#</a></h2>
+<p>In the previous section, the selection of the best hyperparameters was done
+using the train set, coming from the initial train-test split. Then, we
+evaluated the generalization performance of our tuned model on the left out
+test set. This can be shown schematically as follows:</p>
+<p><img alt="Cross-validation tuningdiagram" src="../_images/cross_validation_train_test_diagram.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This figure shows the particular case of <strong>K-fold</strong> cross-validation strategy
+using <code class="docutils literal notranslate"><span class="pre">n_splits=5</span></code> to further split the train set coming from a train-test
+split. For each cross-validation split, the procedure trains a model on all
+the red samples, evaluates the score of a given set of hyperparameters on the
+green samples. The best combination of hyperparameters <code class="docutils literal notranslate"><span class="pre">best_params</span></code> is selected
+based on those intermediate scores.</p>
+<p>Then a final model is refitted using <code class="docutils literal notranslate"><span class="pre">best_params</span></code> on the concatenation of the
+red and green samples and evaluated on the blue samples.</p>
+<p>The green samples are sometimes referred as the <strong>validation set</strong> to
+differentiate them from the final test set in blue.</p>
+</div>
 <p>In addition, we can inspect all results which are stored in the attribute
 <code class="docutils literal notranslate"><span class="pre">cv_results_</span></code> of the grid-search. We filter some specific columns from these
 results.</p>
@@ -2114,10 +2130,10 @@ results.</p>
   <tbody>
     <tr>
       <th>5</th>
-      <td>0.371154</td>
-      <td>0.036196</td>
-      <td>0.186004</td>
-      <td>0.011414</td>
+      <td>0.366667</td>
+      <td>0.036151</td>
+      <td>0.186504</td>
+      <td>0.011486</td>
       <td>0.10</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2129,10 +2145,10 @@ results.</p>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.289121</td>
-      <td>0.005844</td>
-      <td>0.162188</td>
-      <td>0.000973</td>
+      <td>0.283219</td>
+      <td>0.003888</td>
+      <td>0.162068</td>
+      <td>0.000060</td>
       <td>0.10</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2144,10 +2160,10 @@ results.</p>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.096711</td>
-      <td>0.001511</td>
-      <td>0.061652</td>
-      <td>0.003471</td>
+      <td>0.103007</td>
+      <td>0.002305</td>
+      <td>0.064684</td>
+      <td>0.006748</td>
       <td>1.00</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2159,10 +2175,10 @@ results.</p>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.123180</td>
-      <td>0.023947</td>
-      <td>0.070870</td>
-      <td>0.004997</td>
+      <td>0.127634</td>
+      <td>0.029065</td>
+      <td>0.066547</td>
+      <td>0.008203</td>
       <td>1.00</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2174,10 +2190,10 @@ results.</p>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.209159</td>
-      <td>0.004923</td>
-      <td>0.106686</td>
-      <td>0.000475</td>
+      <td>0.206743</td>
+      <td>0.003880</td>
+      <td>0.105468</td>
+      <td>0.002843</td>
       <td>0.10</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -2189,10 +2205,10 @@ results.</p>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.107536</td>
-      <td>0.004917</td>
-      <td>0.066069</td>
-      <td>0.002205</td>
+      <td>0.116143</td>
+      <td>0.010963</td>
+      <td>0.062747</td>
+      <td>0.001120</td>
       <td>1.00</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -2204,10 +2220,10 @@ results.</p>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.464187</td>
-      <td>0.001820</td>
-      <td>0.210858</td>
-      <td>0.006431</td>
+      <td>0.458940</td>
+      <td>0.002853</td>
+      <td>0.210814</td>
+      <td>0.007104</td>
       <td>0.01</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -2219,10 +2235,10 @@ results.</p>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.298228</td>
-      <td>0.006881</td>
-      <td>0.162617</td>
-      <td>0.003161</td>
+      <td>0.293383</td>
+      <td>0.004396</td>
+      <td>0.162005</td>
+      <td>0.002746</td>
       <td>0.01</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -2234,10 +2250,10 @@ results.</p>
     </tr>
     <tr>
       <th>0</th>
-      <td>0.215408</td>
-      <td>0.002819</td>
-      <td>0.109860</td>
-      <td>0.001543</td>
+      <td>0.211110</td>
+      <td>0.001297</td>
+      <td>0.110479</td>
+      <td>0.001563</td>
       <td>0.01</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -2249,10 +2265,10 @@ results.</p>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.065326</td>
-      <td>0.001444</td>
-      <td>0.043286</td>
-      <td>0.002997</td>
+      <td>0.067422</td>
+      <td>0.003465</td>
+      <td>0.042321</td>
+      <td>0.001446</td>
       <td>10.00</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -2264,10 +2280,10 @@ results.</p>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.065648</td>
-      <td>0.000027</td>
-      <td>0.041593</td>
-      <td>0.000877</td>
+      <td>0.067347</td>
+      <td>0.000119</td>
+      <td>0.042058</td>
+      <td>0.001413</td>
       <td>10.00</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -2279,10 +2295,10 @@ results.</p>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.061153</td>
-      <td>0.000430</td>
-      <td>0.043519</td>
-      <td>0.004228</td>
+      <td>0.067731</td>
+      <td>0.003386</td>
+      <td>0.040464</td>
+      <td>0.002522</td>
       <td>10.00</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -2448,8 +2464,9 @@ to remove the <code class="docutils literal notranslate"><span class="pre">&quot
 </table>
 </div></div></div>
 </div>
-<p>With only 2 parameters, we might want to visualize the grid-search as a
-heatmap. We need to transform our <code class="docutils literal notranslate"><span class="pre">cv_results</span></code> into a dataframe where:</p>
+<p>Given that we are tuning only 2 parameters, we can visualize the results as a
+heatmap. To do so, we first need to reshape the <code class="docutils literal notranslate"><span class="pre">cv_results</span></code> into a dataframe
+where:</p>
 <ul class="simple">
 <li><p>the rows correspond to the learning-rate values;</p></li>
 <li><p>the columns correspond to the maximum number of leaf;</p></li>
@@ -2526,7 +2543,8 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 </table>
 </div></div></div>
 </div>
-<p>We can use a heatmap representation to show the above dataframe visually.</p>
+<p>Now that we have the data in the right format, we can create the heatmap as
+follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
@@ -2547,6 +2565,13 @@ heatmap. We need to transform our <code class="docutils literal notranslate"><sp
 <img alt="../_images/57883c9f1bec4123cdacffad11f1a824299d6ac64190d3b82e33e8167636fbc7.png" src="../_images/57883c9f1bec4123cdacffad11f1a824299d6ac64190d3b82e33e8167636fbc7.png" />
 </div>
 </div>
+<p>The heatmap above shows the mean test accuracy (i.e., the average over
+cross-validation splits) for each combination of hyperparameters, where darker
+colors indicate better performance. However, notice that using colors only
+allows us to visually compare the mean test score, but does not carry any
+information on the standard deviation over splits, making it difficult to say
+if different scores coming from different combinations lead to a significantly
+better model or not.</p>
 <p>The above tables highlights the following things:</p>
 <ul class="simple">
 <li><p>for too high values of <code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>, the generalization performance of
@@ -2639,6 +2664,7 @@ training set).</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-predictive-model">Our predictive model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tuning-using-a-grid-search">Tuning using a grid-search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-need-for-a-validation-set">The need for a validation set</a></li>
 </ul>
   </nav></div>
 

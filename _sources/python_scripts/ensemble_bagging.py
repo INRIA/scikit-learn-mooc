@@ -78,7 +78,7 @@ plt.legend()
 _ = plt.title("Predictions by a single decision tree")
 
 # %% [markdown]
-# Let's see how we can use bootstraping to learn several trees.
+# Let's see how we can use bootstrapping to learn several trees.
 #
 # ## Bootstrap resampling
 #
@@ -354,7 +354,6 @@ from sklearn.linear_model import Ridge
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import make_pipeline
-
 
 polynomial_regressor = make_pipeline(
     MinMaxScaler(),

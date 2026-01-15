@@ -77,7 +77,8 @@ data_train.describe()
 #
 # * Many models such as logistic regression use a numerical solver (based on
 #   gradient descent) to find their optimal parameters. This solver converges
-#   faster when the features are scaled.
+#   faster when the features are scaled, as it requires less steps (called
+#   **iterations**) to reach the optimal solution.
 # ```
 #
 # Whether or not a machine learning model requires scaling the features depends
@@ -88,6 +89,7 @@ data_train.describe()
 # We show how to apply such normalization using a scikit-learn transformer
 # called `StandardScaler`. This transformer shifts and scales each feature
 # individually so that they all have a 0-mean and a unit standard deviation.
+# We recall that transformers are estimators that have a `transform` method.
 #
 # We now investigate different steps used in scikit-learn to achieve such a
 # transformation of the data.

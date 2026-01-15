@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
@@ -1070,11 +1070,19 @@ target data.</p>
 <p>Learning can be represented as follows:</p>
 <p><img alt="Predictor fit diagram" src="../_images/api_diagram-predictor.fit.svg" /></p>
 <p>In scikit-learn an object that has a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method is called an <strong>estimator</strong>.
-The method <code class="docutils literal notranslate"><span class="pre">fit</span></code> is composed of two elements: (i) a <strong>learning algorithm</strong> and
+If the estimator additionally has :</p>
+<ul class="simple">
+<li><p>a  <code class="docutils literal notranslate"><span class="pre">predict</span></code> method, it is called a <strong>predictor</strong>. Examples of predictors
+are classifiers or regressors.</p></li>
+<li><p>a <code class="docutils literal notranslate"><span class="pre">transform</span></code> method, it is called a <strong>transformer</strong>. Examples of
+transformers are scalers or encoders. We will see more about transformers in
+the next notebook.</p></li>
+</ul>
+<p>The method <code class="docutils literal notranslate"><span class="pre">fit</span></code> is composed of two elements: (i) a <strong>learning algorithm</strong> and
 (ii) some <strong>model states</strong>. The learning algorithm takes the training data and
 training target as input and sets the model states. These model states are
-later used to either predict (for classifiers and regressors) or transform
-data (for transformers).</p>
+later used to either predict or transform data as explained above. See the
+glossary for more detailed definitions.</p>
 <p>Both the learning algorithm and the type of model states are specific to each
 type of model.</p>
 <div class="admonition note">
@@ -1091,8 +1099,7 @@ commonly called <code class="docutils literal notranslate"><span class="pre">y</
 </div>
 </div>
 </div>
-<p>An estimator (an object with a <code class="docutils literal notranslate"><span class="pre">fit</span></code> method) with a <code class="docutils literal notranslate"><span class="pre">predict</span></code> method is called
-a <strong>predictor</strong>. We can illustrate the prediction mechanism as follows:</p>
+<p>We can illustrate the prediction mechanism as follows:</p>
 <p><img alt="Predictor predict diagram" src="../_images/api_diagram-predictor.predict.svg" /></p>
 <p>To predict, a model uses a <strong>prediction function</strong> that uses the input data
 together with the model states. As for the learning algorithm and the model

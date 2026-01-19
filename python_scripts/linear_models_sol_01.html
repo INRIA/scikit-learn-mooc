@@ -738,7 +738,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
 <span class="n">feature_name</span> <span class="o">=</span> <span class="s2">&quot;Flipper Length (mm)&quot;</span>
 <span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
-<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[[</span><span class="n">feature_name</span><span class="p">]],</span> <span class="n">penguins</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[[</span><span class="n">feature_name</span><span class="p">]],</span> <span class="n">penguins</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -823,7 +823,7 @@ scalar as output.</p>
 <span class="k">def</span><span class="w"> </span><span class="nf">goodness_fit_measure</span><span class="p">(</span><span class="n">true_values</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
     <span class="c1"># we compute the error between the true values and the predictions of our</span>
     <span class="c1"># model</span>
-    <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">true_values</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+    <span class="n">errors</span> <span class="o">=</span> <span class="n">true_values</span> <span class="o">-</span> <span class="n">predictions</span>
     <span class="c1"># We have several possible strategies to reduce all errors to a single value.</span>
     <span class="c1"># Computing the mean error (sum divided by the number of element) might seem</span>
     <span class="c1"># like a good solution. However, we have negative errors that will misleadingly</span>
@@ -859,15 +859,15 @@ model.</p>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model #0:
 -40.00 (g / mm) * flipper length + 15000.00 (g)
-Error: 2764.854
+Error: nan
 
 Model #1:
 45.00 (g / mm) * flipper length + -5000.00 (g)
-Error: 338.523
+Error: nan
 
 Model #2:
 90.00 (g / mm) * flipper length + -14000.00 (g)
-Error: 573.041
+Error: nan
 </pre></div>
 </div>
 </div>

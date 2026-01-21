@@ -18,7 +18,7 @@ from sklearn.datasets import fetch_california_housing
 california_housing = fetch_california_housing(as_frame=True)
 
 # %% [markdown]
-# We can have a first look at the available description
+# We can have a first look at the available description.
 
 # %%
 print(california_housing.DESCR)
@@ -67,15 +67,13 @@ california_housing.frame.info()
 # * all features are numerical features encoded as floating number;
 # * there is no missing values.
 #
-# Let's have a quick look at the distribution of these features by plotting
-# their histograms.
+# Let's have a quick look at the distribution of these features with the
+# TableReport from the skrub package.
 
 # %%
-import matplotlib.pyplot as plt
+from skrub import TableReport
 
-california_housing.frame.hist(figsize=(12, 10), bins=30, edgecolor="black")
-plt.subplots_adjust(hspace=0.7, wspace=0.4)
-
+TableReport(california_housing.frame)
 
 # %% [markdown]
 # We can first focus on features for which their distributions would be more or
@@ -95,16 +93,12 @@ plt.subplots_adjust(hspace=0.7, wspace=0.4)
 # population, the range of the data is large with unnoticeable bin for the
 # largest values. It means that there are very high and few values (maybe they
 # could be considered as outliers?). We can see this specificity looking at the
-# statistics for these features:
-
-# %%
-features_of_interest = ["AveRooms", "AveBedrms", "AveOccup", "Population"]
-california_housing.frame[features_of_interest].describe()
-
-# %% [markdown]
-# For each of these features, comparing the `max` and `75%` values, we can see a
-# huge difference. It confirms the intuitions that there are a couple of extreme
-# values.
+# statistics for these features by clicking on the corresponding columns in the
+# table.
+#
+# For each of these features, comparing the `max` and `Median ± IQR` values, we
+# can see a huge difference. It confirms the intuitions that there are a couple
+# of extreme values.
 #
 # Up to now, we discarded the longitude and latitude that carry geographical
 # information. In short, the combination of these features could help us decide
@@ -115,6 +109,7 @@ california_housing.frame[features_of_interest].describe()
 
 # %%
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 sns.scatterplot(
     data=california_housing.frame,

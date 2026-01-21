@@ -91,7 +91,6 @@ preprocessor = make_column_transformer(
     remainder="passthrough",
     # Silence a deprecation warning in scikit-learn v1.6 related to how the
     # ColumnTransformer stores an attribute that we do not use in this notebook
-    force_int_remainder_cols=False,
 )
 
 # %% [markdown]

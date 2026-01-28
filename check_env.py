@@ -18,11 +18,11 @@ print(sys.version)
 pyversion_str = f"{sys.version_info.major}.{sys.version_info.minor}"
 pyversion = Version(pyversion_str)
 
-if pyversion < Version("3.8"):
+if pyversion < Version("3.11"):
     print(
         FAIL,
         (
-            "Python version 3.8 or above is required,"
+            "Python version 3.11 or above is required,"
             f" but {pyversion_str} is installed."
         ),
     )
@@ -66,7 +66,7 @@ requirements = {
     "numpy": "1.16",
     "scipy": "1.2",
     "matplotlib": "3.0",
-    "sklearn": "1.6",
+    "sklearn": "1.8",
     "pandas": "1",
     "seaborn": "0.11",
     "notebook": "5.7",

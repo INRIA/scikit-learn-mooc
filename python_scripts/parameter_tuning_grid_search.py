@@ -192,10 +192,13 @@ print(
 # ```{note}
 # This figure shows the particular case of **K-fold** cross-validation strategy
 # using `n_splits=5` to further split the train set coming from a train-test
-# split. For each cross-validation split, the procedure trains a model on all
-# the red samples, evaluates the score of a given set of hyperparameters on the
-# green samples. The best combination of hyperparameters `best_params` is selected
-# based on those intermediate scores.
+# split.
+#
+# For each cross-validation split, the procedure trains a model with a given set
+# of hyperparameters on all the red samples, evaluates the score of such
+# combination on the green samples, and selects the best combination of
+# hyperparameters `best_params` by comparing the mean of those **validation
+# scores** for different combinations.
 #
 # Then a final model is refitted using `best_params` on the concatenation of the
 # red and green samples and evaluated on the blue samples.

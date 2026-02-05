@@ -12,9 +12,9 @@
 # However, we did not present a proper framework to evaluate the tuned models.
 # Instead, we focused on the mechanism used to find the best set of parameters.
 #
-# In this notebook, we reuse some knowledge presented in the module "Selecting
-# the best model" to show how to evaluate models where hyperparameters need to
-# be tuned.
+# In this notebook, we build on concepts from the "Selecting the Best Model"
+# module to demonstrate how to estimate the uncertainty of generalization
+# performance when tuning hyperparameters.
 #
 # Thus, we first load the dataset and create the predictive model that we want
 # to optimize and later on, evaluate.
@@ -189,10 +189,11 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # of the grid-search procedure. This is often the case that models trained on a
 # larger number of samples tend to generalize better.
 #
-# In the code above, the selection of the best hyperparameters was done only on
-# the train set from the initial train-test split. Then, we evaluated the
-# generalization performance of our tuned model on the left out test set. This
-# can be shown schematically as follows
+# In the code above, as well as in some previous notebooks, the selection of the
+# best hyperparameters was done only on the train set resulting from the initial
+# train-test split. Then, we evaluated the generalization performance of our
+# tuned model on the left out test set. Remember that such process can be shown
+# schematically as follows:
 #
 # ![Cross-validation tuning
 # diagram](../figures/cross_validation_train_test_diagram.png)
@@ -201,16 +202,15 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # This figure shows the particular case of **K-fold** cross-validation
 # strategy using `n_splits=5` to further split the train set coming from a
 # train-test split.
-# For each cross-validation split, the procedure trains a model on all the red
-# samples, evaluates the score of a given set of hyperparameters on the green
-# samples. The best hyper-parameters are selected based on those intermediate
-# scores.
+#
+# For each cross-validation split, the procedure trains a model with a given set
+# of hyperparameters on all the red samples, evaluates the score of such
+# combination on the green samples, and selects the best combination of
+# hyperparameters `best_params` by comparing the mean of those validation
+# scores for different combinations.
 #
 # Then a final model tuned with those hyper-parameters is fitted on the
 # concatenation of the red and green samples and evaluated on the blue samples.
-#
-# The green samples are sometimes called a **validation sets** to differentiate
-# them from the final test set in blue.
 # ```
 #
 # However, this evaluation only provides us a single point estimate of the

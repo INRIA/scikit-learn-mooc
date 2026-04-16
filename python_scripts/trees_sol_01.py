@@ -70,7 +70,6 @@ import seaborn as sns
 
 from sklearn.inspection import DecisionBoundaryDisplay
 
-
 tab10_norm = mpl.colors.Normalize(vmin=-0.5, vmax=8.5)
 
 palette = ["tab:blue", "tab:green", "tab:orange"]

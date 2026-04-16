@@ -57,7 +57,6 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 from sklearn.pipeline import make_pipeline
 
-
 model_with_selection = make_pipeline(
     SelectKBest(score_func=f_classif, k=2),
     RandomForestClassifier(n_jobs=2),

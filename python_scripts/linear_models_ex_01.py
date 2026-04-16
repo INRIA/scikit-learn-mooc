@@ -40,7 +40,7 @@ import pandas as pd
 penguins = pd.read_csv("../datasets/penguins_regression.csv")
 feature_name = "Flipper Length (mm)"
 target_name = "Body Mass (g)"
-data, target = penguins[[feature_name]], penguins[target_name]
+data, target = penguins[[feature_name]], penguins[[target_name]]
 
 # %% [markdown]
 # ### Model definition

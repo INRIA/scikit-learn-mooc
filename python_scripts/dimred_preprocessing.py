@@ -220,7 +220,7 @@ plt.show()
 # with each other. Two strongly correlated features will jointly define a
 # direction with much higher variance than either one alone, and the explained
 # variance ratios across components will still be very unequal. Scaling removes
-# the unit bias; it does not make all directions equally important.
+# the magnitude bias; it does not make all directions equally important.
 #
 # There is a subtler issue too. `StandardScaler` estimates the standard
 # deviation from all samples, **including outliers**. `LotArea` (lot size in sq

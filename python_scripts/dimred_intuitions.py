@@ -125,7 +125,7 @@ bars = ax.barh(
 ax.bar_label(bars)
 ax.set_xlim([0, 14])
 ax.set_yticks([1, 2], labels=["PC1", "PC2"])
-ax.set_xlabel("eigenvalues")
+ax.set_xlabel("Explained variance")
 ax.set_ylabel("PCA features")
 ax.set_title("Variance Explained by Principal Components (PCA)", y=1.05)
 plt.show()

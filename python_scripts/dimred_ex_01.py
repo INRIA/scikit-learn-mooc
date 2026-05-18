@@ -12,7 +12,7 @@
 # ---
 
 # %% [markdown]
-# # Solution for Exercise M8.01
+# # Exercise M8.01
 #
 # In the Chapter on Linear Models we saw that feature engineering using
 # `PolynomialFeatures` can give a linear model the flexibility to capture

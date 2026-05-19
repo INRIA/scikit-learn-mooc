@@ -222,8 +222,8 @@ print(f"Kaiser criterion: {n_kaiser} components")
 # true cutoff lies beyond what we measured.
 #
 # For text data, a common practice is to fix the number of components to be 100
-# or 300, which captures meaningful vocabulary structure while remaining
-# computationally manageable.
+# or 300. Other values are valid, but a finer grid is unlikely to yield
+# meaningfully different results and would add unnecessary computational cost.
 #
 # Let's now run a K-Means as downstream task. We set `n_clusters=5` to match the
 # number of categories we know exist in this dataset. This is similar to what we

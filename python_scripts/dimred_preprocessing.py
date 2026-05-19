@@ -345,6 +345,12 @@ plt.show()
 # remaining variation. This is the most informative decomposition of the four
 # features as a whole.
 #
+# ```{note}
+# Even with domain expertise, assigning meaning to components is not always
+# straightforward, since components are in general a mixture of all original
+# features.
+# ```
+#
 # We can compare the effect of the different scalers, but now in the PC space.
 # Once again we are careful to set `ax.axis("equal")`.
 
@@ -419,13 +425,10 @@ plt.show()
 # house has a pool at all, and how large it is. The binary part is lost entirely
 # when PCA pushes it into a negligible component.
 #
-# A better approach is to separate these two signals. Create a binary "HasPool"
-# feature from "PoolArea" and exclude "PoolArea" from the PCA input. Then
-# concatenate "HasPool" directly to the PCA output and use the combined
-# representation in a downstream model.
-#
-# Refit the pipeline on the four numerical features without "PoolArea", keeping
-# "HasPool" aside. Print the shape of the final feature matrix.
+# A better approach could be to separate these two signals by creating a binary
+# "HasPool" feature from "PoolArea" and exclude "PoolArea" from the PCA input.
+# Then, we can concatenate "HasPool" directly to the PCA output and use the
+# combined representation in a downstream model.
 
 # %%
 from sklearn.preprocessing import Binarizer
@@ -469,8 +472,7 @@ plt.show()
 # This pattern generalises: any binary or categorical feature is better kept
 # outside the PCA input and concatenated to the output. Putting it inside PCA
 # forces a continuous decomposition onto a discrete structure, which rarely
-# works well. But you will discover more about categorical values in the
-# following exercise.
+# works well, as we will see in the following section.
 
 # %% [markdown]
 # ## One-hot encoding and PCA
@@ -498,7 +500,7 @@ plt.show()
 # unique categories:
 
 # %%
-len(data["Neighborhood"].value_counts())
+len(data["Neighborhood"].unique())
 
 # %% [markdown]
 # We then use PCA with 8 components to reduce the 25-dimensional space resulting
@@ -576,6 +578,10 @@ plt.show()
 # - A nonlinear scaler like `SquashingScaler` compresses the tails directly,
 #   which often produces the most interpretable components when outliers are
 #   present.
+#
+# As always, the best practice depends on the use case and domain knowledge. For
+# instance, if you are building an outlier detection pipeline, you may want
+# outliers to remain visible in the PC space rather than compressing them away.
 #
 # The other side of the coin is that PCA can itself be a diagnostic tool. The
 # heatmaps of squared loadings revealed things about the data that were not

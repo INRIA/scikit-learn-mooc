@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 penguins = pd.read_csv("../datasets/penguins_classification.csv")
 penguins = penguins[penguins["Species"] == "Chinstrap"]
 penguins = penguins.drop(columns="Species")
-penguins.plot.scatter(x="Culmen Length (mm)", y="Culmen Depth (mm)")
+_ = penguins.plot.scatter(x="Culmen Length (mm)", y="Culmen Depth (mm)")
 
 # %% [markdown]
 # ## Finding the principal component
@@ -39,10 +39,11 @@ penguins.plot.scatter(x="Culmen Length (mm)", y="Culmen Depth (mm)")
 # which PCA can identify. The second PC would align with the direction with
 # second to most variance, and so on.
 #
-# In our case we begin by extracting both components to understand the full
-# picture. **This is not dimensional reduction yet**, these components are
-# linear combinations of the original features, in other words, just a rotation
-# to more convenient axes.
+# We begin by extracting both components (`n_components` = `n_features`) to
+# understand the full picture. **This is not dimensional reduction yet**. In
+# this case the components are linear combinations of the (centered) original
+# features, in other words, just a change of basis to a more convenient
+# coordinate system.
 
 # %%
 from sklearn.decomposition import PCA
@@ -61,20 +62,21 @@ pca.fit(penguins)
 pca.components_
 
 # %% [markdown]
-# These numbers tell us how to create the new features:
+# These `components_` tell us how to create the new features (after centering):
 
 # %%
 feature_names = penguins.columns.tolist()
 for i, component in enumerate(pca.components_):
     terms = " + ".join(
-        f"{w:.1f} * {f}" for w, f in zip(component, feature_names)
+        f"{w:.1f} * ({f} - {m:.1f})"
+        for w, f, m in zip(component, feature_names, pca.mean_)
     )
     print(f"PC{i + 1} = {terms}")
 
 # %% [markdown]
-# The components are perpendicular (orthogonal) to each other. Indeed,
-# components in the space of reduced dimensions work as new coordinate axes. We
-# can plot them to better visualize the effect.
+# The components are perpendicular to each other. Indeed, components in the
+# space of reduced dimensions work as new coordinate axes. We can plot them to
+# better visualize the effect.
 
 # %%
 import numpy as np
@@ -100,11 +102,9 @@ for component, color, label in zip(
         label=label,
         alpha=0.8,
     )
-
-ax.set_title("Principal Components as New Feature Directions")
 ax.legend()
 ax.axis("equal")
-plt.show()
+_ = ax.set_title("Principal Components as New Feature Directions")
 
 # %% [markdown]
 # The red line shows the first PC. It follows the correlation pattern in our
@@ -127,8 +127,7 @@ ax.set_xlim([0, 14])
 ax.set_yticks([1, 2], labels=["PC1", "PC2"])
 ax.set_xlabel("Explained variance")
 ax.set_ylabel("PCA features")
-ax.set_title("Variance Explained by Principal Components (PCA)", y=1.05)
-plt.show()
+_ = ax.set_title("Variance Explained by Principal Components (PCA)", y=1.05)
 
 # %% [markdown]
 # The `explained_variance_`, is the statistical variance (as computed by the
@@ -212,7 +211,7 @@ ax2.scatter(
     alpha=0.6,
 )
 ax2.set_xlabel("First Principal Component")
-ax2.set_title(
+_ = ax2.set_title(
     f"Reduced 1D space ({pca_1d.explained_variance_ratio_[0]:.0%} variance retained)"
 )
 
@@ -249,8 +248,7 @@ ax.scatter(
 )
 ax.axis("equal")
 ax.legend()
-ax.set_title("Original vs reconstructed feature space")
-plt.show()
+_ = ax.set_title("Original vs reconstructed feature space")
 
 # %% [markdown]
 # The reconstructed points all lie on a line, that is, we have lost the variance
@@ -310,13 +308,10 @@ penguins.plot.scatter(
     alpha=0.6,
     ax=ax,
 )
-ax.plot(x1_range, x2_pred, "b-", linewidth=2, label="Regression line")
-
-ax.plot(pc_line[:, 0], pc_line[:, 1], "r-", linewidth=2, label="First PC")
-
-ax.set_title("Regression line vs First PC")
+ax.plot(x1_range, x2_pred, "b-", label="Regression line")
+ax.plot(pc_line[:, 0], pc_line[:, 1], "r-", label="First PC")
 ax.legend()
-plt.show()
+_ = ax.set_title("Regression line vs First PC")
 
 # %% [markdown]
 # The slopes are slightly different. Indeed :

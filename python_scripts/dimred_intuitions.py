@@ -325,7 +325,56 @@ plt.show()
 #   features asymmetrically, with one as predictor and one as target.
 # - PCA minimises the perpendicular distance from each point to the line. It
 #   treats both features symmetrically, with no notion of predictor/target.
-#
+
+# %%
+X_plot = penguins.sample(10, random_state=42)
+X_plot_pred = lr.predict(X_plot[["Culmen Length (mm)"]])
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
+
+for ax in axes:
+    penguins.plot.scatter(
+        x="Culmen Length (mm)",
+        y="Culmen Depth (mm)",
+        alpha=0.2,
+        color="steelblue",
+        ax=ax,
+    )
+    ax.scatter(
+        X_plot["Culmen Length (mm)"],
+        X_plot["Culmen Depth (mm)"],
+        color="steelblue",
+        alpha=0.8,
+        zorder=3,
+    )
+
+axes[0].plot(x1_range, x2_pred, "b-", label="Regression line")
+axes[0].vlines(
+    X_plot["Culmen Length (mm)"],
+    X_plot["Culmen Depth (mm)"],
+    X_plot_pred,
+    color="red",
+    label="Residuals",
+)
+axes[0].set_title("Linear regression minimizes\nvertical distances")
+
+axes[1].plot(pc_line[:, 0], pc_line[:, 1], "b-", label="First PC")
+points = X_plot.values
+t_proj = (points - center) @ direction
+projections = center + t_proj[:, np.newaxis] * direction
+
+for point, proj in zip(points, projections):
+    axes[1].plot([point[0], proj[0]], [point[1], proj[1]], color="red")
+axes[1].plot([], [], color="red", label="Reconstruction error")
+axes[1].set_title("PCA minimizes\nperpendicular distances")
+
+for ax in axes:
+    ax.set(xlim=(42, 54), ylim=(14, 22), aspect="equal")
+    ax.legend(loc="upper left")
+
+plt.show()
+
+# %% [markdown]
 # ## Key Takeaways
 #
 # - PCA is **an unsupervised learning method**. It works with features only,

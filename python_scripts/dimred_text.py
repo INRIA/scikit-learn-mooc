@@ -106,7 +106,7 @@ def plot_2d_projection(estimator, data, categories_to_plot):
         yaxis_title="PC2",
         yaxis=dict(scaleanchor="x", scaleratio=1),  # set equal axes
     )
-    fig.show()
+    fig.show(renderer="notebook")
 
 
 all_categories = data["category"].unique()
@@ -345,39 +345,7 @@ plot_2d_projection(tsne, data, all_categories)
 #   configuration does not change across runs. A random initialization with
 #   different seeds can produce a noticeably different global layout, making
 #   comparisons across runs harder to interpret.
-
-# %%
-from sklearn.neighbors import NeighborhoodComponentsAnalysis
-
-neigh_components = NeighborhoodComponentsAnalysis(n_components=2)
-X_2d = neigh_components.fit_transform(data_encoded, data["category"])
-
-fig = go.Figure()
-
-for cat in categories_to_plot:
-    idx = data["category"] == cat
-    fig.add_trace(
-        go.Scatter(
-            x=X_2d[idx, 0],
-            y=X_2d[idx, 1],
-            mode="markers",
-            name=cat,
-            marker=dict(size=5, opacity=0.6),
-            text=data.loc[idx, "text"].apply(wrap),
-            hovertemplate="<b>%{text}</b><extra></extra>",
-        )
-    )
-
-estimator_name = type(neigh_components).__name__
-fig.update_layout(
-    title=f"TF-IDF + {estimator_name} (2D projection)",
-    xaxis_title="PC1",
-    yaxis_title="PC2",
-    yaxis=dict(scaleanchor="x", scaleratio=1),  # set equal axes
-)
-fig.show()
-
-# %% [markdown]
+#
 # Finally, some dimensionality reduction algorithms are not included in
 # scikit-learn. One of them is [UMAP (Uniform Manifold Approximation and
 # Projection)](https://umap-learn.readthedocs.io), which is also neighbour-based

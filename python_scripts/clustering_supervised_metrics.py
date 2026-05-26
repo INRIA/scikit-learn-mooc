@@ -10,9 +10,12 @@
 #
 # In this notebook we briefly introduce how to deal with text data. Then we
 # introduce the use of performance metrics to evaluate a clustering model when
-# we have access to labeled data. Our goal is to evaluate whether the cluster
-# structure favored by k-means on the preprocessed text aligns with the
-# editorial categories assigned by Wikinews editors.
+# we have access to labeled data. While a classifier trained on these labels
+# would simply learn to reproduce the editorial categories, clustering may
+# reveal finer-grained or alternative groupings, such as sub-topics within a
+# single category, that classification would otherwise overlook. Our goal is to
+# evaluate whether the cluster structure favored by k-means on the preprocessed
+# text aligns with the editorial categories assigned by the Wikinews editors.
 #
 # ## Feature engineering for text data
 #
@@ -51,8 +54,8 @@ pd.DataFrame(
 # strategies](https://scikit-learn.org/stable/auto_examples/text/plot_hashing_vs_dict_vectorizer.html)
 # for more information.
 #
-# Now let us use the Wikinews dataset to show how text documents can be cluster
-# by topic.
+# Now let us use the Wikinews dataset to show how text documents can be
+# clustered by topic.
 
 # %%
 data = pd.read_csv("../datasets/wiki_news.csv")

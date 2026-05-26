@@ -41,6 +41,12 @@
 # dense region (too isolated from core points). They are usually considered to
 # be noise.
 #
+# ```{note}
+# If you want more information on how HDBSCAN works, you can refer to the
+# [hdbscan documentation](https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html)
+# or watch this [youtube video](https://www.youtube.com/watch?v=dGsxd67IFiU).
+# ```
+#
 # Let's first illustrate those concepts with a toy dataset generated using the
 # code below. You do not need to understand the details of the data generation
 # process, and instead pay attention to the resulting scatter plot.
@@ -103,7 +109,6 @@ plt.scatter(X_all[:, 0], X_all[:, 1], alpha=0.6)
 _ = plt.title("Synthetic dataset")
 
 # %% [markdown]
-#
 # You can observe that the dataset contains:
 # - four Gaussian blobs with different sizes and densities, some of which
 #   are elongated and other more spherical;
@@ -232,7 +237,6 @@ def plot_map(df, color_feature, colorbar_label="cluster label"):
 fig = plot_map(data, target, colorbar_label="price (k$)")
 
 # %% [markdown]
-#
 # We can try to use K-means to group data points into different spatial regions
 # (irrespective of the housing prices) and visualize the results on a map.
 #

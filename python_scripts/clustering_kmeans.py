@@ -49,7 +49,6 @@ species = penguins["Species"]
 penguins = penguins.drop(columns=["Species"])
 
 # %% [markdown]
-#
 # Let's take a first look at the structure of the available features using a
 # `pairplot`:
 
@@ -59,7 +58,6 @@ import seaborn as sns
 _ = sns.pairplot(penguins, hue="Sex", height=4)
 
 # %% [markdown]
-#
 # On these plots, we visually recognize 2 to 3 clusters depending on the feature
 # pairs. We can also notice that female penguins are generally smaller than male
 # penguins.
@@ -72,7 +70,6 @@ female_penguins = penguins.query("Sex == 'FEMALE'")
 _ = sns.pairplot(female_penguins, height=4)
 
 # %% [markdown]
-#
 # Intuitively, a good cluster should be compact (with points close to each
 # other), and well-separated from other clusters, which is indeed the case for
 # this subset of the data.
@@ -118,7 +115,6 @@ ax = sns.scatterplot(
 sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 
 # %% [markdown]
-#
 # The result is disappointing: the 3 clusters found by k-means do not match
 # what we would have naively expected from the scatter plot.
 #
@@ -150,7 +146,6 @@ ax.set(
 sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
 
 # %% [markdown]
-#
 # We thus confirm that, when using in the original units, the distances between
 # data points are almost entirely dominated by the "Body Mass (g)" feature,
 # which has much larger numerical values than the "Culmen Length (mm)" feature.
@@ -168,7 +163,6 @@ scaled_kmeans = make_pipeline(
 )
 
 # %% [markdown]
-#
 # Notice that scaling features by their standard deviation using
 # `StandardScaler` is just one way to achieve this. Other options include
 # `RobustScaler`, `MinMaxScaler`, and several others, which work similarly but
@@ -207,7 +201,6 @@ plot_kmeans_clusters_on_2d_data(
 )
 
 # %% [markdown]
-#
 # Now the results of the k-means cluster better match our visual intuition on
 # this pair of features.
 #
@@ -225,7 +218,6 @@ plot_kmeans_clusters_on_2d_data(
 )
 
 # %% [markdown]
-#
 # Here again the clusters are well separated and the k-means algorithm
 # identified clusters that match our visual intuition.
 #
@@ -242,15 +234,19 @@ plot_kmeans_clusters_on_2d_data(
 )
 
 # %% [markdown]
-#
 # When we select a large value of `n_clusters`, we observe that k-means builds
 # as many groups as requested even if the resulting clusters are not well
 # separated.
 #
 # Let's now see if we can identify suitable values for the number of clusters
-# based on some heuristics. We start by plotting the evolution of the WCSS
-# (Within-Cluster Sum of Squares) metric as a function of the number of
-# clusters.
+# based on some heuristics. But before that, remember that k-means work by
+# minimizing the within-cluster sum of squared distances (normally denoted by
+# its acronym **WCSS** or also known as **inertia**). This is, we minimize the
+# sum of distances between the points in each cluster and the cluster’s
+# centroid.
+#
+# We start by plotting the evolution of the WCSS metric as a function of the
+# number of clusters.
 
 # %%
 import matplotlib.pyplot as plt
@@ -274,15 +270,22 @@ plt.ylabel("WCSS (or inertia)")
 _ = plt.title("Elbow method using WCSS")
 
 # %% [markdown]
-#
 # We can observe the so-called "elbow" in the curve (the point with maximum
 # curvature) around `n_clusters=3`. This matches our visual intuition coming
 # from the "Culmen Length" vs "Body Mass" scatter plot.
 #
 # However, the WCSS value decreases monotonically as the number of clusters
-# increases, and then we may be overlooking important information. Let's now
-# plot the silhouette score instead. Notice that this method requires access to
-# the preprocessed features:
+# increases, and then we may be overlooking important information.
+#
+# As an alternative, we can use the **silhouette score**, which measures both
+# the overall **cohesion** (i.e. the intra-cluster sum of distances) and how
+# **well-separated** are neighboring clusters (i.e. the inter-cluster sum of
+# distances). It does not increase or decrease a priori with the number of
+# clusters, and then it's easier to interpret in terms of cluster quality for a
+# given `n_clusters`.
+#
+# Let's now plot the silhouette score. Notice that this method requires access
+# to the preprocessed features:
 
 # %%
 from sklearn.metrics import silhouette_score
@@ -312,7 +315,7 @@ def plot_silhouette_scores(
 
     plt.plot(n_clusters_values, silhouette_scores, marker="o")
     plt.xlabel("Number of clusters (n_clusters)")
-    plt.ylabel("Silhouette score")
+    plt.ylabel("Silhouette score\n(higher is better)")
     _ = plt.title("Silhouette scores using\n" + title_details)
 
 
@@ -322,7 +325,6 @@ plot_silhouette_scores(
 )
 
 # %% [markdown]
-#
 # The silhouette score reaches a maximum when `n_clusters=3`, which confirms our
 # visual intuition on this 2D dataset.
 #
@@ -340,12 +342,10 @@ plot_silhouette_scores(
 )
 
 # %% [markdown]
-#
 # The plot reaches a clear maximum silhouette score when `n_clusters=2`, which
 # matches our intuition for those two features.
 
 # %% [markdown]
-#
 # We can now try to apply the k-means algorithm on the full dataset, i.e. on all
 # numerical features and all rows, regardless of the "Sex" feature, to see
 # whether k-means can discover meaningful clusters in the whole data.
@@ -367,7 +367,6 @@ preprocessor = make_column_transformer(
 plot_silhouette_scores(penguins, preprocessor=preprocessor)
 
 # %% [markdown]
-#
 # Based on the silhouette scores, it seems that k-means would prefer to cluster
 # those features into either 2 or 6 clusters.
 #
@@ -388,7 +387,6 @@ _ = sns.pairplot(
 )
 
 # %% [markdown]
-#
 # Since this is high-dimensional data (5D), the pairplot (computed only for the
 # 4 numerical features) only offers a limited perspective on the clusters.
 # Despite this limitation, the clusters do appear meaningful, and in particular
@@ -412,7 +410,6 @@ _ = sns.pairplot(
 )
 
 # %% [markdown]
-#
 # This plot seems to be very similar to the pairplot we obtained with the 6
 # clusters found by k-means on our preprocessed data, i.e. in both cases plots
 # that display 3 clusters can be further divided into a group of proportionally

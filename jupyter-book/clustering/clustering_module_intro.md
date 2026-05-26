@@ -8,11 +8,12 @@ In the previous modules, we introduced the development, tuning and evaluation
 of **supervised** machine learning models and pipelines.
 
 In this module we present an **unsupervised** learning task, namely clustering.
-In particular, we will focus on the k-means algorithm, and consider how to
-evaluate such models via concepts such as cluster stability and evaluation
-metrics such as silhouette score and inertia. We also introduce supervised
-clustering metrics that leverage annotated data to assess clustering
-quality.
+Unlike supervised approaches, unsupervised learning finds structure in data
+without relying on a target. In particular, we will focus on the k-means
+algorithm, and consider how to evaluate such models via concepts such as cluster
+stability and evaluation metrics such as silhouette score and inertia. We also
+introduce supervised clustering metrics that leverage annotated data to assess
+clustering quality.
 
 Finally, we discuss what to do when the assumptions of k-means do not hold, such
 as using HDBSCAN for non-convex clusters, and show how k-means can still be

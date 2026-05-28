@@ -136,7 +136,7 @@ plt.show()
 # `components_` attribute. It is a an array of shape `(n_components,
 # n_features)`. Each entry of the array is the cosine of the angle between the
 # axis of an original feature and one PC direction. That is, a value close to 0
-# means the PC is nearly perpendicular to the original feature, whereas a value
+# means the PC is nearly perpendicular to the original feature axis, whereas a value
 # close to 1 or -1 means the PC runs nearly parallel to that feature axis. The
 # sign has no absolute meaning, it just reflects an arbitrary orientation choice
 # that PCA makes internally.

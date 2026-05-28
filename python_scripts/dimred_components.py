@@ -46,7 +46,7 @@ X, _ = load_wine(return_X_y=True, as_frame=True)
 # %%
 from skrub import TableReport
 
-TableReport(X)
+TableReport(X, verbose=0)
 
 # %% [markdown]
 # The dataset is composed of numerical features only, spanning different ranges

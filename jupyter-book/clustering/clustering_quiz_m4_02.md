@@ -32,7 +32,7 @@ _Select all answers that apply_
 ```{admonition} Question
 A `KMeans` instance with `n_clusters=10` is used to transform the latitude and
 longitude in a supervised learning pipeline. Provided the original dataset consists of
-`n_features`, including those two, how many features are passed to
+`n_features`, including those two that were transformed, how many features are passed to
 the final estimator of the pipeline?
 
 - a) `n_features` + 10

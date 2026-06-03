@@ -42,7 +42,6 @@ Repository. https://doi.org/10.24432/C5GS39.
 
 **Attribution:** Dataset created for the scikit-learn MOOC by INRIA.
 
-
 ---
 **Source:** [adults-census](https://www.openml.org/d/1119) ([original
 source](https://archive.ics.uci.edu/dataset/2/adult))
@@ -52,3 +51,20 @@ source](https://archive.ics.uci.edu/dataset/2/adult))
 **Attribution:** Please cite the following when using this dataset: Becker, B. &
 Kohavi, R. (1996). Adult [Dataset]. UCI Machine Learning Repository.
 https://doi.org/10.24432/C5XW20.
+
+---
+**Source:** [rfm_segmentation](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
+
+**License:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+**Attribution:** Please cite the following when using this dataset: Chen, D.
+(2012). Online Retail II [Dataset]. UCI Machine Learning Repository.
+https://doi.org/10.24432/C5CG6D.
+
+---
+**Source:** [wiki_news](https://www.megarhyme.com/blog/wikinews-dataset/)
+
+**License:** [Creative Commons Attribution 2.5 License](https://creativecommons.org/licenses/by/2.5/)
+
+**Attribution:** The dataset is a sub-sample of the version curated by [The Mega
+Rhyme Rhyming Dictionary](https://www.megarhyme.com/blog/wikinews-dataset/).

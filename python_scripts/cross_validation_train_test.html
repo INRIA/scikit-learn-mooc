@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=1ae7504c"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
@@ -61,8 +61,8 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_scripts/cross_validation_train_test';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/matomo.js?v=8af330ab"></script>
     <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
+    <script src="../_static/matomo.js?v=8af330ab"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -450,6 +450,28 @@
 <li class="toctree-l1"><a class="reference internal" href="dev_features_importance.html">Feature importance</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="../interpretation/interpretation_quiz.html">✅ Quiz</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">🚧 Clustering</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../clustering/clustering_module_intro.html">Module overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../clustering/clustering_kmeans_index.html">K-means</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="clustering_kmeans.html">K-means clustering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clustering_ex_01.html">📝 Exercise M4.01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clustering_sol_01.html">📃 Solution for Exercise M4.01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clustering_supervised_metrics.html">Clustering performance metrics in the presence of labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clustering_ex_02.html">📝 Exercise M4.02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clustering_sol_02.html">📃 Solution for Exercise M4.02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/clustering_quiz_m4_01.html">✅ Quiz M4.01</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../clustering/clustering_assumptions_index.html">Clustering when k-means assumptions fail</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="clustering_hdbscan.html">Non-convex clustering using HDBSCAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clustering_transformer.html">Making clusters part of a supervised pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/clustering_quiz_m4_02.html">✅ Quiz M4.02</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../clustering/clustering_wrap_up_quiz.html">🏁 Wrap-up quiz 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../clustering/clustering_module_take_away.html">Main take-away</a></li>
 </ul>
 
     </div>
@@ -2029,242 +2051,242 @@ it into a pandas dataframe to ease visualization and manipulation.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.145785</td>
-      <td>0.003316</td>
+      <td>0.148869</td>
+      <td>0.003482</td>
       <td>-46.909797</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.144695</td>
-      <td>0.003170</td>
+      <td>0.148936</td>
+      <td>0.003495</td>
       <td>-46.421170</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.144891</td>
-      <td>0.003191</td>
+      <td>0.146024</td>
+      <td>0.003500</td>
       <td>-47.411089</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.144984</td>
-      <td>0.003352</td>
+      <td>0.147711</td>
+      <td>0.003474</td>
       <td>-44.319824</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.145467</td>
-      <td>0.003220</td>
+      <td>0.144449</td>
+      <td>0.003445</td>
       <td>-47.607875</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.144186</td>
-      <td>0.003319</td>
+      <td>0.146365</td>
+      <td>0.003600</td>
       <td>-45.901300</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.146330</td>
-      <td>0.003201</td>
+      <td>0.147641</td>
+      <td>0.003603</td>
       <td>-46.572767</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.144566</td>
-      <td>0.003310</td>
+      <td>0.147679</td>
+      <td>0.003598</td>
       <td>-46.194585</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.146601</td>
-      <td>0.003278</td>
+      <td>0.147556</td>
+      <td>0.003620</td>
       <td>-45.590236</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.145756</td>
-      <td>0.003171</td>
+      <td>0.148456</td>
+      <td>0.003596</td>
       <td>-45.727998</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.145225</td>
-      <td>0.003286</td>
+      <td>0.146058</td>
+      <td>0.003619</td>
       <td>-49.325285</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.143584</td>
-      <td>0.003312</td>
+      <td>0.146410</td>
+      <td>0.003595</td>
       <td>-47.433377</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>0.144488</td>
-      <td>0.003262</td>
+      <td>0.145503</td>
+      <td>0.003675</td>
       <td>-46.899316</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>0.140728</td>
-      <td>0.003378</td>
+      <td>0.143358</td>
+      <td>0.003610</td>
       <td>-46.413821</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>0.143978</td>
-      <td>0.003257</td>
+      <td>0.144410</td>
+      <td>0.003572</td>
       <td>-46.727109</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.143544</td>
-      <td>0.003371</td>
+      <td>0.146490</td>
+      <td>0.003633</td>
       <td>-44.254324</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.144842</td>
-      <td>0.003292</td>
+      <td>0.145741</td>
+      <td>0.003720</td>
       <td>-48.042372</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>0.145680</td>
-      <td>0.003187</td>
+      <td>0.147836</td>
+      <td>0.003569</td>
       <td>-43.026746</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>0.145868</td>
-      <td>0.003262</td>
+      <td>0.146230</td>
+      <td>0.003633</td>
       <td>-46.176363</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>0.147365</td>
-      <td>0.003274</td>
+      <td>0.146328</td>
+      <td>0.003748</td>
       <td>-47.662623</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>0.144823</td>
-      <td>0.003311</td>
+      <td>0.146298</td>
+      <td>0.003554</td>
       <td>-44.451056</td>
     </tr>
     <tr>
       <th>21</th>
-      <td>0.143797</td>
-      <td>0.003392</td>
+      <td>0.146090</td>
+      <td>0.003560</td>
       <td>-46.173780</td>
     </tr>
     <tr>
       <th>22</th>
-      <td>0.148995</td>
-      <td>0.003259</td>
+      <td>0.149837</td>
+      <td>0.003646</td>
       <td>-45.795231</td>
     </tr>
     <tr>
       <th>23</th>
-      <td>0.146134</td>
-      <td>0.003263</td>
+      <td>0.148509</td>
+      <td>0.003682</td>
       <td>-46.166307</td>
     </tr>
     <tr>
       <th>24</th>
-      <td>0.144948</td>
-      <td>0.003245</td>
+      <td>0.145662</td>
+      <td>0.003624</td>
       <td>-46.360169</td>
     </tr>
     <tr>
       <th>25</th>
-      <td>0.143765</td>
-      <td>0.003326</td>
+      <td>0.146747</td>
+      <td>0.003610</td>
       <td>-46.968612</td>
     </tr>
     <tr>
       <th>26</th>
-      <td>0.145107</td>
-      <td>0.003319</td>
+      <td>0.146141</td>
+      <td>0.003705</td>
       <td>-46.325623</td>
     </tr>
     <tr>
       <th>27</th>
-      <td>0.143335</td>
-      <td>0.003205</td>
+      <td>0.145410</td>
+      <td>0.003648</td>
       <td>-46.522054</td>
     </tr>
     <tr>
       <th>28</th>
-      <td>0.146583</td>
-      <td>0.003287</td>
+      <td>0.156666</td>
+      <td>0.003644</td>
       <td>-47.415111</td>
     </tr>
     <tr>
       <th>29</th>
-      <td>0.144249</td>
-      <td>0.003345</td>
+      <td>0.147851</td>
+      <td>0.003475</td>
       <td>-46.050461</td>
     </tr>
     <tr>
       <th>30</th>
-      <td>0.148167</td>
-      <td>0.003333</td>
+      <td>0.146372</td>
+      <td>0.003552</td>
       <td>-46.182242</td>
     </tr>
     <tr>
       <th>31</th>
-      <td>0.145163</td>
-      <td>0.003384</td>
+      <td>0.147515</td>
+      <td>0.003791</td>
       <td>-45.305162</td>
     </tr>
     <tr>
       <th>32</th>
-      <td>0.145908</td>
-      <td>0.003295</td>
+      <td>0.147092</td>
+      <td>0.003670</td>
       <td>-44.359681</td>
     </tr>
     <tr>
       <th>33</th>
-      <td>0.144454</td>
-      <td>0.003403</td>
+      <td>0.148044</td>
+      <td>0.003738</td>
       <td>-46.829014</td>
     </tr>
     <tr>
       <th>34</th>
-      <td>0.145834</td>
-      <td>0.003288</td>
+      <td>0.147298</td>
+      <td>0.003635</td>
       <td>-46.648786</td>
     </tr>
     <tr>
       <th>35</th>
-      <td>0.143848</td>
-      <td>0.003153</td>
+      <td>0.146838</td>
+      <td>0.003769</td>
       <td>-45.653002</td>
     </tr>
     <tr>
       <th>36</th>
-      <td>0.145413</td>
-      <td>0.003171</td>
+      <td>0.147014</td>
+      <td>0.003753</td>
       <td>-46.864559</td>
     </tr>
     <tr>
       <th>37</th>
-      <td>0.142965</td>
-      <td>0.003395</td>
+      <td>0.146543</td>
+      <td>0.003617</td>
       <td>-47.420250</td>
     </tr>
     <tr>
       <th>38</th>
-      <td>0.143837</td>
-      <td>0.003275</td>
+      <td>0.145090</td>
+      <td>0.003675</td>
       <td>-47.352148</td>
     </tr>
     <tr>
       <th>39</th>
-      <td>0.142816</td>
-      <td>0.003268</td>
+      <td>0.145815</td>
+      <td>0.003825</td>
       <td>-47.102818</td>
     </tr>
   </tbody>
@@ -2328,71 +2350,71 @@ score.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.145785</td>
-      <td>0.003316</td>
+      <td>0.148869</td>
+      <td>0.003482</td>
       <td>-46.909797</td>
       <td>46.909797</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.144695</td>
-      <td>0.003170</td>
+      <td>0.148936</td>
+      <td>0.003495</td>
       <td>-46.421170</td>
       <td>46.421170</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.144891</td>
-      <td>0.003191</td>
+      <td>0.146024</td>
+      <td>0.003500</td>
       <td>-47.411089</td>
       <td>47.411089</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.144984</td>
-      <td>0.003352</td>
+      <td>0.147711</td>
+      <td>0.003474</td>
       <td>-44.319824</td>
       <td>44.319824</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.145467</td>
-      <td>0.003220</td>
+      <td>0.144449</td>
+      <td>0.003445</td>
       <td>-47.607875</td>
       <td>47.607875</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>0.144186</td>
-      <td>0.003319</td>
+      <td>0.146365</td>
+      <td>0.003600</td>
       <td>-45.901300</td>
       <td>45.901300</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.146330</td>
-      <td>0.003201</td>
+      <td>0.147641</td>
+      <td>0.003603</td>
       <td>-46.572767</td>
       <td>46.572767</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.144566</td>
-      <td>0.003310</td>
+      <td>0.147679</td>
+      <td>0.003598</td>
       <td>-46.194585</td>
       <td>46.194585</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.146601</td>
-      <td>0.003278</td>
+      <td>0.147556</td>
+      <td>0.003620</td>
       <td>-45.590236</td>
       <td>45.590236</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.145756</td>
-      <td>0.003171</td>
+      <td>0.148456</td>
+      <td>0.003596</td>
       <td>-45.727998</td>
       <td>45.727998</td>
     </tr>
@@ -2531,8 +2553,8 @@ passing the option <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.17098403, 0.1668644 , 0.16701126, 0.16715622, 0.16242719]),
- &#39;score_time&#39;: array([0.0025413 , 0.00246167, 0.00254798, 0.00235915, 0.00248909]),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;fit_time&#39;: array([0.17319536, 0.1685636 , 0.16853857, 0.16836905, 0.16346574]),
+ &#39;score_time&#39;: array([0.00282717, 0.00253654, 0.00258541, 0.0025444 , 0.00261974]),
  &#39;estimator&#39;: [DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),
   DecisionTreeRegressor(random_state=0),

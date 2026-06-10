@@ -180,11 +180,6 @@ _ = plt.suptitle(
 # well-defined sub-clusters that still share information with those labels, for
 # example "tech - space" and "tech - internet".
 #
-# The relatively good metrics values observed for `n_clusters=5` reflects both
-# good editorial labels (as the categories are well-defined and internally
-# consistent) as well as a clustering pipeline that can reasonably extract the
-# structure in the data that matches the human intuition.
-#
 # Note that the metrics measured on training or validation data are very
 # similar, meaning that k-means with small number of clusters is unlikely to
 # overfit noise from the training data.

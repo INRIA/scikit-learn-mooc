@@ -263,6 +263,15 @@ _ = plt.title("Test set class counts\n(with stratifying)")
 # performance metrics depend on the proportion of the positive class, as we will
 # see in a future notebook.
 #
+# However, as noted in the [scikit-learn user
+# guide](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-with-stratification-based-on-class-labels),
+# stratification makes folds more homogeneous, which can artificially shrink the
+# spread of the performance metric across folds in a classification case where
+# classes are heavily imbalanced. The reduced inter-fold variability no longer
+# reflects the true uncertainty in model performance — it is a consequence of
+# the folds being deliberately similar, not a sign that the model is more
+# stable.
+#
 # The interested reader can learn about other stratified cross-validation
 # techniques in the [scikit-learn user
 # guide](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-with-stratification-based-on-class-labels).

@@ -255,13 +255,18 @@ _ = plt.title("Test set class counts\n(with stratifying)")
 # train set and the test set. The difference is due to the small number of
 # samples in the iris dataset.
 #
-# In other words, stratifying is more effective than just shuffling when it
-# comes to making sure that the distributions of classes in all the folds are
-# representative of the entire dataset. As training and testing folds have
-# similar class distributions, stratifying leads to a more realistic measure of
-# the model’s ability to generalize. This is specially important when the
-# performance metrics depend on the proportion of the positive class, as we will
-# see in a future notebook.
+# Stratification is especially useful for ensuring that rare classes are
+# represented in every cross validation split. In particular, if a class is
+# absent from one or more splits, some classification metrics may become
+# undefined. It is also the case that some performance metrics depend on
+# the proportion of the positive class, as we will see in a future notebook.
+#
+# However, as noted in the [scikit-learn user
+# guide](https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-with-stratification-based-on-class-labels),
+# stratification makes the folds more homogeneous. In the presence of severe
+# class imbalance, this can artificially reduce the variability of performance
+# metrics across folds, causing the observed variability to underestimate the
+# true uncertainty in model performance.
 #
 # The interested reader can learn about other stratified cross-validation
 # techniques in the [scikit-learn user

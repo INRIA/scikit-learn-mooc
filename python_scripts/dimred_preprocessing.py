@@ -329,11 +329,11 @@ fig.colorbar(im, ax=axes, shrink=0.8)
 plt.show()
 
 # %% [markdown]
-# Using `StandardScaler`, PC1 is dominated by `OverallQual` and `GrLivArea`, with
-# `YearBuilt` contributing moderately; while `LotArea` plays almost no role in
-# PC1 but dominates PC2. The outlier lots do
-# inflate the standard deviation of `LotArea`, but their influence on the joint
-# decomposition is modest because they are outnumbered by the inliers.
+# Using `StandardScaler`, PC1 is dominated by `OverallQual` and `GrLivArea`,
+# with `YearBuilt` contributing moderately; while `LotArea` plays almost no role
+# in PC1 but dominates PC2. The outlier lots do inflate the standard deviation
+# of `LotArea`, but their influence on the joint decomposition is modest because
+# they are outnumbered by the inliers.
 #
 # With `RobustScaler`, `LotArea` dominates PC1 almost entirely. The small IQR
 # makes the outlier lots extremely large in scaled units, so PCA dedicates most

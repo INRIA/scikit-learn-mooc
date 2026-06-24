@@ -329,9 +329,9 @@ fig.colorbar(im, ax=axes, shrink=0.8)
 plt.show()
 
 # %% [markdown]
-# With `StandardScaler`, PC1 loads on `GrLivArea` and `OverallQual` the most
-# (positively correlated house-size and quality features), while `LotArea` and
-# `YearBuilt` contribute less to PC1, and more to PC2. The outlier lots do
+# Using `StandardScaler`, PC1 is dominated by `OverallQual` and `GrLivArea`, with
+# `YearBuilt` contributing moderately; while `LotArea` plays almost no role in
+# PC1 but dominates PC2. The outlier lots do
 # inflate the standard deviation of `LotArea`, but their influence on the joint
 # decomposition is modest because they are outnumbered by the inliers.
 #

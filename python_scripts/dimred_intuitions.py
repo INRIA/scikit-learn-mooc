@@ -142,8 +142,7 @@ print(
 )  # ddof scales by n_samples-1
 
 # %% [markdown]
-# Since the variance is the square of the standard deviation, we have to take
-# the square root to recover the original scale in millimeters:
+# Remember that the variance is simply the square of the standard deviation:
 
 # %%
 pca_std = np.sqrt(pca.explained_variance_)
@@ -151,6 +150,11 @@ print(f"Std along the first PC : {pca_std[0]:.3f} mm")
 print(f"Std along the second PC : {pca_std[1]:.3f} mm")
 
 # %% [markdown]
+# As both features share the same unit (mm), the standard deviation of each
+# component is still interpretable in mm in this particular case. But in the
+# general case PCA can mix heterogeneous units from different features, making
+# such interpretation meaningless.
+#
 # If we are more interested in the proportion of the total variance carried by
 # each component, and not so much on the original scale, we can make use of the
 # `explained_variance_ratio_` attribute:

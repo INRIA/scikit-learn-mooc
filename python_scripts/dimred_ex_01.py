@@ -101,10 +101,7 @@ param_grid = {param_name: [3, 10, 50, 100, 200, None]}
 
 # %% [markdown]
 # Build a `grid_search_results` DataFrame from the attribute `cv_results_`
-# keeping only the columns listed in `results_columns` below. Add a
-# `"mean_test_error"` column as the negative of `"mean_test_score"`, drop
-# `"mean_test_score"`, and rename `"param_pca__n_components"` to
-# `"n_components"`.
+# keeping only the columns listed in `results_columns` below.
 
 # %%
 results_columns = [
@@ -120,8 +117,6 @@ results_columns = [
 # %%
 # Write your code here.
 
-grid_search_results = [...]  # complete this code
-
 # %% [markdown]
 # The following cell plots test RMSE against fit time using `grid_search_results`.
 # Hover over a point to see the corresponding `n_components` value. It runs
@@ -130,32 +125,48 @@ grid_search_results = [...]  # complete this code
 # %%
 import plotly.express as px
 
-labels = {
-    "mean_fit_time": "CV fit time (s)",
-    "mean_test_error": "CV score (MAE)",
-}
-grid_search_results["n_components"] = grid_search_results[
-    "n_components"
-].fillna("None")
-fig = px.scatter(
-    grid_search_results,
-    x="mean_fit_time",
-    y="mean_test_error",
-    error_x="std_fit_time",
-    error_y="std_test_score",
-    hover_data=grid_search_results.columns,
-    labels=labels,
-)
-fig.update_layout(
-    title={
-        "text": "Trade-off between fit time and mean test score",
-        "y": 0.95,
-        "x": 0.5,
-        "xanchor": "center",
-        "yanchor": "top",
+
+def plot_grid_search_results(grid_search_results):
+    grid_search_results["mean_test_error"] = -grid_search_results[
+        "mean_test_score"
+    ]
+    grid_search_results = (
+        grid_search_results.drop(columns=["mean_test_score"])
+        .rename(columns={"param_" + param_name: "n_components"})
+        .round(2)
+    )
+    grid_search_results.sort_values("mean_test_error", ascending=False)
+
+    labels = {
+        "mean_fit_time": "CV fit time (s)",
+        "mean_test_error": "CV score (RMSE)",
     }
-)
-fig.show(renderer="notebook")
+    grid_search_results["n_components"] = grid_search_results[
+        "n_components"
+    ].fillna("None")
+    fig = px.scatter(
+        grid_search_results,
+        x="mean_fit_time",
+        y="mean_test_error",
+        error_x="std_fit_time",
+        error_y="std_test_score",
+        hover_data=grid_search_results.columns,
+        labels=labels,
+    )
+    fig.update_layout(
+        title={
+            "text": "Trade-off between fit time and mean test score",
+            "y": 0.95,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+    fig.show(renderer="notebook")
+
+
+# %%
+# Write your code here.
 
 # %% [markdown]
 # ## Does reducing dimensions stabilize the optimal `alpha`?

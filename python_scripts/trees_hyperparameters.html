@@ -16,38 +16,41 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -61,8 +64,8 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_scripts/trees_hyperparameters';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <script src="../_static/matomo.js?v=8af330ab"></script>
+    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -70,6 +73,7 @@
     <link rel="prev" title="Hyperparameters of decision tree" href="../trees/trees_hyperparameters_index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -85,19 +89,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -105,7 +98,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -113,8 +105,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -130,7 +122,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -160,21 +153,17 @@
     
     
     <img src="../_static/scikit-learn-logo.png" class="logo__image only-light" alt="Scikit-learn course - Home"/>
-    <script>document.write(`<img src="../_static/scikit-learn-logo.png" class="logo__image only-dark" alt="Scikit-learn course - Home"/>`);</script>
+    <img src="../_static/scikit-learn-logo.png" class="logo__image only-dark pst-js-only" alt="Scikit-learn course - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
@@ -480,9 +469,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -660,7 +654,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -674,25 +668,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -841,7 +827,7 @@ parameter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/45a9d73f0392dea9b845ad14ac78fba264c36fc74680838eb92696ccebc5f85f.png" src="../_images/45a9d73f0392dea9b845ad14ac78fba264c36fc74680838eb92696ccebc5f85f.png" />
+<img alt="../_images/4d013e76ebd64e76f89510364c9e3d5985b09a2a08f11e15890d49c1a2630782.png" src="../_images/4d013e76ebd64e76f89510364c9e3d5985b09a2a08f11e15890d49c1a2630782.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -854,7 +840,7 @@ parameter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b48ad532d880a22768173033b5a3e88daf2b1db53aeb2ca4556208557ebc26e3.png" src="../_images/b48ad532d880a22768173033b5a3e88daf2b1db53aeb2ca4556208557ebc26e3.png" />
+<img alt="../_images/fdcb619505a73afe53fde614a6db5110da57c5d399f9dae3e7a5cc1f51452b53.png" src="../_images/fdcb619505a73afe53fde614a6db5110da57c5d399f9dae3e7a5cc1f51452b53.png" />
 </div>
 </div>
 <p>Now, let’s increase the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter value to check the difference by
@@ -878,7 +864,7 @@ observing the decision function.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6d4e7f932cf582608296f2134d98ab4cce85270385c0bdc03077d96ffb081168.png" src="../_images/6d4e7f932cf582608296f2134d98ab4cce85270385c0bdc03077d96ffb081168.png" />
+<img alt="../_images/ecf73415fde7374942f6cb9f84ce2837201308ef0cc18076fe8c3dadb7a98e4e.png" src="../_images/ecf73415fde7374942f6cb9f84ce2837201308ef0cc18076fe8c3dadb7a98e4e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -891,7 +877,7 @@ observing the decision function.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f626d171280fc18f5cc1a6846c3601d66630f188a15dde3cdb086dc14b3fecd3.png" src="../_images/f626d171280fc18f5cc1a6846c3601d66630f188a15dde3cdb086dc14b3fecd3.png" />
+<img alt="../_images/5d61e6b7b0631b9fe59207838075dbfbefbb645519586254cc880fc8505ca050.png" src="../_images/5d61e6b7b0631b9fe59207838075dbfbefbb645519586254cc880fc8505ca050.png" />
 </div>
 </div>
 <p>For both classification and regression setting, we observe that increasing the
@@ -922,7 +908,7 @@ one should optimize via cross-validation and grid-search.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/920cd5d29a5b623d56cb0041f1774b16f63f3639fe665db1e2085cfe11849ad0.png" src="../_images/920cd5d29a5b623d56cb0041f1774b16f63f3639fe665db1e2085cfe11849ad0.png" />
+<img alt="../_images/f7ce2f73cf96175e8ce53cf95665c06f5295fdabdb57f03b4768a9c7979ba26b.png" src="../_images/f7ce2f73cf96175e8ce53cf95665c06f5295fdabdb57f03b4768a9c7979ba26b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -937,7 +923,7 @@ one should optimize via cross-validation and grid-search.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c972cb385c6cac352223ce2839d844d265f9af0e286a27ab7e9ae7bd830e9e4b.png" src="../_images/c972cb385c6cac352223ce2839d844d265f9af0e286a27ab7e9ae7bd830e9e4b.png" />
+<img alt="../_images/fc545413824c87292f5ca5035efa4c63fc22f6ad6f30b5beca35d7fe4af980d3.png" src="../_images/fc545413824c87292f5ca5035efa4c63fc22f6ad6f30b5beca35d7fe4af980d3.png" />
 </div>
 </div>
 <p>With this example, we see that there is not a single value that is optimal for
@@ -995,7 +981,7 @@ from the second subset than from the first subset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2c08667a690ea9c2094b31465189eb68d2e841893ed485e591f5c919711743fd.png" src="../_images/2c08667a690ea9c2094b31465189eb68d2e841893ed485e591f5c919711743fd.png" />
+<img alt="../_images/382700d395367b80ff3e8bb4b74db11f8b2ea1fb7c58a2eb030930b27c7719ae.png" src="../_images/382700d395367b80ff3e8bb4b74db11f8b2ea1fb7c58a2eb030930b27c7719ae.png" />
 </div>
 </div>
 <p>We first train a shallow decision tree with <code class="docutils literal notranslate"><span class="pre">max_depth=2</span></code>. We would expect
@@ -1012,7 +998,7 @@ this depth to be enough to separate the blobs that are easy to separate.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c528271c2add3eb9d04b111b0e35d26e69f3760fbcf9232a1b41de832c87ab4b.png" src="../_images/c528271c2add3eb9d04b111b0e35d26e69f3760fbcf9232a1b41de832c87ab4b.png" />
+<img alt="../_images/7ddcf326efca90cbe2c9ee711d9d660a491fe7f2dc22cb974cde567a8ec661ca.png" src="../_images/7ddcf326efca90cbe2c9ee711d9d660a491fe7f2dc22cb974cde567a8ec661ca.png" />
 </div>
 </div>
 <p>As expected, we see that the blue blob in the lower right and the red blob on
@@ -1028,7 +1014,7 @@ split the blob were both blue and red data points are mixed.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/aff81281e39305f83e1ee6319e95f40a46922e548790edb504b9f0a384bd96b8.png" src="../_images/aff81281e39305f83e1ee6319e95f40a46922e548790edb504b9f0a384bd96b8.png" />
+<img alt="../_images/af7927a387f4e809cce1c19aec15d15cd034f40463e22e79a498fb54bd1129fd.png" src="../_images/af7927a387f4e809cce1c19aec15d15cd034f40463e22e79a498fb54bd1129fd.png" />
 </div>
 </div>
 <p>We see that the right branch achieves perfect classification. Now, we increase
@@ -1045,7 +1031,7 @@ the depth to check how the tree grows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/12db4f851e202ed4df0b9360259cc383caea85752360b8a4619ab3ee50264476.png" src="../_images/12db4f851e202ed4df0b9360259cc383caea85752360b8a4619ab3ee50264476.png" />
+<img alt="../_images/a4c727c8f89ab5718ca5bbecf88dfe4249fdbe8313c7ede487b94ccf3030fa95.png" src="../_images/a4c727c8f89ab5718ca5bbecf88dfe4249fdbe8313c7ede487b94ccf3030fa95.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1056,7 +1042,7 @@ the depth to check how the tree grows.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/030d2ecd9d0429c5c7bbc0f4496a5c8f2d0d7e402fe1a8d584cf80be88aef14f.png" src="../_images/030d2ecd9d0429c5c7bbc0f4496a5c8f2d0d7e402fe1a8d584cf80be88aef14f.png" />
+<img alt="../_images/d06b6c64c5557acdc8eeeb20026af2f3ce9e1e563ec42a2caf8e7f5288b83d81.png" src="../_images/d06b6c64c5557acdc8eeeb20026af2f3ce9e1e563ec42a2caf8e7f5288b83d81.png" />
 </div>
 </div>
 <p>As expected, the left branch of the tree continue to grow while no further
@@ -1081,7 +1067,7 @@ constraint at the leaves or nodes level. We check the effect of
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f6dbdbc60bfced8433e397aa320b3c8b0c96ebad7d27caf19a421c7d56f0aefe.png" src="../_images/f6dbdbc60bfced8433e397aa320b3c8b0c96ebad7d27caf19a421c7d56f0aefe.png" />
+<img alt="../_images/a214d53b86a8a5267efe83c4fbda77ba72354e1b3ea25fb52dcd81893d054c4b.png" src="../_images/a214d53b86a8a5267efe83c4fbda77ba72354e1b3ea25fb52dcd81893d054c4b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1092,7 +1078,7 @@ constraint at the leaves or nodes level. We check the effect of
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3edacd641badd320d1773fdf9a984c6cf1a5ee9773b8ae6236e1e5a1bb568b94.png" src="../_images/3edacd641badd320d1773fdf9a984c6cf1a5ee9773b8ae6236e1e5a1bb568b94.png" />
+<img alt="../_images/a133c69e1779ef28f0e87bd1c504ae32888ec76c8bed6ee340464388443c5c94.png" src="../_images/a133c69e1779ef28f0e87bd1c504ae32888ec76c8bed6ee340464388443c5c94.png" />
 </div>
 </div>
 <p>This hyperparameter allows to have leaves with a minimum number of samples and
@@ -1156,14 +1142,16 @@ could be an alternative to fix the <code class="docutils literal notranslate"><s
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-helper-functions">Create helper functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-the-max-depth-parameter">Effect of the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter</a></li>
@@ -1231,8 +1219,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

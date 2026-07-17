@@ -16,38 +16,41 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -61,8 +64,8 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_scripts/ensemble_bagging';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <script src="../_static/matomo.js?v=8af330ab"></script>
+    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -70,6 +73,7 @@
     <link rel="prev" title="Introductory example to ensemble models" href="ensemble_introduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -85,19 +89,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -105,7 +98,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -113,8 +105,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -130,7 +122,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -160,21 +153,17 @@
     
     
     <img src="../_static/scikit-learn-logo.png" class="logo__image only-light" alt="Scikit-learn course - Home"/>
-    <script>document.write(`<img src="../_static/scikit-learn-logo.png" class="logo__image only-dark" alt="Scikit-learn course - Home"/>`);</script>
+    <img src="../_static/scikit-learn-logo.png" class="logo__image only-dark pst-js-only" alt="Scikit-learn course - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
@@ -480,9 +469,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -660,7 +654,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -674,25 +668,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -780,7 +766,7 @@ learner are aggregated to give the final predictions.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f405d946f0da23c9994580d89e85c202f4f9fb6b420a6a29ac102ae55af7cb30.png" src="../_images/f405d946f0da23c9994580d89e85c202f4f9fb6b420a6a29ac102ae55af7cb30.png" />
+<img alt="../_images/b61c5796e71cacb88b627636330fc62e05a360c7200d7f0f0d7835c855fbfc55.png" src="../_images/b61c5796e71cacb88b627636330fc62e05a360c7200d7f0f0d7835c855fbfc55.png" />
 </div>
 </div>
 <p>The target to predict is a non-linear function of the only feature. However, a
@@ -811,7 +797,7 @@ be meaningless.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1bbe98f693c12900aff6889c046b91e75d96f02e4a3e91c4fd569d9cf3ad9ffb.png" src="../_images/1bbe98f693c12900aff6889c046b91e75d96f02e4a3e91c4fd569d9cf3ad9ffb.png" />
+<img alt="../_images/fcd81eff40c6a3f0adcfaf8e55f387c61bffe28de049631a7761dccacf3ae2ad.png" src="../_images/fcd81eff40c6a3f0adcfaf8e55f387c61bffe28de049631a7761dccacf3ae2ad.png" />
 </div>
 </div>
 <p>Let’s see how we can use bootstrapping to learn several trees.</p>
@@ -883,9 +869,9 @@ with the original dataset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/308dc4320353944fbd49faec1ee4afcf4e85558fd1b167baad56a0a9010eeb33.png" src="../_images/308dc4320353944fbd49faec1ee4afcf4e85558fd1b167baad56a0a9010eeb33.png" />
-<img alt="../_images/fd8a862fcd7512951f2804e630b9914785fcaeaf327f9401eb02ba438991e921.png" src="../_images/fd8a862fcd7512951f2804e630b9914785fcaeaf327f9401eb02ba438991e921.png" />
-<img alt="../_images/a666e5576d824865ed17bd06fbcc981b567d0b18c9f1b1aa5ce0b4d1847a92a4.png" src="../_images/a666e5576d824865ed17bd06fbcc981b567d0b18c9f1b1aa5ce0b4d1847a92a4.png" />
+<img alt="../_images/6b096310d76a0720350e43bac265be8789afd31d0cdde4a6e0024d0372670d50.png" src="../_images/6b096310d76a0720350e43bac265be8789afd31d0cdde4a6e0024d0372670d50.png" />
+<img alt="../_images/774f0abb1e5566e4e021de6bdc399ce9d065abaa5241f3b7c967ac2ebe8cc14d.png" src="../_images/774f0abb1e5566e4e021de6bdc399ce9d065abaa5241f3b7c967ac2ebe8cc14d.png" />
+<img alt="../_images/74777e721caf81d5bbbff5d16d5a1b27cac90b936e723c11994435fab53f3ed6.png" src="../_images/74777e721caf81d5bbbff5d16d5a1b27cac90b936e723c11994435fab53f3ed6.png" />
 </div>
 </div>
 <p>Observe that the 3 variations all share common points with the original
@@ -965,7 +951,7 @@ different predictions.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/167ffa431f1b03631e0add7cc5b40a1250975171248051b3e3125dbe977ef4aa.png" src="../_images/167ffa431f1b03631e0add7cc5b40a1250975171248051b3e3125dbe977ef4aa.png" />
+<img alt="../_images/67052e194180ad1b5dc9f6a5d935cd692db8346256ed6d48e9fca2680a8ec3c3.png" src="../_images/67052e194180ad1b5dc9f6a5d935cd692db8346256ed6d48e9fca2680a8ec3c3.png" />
 </div>
 </div>
 </section>
@@ -1009,7 +995,7 @@ for the test data point is the average of those <code class="docutils literal no
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/39a5631ab87aec99376e3635301c95ae1afe8944f4c0e8ce58e9e1c732b8768a.png" src="../_images/39a5631ab87aec99376e3635301c95ae1afe8944f4c0e8ce58e9e1c732b8768a.png" />
+<img alt="../_images/80acba51d88a20c7cf8b5b5b705d7e715361941a6884aa5bd34d335cc884c0da.png" src="../_images/80acba51d88a20c7cf8b5b5b705d7e715361941a6884aa5bd34d335cc884c0da.png" />
 </div>
 </div>
 <p>The continuous red line shows the averaged predictions, which would be the final
@@ -1054,7 +1040,7 @@ above to get a stronger smoothing effect.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/27d08e68ab2d6340c7cd36579f4c75e6439aaf34351330f7c5f6fe2befa57cb8.png" src="../_images/27d08e68ab2d6340c7cd36579f4c75e6439aaf34351330f7c5f6fe2befa57cb8.png" />
+<img alt="../_images/316d382fe34826597d5bbc6eba55fbd502324d0be94436ff5daeca774b0df49a.png" src="../_images/316d382fe34826597d5bbc6eba55fbd502324d0be94436ff5daeca774b0df49a.png" />
 </div>
 </div>
 <p>Because we use 100 trees in the ensemble, the average prediction is indeed
@@ -1093,7 +1079,7 @@ Python list in the <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8cb705b13da6ca5b3887c56a2cf0c2cb2127b8d82c0ed03fc8d521e889d02bbd.png" src="../_images/8cb705b13da6ca5b3887c56a2cf0c2cb2127b8d82c0ed03fc8d521e889d02bbd.png" />
+<img alt="../_images/65691ee3976d9ad6dffc4e94664b7adcd78e2c9e77e25641450c1b75060ef742.png" src="../_images/65691ee3976d9ad6dffc4e94664b7adcd78e2c9e77e25641450c1b75060ef742.png" />
 </div>
 </div>
 <p>We used a low value of the opacity parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> to better appreciate the
@@ -1177,7 +1163,7 @@ base models.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5b0a0a33cfbbb2694a6af5360a71ce2149b8de7b5ea6034d1f0200347220b196.png" src="../_images/5b0a0a33cfbbb2694a6af5360a71ce2149b8de7b5ea6034d1f0200347220b196.png" />
+<img alt="../_images/47c353bd4b65dc877be1f1ae74042d8fd3af0187d6a3bee7cd729bd13c54ac7e.png" src="../_images/47c353bd4b65dc877be1f1ae74042d8fd3af0187d6a3bee7cd729bd13c54ac7e.png" />
 </div>
 </div>
 <p>The predictions of this bagged polynomial regression model looks qualitatively
@@ -1248,14 +1234,16 @@ bootstrapping</a>.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrap-resampling">Bootstrap resampling</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregating">Aggregating</a></li>
@@ -1324,8 +1312,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

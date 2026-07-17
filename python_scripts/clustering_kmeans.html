@@ -16,38 +16,41 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -61,8 +64,8 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_scripts/clustering_kmeans';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <script src="../_static/matomo.js?v=8af330ab"></script>
+    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -70,6 +73,7 @@
     <link rel="prev" title="K-means" href="../clustering/clustering_kmeans_index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -85,19 +89,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -105,7 +98,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -113,8 +105,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -130,7 +122,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -160,21 +153,17 @@
     
     
     <img src="../_static/scikit-learn-logo.png" class="logo__image only-light" alt="Scikit-learn course - Home"/>
-    <script>document.write(`<img src="../_static/scikit-learn-logo.png" class="logo__image only-dark" alt="Scikit-learn course - Home"/>`);</script>
+    <img src="../_static/scikit-learn-logo.png" class="logo__image only-dark pst-js-only" alt="Scikit-learn course - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
@@ -480,9 +469,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -660,7 +654,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -674,24 +668,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -904,7 +890,7 @@ notebook:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c32ddc798b1f36894d3c13a478b2f189d3ff83b9e1dad58e6ad068e42267acdc.png" src="../_images/c32ddc798b1f36894d3c13a478b2f189d3ff83b9e1dad58e6ad068e42267acdc.png" />
+<img alt="../_images/2133f3eb78f1d6e372bb27457e718751b60f778a50a42f3da2a55ec3b3218e3b.png" src="../_images/2133f3eb78f1d6e372bb27457e718751b60f778a50a42f3da2a55ec3b3218e3b.png" />
 </div>
 </div>
 <p>On these plots, we visually recognize 2 to 3 clusters depending on the feature
@@ -920,7 +906,7 @@ leads to better separated clusters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/51390a265b9517d79ba32c69e05f0ddaa7a779db2bd4f0427541ebf70ce344ba.png" src="../_images/51390a265b9517d79ba32c69e05f0ddaa7a779db2bd4f0427541ebf70ce344ba.png" />
+<img alt="../_images/d2512fde129ffc754df9cdc2d7584618153eb3a22b639eebb501eadb934a97e2.png" src="../_images/d2512fde129ffc754df9cdc2d7584618153eb3a22b639eebb501eadb934a97e2.png" />
 </div>
 </div>
 <p>Intuitively, a good cluster should be compact (with points close to each
@@ -984,7 +970,7 @@ clusters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f94f99cffb282e6cf1bed29ae23e5db571372be62b57823d72bb8d667c3d3e9c.png" src="../_images/f94f99cffb282e6cf1bed29ae23e5db571372be62b57823d72bb8d667c3d3e9c.png" />
+<img alt="../_images/11fc03a5e969c7ac0467f000a8fa61b96744e912c6b18e087949d51500b255ec.png" src="../_images/11fc03a5e969c7ac0467f000a8fa61b96744e912c6b18e087949d51500b255ec.png" />
 </div>
 </div>
 <p>The result is disappointing: the 3 clusters found by k-means do not match
@@ -1017,7 +1003,7 @@ values of “Culmen Length (mm)” and “Body Mass (g)” are not on the same s
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7fa360f12bb387b8d6285c594291c048385e07df9043db4e432cfee2957291c1.png" src="../_images/7fa360f12bb387b8d6285c594291c048385e07df9043db4e432cfee2957291c1.png" />
+<img alt="../_images/7301156c3b0d1cb929549a215211088a2403d4c177cd751e6fdb43d262bfd15c.png" src="../_images/7301156c3b0d1cb929549a215211088a2403d4c177cd751e6fdb43d262bfd15c.png" />
 </div>
 </div>
 <p>We thus confirm that, when using in the original units, the distances between
@@ -1075,7 +1061,7 @@ function as follows:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6309af155a21547bd73f02563c509df9ccfed446cf031da05ff73db6cca2e30d.png" src="../_images/6309af155a21547bd73f02563c509df9ccfed446cf031da05ff73db6cca2e30d.png" />
+<img alt="../_images/3be2823b37fea6533f27490dc85695dbb0d0c663feedc17a64de91a312d34838.png" src="../_images/3be2823b37fea6533f27490dc85695dbb0d0c663feedc17a64de91a312d34838.png" />
 </div>
 </div>
 <p>Now the results of the k-means cluster better match our visual intuition on
@@ -1096,7 +1082,7 @@ utility function:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6201a45b44de27b1403f42798d1beaf09b9a338e20702feb8bfdaf2b5dc33786.png" src="../_images/6201a45b44de27b1403f42798d1beaf09b9a338e20702feb8bfdaf2b5dc33786.png" />
+<img alt="../_images/12912203c7510ffa453656d77e58992074e3e0c511535b2006236b69b32ad03c.png" src="../_images/12912203c7510ffa453656d77e58992074e3e0c511535b2006236b69b32ad03c.png" />
 </div>
 </div>
 <p>Here again the clusters are well separated and the k-means algorithm
@@ -1116,7 +1102,7 @@ identified clusters that match our visual intuition.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b557f3dbcf143d963a0b2dab4f14957fbeaccca9ea118ab723e3acf39ba7a79b.png" src="../_images/b557f3dbcf143d963a0b2dab4f14957fbeaccca9ea118ab723e3acf39ba7a79b.png" />
+<img alt="../_images/55253c072564acf4bc1c09c326a92e981299d12e5910fb731016c642784beb8a.png" src="../_images/55253c072564acf4bc1c09c326a92e981299d12e5910fb731016c642784beb8a.png" />
 </div>
 </div>
 <p>When we select a large value of <code class="docutils literal notranslate"><span class="pre">n_clusters</span></code>, we observe that k-means builds
@@ -1155,7 +1141,7 @@ number of clusters.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8fc146941d7c5f80eec2a5f57d934d8a55c950268ca2694d3a865be104d891bc.png" src="../_images/8fc146941d7c5f80eec2a5f57d934d8a55c950268ca2694d3a865be104d891bc.png" />
+<img alt="../_images/0cb08ec2a2a6e712caddbf4368194b563e7bf4ccc49534af24b6bc9dc3008339.png" src="../_images/0cb08ec2a2a6e712caddbf4368194b563e7bf4ccc49534af24b6bc9dc3008339.png" />
 </div>
 </div>
 <p>We can observe the so-called “elbow” in the curve (the point with maximum
@@ -1212,7 +1198,7 @@ to the preprocessed features:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c35f5bc539e3c5833edf2ca6fe315f579342f35f9004655a0ed3108dd123995f.png" src="../_images/c35f5bc539e3c5833edf2ca6fe315f579342f35f9004655a0ed3108dd123995f.png" />
+<img alt="../_images/99c4aefafbc554ce303009628ec5383ddec511c3b10f53b9e44e81f0eec6f352.png" src="../_images/99c4aefafbc554ce303009628ec5383ddec511c3b10f53b9e44e81f0eec6f352.png" />
 </div>
 </div>
 <p>The silhouette score reaches a maximum when <code class="docutils literal notranslate"><span class="pre">n_clusters=3</span></code>, which confirms our
@@ -1232,7 +1218,7 @@ clusters, but that is less the case for <code class="docutils literal notranslat
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1d1e78368c78c5d0c2077ec04540742af7bd724e7c6c46f76575f0328a21c560.png" src="../_images/1d1e78368c78c5d0c2077ec04540742af7bd724e7c6c46f76575f0328a21c560.png" />
+<img alt="../_images/059df3e41f310bc92084cfe164ddc8bc375649bb6e3598aeafe53abb3af189ed.png" src="../_images/059df3e41f310bc92084cfe164ddc8bc375649bb6e3598aeafe53abb3af189ed.png" />
 </div>
 </div>
 <p>The plot reaches a clear maximum silhouette score when <code class="docutils literal notranslate"><span class="pre">n_clusters=2</span></code>, which
@@ -1260,7 +1246,7 @@ whether k-means can discover meaningful clusters in the whole data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3a41feba018182db6634cfee530ef11049607b834eba0dd359f069f29a77933e.png" src="../_images/3a41feba018182db6634cfee530ef11049607b834eba0dd359f069f29a77933e.png" />
+<img alt="../_images/6373684fcfad6da678a5b085d4b882e63cde51abddc36d8a2dd6af454f81945d.png" src="../_images/6373684fcfad6da678a5b085d4b882e63cde51abddc36d8a2dd6af454f81945d.png" />
 </div>
 </div>
 <p>Based on the silhouette scores, it seems that k-means would prefer to cluster
@@ -1283,7 +1269,7 @@ those features into either 2 or 6 clusters.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5ecdef9b229ad2607ea5df08b748036ca187e5e4587761f10b97eef1837c1032.png" src="../_images/5ecdef9b229ad2607ea5df08b748036ca187e5e4587761f10b97eef1837c1032.png" />
+<img alt="../_images/96ad67fb10cf3450c00a2ee1bb7e9eeaa6cb12f5132250d59d6fa82ced635d3e.png" src="../_images/96ad67fb10cf3450c00a2ee1bb7e9eeaa6cb12f5132250d59d6fa82ced635d3e.png" />
 </div>
 </div>
 <p>Since this is high-dimensional data (5D), the pairplot (computed only for the
@@ -1326,7 +1312,7 @@ Name: count, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/91521f569f8cf0887c6cdc9ac528f6858348f720f6d5bcbe37a6451f89e4efeb.png" src="../_images/91521f569f8cf0887c6cdc9ac528f6858348f720f6d5bcbe37a6451f89e4efeb.png" />
+<img alt="../_images/fb4cd4d8f8a498f5ebf2809ca61136a5dac1e54e6b6a81366e50f39ea2f46e3c.png" src="../_images/fb4cd4d8f8a498f5ebf2809ca61136a5dac1e54e6b6a81366e50f39ea2f46e3c.png" />
 </div>
 </div>
 <p>This plot seems to be very similar to the pairplot we obtained with the 6
@@ -1460,8 +1446,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -16,38 +16,41 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -61,8 +64,8 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_scripts/datasets_ames_housing';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <script src="../_static/matomo.js?v=8af330ab"></script>
+    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -70,6 +73,7 @@
     <link rel="prev" title="The California housing dataset" href="datasets_california_housing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -85,19 +89,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -105,7 +98,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -113,8 +105,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -130,7 +122,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -160,21 +153,17 @@
     
     
     <img src="../_static/scikit-learn-logo.png" class="logo__image only-light" alt="Scikit-learn course - Home"/>
-    <script>document.write(`<img src="../_static/scikit-learn-logo.png" class="logo__image only-dark" alt="Scikit-learn course - Home"/>`);</script>
+    <img src="../_static/scikit-learn-logo.png" class="logo__image only-dark pst-js-only" alt="Scikit-learn course - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
@@ -480,9 +469,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -660,7 +654,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -674,24 +668,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 
 </div></div>
       
@@ -959,7 +945,7 @@ of a house in $. We can have a look at the target distribution.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/309abdc3b56352ffce63ca265d6a85dbe25e45b60493f18bd2b680da9414b24b.png" src="../_images/309abdc3b56352ffce63ca265d6a85dbe25e45b60493f18bd2b680da9414b24b.png" />
+<img alt="../_images/b03b9385cb9e786fa074806643de11a344b207274fe6c79514ef37891f3a41a2.png" src="../_images/b03b9385cb9e786fa074806643de11a344b207274fe6c79514ef37891f3a41a2.png" />
 </div>
 </div>
 <p>We see that the distribution has a long tail. It means that most of the house
@@ -975,53 +961,53 @@ house prices.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.DataFrame&#39;&gt;
 RangeIndex: 1460 entries, 0 to 1459
 Data columns (total 79 columns):
  #   Column         Non-Null Count  Dtype  
 ---  ------         --------------  -----  
  0   MSSubClass     1460 non-null   int64  
- 1   MSZoning       1460 non-null   object 
+ 1   MSZoning       1460 non-null   str    
  2   LotFrontage    1201 non-null   float64
  3   LotArea        1460 non-null   int64  
- 4   Street         1460 non-null   object 
- 5   Alley          91 non-null     object 
- 6   LotShape       1460 non-null   object 
- 7   LandContour    1460 non-null   object 
- 8   Utilities      1460 non-null   object 
- 9   LotConfig      1460 non-null   object 
- 10  LandSlope      1460 non-null   object 
- 11  Neighborhood   1460 non-null   object 
- 12  Condition1     1460 non-null   object 
- 13  Condition2     1460 non-null   object 
- 14  BldgType       1460 non-null   object 
- 15  HouseStyle     1460 non-null   object 
+ 4   Street         1460 non-null   str    
+ 5   Alley          91 non-null     str    
+ 6   LotShape       1460 non-null   str    
+ 7   LandContour    1460 non-null   str    
+ 8   Utilities      1460 non-null   str    
+ 9   LotConfig      1460 non-null   str    
+ 10  LandSlope      1460 non-null   str    
+ 11  Neighborhood   1460 non-null   str    
+ 12  Condition1     1460 non-null   str    
+ 13  Condition2     1460 non-null   str    
+ 14  BldgType       1460 non-null   str    
+ 15  HouseStyle     1460 non-null   str    
  16  OverallQual    1460 non-null   int64  
  17  OverallCond    1460 non-null   int64  
  18  YearBuilt      1460 non-null   int64  
  19  YearRemodAdd   1460 non-null   int64  
- 20  RoofStyle      1460 non-null   object 
- 21  RoofMatl       1460 non-null   object 
- 22  Exterior1st    1460 non-null   object 
- 23  Exterior2nd    1460 non-null   object 
- 24  MasVnrType     588 non-null    object 
+ 20  RoofStyle      1460 non-null   str    
+ 21  RoofMatl       1460 non-null   str    
+ 22  Exterior1st    1460 non-null   str    
+ 23  Exterior2nd    1460 non-null   str    
+ 24  MasVnrType     588 non-null    str    
  25  MasVnrArea     1452 non-null   float64
- 26  ExterQual      1460 non-null   object 
- 27  ExterCond      1460 non-null   object 
- 28  Foundation     1460 non-null   object 
- 29  BsmtQual       1423 non-null   object 
- 30  BsmtCond       1423 non-null   object 
- 31  BsmtExposure   1422 non-null   object 
- 32  BsmtFinType1   1423 non-null   object 
+ 26  ExterQual      1460 non-null   str    
+ 27  ExterCond      1460 non-null   str    
+ 28  Foundation     1460 non-null   str    
+ 29  BsmtQual       1423 non-null   str    
+ 30  BsmtCond       1423 non-null   str    
+ 31  BsmtExposure   1422 non-null   str    
+ 32  BsmtFinType1   1423 non-null   str    
  33  BsmtFinSF1     1460 non-null   int64  
- 34  BsmtFinType2   1422 non-null   object 
+ 34  BsmtFinType2   1422 non-null   str    
  35  BsmtFinSF2     1460 non-null   int64  
  36  BsmtUnfSF      1460 non-null   int64  
  37  TotalBsmtSF    1460 non-null   int64  
- 38  Heating        1460 non-null   object 
- 39  HeatingQC      1460 non-null   object 
- 40  CentralAir     1460 non-null   object 
- 41  Electrical     1459 non-null   object 
+ 38  Heating        1460 non-null   str    
+ 39  HeatingQC      1460 non-null   str    
+ 40  CentralAir     1460 non-null   str    
+ 41  Electrical     1459 non-null   str    
  42  1stFlrSF       1460 non-null   int64  
  43  2ndFlrSF       1460 non-null   int64  
  44  LowQualFinSF   1460 non-null   int64  
@@ -1032,35 +1018,35 @@ Data columns (total 79 columns):
  49  HalfBath       1460 non-null   int64  
  50  BedroomAbvGr   1460 non-null   int64  
  51  KitchenAbvGr   1460 non-null   int64  
- 52  KitchenQual    1460 non-null   object 
+ 52  KitchenQual    1460 non-null   str    
  53  TotRmsAbvGrd   1460 non-null   int64  
- 54  Functional     1460 non-null   object 
+ 54  Functional     1460 non-null   str    
  55  Fireplaces     1460 non-null   int64  
- 56  FireplaceQu    770 non-null    object 
- 57  GarageType     1379 non-null   object 
+ 56  FireplaceQu    770 non-null    str    
+ 57  GarageType     1379 non-null   str    
  58  GarageYrBlt    1379 non-null   float64
- 59  GarageFinish   1379 non-null   object 
+ 59  GarageFinish   1379 non-null   str    
  60  GarageCars     1460 non-null   int64  
  61  GarageArea     1460 non-null   int64  
- 62  GarageQual     1379 non-null   object 
- 63  GarageCond     1379 non-null   object 
- 64  PavedDrive     1460 non-null   object 
+ 62  GarageQual     1379 non-null   str    
+ 63  GarageCond     1379 non-null   str    
+ 64  PavedDrive     1460 non-null   str    
  65  WoodDeckSF     1460 non-null   int64  
  66  OpenPorchSF    1460 non-null   int64  
  67  EnclosedPorch  1460 non-null   int64  
  68  3SsnPorch      1460 non-null   int64  
  69  ScreenPorch    1460 non-null   int64  
  70  PoolArea       1460 non-null   int64  
- 71  PoolQC         7 non-null      object 
- 72  Fence          281 non-null    object 
- 73  MiscFeature    54 non-null     object 
+ 71  PoolQC         7 non-null      str    
+ 72  Fence          281 non-null    str    
+ 73  MiscFeature    54 non-null     str    
  74  MiscVal        1460 non-null   int64  
  75  MoSold         1460 non-null   int64  
  76  YrSold         1460 non-null   int64  
- 77  SaleType       1460 non-null   object 
- 78  SaleCondition  1460 non-null   object 
-dtypes: float64(3), int64(33), object(43)
-memory usage: 901.2+ KB
+ 77  SaleType       1460 non-null   str    
+ 78  SaleCondition  1460 non-null   str    
+dtypes: float64(3), int64(33), str(43)
+memory usage: 901.2 KB
 </pre></div>
 </div>
 </div>
@@ -1078,7 +1064,7 @@ numerical and categorical data are available.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.DataFrame&#39;&gt;
 RangeIndex: 1460 entries, 0 to 1459
 Data columns (total 36 columns):
  #   Column         Non-Null Count  Dtype  
@@ -1137,7 +1123,7 @@ look at the histogram for all these features.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/babf29d08c18f377d3b8380951d19cd69af025605d1922e32ceaaa89f6ab1a46.png" src="../_images/babf29d08c18f377d3b8380951d19cd69af025605d1922e32ceaaa89f6ab1a46.png" />
+<img alt="../_images/6a16bea1362aebf3fbbe569b0a9e21890cdc7494b404afe5f267ad4c9d45c907.png" src="../_images/6a16bea1362aebf3fbbe569b0a9e21890cdc7494b404afe5f267ad4c9d45c907.png" />
 </div>
 </div>
 <p>We see that some features have high picks for 0. It could be linked that this
@@ -1155,56 +1141,61 @@ predictive model.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.DataFrame&#39;&gt;
 RangeIndex: 1460 entries, 0 to 1459
 Data columns (total 43 columns):
- #   Column         Non-Null Count  Dtype 
----  ------         --------------  ----- 
- 0   MSZoning       1460 non-null   object
- 1   Street         1460 non-null   object
- 2   Alley          91 non-null     object
- 3   LotShape       1460 non-null   object
- 4   LandContour    1460 non-null   object
- 5   Utilities      1460 non-null   object
- 6   LotConfig      1460 non-null   object
- 7   LandSlope      1460 non-null   object
- 8   Neighborhood   1460 non-null   object
- 9   Condition1     1460 non-null   object
- 10  Condition2     1460 non-null   object
- 11  BldgType       1460 non-null   object
- 12  HouseStyle     1460 non-null   object
- 13  RoofStyle      1460 non-null   object
- 14  RoofMatl       1460 non-null   object
- 15  Exterior1st    1460 non-null   object
- 16  Exterior2nd    1460 non-null   object
- 17  MasVnrType     588 non-null    object
- 18  ExterQual      1460 non-null   object
- 19  ExterCond      1460 non-null   object
- 20  Foundation     1460 non-null   object
- 21  BsmtQual       1423 non-null   object
- 22  BsmtCond       1423 non-null   object
- 23  BsmtExposure   1422 non-null   object
- 24  BsmtFinType1   1423 non-null   object
- 25  BsmtFinType2   1422 non-null   object
- 26  Heating        1460 non-null   object
- 27  HeatingQC      1460 non-null   object
- 28  CentralAir     1460 non-null   object
- 29  Electrical     1459 non-null   object
- 30  KitchenQual    1460 non-null   object
- 31  Functional     1460 non-null   object
- 32  FireplaceQu    770 non-null    object
- 33  GarageType     1379 non-null   object
- 34  GarageFinish   1379 non-null   object
- 35  GarageQual     1379 non-null   object
- 36  GarageCond     1379 non-null   object
- 37  PavedDrive     1460 non-null   object
- 38  PoolQC         7 non-null      object
- 39  Fence          281 non-null    object
- 40  MiscFeature    54 non-null     object
- 41  SaleType       1460 non-null   object
- 42  SaleCondition  1460 non-null   object
-dtypes: object(43)
-memory usage: 490.6+ KB
+ #   Column         Non-Null Count  Dtype
+---  ------         --------------  -----
+ 0   MSZoning       1460 non-null   str  
+ 1   Street         1460 non-null   str  
+ 2   Alley          91 non-null     str  
+ 3   LotShape       1460 non-null   str  
+ 4   LandContour    1460 non-null   str  
+ 5   Utilities      1460 non-null   str  
+ 6   LotConfig      1460 non-null   str  
+ 7   LandSlope      1460 non-null   str  
+ 8   Neighborhood   1460 non-null   str  
+ 9   Condition1     1460 non-null   str  
+ 10  Condition2     1460 non-null   str  
+ 11  BldgType       1460 non-null   str  
+ 12  HouseStyle     1460 non-null   str  
+ 13  RoofStyle      1460 non-null   str  
+ 14  RoofMatl       1460 non-null   str  
+ 15  Exterior1st    1460 non-null   str  
+ 16  Exterior2nd    1460 non-null   str  
+ 17  MasVnrType     588 non-null    str  
+ 18  ExterQual      1460 non-null   str  
+ 19  ExterCond      1460 non-null   str  
+ 20  Foundation     1460 non-null   str  
+ 21  BsmtQual       1423 non-null   str  
+ 22  BsmtCond       1423 non-null   str  
+ 23  BsmtExposure   1422 non-null   str  
+ 24  BsmtFinType1   1423 non-null   str  
+ 25  BsmtFinType2   1422 non-null   str  
+ 26  Heating        1460 non-null   str  
+ 27  HeatingQC      1460 non-null   str  
+ 28  CentralAir     1460 non-null   str  
+ 29  Electrical     1459 non-null   str  
+ 30  KitchenQual    1460 non-null   str  
+ 31  Functional     1460 non-null   str  
+ 32  FireplaceQu    770 non-null    str  
+ 33  GarageType     1379 non-null   str  
+ 34  GarageFinish   1379 non-null   str  
+ 35  GarageQual     1379 non-null   str  
+ 36  GarageCond     1379 non-null   str  
+ 37  PavedDrive     1460 non-null   str  
+ 38  PoolQC         7 non-null      str  
+ 39  Fence          281 non-null    str  
+ 40  MiscFeature    54 non-null     str  
+ 41  SaleType       1460 non-null   str  
+ 42  SaleCondition  1460 non-null   str  
+dtypes: str(43)
+memory usage: 490.6 KB
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3644/475282094.py:1: Pandas4Warning: For backward compatibility, &#39;str&#39; dtypes are included by select_dtypes when &#39;object&#39; dtype is specified. This behavior is deprecated and will be removed in a future version. Explicitly pass &#39;str&#39; to `include` to select them, or to `exclude` to remove them and silence this warning.
+See https://pandas.pydata.org/docs/user_guide/migration-3-strings.html#string-migration-select-dtypes for details on how to write code that works with pandas 2 and 3.
+  string_data = data.select_dtypes(object)
 </pre></div>
 </div>
 </div>
@@ -1235,7 +1226,7 @@ count for each feature.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/75297f7bc01f3e6b9f5b722df1281b05f068bb5fae08cac6524b6d46d10af46c.png" src="../_images/75297f7bc01f3e6b9f5b722df1281b05f068bb5fae08cac6524b6d46d10af46c.png" />
+<img alt="../_images/c7ba77e7ef7d45f34807b7cd1451e9e4c0219c623fdc0dfcdec2da779730ad66.png" src="../_images/c7ba77e7ef7d45f34807b7cd1451e9e4c0219c623fdc0dfcdec2da779730ad66.png" />
 </div>
 </div>
 <p>Plotting this information allows us to answer to two questions:</p>
@@ -1618,8 +1609,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

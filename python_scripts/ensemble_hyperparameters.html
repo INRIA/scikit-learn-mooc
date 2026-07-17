@@ -16,38 +16,41 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -63,8 +66,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'python_scripts/ensemble_hyperparameters';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <script src="../_static/matomo.js?v=8af330ab"></script>
+    <script src="../_static/sklearn_mooc.js?v=cdec65c7"></script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -72,6 +75,7 @@
     <link rel="prev" title="Hyperparameter tuning with ensemble methods" href="../ensemble/ensemble_hyperparameters_index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -87,19 +91,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -107,7 +100,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -115,8 +107,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -132,7 +124,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -162,21 +155,17 @@
     
     
     <img src="../_static/scikit-learn-logo.png" class="logo__image only-light" alt="Scikit-learn course - Home"/>
-    <script>document.write(`<img src="../_static/scikit-learn-logo.png" class="logo__image only-dark" alt="Scikit-learn course - Home"/>`);</script>
+    <img src="../_static/scikit-learn-logo.png" class="logo__image only-dark pst-js-only" alt="Scikit-learn course - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
@@ -482,9 +471,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -662,7 +656,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -676,25 +670,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -869,80 +855,80 @@ trees (i.e. shallow trees) might also lead to an underfitted forest.</p>
       <td>2</td>
       <td>None</td>
       <td>2</td>
-      <td>34.124907</td>
-      <td>0.458491</td>
+      <td>34.052717</td>
+      <td>0.585000</td>
     </tr>
     <tr>
       <th>0</th>
       <td>2</td>
       <td>1000</td>
       <td>10</td>
-      <td>36.800928</td>
-      <td>0.624162</td>
+      <td>36.917672</td>
+      <td>0.557893</td>
     </tr>
     <tr>
       <th>7</th>
       <td>None</td>
       <td>None</td>
       <td>20</td>
-      <td>37.287230</td>
-      <td>0.410707</td>
+      <td>37.244273</td>
+      <td>0.456508</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5</td>
       <td>100</td>
       <td>2</td>
-      <td>40.056528</td>
-      <td>0.557549</td>
+      <td>39.951047</td>
+      <td>0.612473</td>
     </tr>
     <tr>
       <th>8</th>
       <td>None</td>
       <td>100</td>
       <td>10</td>
-      <td>40.380578</td>
-      <td>0.657726</td>
+      <td>40.339173</td>
+      <td>0.644679</td>
     </tr>
     <tr>
       <th>6</th>
       <td>None</td>
       <td>1000</td>
       <td>50</td>
-      <td>40.910069</td>
-      <td>0.482337</td>
+      <td>40.917052</td>
+      <td>0.338343</td>
     </tr>
     <tr>
       <th>9</th>
       <td>1</td>
       <td>100</td>
       <td>2</td>
-      <td>49.752855</td>
-      <td>0.839606</td>
+      <td>49.893778</td>
+      <td>0.475407</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
       <td>100</td>
       <td>1</td>
-      <td>50.460085</td>
-      <td>0.631171</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1</td>
-      <td>None</td>
-      <td>100</td>
-      <td>54.532462</td>
-      <td>0.643014</td>
+      <td>50.058088</td>
+      <td>1.072776</td>
     </tr>
     <tr>
       <th>1</th>
       <td>3</td>
       <td>10</td>
       <td>10</td>
-      <td>54.761448</td>
-      <td>0.754377</td>
+      <td>54.764069</td>
+      <td>0.726262</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>None</td>
+      <td>100</td>
+      <td>54.903727</td>
+      <td>0.991773</td>
     </tr>
   </tbody>
 </table>
@@ -971,7 +957,7 @@ the unseen data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.65 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our random forest regressor makes an error of 33.85 k$
 </pre></div>
 </div>
 </div>
@@ -1071,160 +1057,160 @@ value that results in a model with good generalization performance.</p>
       <td>300</td>
       <td>100</td>
       <td>0.018640</td>
-      <td>31.129388</td>
-      <td>0.443097</td>
+      <td>30.996475</td>
+      <td>0.249479</td>
     </tr>
     <tr>
       <th>6</th>
       <td>300</td>
       <td>20</td>
       <td>0.047293</td>
-      <td>31.814888</td>
-      <td>0.417179</td>
+      <td>31.786437</td>
+      <td>0.285874</td>
     </tr>
     <tr>
       <th>2</th>
       <td>30</td>
       <td>50</td>
       <td>0.176656</td>
-      <td>32.648794</td>
-      <td>0.113736</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>300</td>
-      <td>10</td>
-      <td>0.297739</td>
-      <td>32.681031</td>
-      <td>0.834486</td>
+      <td>32.711153</td>
+      <td>0.500035</td>
     </tr>
     <tr>
       <th>9</th>
       <td>100</td>
       <td>20</td>
       <td>0.083745</td>
-      <td>33.181125</td>
-      <td>0.382497</td>
+      <td>33.057433</td>
+      <td>0.237334</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>300</td>
+      <td>10</td>
+      <td>0.297739</td>
+      <td>33.164687</td>
+      <td>0.624967</td>
     </tr>
     <tr>
       <th>19</th>
       <td>100</td>
       <td>10</td>
       <td>0.215543</td>
-      <td>33.181888</td>
-      <td>0.382786</td>
+      <td>33.285129</td>
+      <td>0.262036</td>
     </tr>
     <tr>
       <th>12</th>
       <td>100</td>
       <td>20</td>
       <td>0.067503</td>
-      <td>33.644525</td>
-      <td>0.363473</td>
+      <td>33.825749</td>
+      <td>0.395344</td>
     </tr>
     <tr>
       <th>16</th>
       <td>300</td>
       <td>5</td>
       <td>0.059290</td>
-      <td>35.884412</td>
-      <td>0.520681</td>
+      <td>35.837073</td>
+      <td>0.558571</td>
     </tr>
     <tr>
       <th>1</th>
       <td>100</td>
       <td>5</td>
       <td>0.160519</td>
-      <td>36.187571</td>
-      <td>0.442002</td>
+      <td>36.125470</td>
+      <td>0.287182</td>
     </tr>
     <tr>
       <th>0</th>
       <td>1000</td>
       <td>2</td>
       <td>0.125207</td>
-      <td>40.843828</td>
-      <td>0.450345</td>
+      <td>40.779091</td>
+      <td>0.704050</td>
     </tr>
     <tr>
       <th>7</th>
       <td>1000</td>
       <td>2</td>
       <td>0.054511</td>
-      <td>42.203734</td>
-      <td>0.673827</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>10</td>
-      <td>5</td>
-      <td>0.248463</td>
-      <td>50.082696</td>
-      <td>0.690027</td>
+      <td>42.182342</td>
+      <td>0.628837</td>
     </tr>
     <tr>
       <th>8</th>
       <td>3</td>
       <td>5</td>
       <td>0.906226</td>
-      <td>50.170124</td>
-      <td>0.738073</td>
+      <td>49.962343</td>
+      <td>0.805139</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>10</td>
+      <td>5</td>
+      <td>0.248463</td>
+      <td>50.199535</td>
+      <td>0.889522</td>
     </tr>
     <tr>
       <th>5</th>
       <td>10</td>
       <td>100</td>
       <td>0.061034</td>
-      <td>61.397727</td>
-      <td>0.628002</td>
+      <td>61.754777</td>
+      <td>0.723210</td>
     </tr>
     <tr>
       <th>17</th>
       <td>3</td>
       <td>5</td>
       <td>0.079415</td>
-      <td>81.541382</td>
-      <td>0.833616</td>
+      <td>81.531463</td>
+      <td>0.904154</td>
     </tr>
     <tr>
       <th>4</th>
       <td>10</td>
       <td>2</td>
       <td>0.035100</td>
-      <td>82.531603</td>
-      <td>0.923235</td>
+      <td>82.589576</td>
+      <td>0.997775</td>
     </tr>
     <tr>
       <th>15</th>
       <td>3</td>
       <td>50</td>
       <td>0.019923</td>
-      <td>87.711412</td>
-      <td>1.065936</td>
+      <td>87.653850</td>
+      <td>1.090253</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3</td>
       <td>2</td>
       <td>0.039361</td>
-      <td>87.782471</td>
-      <td>1.120773</td>
+      <td>87.798125</td>
+      <td>1.074084</td>
     </tr>
     <tr>
       <th>11</th>
       <td>3</td>
       <td>10</td>
       <td>0.019351</td>
-      <td>88.362463</td>
-      <td>1.062010</td>
+      <td>88.326195</td>
+      <td>1.046983</td>
     </tr>
     <tr>
       <th>10</th>
       <td>3</td>
       <td>5</td>
       <td>0.017240</td>
-      <td>88.887151</td>
-      <td>1.107906</td>
+      <td>88.932392</td>
+      <td>1.083934</td>
     </tr>
   </tbody>
 </table>
@@ -1251,7 +1237,7 @@ test set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our HGBT regressor makes an error of 30.62 k$
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>On average, our HGBT regressor makes an error of 30.59 k$
 </pre></div>
 </div>
 </div>
@@ -1344,14 +1330,16 @@ the grid search procedure.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-forest">Random forest</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-gradient-boosting-decision-trees">Histogram gradient-boosting decision trees</a></li>
@@ -1418,8 +1406,8 @@ By scikit-learn developers
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

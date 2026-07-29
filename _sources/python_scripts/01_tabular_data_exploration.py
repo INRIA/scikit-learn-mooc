@@ -231,8 +231,8 @@ pd.crosstab(
 )
 
 # %% [markdown]
-# For every entry in `\"education\"`, there is only one single corresponding
-# value in `\"education-num\"`. This shows that `"education"` and
+# For every entry in `"education"`, there is only one single corresponding
+# value in `"education-num"`. This shows that `"education"` and
 # `"education-num"` give you the same information. For example,
 # `"education-num"=2` is equivalent to `"education"="1st-4th"`. In practice that
 # means we can remove `"education-num"` without losing information. Note that

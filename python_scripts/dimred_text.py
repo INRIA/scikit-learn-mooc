@@ -361,7 +361,7 @@ plot_2d_projection(tsne, data, all_categories)
 # the notebook locally.
 
 # %%
-# %pip install umap-learn
+# # %pip install umap-learn
 # from umap import UMAP
 
 # umap = UMAP(random_state=42)

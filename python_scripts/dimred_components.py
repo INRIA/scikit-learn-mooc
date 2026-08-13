@@ -89,7 +89,9 @@ axes[0].set_title("Variance ratio per component\n(scree plot)")
 axes[1].plot(components, cumulative, marker="o")
 axes[1].set_xlabel("Number of components")
 axes[1].set_ylabel("Cumulative explained variance")
-_ = axes[1].set_title("Cumulative explained variance ratio")
+axes[1].set_title("Cumulative explained variance ratio")
+
+plt.show()
 
 # %% [markdown]
 # The bar chart on the left is called a **scree plot**. It shows how much new
@@ -168,7 +170,9 @@ ax.axhline(0.95, color="tab:red", linestyle="--", label="95%")
 ax.set_xlabel("Number of components")
 ax.set_ylabel("Cumulative explained variance")
 ax.set_title("Cumulative variance is not identical across subsamples")
-_ = ax.legend()
+ax.legend()
+
+plt.show()
 
 # %% [markdown]
 # Each faint line is one subsample. The spread is most visible near the
@@ -218,7 +222,8 @@ ax.axhline(
 ax.set_xlabel("Component")
 ax.set_ylabel("Explained variance ratio")
 ax.set_title(f"Kaiser criterion: keep components above 1/{n_features}")
-_ = ax.legend()
+ax.legend()
+plt.show()
 
 # %% [markdown]
 # The Kaiser criterion does not require choosing a target variance level, which
@@ -244,7 +249,8 @@ ax.axhline(
 ax.set_xlabel("Component")
 ax.set_ylabel("Explained variance ratio")
 ax.set_title("Kaiser criterion stability across subsamples")
-_ = ax.legend()
+ax.legend()
+plt.show()
 
 # %% [markdown]
 # Notice that this curve reinforces the argument that finding an elbow depends
@@ -260,11 +266,12 @@ import pandas as pd
 kaiser_n = np.sum(explained > kaiser_threshold)
 kaiser_counts = [np.sum(ev > kaiser_threshold) for ev in split_explained]
 ax = pd.Series(kaiser_counts).value_counts().sort_index().plot.bar(rot=0)
-_ = ax.set(
+ax.set(
     title="Selected number of components across splits",
     xlabel="Number of components",
     ylabel="Counts",
 )
+plt.show()
 
 # %% [markdown]
 # The Kaiser criterion suggests 3 or 4 components at almost the same rate.
@@ -335,6 +342,8 @@ for ax, n_components, label in zip(
     ax.set_xlabel("Number of clusters (n_clusters)")
     ax.set_ylabel("Silhouette score")
     ax.set_title(label)
+
+plt.show()
 
 # %% [markdown]
 # The two panels tell a different story. With the Kaiser components, the peak at

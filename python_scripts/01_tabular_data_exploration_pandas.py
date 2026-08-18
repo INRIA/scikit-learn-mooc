@@ -162,42 +162,45 @@ print(f"The dataset contains {adult_census.shape[1] - 1} features.")
 
 # %% [markdown]
 # Let's look at the distribution of individual features, to get some insights
-# about the data. We will use `skrub`'s `TableReport` class to generate an
-# overview of the dataset.
+# about the data. We can start by plotting histograms, note that this only works
+# for features containing numerical values:
 
 # %%
-
-from skrub import TableReport
-
-report = TableReport(adult_census)
-report
-# _ = adult_census.hist(figsize=(20, 14))
+_ = adult_census.hist(figsize=(20, 14))
 
 # %% [markdown]
-# The report shows many useful statistics about each variable. On the first tab
-# "Table", we have a representation of the dataframe. Clicking on each column
-# name shows a statistical summary of the variable. For a better view of the
-# distribution of each variable, we can click on the "Distributions" tab.
+# ```{tip}
+# In the previous cell, we used the following pattern: `_ = func()`. We do this
+# to avoid showing the output of `func()` which in this case is not that
+# useful. We actually assign the output of `func()` into the variable `_`
+# (called underscore). By convention, in Python the underscore variable is used
+# as a "garbage" variable to store results that we are not interested in.
+# ```
 #
-# Numerical features's distributions are displayed as histograms, while
-# categorical values are shown as bar plots. We can already make a few comments
-# about some of the variables:
+# We can already make a few comments about some of the variables:
 #
 # * `"age"`: there are not that many points for `age > 70`. The dataset
 #   description does indicate that retired people have been filtered out
 #   (`hours-per-week > 0`);
 # * `"education-num"`: peak at 10 and 13, hard to tell what it corresponds to
 #   without looking much further. We'll do that later in this notebook;
-# * most values of `"capital-gain"` and `"capital-loss"` are close to zero;
 # * `"hours-per-week"` peaks at 40, this was very likely the standard number of
 #   working hours at the time of the data collection;
-# * `"sex"`: the data collection process resulted in an important imbalance
-#   between the number of male/female samples.
+# * most values of `"capital-gain"` and `"capital-loss"` are close to zero.
+
+# %% [markdown]
+# For categorical variables, we can look at the distribution of values:
+
+# %%
+adult_census["sex"].value_counts()
+
+# %% [markdown]
+# Note that the data collection process resulted in an important imbalance
+# between the number of male/female samples.
 #
-# About the last observation, be aware that training a model with such data
-# imbalance can cause disproportioned prediction errors for the
-# under-represented sensitive groups (based on gender or ethnicity for
-# instance). This is a typical cause of
+# Be aware that training a model with such data imbalance can cause
+# disproportioned prediction errors for the under-represented groups. This is a
+# typical cause of
 # [fairness](https://docs.microsoft.com/en-us/azure/machine-learning/concept-fairness-ml#what-is-machine-learning-fairness)
 # problems if used naively when deploying a machine learning based system in a
 # real life setting.
@@ -207,40 +210,35 @@ report
 # related to the deployment of automated decision making systems that rely on
 # machine learning components.
 #
-# Studying why the data collection process of this dataset led to such an
+# Studying why the data collection process of this dataset lead to such an
 # unexpected gender imbalance is beyond the scope of this MOOC but we should
 # keep in mind that this dataset is not representative of the US population
 # before drawing any conclusions based on its statistics or the predictions of
 # models trained on it.
+
+# %%
+adult_census["education"].value_counts()
 
 # %% [markdown]
 # As noted above, `"education-num"` distribution has two clear peaks around 10
 # and 13. It would be reasonable to expect that `"education-num"` is the number
 # of years of education.
 #
-# Let's look at the relationship between `"education"` and `"education-num"` by
-# going to the "Associations" tab of the report. This tab shows the statistical
-# relationship between each pair of variables in the dataset, using [Cramér's
-# V](https://en.wikipedia.org/wiki/Cram%C3%A9r%27s_V) and [Pearson's
-# Correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient).
-# We can see that `"education"` and `"education-num"` are very strongly related.
-
+# Let's look at the relationship between `"education"` and `"education-num"`.
 # %%
 pd.crosstab(
     index=adult_census["education"], columns=adult_census["education-num"]
 )
 
 # %% [markdown]
-# For every entry in `"education"`, there is only one single corresponding
-# value in `"education-num"`. This shows that `"education"` and
+# For every entry in `\"education\"`, there is only one single corresponding
+# value in `\"education-num\"`. This shows that `"education"` and
 # `"education-num"` give you the same information. For example,
 # `"education-num"=2` is equivalent to `"education"="1st-4th"`. In practice that
 # means we can remove `"education-num"` without losing information. Note that
 # having redundant (or highly correlated) columns can be a problem for machine
 # learning algorithms.
-#
-# All of this data expliration can be done manually with `pandas`. See [this
-# notebook](lol) for more information.
+
 # %% [markdown]
 # ```{note}
 # In the upcoming notebooks, we will only keep the `"education"` variable,

@@ -54,17 +54,15 @@ data.head()
 # columns and if any missing values are present in our dataset.
 
 # %%
-data.info()
+from skrub import TableReport
+
+TableReport(data)
 
 # %% [markdown]
 # Our dataset is made of 748 samples. All features are represented with integer
 # numbers and there is no missing values. We can have a look at each feature
-# distributions.
-
-# %%
-_ = data.hist(figsize=(12, 10), bins=30, edgecolor="black")
-
-# %% [markdown]
+# distributions in the "Distributions" tab.
+#
 # There is nothing shocking regarding the distributions. We only observe a high
 # value range for the features `"Recency"`, `"Frequency"`, and `"Monetary"`. It
 # means that we have a few extreme high values for these features.
@@ -76,11 +74,7 @@ _ = data.hist(figsize=(12, 10), bins=30, edgecolor="black")
 target.head()
 
 # %%
-import matplotlib.pyplot as plt
-
-target.value_counts(normalize=True).plot.barh()
-plt.xlabel("Number of samples")
-_ = plt.title("Class distribution")
+TableReport(target)
 
 # %% [markdown]
 # We see that the target is discrete and contains two categories: whether a

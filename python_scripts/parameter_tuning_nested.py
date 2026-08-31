@@ -204,9 +204,9 @@ print(f"Accuracy on test set: {accuracy:.3f}")
 # train-test split.
 #
 # For each cross-validation split, the procedure trains a model with a given set
-# of hyperparameters on all the red samples, evaluates the score of such
-# combination on the green samples, and selects the best combination of
-# hyperparameters `best_params` by comparing the mean of those validation
+# of hyperparameters on all the red samples and evaluates the score of such
+# combination on the green samples. The best combination of
+# hyperparameters `best_params` is selected by comparing the mean of those validation
 # scores for different combinations.
 #
 # Then a final model tuned with those hyper-parameters is fitted on the

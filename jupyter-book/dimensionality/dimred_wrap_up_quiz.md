@@ -138,10 +138,10 @@ _Select all answers that apply_
 
 Finally, compare the two approaches. For each PCA dimension, fit
 `KMeans(n_clusters=6)` and `HDBSCAN(min_cluster_size=10)` on the reduced data and
-compute the Adjusted Mutual Information (AMI) between their labelings.
+compute the Adjusted Mutual Information (AMI) between their labels.
 
 ```{admonition} Question
-Select the true statements:
+Select the true statement:
 
 - a) The AMI stays between 0.7 and 0.8 at every `n_components` tested,
   indicating moderate agreement between the two methods.

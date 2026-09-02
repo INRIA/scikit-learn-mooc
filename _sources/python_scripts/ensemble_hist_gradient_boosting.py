@@ -115,7 +115,8 @@ data_trans
 from sklearn.pipeline import make_pipeline
 
 gradient_boosting = make_pipeline(
-    discretizer, GradientBoostingRegressor(n_estimators=200)
+    discretizer,
+    GradientBoostingRegressor(n_estimators=200, max_depth=5, random_state=0),
 )
 cv_results_gbdt = cross_validate(
     gradient_boosting,
@@ -154,8 +155,8 @@ print(
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 histogram_gradient_boosting = HistGradientBoostingRegressor(
-    max_iter=200, random_state=0
-)
+    max_iter=200, max_depth=5, random_state=0
+)  # same max_depth as gbdt for fair comparison
 cv_results_hgbdt = cross_validate(
     histogram_gradient_boosting,
     data,

@@ -836,9 +836,9 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree
-Mean absolute error via cross-validation: 46.447 ± 2.915 k$
-Average fit time: 7.674 seconds
-Average score time: 0.008 seconds
+Mean absolute error via cross-validation: 46.409 ± 2.908 k$
+Average fit time: 6.897 seconds
+Average score time: 0.007 seconds
 </pre></div>
 </div>
 </div>
@@ -916,7 +916,8 @@ the gradient boosting regressor.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
 
 <span class="n">gradient_boosting</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">discretizer</span><span class="p">,</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">discretizer</span><span class="p">,</span>
+    <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results_gbdt</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">gradient_boosting</span><span class="p">,</span>
@@ -1008,9 +1009,9 @@ the gradient boosting regressor.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gradient Boosting Decision Tree with KBinsDiscretizer
-Mean absolute error via cross-validation: 45.774 ± 2.026 k$
-Average fit time: 5.011 seconds
-Average score time: 0.010 seconds
+Mean absolute error via cross-validation: 45.713 ± 2.934 k$
+Average fit time: 7.293 seconds
+Average score time: 0.015 seconds
 </pre></div>
 </div>
 </div>
@@ -1030,8 +1031,8 @@ computation times with the experiment of the previous section.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">HistGradientBoostingRegressor</span>
 
 <span class="n">histogram_gradient_boosting</span> <span class="o">=</span> <span class="n">HistGradientBoostingRegressor</span><span class="p">(</span>
-    <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
-<span class="p">)</span>
+    <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>  <span class="c1"># same max_depth as gbdt for fair comparison</span>
 <span class="n">cv_results_hgbdt</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">histogram_gradient_boosting</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
@@ -1060,9 +1061,9 @@ computation times with the experiment of the previous section.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Histogram Gradient Boosting Decision Tree
-Mean absolute error via cross-validation: 43.758 ± 2.694 k$
-Average fit time: 0.443 seconds
-Average score time: 0.036 seconds
+Mean absolute error via cross-validation: 44.925 ± 2.609 k$
+Average fit time: 0.341 seconds
+Average score time: 0.032 seconds
 </pre></div>
 </div>
 </div>

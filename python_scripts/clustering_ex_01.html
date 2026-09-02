@@ -781,7 +781,7 @@ dataset to ease the calculations.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/rfm_segmentation.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/rfm_segmentation.csv"</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">data</span>
 </pre></div>
@@ -923,50 +923,50 @@ purpose:</p>
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_n_clusters_scores</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
-    <span class="n">score_type</span><span class="o">=</span><span class="s2">&quot;inertia&quot;</span><span class="p">,</span>
+    <span class="n">score_type</span><span class="o">=</span><span class="s2">"inertia"</span><span class="p">,</span>
     <span class="n">n_clusters_values</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
     <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Plots clustering scores (inertia or silhouette) for a range of n_clusters.</span>
 
 <span class="sd">    Parameters:</span>
 <span class="sd">        model: A pipeline whose last step has a `n_clusters` hyperparameter.</span>
 <span class="sd">        data: The input data to cluster.</span>
-<span class="sd">        score_type: &quot;inertia&quot; or &quot;silhouette&quot; to decide which score to compute.</span>
+<span class="sd">        score_type: "inertia" or "silhouette" to decide which score to compute.</span>
 <span class="sd">        alpha: Transparency of the plot line, useful when several plots overlap.</span>
 <span class="sd">        title: Optional title to set; default title used if None.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">scores</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">if</span> <span class="n">n_clusters_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">score_type</span> <span class="o">==</span> <span class="s2">&quot;inertia&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">score_type</span> <span class="o">==</span> <span class="s2">"inertia"</span><span class="p">:</span>
             <span class="n">n_clusters_values</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">n_clusters_values</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">n_clusters</span> <span class="ow">in</span> <span class="n">n_clusters_values</span><span class="p">:</span>
         <span class="n">model</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">score_type</span> <span class="o">==</span> <span class="s2">&quot;inertia&quot;</span><span class="p">:</span>
-            <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;WCSS (inertia)&quot;</span>
+        <span class="k">if</span> <span class="n">score_type</span> <span class="o">==</span> <span class="s2">"inertia"</span><span class="p">:</span>
+            <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">"WCSS (inertia)"</span>
             <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">score_type</span> <span class="o">==</span> <span class="s2">&quot;silhouette&quot;</span><span class="p">:</span>
-            <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">&quot;Silhouette score&quot;</span>
+        <span class="k">elif</span> <span class="n">score_type</span> <span class="o">==</span> <span class="s2">"silhouette"</span><span class="p">:</span>
+            <span class="n">ylabel</span> <span class="o">=</span> <span class="s2">"Silhouette score"</span>
             <span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">data_transformed</span> <span class="o">=</span> <span class="n">model</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">data_transformed</span><span class="p">,</span> <span class="n">cluster_labels</span><span class="p">)</span>
             <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;score_type must be either &#39;inertia&#39; or &#39;silhouette&#39;&quot;</span>
+                <span class="s2">"score_type must be either 'inertia' or 'silhouette'"</span>
             <span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_clusters_values</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of clusters (n_clusters)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_clusters_values</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Number of clusters (n_clusters)"</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ylabel</span><span class="si">}</span><span class="s2"> for varying n_clusters&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">ylabel</span><span class="si">}</span><span class="s2"> for varying n_clusters"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

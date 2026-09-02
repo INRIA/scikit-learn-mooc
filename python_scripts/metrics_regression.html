@@ -782,9 +782,9 @@ train-test split to focus solely on the regression metrics.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/house_prices.csv&quot;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">]</span>
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/house_prices.csv"</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"SalePrice"</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">ames_housing</span><span class="p">[</span><span class="s2">"SalePrice"</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
 <span class="n">target</span> <span class="o">/=</span> <span class="mi">1000</span>
 </pre></div>
@@ -824,8 +824,8 @@ it is optimized by said model.</p>
 <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error on the training set: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target_train</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error on the training set: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target_train</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -845,8 +845,8 @@ decreases the error.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error on the testing set: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error on the testing set: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -884,11 +884,11 @@ score of 0.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.dummy</span><span class="w"> </span><span class="kn">import</span> <span class="n">DummyRegressor</span>
 
-<span class="n">dummy_regressor</span> <span class="o">=</span> <span class="n">DummyRegressor</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+<span class="n">dummy_regressor</span> <span class="o">=</span> <span class="n">DummyRegressor</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">"mean"</span><span class="p">)</span>
 <span class="n">dummy_regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;R2 score for a regressor predicting the mean:&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dummy_regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"R2 score for a regressor predicting the mean:"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dummy_regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -910,8 +910,8 @@ interested in the median or mean absolute error.</p>
 
 <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean absolute error: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+    <span class="s2">"Mean absolute error: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -932,8 +932,8 @@ influence on our metric. In this case we can use the median absolute error.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">median_absolute_error</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Median absolute error: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">median_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+    <span class="s2">"Median absolute error: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">median_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -954,8 +954,8 @@ Indeed, the mean absolute error is not relative.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_absolute_percentage_error</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean absolute percentage error: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %&quot;</span>
+    <span class="s2">"Mean absolute percentage error: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> %"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -994,27 +994,27 @@ model associated with the lowest or highest predicted values.</p>
 <span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
     <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
     <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
-    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;actual_vs_predicted&quot;</span><span class="p">,</span>
-    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">"actual_vs_predicted"</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"square"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Predicted values (k$)"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"True values (k$)"</span><span class="p">)</span>
 
 <span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
     <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
     <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
-    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;residual_vs_predicted&quot;</span><span class="p">,</span>
-    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">"residual_vs_predicted"</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Residual values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"square"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Predicted values (k$)"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Residual values (k$)"</span><span class="p">)</span>
 
 <span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
-    <span class="s2">&quot;Regression using a model</span><span class="se">\n</span><span class="s2">without target transformation&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span>
+    <span class="s2">"Regression using a model</span><span class="se">\n</span><span class="s2">without target transformation"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1037,7 +1037,7 @@ reshapes the target variable to follow a normal distribution.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.compose</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransformedTargetRegressor</span>
 
 <span class="n">transformer</span> <span class="o">=</span> <span class="n">QuantileTransformer</span><span class="p">(</span>
-    <span class="n">n_quantiles</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">output_distribution</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span>
+    <span class="n">n_quantiles</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">output_distribution</span><span class="o">=</span><span class="s2">"normal"</span>
 <span class="p">)</span>
 <span class="n">model_transformed_target</span> <span class="o">=</span> <span class="n">TransformedTargetRegressor</span><span class="p">(</span>
     <span class="n">regressor</span><span class="o">=</span><span class="n">regressor</span><span class="p">,</span> <span class="n">transformer</span><span class="o">=</span><span class="n">transformer</span>
@@ -1050,27 +1050,27 @@ reshapes the target variable to follow a normal distribution.</p>
 <span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
     <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
     <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
-    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;actual_vs_predicted&quot;</span><span class="p">,</span>
-    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">"actual_vs_predicted"</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"square"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Predicted values (k$)"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"True values (k$)"</span><span class="p">)</span>
 
 <span class="n">PredictionErrorDisplay</span><span class="o">.</span><span class="n">from_predictions</span><span class="p">(</span>
     <span class="n">y_true</span><span class="o">=</span><span class="n">target_test</span><span class="p">,</span>
     <span class="n">y_pred</span><span class="o">=</span><span class="n">target_predicted</span><span class="p">,</span>
-    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;residual_vs_predicted&quot;</span><span class="p">,</span>
-    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">"residual_vs_predicted"</span><span class="p">,</span>
+    <span class="n">scatter_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;square&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted values (k$)&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Residual values (k$)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"square"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Predicted values (k$)"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Residual values (k$)"</span><span class="p">)</span>
 
 <span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
-    <span class="s2">&quot;Regression using a model that</span><span class="se">\n</span><span class="s2">transforms the target before fitting&quot;</span><span class="p">,</span>
+    <span class="s2">"Regression using a model that</span><span class="se">\n</span><span class="s2">transforms the target before fitting"</span><span class="p">,</span>
     <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -1089,16 +1089,16 @@ transformation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean absolute error: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+    <span class="s2">"Mean absolute error: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$"</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Median absolute error: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">median_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$&quot;</span>
+    <span class="s2">"Median absolute error: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">median_absolute_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> k$"</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean absolute percentage error: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean absolute percentage error: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">target_test</span><span class="p">,</span><span class="w"> </span><span class="n">target_predicted</span><span class="p">)</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>

@@ -807,8 +807,8 @@ PCA is an unsupervised learning method.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;SalePrice&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/ames_housing_no_missing.csv"</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">"SalePrice"</span><span class="p">)</span>
 <span class="n">data</span>
 </pre></div>
 </div>
@@ -1143,9 +1143,9 @@ computing the common range across all three axes and applying it uniformly.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
 
-<span class="n">features_3d</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GrLivArea&quot;</span><span class="p">,</span> <span class="s2">&quot;OverallQual&quot;</span><span class="p">,</span> <span class="s2">&quot;YearBuilt&quot;</span><span class="p">]</span>
+<span class="n">features_3d</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"GrLivArea"</span><span class="p">,</span> <span class="s2">"OverallQual"</span><span class="p">,</span> <span class="s2">"YearBuilt"</span><span class="p">]</span>
 <span class="n">X_3D</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">features_3d</span><span class="p">]</span>
-<span class="n">standard_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
+<span class="n">standard_scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">"pandas"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">set_equal_3d_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
@@ -1161,13 +1161,13 @@ computing the common range across all three axes and applying it uniformly.</p>
 
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
-    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;3d&quot;</span><span class="p">}</span>
+    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"projection"</span><span class="p">:</span> <span class="s2">"3d"</span><span class="p">}</span>
 <span class="p">)</span>
 
-<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Raw&quot;</span><span class="p">,</span> <span class="s2">&quot;StandardScaler&quot;</span><span class="p">)):</span>
-    <span class="n">X_t</span> <span class="o">=</span> <span class="n">X_3D</span> <span class="k">if</span> <span class="n">title</span> <span class="o">==</span> <span class="s2">&quot;Raw&quot;</span> <span class="k">else</span> <span class="n">standard_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_3D</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">(</span><span class="s2">"Raw"</span><span class="p">,</span> <span class="s2">"StandardScaler"</span><span class="p">)):</span>
+    <span class="n">X_t</span> <span class="o">=</span> <span class="n">X_3D</span> <span class="k">if</span> <span class="n">title</span> <span class="o">==</span> <span class="s2">"Raw"</span> <span class="k">else</span> <span class="n">standard_scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_3D</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-        <span class="n">X_t</span><span class="p">[</span><span class="s2">&quot;GrLivArea&quot;</span><span class="p">],</span> <span class="n">X_t</span><span class="p">[</span><span class="s2">&quot;OverallQual&quot;</span><span class="p">],</span> <span class="n">X_t</span><span class="p">[</span><span class="s2">&quot;YearBuilt&quot;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span>
+        <span class="n">X_t</span><span class="p">[</span><span class="s2">"GrLivArea"</span><span class="p">],</span> <span class="n">X_t</span><span class="p">[</span><span class="s2">"OverallQual"</span><span class="p">],</span> <span class="n">X_t</span><span class="p">[</span><span class="s2">"YearBuilt"</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span>
     <span class="p">)</span>
     <span class="n">set_equal_3d_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">X_t</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
@@ -1198,16 +1198,16 @@ without scaling. Here we don’t need a helper function, we can directly set
 <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">pipe</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
     <span class="n">axes</span><span class="p">,</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;Raw&quot;</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">),</span>
-        <span class="p">(</span><span class="s2">&quot;StandardScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">"Raw"</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"StandardScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
     <span class="p">],</span>
 <span class="p">):</span>
     <span class="n">X_pc</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_3D</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;PC1&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;PC2&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"PC1"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"PC2"</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1249,22 +1249,22 @@ heatmap.</p>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">components</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">components_</span>
     <span class="n">sq_loadings</span> <span class="o">=</span> <span class="n">components</span><span class="o">**</span><span class="mi">2</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sq_loadings</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sq_loadings</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"Blues"</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"auto"</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">sq_loadings</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
             <span class="n">j</span><span class="p">,</span>
             <span class="n">i</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sq_loadings</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">decimals</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
-            <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">sq_loadings</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">]</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">decimals</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span>
+            <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span>
             <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">)))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span>
         <span class="p">[</span>
-            <span class="sa">f</span><span class="s2">&quot;PC</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="se">\n</span><span class="s2">(</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">"PC</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="se">\n</span><span class="s2">(</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">)"</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
         <span class="p">],</span>
         <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span>
@@ -1276,8 +1276,8 @@ heatmap.</p>
 <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">pipe</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
     <span class="n">axes</span><span class="p">,</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;Raw&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">pca_2d</span><span class="p">)),</span>
-        <span class="p">(</span><span class="s2">&quot;StandardScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">"Raw"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">pca_2d</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">"StandardScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
     <span class="p">],</span>
 <span class="p">):</span>
     <span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_3D</span><span class="p">)</span>
@@ -1334,13 +1334,13 @@ fair description of what PCA computed in that space.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">RobustScaler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">skrub</span><span class="w"> </span><span class="kn">import</span> <span class="n">SquashingScaler</span>
 
-<span class="n">X_lots</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">&quot;LotArea&quot;</span><span class="p">,</span> <span class="s2">&quot;GrLivArea&quot;</span><span class="p">]]</span>
+<span class="n">X_lots</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s2">"LotArea"</span><span class="p">,</span> <span class="s2">"GrLivArea"</span><span class="p">]]</span>
 <span class="n">squashing_scaler</span> <span class="o">=</span> <span class="n">SquashingScaler</span><span class="p">(</span><span class="n">quantile_range</span><span class="o">=</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">95.0</span><span class="p">))</span>
 
 <span class="n">pipelines</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s2">&quot;StandardScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
-    <span class="p">(</span><span class="s2">&quot;RobustScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">RobustScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
-    <span class="p">(</span><span class="s2">&quot;SquashingScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">squashing_scaler</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">"StandardScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">"RobustScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">RobustScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">"SquashingScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">squashing_scaler</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">)),</span>
 <span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -1353,12 +1353,12 @@ fair description of what PCA computed in that space.</p>
     <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">center</span> <span class="o">-</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="n">center</span> <span class="o">+</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">v</span><span class="p">])</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_t</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_t</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PC1&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"PC1"</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;LotArea&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;GrLivArea&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"LotArea"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"GrLivArea"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1378,12 +1378,12 @@ the right. This may appear counterintuitive, but as “LotArea” has a heavily
 skewed distribution, its IQR is much smaller than its standard deviation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lot</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;LotArea&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lot</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"LotArea"</span><span class="p">]</span>
 <span class="n">q1</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">lot</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="n">lot</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
 <span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;std: </span><span class="si">{</span><span class="n">lot</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> sq ft&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IQR: </span><span class="si">{</span><span class="n">iqr</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> sq ft  (Q1=</span><span class="si">{</span><span class="n">q1</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">, Q3=</span><span class="si">{</span><span class="n">q3</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"std: </span><span class="si">{</span><span class="n">lot</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> sq ft"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"IQR: </span><span class="si">{</span><span class="n">iqr</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> sq ft  (Q1=</span><span class="si">{</span><span class="n">q1</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">, Q3=</span><span class="si">{</span><span class="n">q3</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1409,13 +1409,13 @@ features together, <code class="docutils literal notranslate"><span class="pre">
 then using PCA with 2 components.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_4d</span> <span class="o">=</span> <span class="n">features_3d</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;LotArea&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_4d</span> <span class="o">=</span> <span class="n">features_3d</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"LotArea"</span><span class="p">]</span>
 <span class="n">X_4D</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">features_4d</span><span class="p">]</span>
 
 <span class="n">pipelines_4</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="s2">&quot;StandardScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
-    <span class="p">(</span><span class="s2">&quot;RobustScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">RobustScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
-    <span class="p">(</span><span class="s2">&quot;SquashingScaler&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">squashing_scaler</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">"StandardScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">"RobustScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">RobustScaler</span><span class="p">(),</span> <span class="n">pca_2d</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">"SquashingScaler"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">squashing_scaler</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">)),</span>
 <span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -1460,10 +1460,10 @@ Once again we are careful to set <code class="docutils literal notranslate"><spa
 <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">pipe</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">pipelines_4</span><span class="p">):</span>
     <span class="n">X_pc</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_4D</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;PC1&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;PC2&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"PC1"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"PC2"</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1491,7 +1491,7 @@ lots.</p>
 Ames have no pool, so the column is almost entirely zeros.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;PoolArea&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">"PoolArea"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1520,7 +1520,7 @@ component.</p>
 <p>Let’s verify using a heat map.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_5d</span> <span class="o">=</span> <span class="n">features_4d</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;PoolArea&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features_5d</span> <span class="o">=</span> <span class="n">features_4d</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"PoolArea"</span><span class="p">]</span>
 <span class="n">X_5d</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">features_5d</span><span class="p">]</span>
 
 <span class="n">pipe_pool</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">squashing_scaler</span><span class="p">,</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
@@ -1557,11 +1557,11 @@ combined representation in a downstream model.</p>
 
 <span class="n">ct</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;pca&quot;</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">squashing_scaler</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">),</span> <span class="n">features_4d</span><span class="p">),</span>
-        <span class="p">(</span><span class="s2">&quot;pool&quot;</span><span class="p">,</span> <span class="n">Binarizer</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;PoolArea&quot;</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">"pca"</span><span class="p">,</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">squashing_scaler</span><span class="p">,</span> <span class="n">pca_2d</span><span class="p">),</span> <span class="n">features_4d</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"pool"</span><span class="p">,</span> <span class="n">Binarizer</span><span class="p">(),</span> <span class="p">[</span><span class="s2">"PoolArea"</span><span class="p">]),</span>
     <span class="p">]</span>
 <span class="p">)</span>
-<span class="n">ct</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
+<span class="n">ct</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">"pandas"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2722,19 +2722,19 @@ forceTheme('sk-container-id-1');</script></body></div></div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pc1</span><span class="p">,</span> <span class="n">pc2</span><span class="p">,</span> <span class="n">has_pool</span> <span class="o">=</span> <span class="n">X_final</span><span class="o">.</span><span class="n">columns</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;projection&quot;</span><span class="p">:</span> <span class="s2">&quot;3d&quot;</span><span class="p">})</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">"projection"</span><span class="p">:</span> <span class="s2">"3d"</span><span class="p">})</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
     <span class="n">X_final</span><span class="p">[</span><span class="n">pc1</span><span class="p">],</span>
     <span class="n">X_final</span><span class="p">[</span><span class="n">pc2</span><span class="p">],</span>
     <span class="n">X_final</span><span class="p">[</span><span class="n">has_pool</span><span class="p">],</span>
     <span class="n">c</span><span class="o">=</span><span class="n">X_final</span><span class="p">[</span><span class="n">has_pool</span><span class="p">],</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
     <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;PC1&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;PC2&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;HasPool&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"PC1"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"PC2"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">"HasPool"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2775,7 +2775,7 @@ between two, making the components hard to interpret.</p>
 unique categories:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Neighborhood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"Neighborhood"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -2795,10 +2795,10 @@ with neighborhoods sorted by descending frequency.</p>
 <span class="n">pipe_ohe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse_output</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 <span class="p">)</span>
-<span class="n">pipe_ohe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s2">&quot;Neighborhood&quot;</span><span class="p">]])</span>
+<span class="n">pipe_ohe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s2">"Neighborhood"</span><span class="p">]])</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="n">pipe_ohe</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="n">freq_order</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;Neighborhood&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">freq_order</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"Neighborhood"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">freq_order</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -2834,7 +2834,7 @@ dominate their own component.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.19</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">]</span>
+    <span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.60</span><span class="p">,</span> <span class="mf">0.19</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">]</span>
 <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="n">pipe_ohe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
@@ -2843,7 +2843,7 @@ dominate their own component.</p>
 <span class="n">pipe_ohe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="n">im</span> <span class="o">=</span> <span class="n">plot_sq_loadings</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">pipe_ohe</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">])</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">plot_sq_loadings</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">pipe_ohe</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">])</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>

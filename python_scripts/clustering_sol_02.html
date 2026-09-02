@@ -778,16 +778,16 @@ penguins dataset.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">columns_to_keep</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Body Mass (g)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Sex&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Species&quot;</span><span class="p">,</span>
+    <span class="s2">"Culmen Length (mm)"</span><span class="p">,</span>
+    <span class="s2">"Culmen Depth (mm)"</span><span class="p">,</span>
+    <span class="s2">"Flipper Length (mm)"</span><span class="p">,</span>
+    <span class="s2">"Body Mass (g)"</span><span class="p">,</span>
+    <span class="s2">"Sex"</span><span class="p">,</span>
+    <span class="s2">"Species"</span><span class="p">,</span>
 <span class="p">]</span>
-<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)[</span><span class="n">columns_to_keep</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">species</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">penguins</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">])</span>
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/penguins.csv"</span><span class="p">)[</span><span class="n">columns_to_keep</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">species</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[</span><span class="s2">"Species"</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Species"</span><span class="p">])</span>
 <span class="n">penguins</span>
 </pre></div>
 </div>
@@ -932,12 +932,12 @@ interpretation of the results.</p>
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
     <span class="p">(</span>
-        <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">&quot;if_binary&quot;</span><span class="p">),</span>
-        <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_exclude</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">),</span>
+        <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="s2">"if_binary"</span><span class="p">),</span>
+        <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_exclude</span><span class="o">=</span><span class="s2">"number"</span><span class="p">),</span>
     <span class="p">),</span>
     <span class="p">(</span>
         <span class="n">StandardScaler</span><span class="p">(),</span>
-        <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">),</span>
+        <span class="n">make_column_selector</span><span class="p">(</span><span class="n">dtype_include</span><span class="o">=</span><span class="s2">"number"</span><span class="p">),</span>
     <span class="p">),</span>
 <span class="p">)</span>
 
@@ -961,32 +961,32 @@ for the k-means cluster and the “true” labels).</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
-<span class="n">species_and_sex_labels</span> <span class="o">=</span> <span class="n">species</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">penguins</span><span class="p">[</span><span class="s2">&quot;Sex&quot;</span><span class="p">]</span>
+<span class="n">species_and_sex_labels</span> <span class="o">=</span> <span class="n">species</span> <span class="o">+</span> <span class="s2">" "</span> <span class="o">+</span> <span class="n">penguins</span><span class="p">[</span><span class="s2">"Sex"</span><span class="p">]</span>
 <span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">penguins</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">penguins</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">species_and_sex</span><span class="o">=</span><span class="n">species_and_sex_labels</span><span class="p">),</span>
-    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;species_and_sex&quot;</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span>
-    <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;deep&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">"species_and_sex"</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">"Culmen Length (mm)"</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">"Flipper Length (mm)"</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s2">"deep"</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Species and sex&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Species and sex"</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">penguins</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">kmeans_labels</span><span class="o">=</span><span class="n">cluster_labels</span><span class="p">),</span>
-    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;kmeans_labels&quot;</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span>
-    <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;deep&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">"kmeans_labels"</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">"Culmen Length (mm)"</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">"Flipper Length (mm)"</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s2">"deep"</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span>
     <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;K-means labels&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"K-means labels"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1010,7 +1010,7 @@ partitions are identical (ie perfectly matched)</p>
     <span class="n">species_and_sex_labels</span><span class="p">,</span>
     <span class="n">cluster_labels</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adjusted Mutual Information (AMI): </span><span class="si">{</span><span class="n">ami</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Adjusted Mutual Information (AMI): </span><span class="si">{</span><span class="n">ami</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1039,7 +1039,7 @@ agreement between both sets of labels?</p>
 
 <span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">penguins</span><span class="p">)</span>
 <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">true_labels</span><span class="p">,</span> <span class="n">cluster_labels</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Accuracy: </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1070,8 +1070,8 @@ sensitive to relabeling?</p>
 <span class="n">permuted_ami</span> <span class="o">=</span> <span class="n">adjusted_mutual_info_score</span><span class="p">(</span><span class="n">true_labels</span><span class="p">,</span> <span class="n">permuted_labels</span><span class="p">)</span>
 <span class="n">permuted_acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">true_labels</span><span class="p">,</span> <span class="n">permuted_labels</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AMI (permuted): </span><span class="si">{</span><span class="n">permuted_ami</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy (permuted): </span><span class="si">{</span><span class="n">permuted_acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"AMI (permuted): </span><span class="si">{</span><span class="n">permuted_ami</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Accuracy (permuted): </span><span class="si">{</span><span class="n">permuted_acc</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1099,7 +1099,7 @@ match the number of clusters).</p>
 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">random_labels</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_labels</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">species</span><span class="p">))</span>
     <span class="n">ami_random</span> <span class="o">=</span> <span class="n">adjusted_mutual_info_score</span><span class="p">(</span><span class="n">true_labels</span><span class="p">,</span> <span class="n">random_labels</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AMI (random labels): </span><span class="si">{</span><span class="n">ami_random</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"AMI (random labels): </span><span class="si">{</span><span class="n">ami_random</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

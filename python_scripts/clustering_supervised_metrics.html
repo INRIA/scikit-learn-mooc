@@ -804,9 +804,9 @@ short phrases into a numerical table:</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">CountVectorizer</span>
 
 <span class="n">docs</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;This is a simple phrase&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;This phrase is shorter&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;The previous phrase is shorter than the first phrase&quot;</span><span class="p">,</span>
+    <span class="s2">"This is a simple phrase"</span><span class="p">,</span>
+    <span class="s2">"This phrase is shorter"</span><span class="p">,</span>
+    <span class="s2">"The previous phrase is shorter than the first phrase"</span><span class="p">,</span>
 <span class="p">]</span>
 <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
 <span class="n">X_vectorized</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
@@ -900,7 +900,7 @@ for more information.</p>
 clustered by topic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/wiki_news.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/wiki_news.csv"</span><span class="p">)</span>
 <span class="n">data</span>
 </pre></div>
 </div>
@@ -993,7 +993,7 @@ clustered by topic.</p>
 “business”, “entertainment”, “sport”, “politics” and “tech”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">"category"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1021,15 +1021,15 @@ documents.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_pipeline</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StringEncoder</span><span class="p">(),</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-<span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+<span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2    984
-1    214
-0     52
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    647
+1    580
+2     23
 Name: count, dtype: int64
 </pre></div>
 </div>
@@ -1087,11 +1087,11 @@ for both of them:</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShuffleSplit</span>
 
 <span class="n">cv</span> <span class="o">=</span> <span class="n">ShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">data_encoded</span> <span class="o">=</span> <span class="n">StringEncoder</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+<span class="n">data_encoded</span> <span class="o">=</span> <span class="n">StringEncoder</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"text"</span><span class="p">])</span>
 <span class="n">n_clusters_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
 <span class="n">scoring_names</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;V-measure&quot;</span><span class="p">:</span> <span class="s2">&quot;v_measure_score&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ARI&quot;</span><span class="p">:</span> <span class="s2">&quot;adjusted_rand_score&quot;</span><span class="p">,</span>
+    <span class="s2">"V-measure"</span><span class="p">:</span> <span class="s2">"v_measure_score"</span><span class="p">,</span>
+    <span class="s2">"ARI"</span><span class="p">:</span> <span class="s2">"adjusted_rand_score"</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
     <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span>
@@ -1100,11 +1100,11 @@ for both of them:</p>
     <span class="n">ValidationCurveDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
         <span class="n">KMeans</span><span class="p">(</span><span class="n">n_init</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
         <span class="n">data_encoded</span><span class="p">,</span>
-        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">],</span>
-        <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;n_clusters&quot;</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">"category"</span><span class="p">],</span>
+        <span class="n">param_name</span><span class="o">=</span><span class="s2">"n_clusters"</span><span class="p">,</span>
         <span class="n">param_range</span><span class="o">=</span><span class="n">n_clusters_values</span><span class="p">,</span>
         <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">,</span>
-        <span class="n">std_display_style</span><span class="o">=</span><span class="s2">&quot;errorbar&quot;</span><span class="p">,</span>
+        <span class="n">std_display_style</span><span class="o">=</span><span class="s2">"errorbar"</span><span class="p">,</span>
         <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
         <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
     <span class="p">)</span>
@@ -1113,9 +1113,9 @@ for both of them:</p>
         <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">ylabel</span><span class="o">=</span><span class="n">scoring_name</span><span class="p">,</span>
     <span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of clusters (n_clusters)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Number of clusters (n_clusters)"</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
-    <span class="s2">&quot;Supervised evaluation of clusters</span><span class="se">\n</span><span class="s2">for varying n_clusters&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.08</span>
+    <span class="s2">"Supervised evaluation of clusters</span><span class="se">\n</span><span class="s2">for varying n_clusters"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.08</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1154,20 +1154,20 @@ the silhouette score also lead us to chose <code class="docutils literal notrans
         <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
 
     <span class="n">all_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_clusters_values</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of clusters (n_clusters)&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Silhouette score&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_clusters_values</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Number of clusters (n_clusters)"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Silhouette score"</span><span class="p">)</span>
 
 <span class="n">all_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">all_scores</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">n_clusters_values</span><span class="p">,</span>
     <span class="n">all_scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean silhouette score&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"Mean silhouette score"</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Silhouette score for varying n_clusters&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Silhouette score for varying n_clusters"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

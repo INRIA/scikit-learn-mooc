@@ -773,10 +773,10 @@ following snippet. For the moment we retain only the <strong>numerical features<
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">([</span><span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;floating&quot;</span><span class="p">])</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/adult-census.csv"</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">"class"</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">([</span><span class="s2">"integer"</span><span class="p">,</span> <span class="s2">"floating"</span><span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"education-num"</span><span class="p">])</span>
 <span class="n">data</span>
 </pre></div>
 </div>
@@ -907,7 +907,7 @@ the trained estimators.</p>
 <span class="n">cv_results_lr</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
-<span class="n">test_score_lr</span> <span class="o">=</span> <span class="n">cv_results_lr</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="n">test_score_lr</span> <span class="o">=</span> <span class="n">cv_results_lr</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span>
 <span class="n">test_score_lr</span>
 </pre></div>
 </div>
@@ -927,10 +927,10 @@ also visualizing the variability induced by the cross-validation resampling.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pipeline</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">cv_results_lr</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pipeline</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">cv_results_lr</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]]</span>
 <span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
-<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"whiskers"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"medians"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"caps"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">}</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">coefs</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 </pre></div>
@@ -952,9 +952,9 @@ effects</a>.</p>
 reload the Adult Census dataset with the following snippet:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/adult-census.csv"</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="s2">"class"</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"class"</span><span class="p">,</span> <span class="s2">"education-num"</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -982,7 +982,7 @@ preprocessing.</p>
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
     <span class="p">(</span>
-        <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">min_frequency</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+        <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">handle_unknown</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">min_frequency</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
         <span class="n">categorical_columns</span><span class="p">,</span>
     <span class="p">),</span>
     <span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">numerical_columns</span><span class="p">),</span>
@@ -991,7 +991,7 @@ preprocessing.</p>
 <span class="n">cv_results_complex_lr</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span>
 <span class="p">)</span>
-<span class="n">test_score_complex_lr</span> <span class="o">=</span> <span class="n">cv_results_complex_lr</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="n">test_score_complex_lr</span> <span class="o">=</span> <span class="n">cv_results_complex_lr</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span>
 <span class="n">test_score_complex_lr</span>
 </pre></div>
 </div>
@@ -1014,23 +1014,23 @@ features has a better test score than the model using only numerical features.</
 
 <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_score_lr</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-    <span class="n">indices</span><span class="p">,</span> <span class="n">test_score_lr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;numerical features only&quot;</span>
+    <span class="n">indices</span><span class="p">,</span> <span class="n">test_score_lr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"numerical features only"</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
     <span class="n">indices</span><span class="p">,</span>
     <span class="n">test_score_complex_lr</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;all features&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"tab:red"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"all features"</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Cross-validation iteration&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Cross-validation iteration"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Accuracy"</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;A model using both all features is better than a&quot;</span>
-    <span class="s2">&quot; model using only numerical features for&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">test_score_complex_lr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_score_lr</span><span class="p">)</span><span class="si">}</span><span class="s2"> CV iterations out of 10.&quot;</span>
+    <span class="s2">"A model using both all features is better than a"</span>
+    <span class="s2">" model using only numerical features for"</span>
+    <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">test_score_complex_lr</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_score_lr</span><span class="p">)</span><span class="si">}</span><span class="s2"> CV iterations out of 10."</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1046,7 +1046,7 @@ features has a better test score than the model using only numerical features.</
 get the feature names from the column transformer here named <code class="docutils literal notranslate"><span class="pre">preprocessor</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">feature_names</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s2">&quot;onehotencoder&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
+    <span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s2">"onehotencoder"</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
         <span class="n">categorical_columns</span>
     <span class="p">)</span>
 <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -1059,7 +1059,7 @@ get the feature names from the column transformer here named <code class="docuti
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">feature_names</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s2">&quot;onehotencoder&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
+    <span class="n">preprocessor</span><span class="o">.</span><span class="n">named_transformers_</span><span class="p">[</span><span class="s2">"onehotencoder"</span><span class="p">]</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
         <span class="n">categorical_columns</span>
     <span class="p">)</span>
 <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -1069,70 +1069,70 @@ get the feature names from the column transformer here named <code class="docuti
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;workclass_ ?&#39;,
- &#39;workclass_ Federal-gov&#39;,
- &#39;workclass_ Local-gov&#39;,
- &#39;workclass_ Private&#39;,
- &#39;workclass_ Self-emp-inc&#39;,
- &#39;workclass_ Self-emp-not-inc&#39;,
- &#39;workclass_ State-gov&#39;,
- &#39;workclass_infrequent_sklearn&#39;,
- &#39;education_ 10th&#39;,
- &#39;education_ 11th&#39;,
- &#39;education_ 12th&#39;,
- &#39;education_ 5th-6th&#39;,
- &#39;education_ 7th-8th&#39;,
- &#39;education_ 9th&#39;,
- &#39;education_ Assoc-acdm&#39;,
- &#39;education_ Assoc-voc&#39;,
- &#39;education_ Bachelors&#39;,
- &#39;education_ Doctorate&#39;,
- &#39;education_ HS-grad&#39;,
- &#39;education_ Masters&#39;,
- &#39;education_ Prof-school&#39;,
- &#39;education_ Some-college&#39;,
- &#39;education_infrequent_sklearn&#39;,
- &#39;marital-status_ Divorced&#39;,
- &#39;marital-status_ Married-civ-spouse&#39;,
- &#39;marital-status_ Married-spouse-absent&#39;,
- &#39;marital-status_ Never-married&#39;,
- &#39;marital-status_ Separated&#39;,
- &#39;marital-status_ Widowed&#39;,
- &#39;marital-status_infrequent_sklearn&#39;,
- &#39;occupation_ ?&#39;,
- &#39;occupation_ Adm-clerical&#39;,
- &#39;occupation_ Craft-repair&#39;,
- &#39;occupation_ Exec-managerial&#39;,
- &#39;occupation_ Farming-fishing&#39;,
- &#39;occupation_ Handlers-cleaners&#39;,
- &#39;occupation_ Machine-op-inspct&#39;,
- &#39;occupation_ Other-service&#39;,
- &#39;occupation_ Prof-specialty&#39;,
- &#39;occupation_ Protective-serv&#39;,
- &#39;occupation_ Sales&#39;,
- &#39;occupation_ Tech-support&#39;,
- &#39;occupation_ Transport-moving&#39;,
- &#39;occupation_infrequent_sklearn&#39;,
- &#39;relationship_ Husband&#39;,
- &#39;relationship_ Not-in-family&#39;,
- &#39;relationship_ Other-relative&#39;,
- &#39;relationship_ Own-child&#39;,
- &#39;relationship_ Unmarried&#39;,
- &#39;relationship_ Wife&#39;,
- &#39;race_ Asian-Pac-Islander&#39;,
- &#39;race_ Black&#39;,
- &#39;race_ White&#39;,
- &#39;race_infrequent_sklearn&#39;,
- &#39;sex_ Female&#39;,
- &#39;sex_ Male&#39;,
- &#39;native-country_ ?&#39;,
- &#39;native-country_ Mexico&#39;,
- &#39;native-country_ United-States&#39;,
- &#39;native-country_infrequent_sklearn&#39;,
- &#39;age&#39;,
- &#39;capital-gain&#39;,
- &#39;capital-loss&#39;,
- &#39;hours-per-week&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['workclass_ ?',
+ 'workclass_ Federal-gov',
+ 'workclass_ Local-gov',
+ 'workclass_ Private',
+ 'workclass_ Self-emp-inc',
+ 'workclass_ Self-emp-not-inc',
+ 'workclass_ State-gov',
+ 'workclass_infrequent_sklearn',
+ 'education_ 10th',
+ 'education_ 11th',
+ 'education_ 12th',
+ 'education_ 5th-6th',
+ 'education_ 7th-8th',
+ 'education_ 9th',
+ 'education_ Assoc-acdm',
+ 'education_ Assoc-voc',
+ 'education_ Bachelors',
+ 'education_ Doctorate',
+ 'education_ HS-grad',
+ 'education_ Masters',
+ 'education_ Prof-school',
+ 'education_ Some-college',
+ 'education_infrequent_sklearn',
+ 'marital-status_ Divorced',
+ 'marital-status_ Married-civ-spouse',
+ 'marital-status_ Married-spouse-absent',
+ 'marital-status_ Never-married',
+ 'marital-status_ Separated',
+ 'marital-status_ Widowed',
+ 'marital-status_infrequent_sklearn',
+ 'occupation_ ?',
+ 'occupation_ Adm-clerical',
+ 'occupation_ Craft-repair',
+ 'occupation_ Exec-managerial',
+ 'occupation_ Farming-fishing',
+ 'occupation_ Handlers-cleaners',
+ 'occupation_ Machine-op-inspct',
+ 'occupation_ Other-service',
+ 'occupation_ Prof-specialty',
+ 'occupation_ Protective-serv',
+ 'occupation_ Sales',
+ 'occupation_ Tech-support',
+ 'occupation_ Transport-moving',
+ 'occupation_infrequent_sklearn',
+ 'relationship_ Husband',
+ 'relationship_ Not-in-family',
+ 'relationship_ Other-relative',
+ 'relationship_ Own-child',
+ 'relationship_ Unmarried',
+ 'relationship_ Wife',
+ 'race_ Asian-Pac-Islander',
+ 'race_ Black',
+ 'race_ White',
+ 'race_infrequent_sklearn',
+ 'sex_ Female',
+ 'sex_ Male',
+ 'native-country_ ?',
+ 'native-country_ Mexico',
+ 'native-country_ United-States',
+ 'native-country_infrequent_sklearn',
+ 'age',
+ 'capital-gain',
+ 'capital-loss',
+ 'hours-per-week']
 </pre></div>
 </div>
 </div>
@@ -1146,7 +1146,7 @@ coefficients?</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">pipeline</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">cv_results_complex_lr</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]</span>
+    <span class="n">pipeline</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">cv_results_complex_lr</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]</span>
 <span class="p">]</span>
 <span class="n">coefs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 
@@ -2601,7 +2601,7 @@ without interactions.</p>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">test_score_interactions</span> <span class="o">=</span> <span class="n">cv_results_interactions</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<span class="n">test_score_interactions</span> <span class="o">=</span> <span class="n">cv_results_interactions</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span>
 <span class="n">test_score_interactions</span>
 </pre></div>
 </div>
@@ -2617,29 +2617,29 @@ without interactions.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-    <span class="n">indices</span><span class="p">,</span> <span class="n">test_score_lr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;numerical features only&quot;</span>
+    <span class="n">indices</span><span class="p">,</span> <span class="n">test_score_lr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:blue"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"numerical features only"</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
     <span class="n">indices</span><span class="p">,</span>
     <span class="n">test_score_complex_lr</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;all features&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"tab:red"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"all features"</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
     <span class="n">indices</span><span class="p">,</span>
     <span class="n">test_score_interactions</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;all features and interactions&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"all features and interactions"</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Cross-validation iteration&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Cross-validation iteration"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Accuracy"</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;A model using all features and interactions is better than a model&quot;</span>
-    <span class="s2">&quot; without interactions for&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">test_score_interactions</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_score_complex_lr</span><span class="p">)</span><span class="si">}</span><span class="s2"> CV iterations&quot;</span>
-    <span class="s2">&quot; out of 10.&quot;</span>
+    <span class="s2">"A model using all features and interactions is better than a model"</span>
+    <span class="s2">" without interactions for"</span>
+    <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">test_score_interactions</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">test_score_complex_lr</span><span class="p">)</span><span class="si">}</span><span class="s2"> CV iterations"</span>
+    <span class="s2">" out of 10."</span>
 <span class="p">)</span>
 </pre></div>
 </div>

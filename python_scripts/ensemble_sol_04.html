@@ -810,9 +810,9 @@ providing the previous gradient boosting instance as the model.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
-    <span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">31</span><span class="p">],</span>
-    <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="s2">"max_depth"</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+    <span class="s2">"max_leaf_nodes"</span><span class="p">:</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">31</span><span class="p">],</span>
+    <span class="s2">"learning_rate"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
 <span class="p">}</span>
 
 <span class="n">search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">hist_gbdt</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
@@ -850,9 +850,9 @@ deviation score.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;R2 score with cross-validation:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"R2 score with cross-validation:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -869,22 +869,22 @@ parameters values. Besides, check the number of trees used by the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
-<span class="k">for</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# trees: </span><span class="si">{</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"# trees: </span><span class="si">{</span><span class="n">estimator</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">n_iter_</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;learning_rate&#39;: 0.1, &#39;max_depth&#39;: 3, &#39;max_leaf_nodes&#39;: 15}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{'learning_rate': 0.1, 'max_depth': 3, 'max_leaf_nodes': 15}
 # trees: 528
-{&#39;learning_rate&#39;: 0.1, &#39;max_depth&#39;: 8, &#39;max_leaf_nodes&#39;: 15}
+{'learning_rate': 0.1, 'max_depth': 8, 'max_leaf_nodes': 15}
 # trees: 447
-{&#39;learning_rate&#39;: 0.1, &#39;max_depth&#39;: 3, &#39;max_leaf_nodes&#39;: 15}
+{'learning_rate': 0.1, 'max_depth': 3, 'max_leaf_nodes': 15}
 # trees: 576
-{&#39;learning_rate&#39;: 0.1, &#39;max_depth&#39;: 8, &#39;max_leaf_nodes&#39;: 15}
+{'learning_rate': 0.1, 'max_depth': 8, 'max_leaf_nodes': 15}
 # trees: 290
-{&#39;learning_rate&#39;: 0.1, &#39;max_depth&#39;: 8, &#39;max_leaf_nodes&#39;: 15}
+{'learning_rate': 0.1, 'max_depth': 8, 'max_leaf_nodes': 15}
 # trees: 414
 </pre></div>
 </div>
@@ -900,15 +900,15 @@ plot of these scores.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">index_columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">columns</span> <span class="o">=</span> <span class="n">index_columns</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">]</span>
+<span class="n">index_columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="n">index_columns</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"mean_test_score"</span><span class="p">]</span>
 
 <span class="n">inner_cv_results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">cv_idx</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]):</span>
+<span class="k">for</span> <span class="n">cv_idx</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]):</span>
     <span class="n">search_cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
     <span class="n">search_cv_results</span> <span class="o">=</span> <span class="n">search_cv_results</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_columns</span><span class="p">)</span>
     <span class="n">search_cv_results</span> <span class="o">=</span> <span class="n">search_cv_results</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
-        <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;CV </span><span class="si">{</span><span class="n">cv_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"mean_test_score"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"CV </span><span class="si">{</span><span class="n">cv_idx</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span>
     <span class="p">)</span>
     <span class="n">inner_cv_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">search_cv_results</span><span class="p">)</span>
 <span class="n">inner_cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">inner_cv_results</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
@@ -920,13 +920,13 @@ plot of these scores.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"whiskers"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"medians"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"caps"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">}</span>
 <span class="n">inner_cv_results</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;R2 score&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Parameters&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"R2 score"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Parameters"</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
-    <span class="s2">&quot;Inner CV results with parameters</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="s2">&quot;(max_depth, max_leaf_nodes, learning_rate)&quot;</span>
+    <span class="s2">"Inner CV results with parameters</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="s2">"(max_depth, max_leaf_nodes, learning_rate)"</span>
 <span class="p">)</span>
 </pre></div>
 </div>

@@ -795,14 +795,14 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/penguins_classification.csv"</span><span class="p">)</span>
 
 <span class="c1"># only keep the Adelie and Chinstrap classes</span>
 <span class="n">penguins</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">penguins</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Species&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">&quot;Adelie&quot;</span><span class="p">,</span> <span class="s2">&quot;Chinstrap&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">penguins</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"Species"</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s2">"Adelie"</span><span class="p">,</span> <span class="s2">"Chinstrap"</span><span class="p">]]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="p">)</span>
-<span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
-<span class="n">target_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
+<span class="n">culmen_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Culmen Length (mm)"</span><span class="p">,</span> <span class="s2">"Culmen Depth (mm)"</span><span class="p">]</span>
+<span class="n">target_column</span> <span class="o">=</span> <span class="s2">"Species"</span>
 </pre></div>
 </div>
 </div>
@@ -815,7 +815,7 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <span class="k">for</span> <span class="n">feature_name</span> <span class="ow">in</span> <span class="n">culmen_columns</span><span class="p">:</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
     <span class="c1"># plot the histogram for each specie</span>
-    <span class="n">penguins</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Species&quot;</span><span class="p">)[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">penguins</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"Species"</span><span class="p">)[</span><span class="n">feature_name</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">feature_name</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -859,7 +859,7 @@ algorithm.</p>
 <span class="n">logistic_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
 <span class="n">logistic_regression</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
 <span class="n">accuracy</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy on test set: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Accuracy on test set: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -891,8 +891,8 @@ general.</p>
 <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">logistic_regression</span><span class="p">,</span>
     <span class="n">data_test</span><span class="p">,</span>
-    <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+    <span class="n">response_method</span><span class="o">=</span><span class="s2">"predict"</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
@@ -900,9 +900,9 @@ general.</p>
     <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">],</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="s2">"tab:blue"</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision boundary of the trained</span><span class="se">\n</span><span class="s2"> LogisticRegression&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Decision boundary of the trained</span><span class="se">\n</span><span class="s2"> LogisticRegression"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -928,14 +928,14 @@ weights) are non-null:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="n">logistic_regression</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Weight for &#39;</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">culmen_columns</span><span class="p">])</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Weight for '</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">'"</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">culmen_columns</span><span class="p">])</span>
 <span class="n">weights</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight for &#39;Culmen Length (mm)&#39;    3.724791
-Weight for &#39;Culmen Depth (mm)&#39;    -1.096371
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Weight for 'Culmen Length (mm)'    3.724791
+Weight for 'Culmen Depth (mm)'    -1.096371
 dtype: float64
 </pre></div>
 </div>
@@ -952,7 +952,7 @@ could use <code class="docutils literal notranslate"><span class="pre">coef_.rav
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Weights of the logistic regression&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Weights of the logistic regression"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -973,14 +973,14 @@ testing on a hypothetical <code class="docutils literal notranslate"><span class
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_penguin</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="p">{</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">45</span><span class="p">],</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">]}</span>
+    <span class="p">{</span><span class="s2">"Culmen Length (mm)"</span><span class="p">:</span> <span class="p">[</span><span class="mi">45</span><span class="p">],</span> <span class="s2">"Culmen Depth (mm)"</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">]}</span>
 <span class="p">)</span>
 <span class="n">logistic_regression</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_penguin</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Chinstrap&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(['Chinstrap'], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -1034,8 +1034,8 @@ follows:</p>
     <span class="n">y_pred_proba</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="n">logistic_regression</span><span class="o">.</span><span class="n">classes_</span>
 <span class="p">)</span>
 <span class="n">y_proba_sample</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Estimated probability&quot;</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Probability of the sample belonging to a penguin class&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Estimated probability"</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Probability of the sample belonging to a penguin class"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1068,8 +1068,8 @@ classifier is in its predictions.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
     <span class="n">logistic_regression</span><span class="p">,</span>
     <span class="n">data_test</span><span class="p">,</span>
-    <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict_proba&quot;</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+    <span class="n">response_method</span><span class="o">=</span><span class="s2">"predict_proba"</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">"RdBu_r"</span><span class="p">,</span>
     <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
@@ -1077,9 +1077,9 @@ classifier is in its predictions.</p>
     <span class="n">x</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">y</span><span class="o">=</span><span class="n">culmen_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">hue</span><span class="o">=</span><span class="n">target_column</span><span class="p">,</span>
-    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">],</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="s2">"tab:blue"</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Predicted probability of the trained</span><span class="se">\n</span><span class="s2"> LogisticRegression&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Predicted probability of the trained</span><span class="se">\n</span><span class="s2"> LogisticRegression"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

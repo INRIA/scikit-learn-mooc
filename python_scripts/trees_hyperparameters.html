@@ -790,18 +790,18 @@ regression problems we saw previously.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
-<span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Species&quot;</span>
-<span class="n">data_clf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_classification.csv&quot;</span><span class="p">)</span>
+<span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Culmen Length (mm)"</span><span class="p">,</span> <span class="s2">"Culmen Depth (mm)"</span><span class="p">]</span>
+<span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">"Species"</span>
+<span class="n">data_clf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/penguins_classification.csv"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_reg_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">]</span>
-<span class="n">target_reg_column</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
-<span class="n">data_reg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins_regression.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_reg_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Flipper Length (mm)"</span><span class="p">]</span>
+<span class="n">target_reg_column</span> <span class="o">=</span> <span class="s2">"Body Mass (g)"</span>
+<span class="n">data_reg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/penguins_regression.csv"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -826,14 +826,14 @@ decision boundary for classification and the regression line for regression.</p>
 <span class="k">def</span><span class="w"> </span><span class="nf">fit_and_plot_classification</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
     <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">]</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="s2">"tab:blue"</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
+        <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="s2">"tab:blue"</span><span class="p">,</span> <span class="s2">"black"</span><span class="p">]</span>
     <span class="n">DecisionBoundaryDisplay</span><span class="o">.</span><span class="n">from_estimator</span><span class="p">(</span>
         <span class="n">model</span><span class="p">,</span>
         <span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span>
-        <span class="n">response_method</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
-        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu&quot;</span><span class="p">,</span>
+        <span class="n">response_method</span><span class="o">=</span><span class="s2">"predict"</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">"RdBu"</span><span class="p">,</span>
         <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
@@ -843,7 +843,7 @@ decision boundary for classification and the regression line for regression.</p>
         <span class="n">hue</span><span class="o">=</span><span class="n">target_names</span><span class="p">,</span>
         <span class="n">palette</span><span class="o">=</span><span class="n">palette</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">fit_and_plot_regression</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
@@ -855,7 +855,7 @@ decision boundary for classification and the regression line for regression.</p>
     <span class="n">target_predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
 
     <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
-        <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">target_names</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span>
     <span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">target_predicted</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
@@ -887,7 +887,7 @@ parameter.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_classification</span><span class="p">(</span>
     <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shallow classification tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Shallow classification tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -900,7 +900,7 @@ parameter.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_regression</span><span class="p">(</span>
     <span class="n">tree_reg</span><span class="p">,</span> <span class="n">data_reg</span><span class="p">,</span> <span class="n">data_reg_columns</span><span class="p">,</span> <span class="n">target_reg_column</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shallow regression tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Shallow regression tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -924,7 +924,7 @@ observing the decision function.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_classification</span><span class="p">(</span>
     <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deep classification tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Deep classification tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -937,7 +937,7 @@ observing the decision function.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_and_plot_regression</span><span class="p">(</span>
     <span class="n">tree_reg</span><span class="p">,</span> <span class="n">data_reg</span><span class="p">,</span> <span class="n">data_reg_columns</span><span class="p">,</span> <span class="n">target_reg_column</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deep regression tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Deep regression tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -954,7 +954,7 @@ one should optimize via cross-validation and grid-search.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
-<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"max_depth"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
 <span class="n">tree_clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">)</span>
 <span class="n">tree_reg</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">DecisionTreeRegressor</span><span class="p">(),</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">)</span>
 </pre></div>
@@ -967,13 +967,13 @@ one should optimize via cross-validation and grid-search.</p>
     <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span>
 <span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Optimal depth found via CV: </span><span class="si">{</span><span class="n">tree_clf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">"Optimal depth found via CV: </span><span class="si">{</span><span class="n">tree_clf</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">'max_depth'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5c25dd14ffa30e93902fd3e447071603a725ff93b0838fdd85f2ce9ecc576560.png" src="../_images/5c25dd14ffa30e93902fd3e447071603a725ff93b0838fdd85f2ce9ecc576560.png" />
+<img alt="../_images/c8760a7921424a858cf925d28b01fc29d52f0a22dc145a38a383c394b803b7f1.png" src="../_images/c8760a7921424a858cf925d28b01fc29d52f0a22dc145a38a383c394b803b7f1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -982,7 +982,7 @@ one should optimize via cross-validation and grid-search.</p>
     <span class="n">tree_reg</span><span class="p">,</span> <span class="n">data_reg</span><span class="p">,</span> <span class="n">data_reg_columns</span><span class="p">,</span> <span class="n">target_reg_column</span>
 <span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Optimal depth found via CV: </span><span class="si">{</span><span class="n">tree_reg</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">"Optimal depth found via CV: </span><span class="si">{</span><span class="n">tree_reg</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">'max_depth'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1011,8 +1011,8 @@ from the second subset than from the first subset.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_blobs</span>
 
-<span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Feature #0&quot;</span><span class="p">,</span> <span class="s2">&quot;Feature #1&quot;</span><span class="p">]</span>
-<span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">&quot;Class&quot;</span>
+<span class="n">data_clf_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Feature #0"</span><span class="p">,</span> <span class="s2">"Feature #1"</span><span class="p">]</span>
+<span class="n">target_clf_column</span> <span class="o">=</span> <span class="s2">"Class"</span>
 
 <span class="c1"># Blobs that are interlaced</span>
 <span class="n">X_1</span><span class="p">,</span> <span class="n">y_1</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span>
@@ -1039,9 +1039,9 @@ from the second subset than from the first subset.</p>
     <span class="n">x</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">y</span><span class="o">=</span><span class="n">data_clf_columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">hue</span><span class="o">=</span><span class="n">target_clf_column</span><span class="p">,</span>
-    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="s2">&quot;tab:blue&quot;</span><span class="p">],</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="s2">"tab:blue"</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Synthetic dataset&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Synthetic dataset"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1058,7 +1058,7 @@ this depth to be enough to separate the blobs that are easy to separate.</p>
 <span class="n">fit_and_plot_classification</span><span class="p">(</span>
     <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Decision tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1091,7 +1091,7 @@ the depth to check how the tree grows.</p>
 <span class="n">fit_and_plot_classification</span><span class="p">(</span>
     <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span>
 <span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decision tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Decision tree with max-depth of </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1126,7 +1126,7 @@ constraint at the leaves or nodes level. We check the effect of
     <span class="n">tree_clf</span><span class="p">,</span> <span class="n">data_clf</span><span class="p">,</span> <span class="n">data_clf_columns</span><span class="p">,</span> <span class="n">target_clf_column</span>
 <span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Decision tree with leaf having at least </span><span class="si">{</span><span class="n">min_samples_leaf</span><span class="si">}</span><span class="s2"> samples&quot;</span>
+    <span class="sa">f</span><span class="s2">"Decision tree with leaf having at least </span><span class="si">{</span><span class="n">min_samples_leaf</span><span class="si">}</span><span class="s2"> samples"</span>
 <span class="p">)</span>
 </pre></div>
 </div>

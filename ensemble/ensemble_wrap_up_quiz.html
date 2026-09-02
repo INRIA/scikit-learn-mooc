@@ -740,16 +740,16 @@
 traditional <code class="docutils literal notranslate"><span class="pre">Species</span></code> column</strong> as predictive target:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/penguins.csv"</span><span class="p">)</span>
 
 <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span>
+    <span class="s2">"Culmen Length (mm)"</span><span class="p">,</span>
+    <span class="s2">"Culmen Depth (mm)"</span><span class="p">,</span>
+    <span class="s2">"Flipper Length (mm)"</span><span class="p">,</span>
 <span class="p">]</span>
-<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">"Body Mass (g)"</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;rows&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;any&quot;</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">feature_names</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">"rows"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">"any"</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">feature_names</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 </pre></div>
@@ -850,7 +850,7 @@ while using the default <code class="docutils literal notranslate"><span class="
 <span class="n">cv_results_tree</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">rf_1_tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
-<span class="n">cv_results_tree</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<span class="n">cv_results_tree</span><span class="p">[</span><span class="s2">"train_score"</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>should return:</p>
@@ -868,7 +868,7 @@ training data:</p>
 <span class="n">cv_results_tree</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">tree</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
-<span class="n">cv_results_tree</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<span class="n">cv_results_tree</span><span class="p">[</span><span class="s2">"train_score"</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>which outputs the expected perfect score:</p>

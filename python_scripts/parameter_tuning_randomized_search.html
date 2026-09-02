@@ -797,7 +797,7 @@ randomized search.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/adult-census.csv"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -805,7 +805,7 @@ randomized search.</p>
 <p>We extract the column containing the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">"class"</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 <span class="n">target</span>
 </pre></div>
@@ -832,7 +832,7 @@ Name: class, Length: 48842, dtype: str
 duplicates the information with <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> columns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">"education-num"</span><span class="p">])</span>
 <span class="n">data</span>
 </pre></div>
 </div>
@@ -1064,11 +1064,11 @@ duplicates the information with <code class="docutils literal notranslate"><span
 <span class="n">categorical_columns</span> <span class="o">=</span> <span class="n">categorical_columns_selector</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
-    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">"use_encoded_value"</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
 <span class="p">)</span>
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
     <span class="p">(</span><span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">"passthrough"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1081,9 +1081,9 @@ duplicates the information with <code class="docutils literal notranslate"><span
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"preprocessor"</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
         <span class="p">(</span>
-            <span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
+            <span class="s2">"classifier"</span><span class="p">,</span>
             <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">]</span>
@@ -2510,13 +2510,13 @@ adapt it as follows:</p>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">loguniform_int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Integer valued version of the log-uniform distribution&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Integer valued version of the log-uniform distribution"""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_distribution</span> <span class="o">=</span> <span class="n">loguniform</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">rvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Random variable sample&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Random variable sample"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_distribution</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2533,11 +2533,11 @@ processors.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
 
 <span class="n">param_distributions</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;classifier__l2_regularization&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">),</span>
-    <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
-    <span class="s2">&quot;classifier__max_leaf_nodes&quot;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-    <span class="s2">&quot;classifier__min_samples_leaf&quot;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
-    <span class="s2">&quot;classifier__max_bins&quot;</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+    <span class="s2">"classifier__l2_regularization"</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">),</span>
+    <span class="s2">"classifier__learning_rate"</span><span class="p">:</span> <span class="n">loguniform</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">"classifier__max_leaf_nodes"</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+    <span class="s2">"classifier__min_samples_leaf"</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s2">"classifier__max_bins"</span><span class="p">:</span> <span class="n">loguniform_int</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
 <span class="p">}</span>
 
 <span class="n">model_random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
@@ -2555,8 +2555,8 @@ processors.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 10 candidates, totalling 50 fits
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 22.2 s, sys: 1.52 s, total: 23.7 s
-Wall time: 23.7 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 15.8 s, sys: 695 ms, total: 16.5 s
+Wall time: 16.5 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {
@@ -3125,11 +3125,11 @@ a.param-doc-link::before {
                                                                                 &#x27;native-country&#x27;])])),
                                              (&#x27;classifier&#x27;,
                                               HistGradientBoostingCla...
-                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7efee45d2f90&gt;,
-                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7efee483f710&gt;,
-                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7efee45e51d0&gt;,
-                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7efee4ef6210&gt;,
-                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7efee45e4b50&gt;},
+                   param_distributions={&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7fa1edcc7c10&gt;,
+                                        &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen object at 0x7fa1f077a990&gt;,
+                                        &#x27;classifier__max_bins&#x27;: &lt;__main__.loguniform_int object at 0x7fa1edcd5110&gt;,
+                                        &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.loguniform_int object at 0x7fa1edcc7bd0&gt;,
+                                        &#x27;classifier__min_samples_leaf&#x27;: &lt;__main__.loguniform_int object at 0x7fa1edcd4a90&gt;},
                    verbose=1)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>RandomizedSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.model_selection.RandomizedSearchCV.html">?<span>Documentation for RandomizedSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -3165,7 +3165,7 @@ a.param-doc-link::before {
             <span class="param-doc-description">param_distributions: dict or list of dicts<br><br>Dictionary with parameters names (`str`) as keys and distributions<br>or lists of parameters to try. Distributions must provide a ``rvs``<br>method for sampling (such as those from scipy.stats.distributions).<br>If a list is given, it is sampled uniformly.<br>If a list of dicts is given, first a dict is sampled uniformly, and<br>then a parameter is sampled using that dict as above.</span>
         </a>
     </td>
-            <td class="value">{&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats....x7efee45d2f90&gt;, &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats....x7efee483f710&gt;, &#x27;classifier__max_bins&#x27;: &lt;__main__.log...x7efee45e51d0&gt;, &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.log...x7efee4ef6210&gt;, ...}</td>
+            <td class="value">{&#x27;classifier__l2_regularization&#x27;: &lt;scipy.stats....x7fa1edcc7c10&gt;, &#x27;classifier__learning_rate&#x27;: &lt;scipy.stats....x7fa1f077a990&gt;, &#x27;classifier__max_bins&#x27;: &lt;__main__.log...x7fa1edcd5110&gt;, &#x27;classifier__max_leaf_nodes&#x27;: &lt;__main__.log...x7fa1edcc7bd0&gt;, ...}</td>
         </tr>
     
 
@@ -3627,7 +3627,7 @@ a.param-doc-link::before {
             <span class="param-doc-description">learning_rate: float, default=0.1<br><br>The learning rate, also known as *shrinkage*. This is used as a<br>multiplicative factor for the leaves values. Use ``1`` for no<br>shrinkage.</span>
         </a>
     </td>
-            <td class="value">np.float64(0....4681355958928)</td>
+            <td class="value">np.float64(0....4670652478846)</td>
         </tr>
     
 
@@ -3659,7 +3659,7 @@ a.param-doc-link::before {
             <span class="param-doc-description">max_leaf_nodes: int or None, default=31<br><br>The maximum number of leaves for each tree. Must be strictly greater<br>than 1. If None, there is no maximum limit.</span>
         </a>
     </td>
-            <td class="value">np.int64(62)</td>
+            <td class="value">np.int64(53)</td>
         </tr>
     
 
@@ -3691,7 +3691,7 @@ a.param-doc-link::before {
             <span class="param-doc-description">min_samples_leaf: int, default=20<br><br>The minimum number of samples per leaf. For small datasets with less<br>than a few hundred samples, it is recommended to lower this value<br>since only very shallow trees would be built.</span>
         </a>
     </td>
-            <td class="value">np.int64(4)</td>
+            <td class="value">np.int64(7)</td>
         </tr>
     
 
@@ -3707,7 +3707,7 @@ a.param-doc-link::before {
             <span class="param-doc-description">l2_regularization: float, default=0<br><br>The L2 regularization parameter penalizing leaves with small hessians.<br>Use ``0`` for no regularization (default).</span>
         </a>
     </td>
-            <td class="value">np.float64(0....0083606244976)</td>
+            <td class="value">np.float64(0.3456896122151748)</td>
         </tr>
     
 
@@ -3739,7 +3739,7 @@ a.param-doc-link::before {
             <span class="param-doc-description">max_bins: int, default=255<br><br>The maximum number of bins to use for non-missing values. Before<br>training, each feature of the input array `X` is binned into<br>integer-valued bins, which allows for a much faster training stage.<br>Features with a small number of unique values may use less than<br>``max_bins`` bins. In addition to the ``max_bins`` bins, one more bin<br>is always reserved for missing values. Must be no larger than 255.</span>
         </a>
     </td>
-            <td class="value">np.int64(220)</td>
+            <td class="value">np.int64(122)</td>
         </tr>
     
 
@@ -4060,7 +4060,7 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_random_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The test accuracy score of the best model is </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The test accuracy score of the best model is </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -4074,18 +4074,18 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The best parameters are:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"The best parameters are:"</span><span class="p">)</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best parameters are:
-{&#39;classifier__l2_regularization&#39;: np.float64(0.022480083606244976),
- &#39;classifier__learning_rate&#39;: np.float64(0.019864681355958928),
- &#39;classifier__max_bins&#39;: np.int64(220),
- &#39;classifier__max_leaf_nodes&#39;: np.int64(62),
- &#39;classifier__min_samples_leaf&#39;: np.int64(4)}
+{'classifier__l2_regularization': np.float64(0.3456896122151748),
+ 'classifier__learning_rate': np.float64(0.13494670652478846),
+ 'classifier__max_bins': np.int64(122),
+ 'classifier__max_leaf_nodes': np.int64(53),
+ 'classifier__min_samples_leaf': np.int64(7)}
 </pre></div>
 </div>
 </div>
@@ -4095,18 +4095,18 @@ previously.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
-<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
+<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_distributions</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">"mean_test_score"</span><span class="p">,</span> <span class="s2">"std_test_score"</span><span class="p">,</span> <span class="s2">"rank_test_score"</span><span class="p">]</span>
 
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_random_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+    <span class="s2">"mean_test_score"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s2">"__"</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">"__"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">param_name</span>
 
 
@@ -4146,114 +4146,114 @@ previously.</p>
   </thead>
   <tbody>
     <tr>
+      <th>7</th>
+      <td>0.345690</td>
+      <td>0.134947</td>
+      <td>53</td>
+      <td>7</td>
+      <td>122</td>
+      <td>0.869974</td>
+      <td>0.002270</td>
+      <td>1</td>
+    </tr>
+    <tr>
       <th>2</th>
-      <td>0.022480</td>
-      <td>0.019865</td>
-      <td>62</td>
-      <td>4</td>
-      <td>220</td>
-      <td>0.865551</td>
-      <td>0.002290</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.110474</td>
-      <td>0.973617</td>
-      <td>5</td>
-      <td>91</td>
-      <td>19</td>
-      <td>0.851437</td>
-      <td>0.002186</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.000021</td>
-      <td>0.761265</td>
-      <td>16</td>
-      <td>7</td>
-      <td>11</td>
-      <td>0.841610</td>
-      <td>0.003702</td>
+      <td>18.962365</td>
+      <td>0.353656</td>
       <td>3</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>0.482515</td>
-      <td>0.010427</td>
-      <td>96</td>
-      <td>3</td>
-      <td>25</td>
-      <td>0.840627</td>
-      <td>0.001980</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.000018</td>
-      <td>0.825697</td>
-      <td>231</td>
-      <td>2</td>
-      <td>14</td>
-      <td>0.815429</td>
-      <td>0.002046</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.000004</td>
-      <td>1.236294</td>
-      <td>18</td>
-      <td>6</td>
-      <td>2</td>
-      <td>0.800824</td>
-      <td>0.002868</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>0.000003</td>
-      <td>0.001325</td>
-      <td>35</td>
       <td>1</td>
-      <td>202</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
-      <td>7</td>
+      <td>58</td>
+      <td>0.856324</td>
+      <td>0.002943</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>26.281744</td>
-      <td>0.001551</td>
-      <td>199</td>
-      <td>41</td>
-      <td>30</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
-      <td>7</td>
+      <td>0.011040</td>
+      <td>1.048442</td>
+      <td>18</td>
+      <td>4</td>
+      <td>37</td>
+      <td>0.845486</td>
+      <td>0.003743</td>
+      <td>3</td>
     </tr>
     <tr>
-      <th>7</th>
-      <td>138.761598</td>
-      <td>0.006837</td>
-      <td>3</td>
+      <th>4</th>
+      <td>6.037767</td>
+      <td>0.035975</td>
+      <td>18</td>
+      <td>27</td>
+      <td>12</td>
+      <td>0.843302</td>
+      <td>0.003339</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>1.693660</td>
+      <td>1.550846</td>
+      <td>13</td>
       <td>1</td>
-      <td>137</td>
-      <td>0.758947</td>
-      <td>0.000013</td>
       <td>7</td>
+      <td>0.817095</td>
+      <td>0.006113</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>15.881602</td>
-      <td>8.908173</td>
-      <td>71</td>
-      <td>9</td>
+      <td>0.000122</td>
+      <td>0.009722</td>
+      <td>3</td>
+      <td>1</td>
+      <td>52</td>
+      <td>0.786328</td>
+      <td>0.001856</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>21.623918</td>
+      <td>0.009615</td>
+      <td>157</td>
+      <td>18</td>
       <td>2</td>
-      <td>0.699052</td>
-      <td>0.039257</td>
-      <td>10</td>
+      <td>0.783626</td>
+      <td>0.002115</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.469573</td>
+      <td>2.093031</td>
+      <td>11</td>
+      <td>85</td>
+      <td>7</td>
+      <td>0.636753</td>
+      <td>0.173065</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.000196</td>
+      <td>7.360833</td>
+      <td>3</td>
+      <td>50</td>
+      <td>3</td>
+      <td>0.283476</td>
+      <td>0.005123</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.320275</td>
+      <td>4.083052</td>
+      <td>2</td>
+      <td>60</td>
+      <td>5</td>
+      <td>0.283476</td>
+      <td>0.005123</td>
+      <td>9</td>
     </tr>
   </tbody>
 </table>
@@ -4273,7 +4273,7 @@ the results obtained from a similar search with 500 iterations.</p>
 <span class="c1">#     n_jobs=2, cv=5)</span>
 <span class="c1"># model_random_search.fit(data_train, target_train)</span>
 <span class="c1"># cv_results =  pd.DataFrame(model_random_search.cv_results_)</span>
-<span class="c1"># cv_results.to_csv(&quot;../figures/randomized_search_results.csv&quot;)</span>
+<span class="c1"># cv_results.to_csv("../figures/randomized_search_results.csv")</span>
 </pre></div>
 </div>
 </div>
@@ -4281,13 +4281,13 @@ the results obtained from a similar search with 500 iterations.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="s2">&quot;../figures/randomized_search_results.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span>
+    <span class="s2">"../figures/randomized_search_results.csv"</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span>
 <span class="p">)</span>
 
 <span class="p">(</span>
     <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span>
     <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">shorten_param</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"mean_test_score"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>

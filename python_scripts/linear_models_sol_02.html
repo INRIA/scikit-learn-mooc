@@ -790,10 +790,10 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/penguins.csv&quot;</span><span class="p">)</span>
+<span class="n">penguins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/penguins.csv"</span><span class="p">)</span>
 
-<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Flipper Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Length (mm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Culmen Depth (mm)&quot;</span><span class="p">]</span>
-<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;Body Mass (g)&quot;</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Flipper Length (mm)"</span><span class="p">,</span> <span class="s2">"Culmen Length (mm)"</span><span class="p">,</span> <span class="s2">"Culmen Depth (mm)"</span><span class="p">]</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">"Body Mass (g)"</span>
 
 <span class="c1"># Remove lines with missing values for the columns of interest</span>
 <span class="n">penguins_non_missing</span> <span class="o">=</span> <span class="n">penguins</span><span class="p">[</span><span class="n">columns</span> <span class="o">+</span> <span class="p">[</span><span class="n">target_name</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
@@ -924,7 +924,7 @@ as metric.</p>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_absolute_error"</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -938,9 +938,9 @@ the sign introduced when metrics start with <code class="docutils literal notran
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean absolute error on testing set with original features: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> g&quot;</span>
+    <span class="s2">"Mean absolute error on testing set with original features: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> g"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -970,7 +970,7 @@ pipeline to answer the next question.</p>
 <span class="p">)</span>
 <span class="n">linear_regression_interactions</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">poly_features</span><span class="p">,</span> <span class="n">linear_regression</span>
-<span class="p">)</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">"pandas"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1098,13 +1098,13 @@ without feature engineering.</p>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_absolute_error"</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean absolute error on testing set with interactions: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> g&quot;</span>
+    <span class="s2">"Mean absolute error on testing set with interactions: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> g"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1135,7 +1135,7 @@ performance.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationCurveDisplay</span>
 
 <span class="n">nystroem_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
-    <span class="n">Nystroem</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;poly&quot;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">Nystroem</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">"poly"</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
     <span class="n">linear_regression</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -1144,19 +1144,19 @@ performance.</p>
     <span class="n">nystroem_regression</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
-    <span class="n">param_name</span><span class="o">=</span><span class="s2">&quot;nystroem__n_components&quot;</span><span class="p">,</span>
+    <span class="n">param_name</span><span class="o">=</span><span class="s2">"nystroem__n_components"</span><span class="p">,</span>
     <span class="n">param_range</span><span class="o">=</span><span class="n">param_range</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_absolute_error"</span><span class="p">,</span>
     <span class="n">negate_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">std_display_style</span><span class="o">=</span><span class="s2">&quot;errorbar&quot;</span><span class="p">,</span>
+    <span class="n">std_display_style</span><span class="o">=</span><span class="s2">"errorbar"</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">_</span> <span class="o">=</span> <span class="n">disp</span><span class="o">.</span><span class="n">ax_</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Number of components&quot;</span><span class="p">,</span>
-    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean absolute error (g)&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Validation curve for Nystroem regression&quot;</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Number of components"</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Mean absolute error (g)"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"Validation curve for Nystroem regression"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1180,13 +1180,13 @@ for this dataset.</p>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_absolute_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_absolute_error"</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean absolute error on testing set with nystroem: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> g&quot;</span>
+    <span class="s2">"Mean absolute error on testing set with nystroem: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cv_results</span><span class="p">[</span><span class="s1">'test_score'</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> g"</span>
 <span class="p">)</span>
 </pre></div>
 </div>

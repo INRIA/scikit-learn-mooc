@@ -801,15 +801,15 @@ Appendix - Datasets description section at the end of this MOOC.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/ames_housing_no_missing.csv&quot;</span><span class="p">)</span>
+<span class="n">ames_housing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/ames_housing_no_missing.csv"</span><span class="p">)</span>
 <span class="n">features_of_interest</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;LotFrontage&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;LotArea&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;PoolArea&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;YearBuilt&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;YrSold&quot;</span><span class="p">,</span>
+    <span class="s2">"LotFrontage"</span><span class="p">,</span>
+    <span class="s2">"LotArea"</span><span class="p">,</span>
+    <span class="s2">"PoolArea"</span><span class="p">,</span>
+    <span class="s2">"YearBuilt"</span><span class="p">,</span>
+    <span class="s2">"YrSold"</span><span class="p">,</span>
 <span class="p">]</span>
-<span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;SalePrice&quot;</span>
+<span class="n">target_name</span> <span class="o">=</span> <span class="s2">"SalePrice"</span>
 <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">ames_housing</span><span class="p">[</span><span class="n">features_of_interest</span><span class="p">],</span>
     <span class="n">ames_housing</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span>
@@ -835,13 +835,13 @@ generalization capabilities of our model.</p>
 
 <span class="n">linear_regression</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">()</span>
-<span class="p">)</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="s2">"pandas"</span><span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">linear_regression</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_squared_error"</span><span class="p">,</span>
     <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
@@ -853,10 +853,10 @@ generalization capabilities of our model.</p>
 assess the generalization performance of our model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"train_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of linear regression model on the train set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -870,10 +870,10 @@ assess the generalization performance of our model.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of linear regression model on the test set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -901,7 +901,7 @@ called <code class="docutils literal notranslate"><span class="pre">feature_name
 coefficients from the model fitted in the first cross-validation fold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_first_fold</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_first_fold</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">model_first_fold</span>
 </pre></div>
 </div>
@@ -1823,12 +1823,12 @@ of the <code class="docutils literal notranslate"><span class="pre">linear_regre
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;LotFrontage&#39;, &#39;LotArea&#39;, &#39;PoolArea&#39;, &#39;YearBuilt&#39;, &#39;YrSold&#39;,
-       &#39;LotFrontage^2&#39;, &#39;LotFrontage LotArea&#39;, &#39;LotFrontage PoolArea&#39;,
-       &#39;LotFrontage YearBuilt&#39;, &#39;LotFrontage YrSold&#39;, &#39;LotArea^2&#39;,
-       &#39;LotArea PoolArea&#39;, &#39;LotArea YearBuilt&#39;, &#39;LotArea YrSold&#39;,
-       &#39;PoolArea^2&#39;, &#39;PoolArea YearBuilt&#39;, &#39;PoolArea YrSold&#39;,
-       &#39;YearBuilt^2&#39;, &#39;YearBuilt YrSold&#39;, &#39;YrSold^2&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array(['LotFrontage', 'LotArea', 'PoolArea', 'YearBuilt', 'YrSold',
+       'LotFrontage^2', 'LotFrontage LotArea', 'LotFrontage PoolArea',
+       'LotFrontage YearBuilt', 'LotFrontage YrSold', 'LotArea^2',
+       'LotArea PoolArea', 'LotArea YearBuilt', 'LotArea YrSold',
+       'PoolArea^2', 'PoolArea YearBuilt', 'PoolArea YrSold',
+       'YearBuilt^2', 'YearBuilt YrSold', 'YrSold^2'], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -1840,7 +1840,7 @@ dataframe containing all the information.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]]</span>
 <span class="n">weights_linear_regression</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1851,10 +1851,10 @@ dataframe containing all the information.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"whiskers"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"medians"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"caps"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">}</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linear regression weights (linear scale)&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Linear regression weights (linear scale)"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1868,12 +1868,12 @@ scale as the extremely large span of <code class="docutils literal notranslate">
 symmetric log scale for the plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;whiskers&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;medians&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="s2">&quot;caps&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"whiskers"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"medians"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span> <span class="s2">"caps"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">}</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_linear_regression</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Linear regression weights (symmetric log scale)&quot;</span><span class="p">,</span>
-    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;symlog&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"Linear regression weights (symmetric log scale)"</span><span class="p">,</span>
+    <span class="n">xscale</span><span class="o">=</span><span class="s2">"symlog"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1895,14 +1895,14 @@ ridge model which enforces such behavior.</p>
 
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;cholesky&quot;</span><span class="p">),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">"cholesky"</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">ridge</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_squared_error"</span><span class="p">,</span>
     <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
@@ -1910,46 +1910,46 @@ ridge model which enforces such behavior.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5992329030417642e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5955588334948822e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5960887407750003e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 3.1182847147854445e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 1.0610908354277733e-19.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6012143982836286e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6169401392630198e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5973473624715944e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5956637702873978e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.723041593148218e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.60046852851326e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.598243745823568e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.595931004346363e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5956412380641375e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.595898398552885e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.595527710678087e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5968627814238887e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6073696016278253e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5957022455573128e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
-/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6024314417784325e-20.
-  return linalg.solve(A, Xy, assume_a=&quot;pos&quot;, overwrite_a=True).T
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5992329030417642e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5955588334948822e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5960887407750003e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 3.1182847147854445e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 1.0610908354277733e-19.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6012143982836286e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6169401392630198e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5973473624715944e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5956637702873978e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.723041593148218e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.60046852851326e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.598243745823568e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.595931004346363e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5956412380641375e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.595898398552885e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.595527710678087e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5968627814238887e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6073696016278253e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.5957022455573128e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
+/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/sklearn/linear_model/_ridge.py:228: LinAlgWarning: An ill-conditioned matrix detected: slice 0 has rcond = 2.6024314417784325e-20.
+  return linalg.solve(A, Xy, assume_a="pos", overwrite_a=True).T
 </pre></div>
 </div>
 </div>
@@ -1961,10 +1961,10 @@ the predictive model. We will get to that in a bit.</p>
 <p>Let us evaluate the train and test scores of this model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"train_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of ridge model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of ridge model on the train set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1978,10 +1978,10 @@ the predictive model. We will get to that in a bit.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of ridge model on the test set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1998,7 +1998,7 @@ model is less overfitting (yet still overfitting!). We can compare the values
 of the weights of ridge with the un-regularized linear regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]]</span>
 <span class="n">weights_ridge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2008,7 +2008,7 @@ of the weights of ridge with the un-regularized linear regression.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_ridge</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge regression weights&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Ridge regression weights"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2071,14 +2071,14 @@ powers of features in the range between zero and one remain in the same range.</
 <span class="n">scaled_ridge</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">MinMaxScaler</span><span class="p">(),</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;cholesky&quot;</span><span class="p">),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">"cholesky"</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">scaled_ridge</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_squared_error"</span><span class="p">,</span>
     <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
@@ -2088,10 +2088,10 @@ powers of features in the range between zero and one remain in the same range.</
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"train_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of scaled ridge model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of scaled ridge model on the train set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2105,10 +2105,10 @@ powers of features in the range between zero and one remain in the same range.</
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of scaled ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of scaled ridge model on the test set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2131,7 +2131,7 @@ changes in the weights.</p>
 <p>Let’s have an additional look to the different weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]]</span>
 <span class="n">weights_ridge_scaled_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2141,7 +2141,7 @@ changes in the weights.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_ridge_scaled_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge regression weights with data scaling&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Ridge regression weights with data scaling"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2159,14 +2159,14 @@ number of unstable weights also decreased.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge_large_alpha</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
     <span class="n">MinMaxScaler</span><span class="p">(),</span>
     <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;lsqr&quot;</span><span class="p">),</span>
+    <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s2">"lsqr"</span><span class="p">),</span>
 <span class="p">)</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
     <span class="n">ridge_large_alpha</span><span class="p">,</span>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_squared_error"</span><span class="p">,</span>
     <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
@@ -2176,7 +2176,7 @@ number of unstable weights also decreased.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coefs</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]]</span>
 <span class="n">weights_ridge_scaled_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2186,7 +2186,7 @@ number of unstable weights also decreased.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">weights_ridge_scaled_data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">vert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ridge regression weights with data scaling and large alpha&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Ridge regression weights with data scaling and large alpha"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2260,7 +2260,7 @@ score.</p>
     <span class="n">data</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-    <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;neg_mean_squared_error&quot;</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="s2">"neg_mean_squared_error"</span><span class="p">,</span>
     <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
@@ -2271,10 +2271,10 @@ score.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"train_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of tuned ridge model on the train set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of tuned ridge model on the train set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">train_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2288,10 +2288,10 @@ score.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_error</span> <span class="o">=</span> <span class="o">-</span><span class="n">cv_results</span><span class="p">[</span><span class="s2">"test_score"</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Mean squared error of tuned ridge model on the test set:</span><span class="se">\n</span><span class="s2">&quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"Mean squared error of tuned ridge model on the test set:</span><span class="se">\n</span><span class="s2">"</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">test_error</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2313,10 +2313,10 @@ average mean square error across folds for a given value of <code class="docutil
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mse_alphas</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cv_results_</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]</span>
+    <span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cv_results_</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]</span>
 <span class="p">]</span>
 <span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mse_alphas</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">alphas</span><span class="p">)</span>
-<span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">cv_alphas</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">cv_alphas</span> <span class="o">=</span> <span class="n">cv_alphas</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"std"</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 <span class="n">cv_alphas</span>
 </pre></div>
 </div>
@@ -2408,13 +2408,13 @@ average mean square error across folds for a given value of <code class="docutil
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">cv_alphas</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">cv_alphas</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">cv_alphas</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">cv_alphas</span><span class="p">[</span><span class="s2">"std"</span><span class="p">])</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-    <span class="n">xscale</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
-    <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;alpha&quot;</span><span class="p">,</span>
-    <span class="n">yscale</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
-    <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Testing error in RidgeCV&#39;s inner cross-validation&quot;</span><span class="p">,</span>
+    <span class="n">xscale</span><span class="o">=</span><span class="s2">"log"</span><span class="p">,</span>
+    <span class="n">xlabel</span><span class="o">=</span><span class="s2">"alpha"</span><span class="p">,</span>
+    <span class="n">yscale</span><span class="o">=</span><span class="s2">"log"</span><span class="p">,</span>
+    <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Mean squared error</span><span class="se">\n</span><span class="s2"> (lower is better)"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"Testing error in RidgeCV's inner cross-validation"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -2428,7 +2428,7 @@ its amount to get the best generalization performance. We can check if the
 best <code class="docutils literal notranslate"><span class="pre">alpha</span></code> found is stable across the cross-validation fold.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">alpha_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_alphas</span> <span class="o">=</span> <span class="p">[</span><span class="n">est</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">alpha_</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="n">cv_results</span><span class="p">[</span><span class="s2">"estimator"</span><span class="p">]]</span>
 <span class="n">best_alphas</span>
 </pre></div>
 </div>
@@ -2496,8 +2496,8 @@ by:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Min optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> and &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;Max optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">"Min optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> and "</span>
+    <span class="sa">f</span><span class="s2">"Max optimal alpha: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">best_alphas</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>

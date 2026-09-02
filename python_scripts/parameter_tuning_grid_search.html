@@ -792,7 +792,7 @@ optimize hyperparameters using a grid-search approach.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../datasets/adult-census.csv&quot;</span><span class="p">)</span>
+<span class="n">adult_census</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"../datasets/adult-census.csv"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -800,7 +800,7 @@ optimize hyperparameters using a grid-search approach.</p>
 <p>We extract the column containing the target.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">&quot;class&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target_name</span> <span class="o">=</span> <span class="s2">"class"</span>
 <span class="n">target</span> <span class="o">=</span> <span class="n">adult_census</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
 <span class="n">target</span>
 </pre></div>
@@ -827,7 +827,7 @@ Name: class, Length: 48842, dtype: str
 duplicates the information from the <code class="docutils literal notranslate"><span class="pre">&quot;education&quot;</span></code> column.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">&quot;education-num&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">adult_census</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">target_name</span><span class="p">,</span> <span class="s2">"education-num"</span><span class="p">])</span>
 <span class="n">data</span>
 </pre></div>
 </div>
@@ -1076,7 +1076,7 @@ representations.</p></li>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdinalEncoder</span>
 
 <span class="n">categorical_preprocessor</span> <span class="o">=</span> <span class="n">OrdinalEncoder</span><span class="p">(</span>
-    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;use_encoded_value&quot;</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">"use_encoded_value"</span><span class="p">,</span> <span class="n">unknown_value</span><span class="o">=-</span><span class="mi">1</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1090,7 +1090,7 @@ the <code class="docutils literal notranslate"><span class="pre">OrdinalEncoder<
 
 <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">make_column_transformer</span><span class="p">(</span>
     <span class="p">(</span><span class="n">categorical_preprocessor</span><span class="p">,</span> <span class="n">categorical_columns</span><span class="p">),</span>
-    <span class="n">remainder</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">,</span>
+    <span class="n">remainder</span><span class="o">=</span><span class="s2">"passthrough"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1105,9 +1105,9 @@ predict whether or not a person earns more than 50 k$ a year.</p>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
     <span class="p">[</span>
-        <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"preprocessor"</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
         <span class="p">(</span>
-            <span class="s2">&quot;classifier&quot;</span><span class="p">,</span>
+            <span class="s2">"classifier"</span><span class="p">,</span>
             <span class="n">HistGradientBoostingClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_leaf_nodes</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">]</span>
@@ -2502,8 +2502,8 @@ number of nodes for a total of 4 x 3 = 12 combinations.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;classifier__learning_rate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># 4 possible values</span>
-    <span class="s2">&quot;classifier__max_leaf_nodes&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>  <span class="c1"># 3 possible values</span>
+    <span class="s2">"classifier__learning_rate"</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># 4 possible values</span>
+    <span class="s2">"classifier__max_leaf_nodes"</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>  <span class="c1"># 3 possible values</span>
 <span class="p">}</span>  <span class="c1"># 12 unique combinations</span>
 <span class="n">model_grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">model_grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span> <span class="n">target_train</span><span class="p">)</span>
@@ -2511,8 +2511,8 @@ number of nodes for a total of 4 x 3 = 12 combinations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 970 ms, sys: 111 ms, total: 1.08 s
-Wall time: 5.35 s
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 975 ms, sys: 102 ms, total: 1.08 s
+Wall time: 5.16 s
 </pre></div>
 </div>
 <div class="output text_html"><style>#sk-container-id-2 {
@@ -3981,12 +3981,12 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 search using the <code class="docutils literal notranslate"><span class="pre">best_params_</span></code> attribute.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The best set of parameters is: </span><span class="si">{</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The best set of parameters is: </span><span class="si">{</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">best_params_</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best set of parameters is: {&#39;classifier__learning_rate&#39;: 0.1, &#39;classifier__max_leaf_nodes&#39;: 30}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The best set of parameters is: {'classifier__learning_rate': 0.1, 'classifier__max_leaf_nodes': 30}
 </pre></div>
 </div>
 </div>
@@ -4003,7 +4003,7 @@ best parameters:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39; &lt;=50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;, &#39; &lt;=50K&#39;, &#39; &gt;50K&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([' &lt;=50K', ' &lt;=50K', ' &gt;50K', ' &lt;=50K', ' &gt;50K'], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -4013,7 +4013,7 @@ best parameters:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">model_grid_search</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">data_test</span><span class="p">,</span> <span class="n">target_test</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;The test accuracy score of the grid-search pipeline is: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="sa">f</span><span class="s2">"The test accuracy score of the grid-search pipeline is: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -4039,10 +4039,12 @@ test set. This can be shown schematically as follows:</p>
 <p class="admonition-title">Note</p>
 <p>This figure shows the particular case of <strong>K-fold</strong> cross-validation strategy
 using <code class="docutils literal notranslate"><span class="pre">n_splits=5</span></code> to further split the train set coming from a train-test
-split. For each cross-validation split, the procedure trains a model on all
-the red samples, evaluates the score of a given set of hyperparameters on the
-green samples. The best combination of hyperparameters <code class="docutils literal notranslate"><span class="pre">best_params</span></code> is selected
-based on those intermediate scores.</p>
+split.</p>
+<p>For each cross-validation split, the procedure trains a model with a given set
+of hyperparameters on all the red samples, evaluates the score of such
+combination on the green samples, and selects the best combination of
+hyperparameters <code class="docutils literal notranslate"><span class="pre">best_params</span></code> by comparing the mean of those <strong>validation
+scores</strong> for different combinations.</p>
 <p>Then a final model is refitted using <code class="docutils literal notranslate"><span class="pre">best_params</span></code> on the concatenation of the
 red and green samples and evaluated on the blue samples.</p>
 <p>The green samples are sometimes referred as the <strong>validation set</strong> to
@@ -4054,7 +4056,7 @@ results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_grid_search</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
-    <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+    <span class="s2">"mean_test_score"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 <span class="n">cv_results</span>
 </pre></div>
@@ -4096,10 +4098,10 @@ results.</p>
   <tbody>
     <tr>
       <th>5</th>
-      <td>0.328554</td>
-      <td>0.027315</td>
-      <td>0.118781</td>
-      <td>0.003978</td>
+      <td>0.333523</td>
+      <td>0.031652</td>
+      <td>0.117017</td>
+      <td>0.006434</td>
       <td>0.10</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -4111,10 +4113,10 @@ results.</p>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.268442</td>
-      <td>0.002465</td>
-      <td>0.114031</td>
-      <td>0.003437</td>
+      <td>0.272998</td>
+      <td>0.004418</td>
+      <td>0.110112</td>
+      <td>0.000111</td>
       <td>0.10</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -4126,10 +4128,10 @@ results.</p>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.090937</td>
-      <td>0.002410</td>
-      <td>0.046861</td>
-      <td>0.001758</td>
+      <td>0.103793</td>
+      <td>0.003163</td>
+      <td>0.047637</td>
+      <td>0.002146</td>
       <td>1.00</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -4141,10 +4143,10 @@ results.</p>
     </tr>
     <tr>
       <th>6</th>
-      <td>0.115235</td>
-      <td>0.025896</td>
-      <td>0.056487</td>
-      <td>0.007492</td>
+      <td>0.115860</td>
+      <td>0.027468</td>
+      <td>0.057310</td>
+      <td>0.007269</td>
       <td>1.00</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -4156,10 +4158,10 @@ results.</p>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.195257</td>
-      <td>0.001022</td>
-      <td>0.088201</td>
-      <td>0.001282</td>
+      <td>0.196712</td>
+      <td>0.002126</td>
+      <td>0.088001</td>
+      <td>0.001085</td>
       <td>0.10</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 0.1, 'classifier...</td>
@@ -4171,10 +4173,10 @@ results.</p>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.097603</td>
-      <td>0.008792</td>
-      <td>0.046447</td>
-      <td>0.000101</td>
+      <td>0.099854</td>
+      <td>0.008780</td>
+      <td>0.047335</td>
+      <td>0.000403</td>
       <td>1.00</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 1, 'classifier__...</td>
@@ -4186,10 +4188,10 @@ results.</p>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.416427</td>
-      <td>0.005247</td>
-      <td>0.143105</td>
-      <td>0.003866</td>
+      <td>0.425155</td>
+      <td>0.001982</td>
+      <td>0.141848</td>
+      <td>0.002416</td>
       <td>0.01</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -4201,10 +4203,10 @@ results.</p>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.281821</td>
-      <td>0.005030</td>
-      <td>0.116101</td>
-      <td>0.003027</td>
+      <td>0.282156</td>
+      <td>0.003753</td>
+      <td>0.114467</td>
+      <td>0.001241</td>
       <td>0.01</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -4216,10 +4218,10 @@ results.</p>
     </tr>
     <tr>
       <th>0</th>
-      <td>0.202235</td>
-      <td>0.001851</td>
-      <td>0.086566</td>
-      <td>0.001334</td>
+      <td>0.205175</td>
+      <td>0.000432</td>
+      <td>0.085769</td>
+      <td>0.001624</td>
       <td>0.01</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 0.01, 'classifie...</td>
@@ -4231,10 +4233,10 @@ results.</p>
     </tr>
     <tr>
       <th>10</th>
-      <td>0.061723</td>
-      <td>0.000339</td>
-      <td>0.037512</td>
-      <td>0.003638</td>
+      <td>0.066084</td>
+      <td>0.003879</td>
+      <td>0.034665</td>
+      <td>0.001040</td>
       <td>10.00</td>
       <td>10</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -4246,10 +4248,10 @@ results.</p>
     </tr>
     <tr>
       <th>11</th>
-      <td>0.062283</td>
-      <td>0.000547</td>
-      <td>0.034821</td>
-      <td>0.001040</td>
+      <td>0.064355</td>
+      <td>0.000655</td>
+      <td>0.034671</td>
+      <td>0.000819</td>
       <td>10.00</td>
       <td>30</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -4261,10 +4263,10 @@ results.</p>
     </tr>
     <tr>
       <th>9</th>
-      <td>0.059317</td>
-      <td>0.000429</td>
-      <td>0.037907</td>
-      <td>0.004016</td>
+      <td>0.059175</td>
+      <td>0.000697</td>
+      <td>0.034364</td>
+      <td>0.001667</td>
       <td>10.00</td>
       <td>3</td>
       <td>{'classifier__learning_rate': 10, 'classifier_...</td>
@@ -4283,8 +4285,8 @@ to remove the <code class="docutils literal notranslate"><span class="pre">&quot
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the parameter names</span>
-<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;std_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]</span>
+<span class="n">column_results</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"param_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">param_grid</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+<span class="n">column_results</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">"mean_test_score"</span><span class="p">,</span> <span class="s2">"std_test_score"</span><span class="p">,</span> <span class="s2">"rank_test_score"</span><span class="p">]</span>
 <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="p">[</span><span class="n">column_results</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -4293,8 +4295,8 @@ to remove the <code class="docutils literal notranslate"><span class="pre">&quot
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">shorten_param</span><span class="p">(</span><span class="n">param_name</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s2">"__"</span> <span class="ow">in</span> <span class="n">param_name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">param_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">"__"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">param_name</span>
 
 
@@ -4441,9 +4443,9 @@ where:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pivoted_cv_results</span> <span class="o">=</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
-    <span class="n">values</span><span class="o">=</span><span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span>
-    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;max_leaf_nodes&quot;</span><span class="p">],</span>
+    <span class="n">values</span><span class="o">=</span><span class="s2">"mean_test_score"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"learning_rate"</span><span class="p">],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"max_leaf_nodes"</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="n">pivoted_cv_results</span>
@@ -4518,10 +4520,10 @@ follows:</p>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
     <span class="n">pivoted_cv_results</span><span class="p">,</span>
     <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;YlGnBu&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">"YlGnBu"</span><span class="p">,</span>
     <span class="n">vmin</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">vmax</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
-    <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;mean test accuracy&quot;</span><span class="p">},</span>
+    <span class="n">cbar_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">"label"</span><span class="p">:</span> <span class="s2">"mean test accuracy"</span><span class="p">},</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
 </pre></div>

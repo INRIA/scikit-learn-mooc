@@ -157,7 +157,7 @@ print(f"Silhouette score for k-means clusters: {kmeans_score:.3f}")
 # %%
 from sklearn.cluster import HDBSCAN
 
-cluster_labels = HDBSCAN(min_cluster_size=10).fit_predict(X_all)
+cluster_labels = HDBSCAN(min_cluster_size=10, copy=False).fit_predict(X_all)
 _ = plt.scatter(X_all[:, 0], X_all[:, 1], c=cluster_labels, alpha=0.6)
 
 # %% [markdown]
@@ -224,8 +224,8 @@ def plot_map(df, color_feature, colorbar_label="cluster label"):
         labels={"color": colorbar_label},
     )
     fig.update_layout(
-        mapbox_style="open-street-map",
-        mapbox_center={
+        map_style="open-street-map",
+        center={
             "lat": df["Latitude"].mean(),
             "lon": df["Longitude"].mean(),
         },
@@ -265,7 +265,7 @@ fig = plot_map(data, cluster_labels.astype("str"))
 # %%
 from sklearn.cluster import HDBSCAN
 
-hdbscan = HDBSCAN(min_cluster_size=100)
+hdbscan = HDBSCAN(min_cluster_size=100, copy=False)
 
 cluster_labels = hdbscan.fit_predict(geo_data)
 cluster_labels
@@ -289,7 +289,7 @@ print(f"Number of clusters: {len(np.unique(cluster_labels))}")
 # Decreasing `min_cluster_size` increases the number of clusters:
 
 # %%
-hdbscan = HDBSCAN(min_cluster_size=30)
+hdbscan = HDBSCAN(min_cluster_size=30, copy=False)
 cluster_labels = hdbscan.fit_predict(geo_data)
 fig = plot_map(data, cluster_labels.astype("str"))
 

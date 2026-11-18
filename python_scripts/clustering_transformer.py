@@ -76,7 +76,7 @@ fig = px.scatter_map(
 )
 fig.update_layout(
     map_style="open-street-map",
-    center={
+    map_center={
         "lat": data["Latitude"].mean(),
         "lon": data["Longitude"].mean(),
     },

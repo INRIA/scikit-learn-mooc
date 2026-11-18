@@ -75,8 +75,8 @@ fig = px.scatter_map(
     labels={"color": "price (k$)"},
 )
 fig.update_layout(
-    mapbox_style="open-street-map",
-    mapbox_center={
+    map_style="open-street-map",
+    map_center={
         "lat": data["Latitude"].mean(),
         "lon": data["Longitude"].mean(),
     },
@@ -127,7 +127,6 @@ model_cluster_geo = make_pipeline(
     make_column_transformer(
         (KMeans(n_clusters=100), geo_columns),
         remainder="passthrough",
-        force_int_remainder_cols=False,  # Silence a warning in scikit-learn v1.6
     ),
     StandardScaler(),
     Ridge(alpha=1e-12),

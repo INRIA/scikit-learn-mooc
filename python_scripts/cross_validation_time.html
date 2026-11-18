@@ -36,7 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
     <link rel="stylesheet" type="text/css" href="../_static/sklearn_mooc.css?v=80799b6b" />
   
   <!-- So that users can add custom icons -->
@@ -57,7 +57,7 @@
     <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -901,6 +901,22 @@ procedure with a single split and plot the prediction. We can use
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_4436/2574974621.py:8: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  data_train.sort_index(ascending=True, inplace=True)
+/tmp/ipykernel_4436/2574974621.py:9: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  data_test.sort_index(ascending=True, inplace=True)
+/tmp/ipykernel_4436/2574974621.py:10: Pandas4Warning: The inplace keyword in Series.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  target_train.sort_index(ascending=True, inplace=True)
+/tmp/ipykernel_4436/2574974621.py:11: Pandas4Warning: The inplace keyword in Series.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  target_test.sort_index(ascending=True, inplace=True)
+</pre></div>
+</div>
+</div>
 </div>
 <p>Let’s check the generalization performance of our model on this split.</p>
 <div class="cell docutils container">
@@ -933,7 +949,7 @@ training, testing and prediction samples.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/beb99f4a29b3cf0face34aa3f587f742ebc0956826b1a47d20a61d928c3bd9ea.png" src="../_images/beb99f4a29b3cf0face34aa3f587f742ebc0956826b1a47d20a61d928c3bd9ea.png" />
+<img alt="../_images/09c64473c1a40a710a04e22cec18821f59042c81a4ff46fd838daffd52ecff2e.png" src="../_images/09c64473c1a40a710a04e22cec18821f59042c81a4ff46fd838daffd52ecff2e.png" />
 </div>
 </div>
 <p>From the plot above, we can see that the training and testing samples are
@@ -970,7 +986,7 @@ ensure training on past data and evaluating on future data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.12
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The R2 on this single split is: -2.21
 </pre></div>
 </div>
 </div>
@@ -991,7 +1007,7 @@ the mean of the target. We can visually check what we are predicting as follows:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5e60807e4f16c299f0f1483b4c17633c801b7779dfe66be51d1461f5ebfdc2f0.png" src="../_images/5e60807e4f16c299f0f1483b4c17633c801b7779dfe66be51d1461f5ebfdc2f0.png" />
+<img alt="../_images/e7e507bb754a636143321aaa5827088e863714946c6fab4ce15adbb7bd4a1508.png" src="../_images/e7e507bb754a636143321aaa5827088e863714946c6fab4ce15adbb7bd4a1508.png" />
 </div>
 </div>
 <p>We see that our model cannot predict anything because it doesn’t have samples
@@ -1015,7 +1031,7 @@ groups. We can use the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -0.97 ± 1.69
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.14 ± 1.98
 </pre></div>
 </div>
 </div>
@@ -1038,7 +1054,7 @@ behaviour.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -5.45 ± 16.65
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The mean R2 is: -1.45 ± 1.94
 </pre></div>
 </div>
 </div>

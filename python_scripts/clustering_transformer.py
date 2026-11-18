@@ -127,7 +127,6 @@ model_cluster_geo = make_pipeline(
     make_column_transformer(
         (KMeans(n_clusters=100), geo_columns),
         remainder="passthrough",
-        force_int_remainder_cols=False,  # Silence a warning in scikit-learn v1.6
     ),
     StandardScaler(),
     Ridge(alpha=1e-12),

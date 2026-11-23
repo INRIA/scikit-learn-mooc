@@ -49,20 +49,15 @@ data, target = (
 # Let's have a quick look at the target before to focus on the data.
 
 # %%
-target.head()
+from skrub import TableReport
+
+TableReport(target)
 
 # %% [markdown]
 # We see that the target contains continuous value. It corresponds to the price
-# of a house in $. We can have a look at the target distribution.
-
-# %%
-import matplotlib.pyplot as plt
-
-target.plot.hist(bins=20, edgecolor="black")
-plt.xlabel("House price in $")
-_ = plt.title("Distribution of the house price \nin Ames")
-
-# %% [markdown]
+# of a house in $. We can have a look at the target distribution in the
+# "Distributions" tab.
+#
 # We see that the distribution has a long tail. It means that most of the house
 # are normally distributed but a couple of houses have a higher than normal
 # value. It could be critical to take this peculiarity into account when
@@ -72,7 +67,7 @@ _ = plt.title("Distribution of the house price \nin Ames")
 # house prices.
 
 # %%
-data.info()
+TableReport(data)
 
 # %% [markdown]
 # Looking at the dataframe general information, we can see that 79 features are
@@ -84,24 +79,17 @@ data.info()
 
 # %%
 numerical_data = data.select_dtypes("number")
-numerical_data.info()
+TableReport(numerical_data, max_plot_columns=40)
 
 # %% [markdown]
 # We see that the data are mainly represented with integer number. Let's have a
-# look at the histogram for all these features.
-
-# %%
-numerical_data.hist(
-    bins=20, figsize=(12, 22), edgecolor="black", layout=(9, 4)
-)
-plt.subplots_adjust(hspace=0.8, wspace=0.8)
-
-# %% [markdown]
+# look at the histogram for all these features in the "Distributions" tab.
+#
 # We see that some features have high picks for 0. It could be linked that this
 # value was assigned when the criterion did not apply, for instance the area of
 # the swimming pool when no swimming pools are available.
 #
-# We also have some feature encoding some date (for instance year).
+# We also have some features encoding a date (for instance year).
 #
 # These information are useful and should also be considered when designing a
 # predictive model.
@@ -110,34 +98,13 @@ plt.subplots_adjust(hspace=0.8, wspace=0.8)
 
 # %%
 string_data = data.select_dtypes(object)
-string_data.info()
+TableReport(string_data, max_plot_columns=45)
 
 # %% [markdown]
-# These features are categorical. We can make some bar plot to see categories
-# count for each feature.
-
-# %%
-from math import ceil
-from itertools import zip_longest
-
-n_string_features = string_data.shape[1]
-nrows, ncols = ceil(n_string_features / 4), 4
-
-fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(14, 80))
-
-for feature_name, ax in zip_longest(string_data, axs.ravel()):
-    if feature_name is None:
-        # do not show the axis
-        ax.axis("off")
-        continue
-
-    string_data[feature_name].value_counts().plot.barh(ax=ax)
-    ax.set_title(feature_name)
-
-plt.subplots_adjust(hspace=0.2, wspace=0.8)
-
-# %% [markdown]
-# Plotting this information allows us to answer to two questions:
+# These features are categorical. We can make analyze the bar plots in the
+# "Distribution" tab to see categories count for each feature.
+#
+# This allows us to answer to two questions:
 #
 # * Is there few or many categories for a given features?
 # * Is there rare categories for some features?

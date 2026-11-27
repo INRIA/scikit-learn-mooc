@@ -2,6 +2,7 @@ PYTHON_SCRIPTS_DIR = python_scripts
 NOTEBOOKS_DIR = notebooks
 JUPYTER_BOOK_DIR = jupyter-book
 WRAP_UP_DIR = wrap-up
+JUPYTERLITE_DIR = jupyterlite
 JUPYTER_KERNEL := python3
 MINIMAL_NOTEBOOK_FILES = $(shell ls $(PYTHON_SCRIPTS_DIR)/*.py | perl -pe "s@$(PYTHON_SCRIPTS_DIR)@$(NOTEBOOKS_DIR)@" | perl -pe "s@\.py@.ipynb@")
 
@@ -16,7 +17,8 @@ GITLAB_REPO_JUPYTERBOOK_DIR = ../mooc-scikit-learn-coordination/jupyter-book
 all: $(NOTEBOOKS_DIR)
 
 .PHONY: $(NOTEBOOKS_DIR) copy_matplotlibrc sanity_check_$(NOTEBOOKS_DIR) all \
-        exercises quizzes $(JUPYTER_BOOK_DIR) $(JUPYTER_BOOK_DIR)-clean $(JUPYTER_BOOK_DIR)-full-clean
+        exercises quizzes $(JUPYTER_BOOK_DIR) $(JUPYTER_BOOK_DIR)-clean $(JUPYTER_BOOK_DIR)-full-clean \
+        $(JUPYTERLITE_DIR) $(JUPYTERLITE_DIR)-clean
 
 $(NOTEBOOKS_DIR): $(MINIMAL_NOTEBOOK_FILES) copy_matplotlibrc sanity_check_$(NOTEBOOKS_DIR)
 
@@ -53,3 +55,18 @@ $(JUPYTER_BOOK_DIR)-clean:
 $(JUPYTER_BOOK_DIR)-full-clean:
 	# deletes jupyter-cache cache folder
 	rm -rf $(JUPYTER_BOOK_DIR)/_build
+
+# Build the JupyterLite site (xeus-python kernel) in jupyterlite/_output.
+# Requires the build environment from jupyterlite/build-environment.yml.
+# Notebooks and git-tracked datasets are staged side by side so that the
+# relative "../datasets/..." paths used in the notebooks keep working.
+# Always build from scratch: incremental builds keep stale kernel packages and
+# skip re-applying jupyterlite/jupyter-lite.json (default kernel).
+$(JUPYTERLITE_DIR): $(JUPYTERLITE_DIR)-clean
+	mkdir -p $(JUPYTERLITE_DIR)/content/$(NOTEBOOKS_DIR)
+	cp $(NOTEBOOKS_DIR)/*.ipynb $(NOTEBOOKS_DIR)/matplotlibrc $(JUPYTERLITE_DIR)/content/$(NOTEBOOKS_DIR)/
+	git ls-files datasets | xargs cp --parents -t $(JUPYTERLITE_DIR)/content
+	cd $(JUPYTERLITE_DIR) && jupyter lite build
+
+$(JUPYTERLITE_DIR)-clean:
+	rm -rf $(JUPYTERLITE_DIR)/content $(JUPYTERLITE_DIR)/_output $(JUPYTERLITE_DIR)/.jupyterlite.doit.db
